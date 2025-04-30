@@ -12,7 +12,11 @@ import { Pokemon, pokemons } from './test';
 export class AppComponent {
     private readonly httpClient: HttpClient = inject(HttpClient);
 
-    join = (arr: Pokemon[]) => arr.map((pokemon) => pokemon.name).join(', ') + ' & ';
+    join = (arr: (Pokemon | string)[]) => arr.map(this.getName).join(', ') + ' & ';
+
+    getName(pokemon: Pokemon | string): string {
+        return typeof pokemon === 'string' ? pokemon : pokemon.name;
+    }
 
     filters = [
         { label: 'IV PVP', query: '2-pv & 2-défense & -1attaque & ' },
@@ -41,7 +45,7 @@ export class AppComponent {
                 pokemons.Gruikui,
                 pokemons.Moustillon,
                 pokemons.Marisson,
-                pokemons.Goupelin,
+                pokemons.Feunnec,
                 pokemons.Grenousse,
                 pokemons.Brindibou,
                 pokemons.Flamiaou,
@@ -49,13 +53,13 @@ export class AppComponent {
                 pokemons.Ouistempo,
                 pokemons.Flambino,
                 pokemons.Larmeleon,
-                // pokemons.Chochodile,
-                // pokemons.Poussacha,
-                // pokemons.Coineton,
+                'Chochodile',
+                'Poussacha',
+                'Coiffeton',
             ]),
         },
         {
-            label: 'Grandir et s"épanouir',
+            label: 'Grandir et s"épanouir', // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale)
             query: this.join([
                 pokemons.Magicarpe,
                 pokemons.Wailmer,
@@ -66,14 +70,14 @@ export class AppComponent {
                 pokemons.Munna,
                 pokemons.Sovkipou,
                 pokemons.Minisange,
-                // pokemons.lillitrelle,
+                'Lilliterelle',
                 pokemons.Ptiravi,
                 pokemons['Mime-Jr'],
                 pokemons.Toxizap,
             ]),
         },
         {
-            label: 'Découverte sucrée',
+            label: 'Découverte sucrée', // L’événement se déroule du jeudi 24 avril à 10h au mardi 29 avril 20h (heure locale)
             query: this.join([
                 pokemons.Rattata,
                 pokemons.Abra,
@@ -90,6 +94,29 @@ export class AppComponent {
                 pokemons.Verpom,
                 pokemons.Ceribou,
                 pokemons.Goinfrex,
+            ]),
+        },
+        {
+            label: 'Effervescence printanière', // L’événement se déroule du mercredi 9 avril à 10h au lundi 14 avril 20h (heure locale)
+            query: this.join([
+                pokemons.Remoraid,
+                pokemons.Passerouge,
+                pokemons.Tournicoton,
+                pokemons.Marill,
+                pokemons.Nenupiot,
+                pokemons.Couaneton,
+                pokemons.Araqua,
+                pokemons.Lokhlass,
+                pokemons.Goupix,
+                pokemons.Ponyta,
+                pokemons.Chamallot,
+                pokemons.Helionceau,
+                pokemons.Caninos,
+                pokemons.Mystherbe,
+                pokemons.Granivol,
+                pokemons.Roselia,
+                pokemons.Ceribou,
+                pokemons.Noadkoko,
             ]),
         },
     ];
@@ -109,9 +136,7 @@ export class AppComponent {
             });
     }
     ngOnInit(): void {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
-        this.getData();
+        // this.getData();
     }
 
     public getData() {
