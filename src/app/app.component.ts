@@ -12,20 +12,20 @@ import { Pokemon, pokemons } from './test';
 export class AppComponent {
     private readonly httpClient: HttpClient = inject(HttpClient);
 
-    join = (arr: (Pokemon | string)[]) => arr.map(this.getName).join(', ') + ' & ';
+    join = (arr: (Pokemon | string)[]) => ' & ' + arr.map(this.getName).join(', ') + ' & ';
 
     getName(pokemon: Pokemon | string): string {
         return typeof pokemon === 'string' ? pokemon : pokemon.name;
     }
 
     filters = [
-        { label: 'IV PVP', query: '2-pv & 2-défense & -1attaque & ' },
+        { label: 'IV PVP', query: ' & 2-pv & 2-défense & -1attaque & ' },
         {
             label: 'Filtre level 1',
-            query: '2-attaque, -1défense & 2-attaque, -1pv & -1défense, -1pv & !# & âge0 & pc-100 & ',
+            query: ' & 2-attaque, -1défense & 2-attaque, -1pv & -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
         },
-        { label: 'Filtre level 2', query: '2-attaque, -1défense, -1pv, 0* & !# & âge0 & pc-100 & ' },
-        { label: 'Filtre level 3', query: '0*, 1*, 2* & !# & âge0 & pc-100 & ' },
+        { label: 'Filtre level 2', query: ' & 2-attaque, -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ' },
+        { label: 'Filtre level 3', query: ' & 0*, 1*, 2* & !# & âge0 & pc-100 & ' },
         {
             label: 'Starter',
             query: this.join([
@@ -59,7 +59,7 @@ export class AppComponent {
             ]),
         },
         {
-            label: 'Grandir et s"épanouir', // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale)
+            label: "Grandir et s'épanouir", // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale)
             query: this.join([
                 pokemons.Magicarpe,
                 pokemons.Wailmer,
