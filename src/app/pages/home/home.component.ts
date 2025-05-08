@@ -1,17 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { GetAllService, PokemonInterface } from './repositories/get-all.service';
-import { pokemons } from './test';
+import { GetAllService, PokemonInterface } from '../../repositories/get-all.service';
+import { pokemons } from '../../test';
 
 @Component({
-    selector: 'app-root',
+    selector: 'app-home',
     standalone: true,
-    imports: [RouterOutlet],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css',
+    imports: [],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css',
 })
-export class AppComponent {
+export class HomeComponent {
     private readonly httpClient: HttpClient = inject(HttpClient);
     private readonly getAllService: GetAllService = inject(GetAllService);
 

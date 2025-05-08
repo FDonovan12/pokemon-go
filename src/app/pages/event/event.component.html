@@ -1,0 +1,5 @@
+@if (event) {
+<div>{{ event.name }}</div>
+@for (savage of event.savagePokemons; track $index) {
+<div>{{ savage.name }}</div>
+} }

@@ -1,6281 +1,7186 @@
-export const pokemons = {
-    Bulbizarre: {
+export const pokemonsList = [
+    {
         id: 1,
         name: 'Bulbizarre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
         slug: 'Bulbizarre',
+        type: ['Poison', 'Plante'],
     },
-    Herbizarre: {
+    {
         id: 2,
         name: 'Herbizarre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png',
         slug: 'Herbizarre',
+        type: ['Poison', 'Plante'],
     },
-    Florizarre: {
+    {
         id: 3,
         name: 'Florizarre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png',
         slug: 'Florizarre',
+        type: ['Poison', 'Plante'],
     },
-    Salameche: {
+    {
         id: 4,
         name: 'Salamèche',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
         slug: 'Salameche',
+        type: ['Feu'],
     },
-    Reptincel: {
+    {
         id: 5,
         name: 'Reptincel',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png',
         slug: 'Reptincel',
+        type: ['Feu'],
     },
-    Dracaufeu: {
+    {
         id: 6,
         name: 'Dracaufeu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
         slug: 'Dracaufeu',
+        type: ['Vol', 'Feu'],
     },
-    Carapuce: {
+    {
         id: 7,
         name: 'Carapuce',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png',
         slug: 'Carapuce',
+        type: ['Eau'],
     },
-    Carabaffe: {
+    {
         id: 8,
         name: 'Carabaffe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png',
         slug: 'Carabaffe',
+        type: ['Eau'],
     },
-    Tortank: {
+    {
         id: 9,
         name: 'Tortank',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png',
         slug: 'Tortank',
+        type: ['Eau'],
     },
-    Chenipan: {
+    {
         id: 10,
         name: 'Chenipan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png',
         slug: 'Chenipan',
+        type: ['Insecte'],
     },
-    Chrysacier: {
+    {
         id: 11,
         name: 'Chrysacier',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/11.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png',
         slug: 'Chrysacier',
+        type: ['Insecte'],
     },
-    Papilusion: {
+    {
         id: 12,
         name: 'Papilusion',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png',
         slug: 'Papilusion',
+        type: ['Vol', 'Insecte'],
     },
-    Aspicot: {
+    {
         id: 13,
         name: 'Aspicot',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/13.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/13.png',
         slug: 'Aspicot',
+        type: ['Poison', 'Insecte'],
     },
-    Coconfort: {
+    {
         id: 14,
         name: 'Coconfort',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/14.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/14.png',
         slug: 'Coconfort',
+        type: ['Poison', 'Insecte'],
     },
-    Dardargnan: {
+    {
         id: 15,
         name: 'Dardargnan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/15.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/15.png',
         slug: 'Dardargnan',
+        type: ['Poison', 'Insecte'],
     },
-    Roucool: {
+    {
         id: 16,
         name: 'Roucool',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/16.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png',
         slug: 'Roucool',
+        type: ['Normal', 'Vol'],
     },
-    Roucoups: {
+    {
         id: 17,
         name: 'Roucoups',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/17.png',
         slug: 'Roucoups',
+        type: ['Normal', 'Vol'],
     },
-    Roucarnage: {
+    {
         id: 18,
         name: 'Roucarnage',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/18.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png',
         slug: 'Roucarnage',
+        type: ['Normal', 'Vol'],
     },
-    Rattata: {
+    {
         id: 19,
         name: 'Rattata',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/19.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png',
         slug: 'Rattata',
+        type: ['Normal'],
     },
-    Rattatac: {
+    {
         id: 20,
         name: 'Rattatac',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/20.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/20.png',
         slug: 'Rattatac',
+        type: ['Normal'],
     },
-    Piafabec: {
+    {
         id: 21,
         name: 'Piafabec',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/21.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/21.png',
         slug: 'Piafabec',
+        type: ['Normal', 'Vol'],
     },
-    Rapasdepic: {
+    {
         id: 22,
         name: 'Rapasdepic',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/22.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/22.png',
         slug: 'Rapasdepic',
+        type: ['Normal', 'Vol'],
     },
-    Abo: {
+    {
         id: 23,
         name: 'Abo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/23.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/23.png',
         slug: 'Abo',
+        type: ['Poison'],
     },
-    Arbok: {
+    {
         id: 24,
         name: 'Arbok',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/24.png',
         slug: 'Arbok',
+        type: ['Poison'],
     },
-    Pikachu: {
+    {
         id: 25,
         name: 'Pikachu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png',
         slug: 'Pikachu',
+        type: ['Électrik'],
     },
-    Raichu: {
+    {
         id: 26,
         name: 'Raichu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png',
         slug: 'Raichu',
+        type: ['Électrik'],
     },
-    Sabelette: {
+    {
         id: 27,
         name: 'Sabelette',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/27.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/27.png',
         slug: 'Sabelette',
+        type: ['Sol'],
     },
-    Sablaireau: {
+    {
         id: 28,
         name: 'Sablaireau',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/28.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/28.png',
         slug: 'Sablaireau',
+        type: ['Sol'],
     },
-    Nidoran: {
-        id: 32,
-        name: 'Nidoran♂',
-        image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/32.png',
-        sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/32.png',
+    {
+        id: 29,
+        name: 'Nidoran♀',
+        image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/29.png',
+        sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/29.png',
         slug: 'Nidoran',
+        type: ['Poison'],
     },
-    Nidorina: {
+    {
         id: 30,
         name: 'Nidorina',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/30.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/30.png',
         slug: 'Nidorina',
+        type: ['Poison'],
     },
-    Nidoqueen: {
+    {
         id: 31,
         name: 'Nidoqueen',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/31.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/31.png',
         slug: 'Nidoqueen',
+        type: ['Poison', 'Sol'],
     },
-    Nidorino: {
+    {
+        id: 32,
+        name: 'Nidoran♂',
+        image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/32.png',
+        sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/32.png',
+        slug: 'Nidoran',
+        type: ['Poison'],
+    },
+    {
         id: 33,
         name: 'Nidorino',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/33.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/33.png',
         slug: 'Nidorino',
+        type: ['Poison'],
     },
-    Nidoking: {
+    {
         id: 34,
         name: 'Nidoking',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/34.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/34.png',
         slug: 'Nidoking',
+        type: ['Poison', 'Sol'],
     },
-    Melofee: {
+    {
         id: 35,
         name: 'Mélofée',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png',
         slug: 'Melofee',
+        type: ['Fée'],
     },
-    Melodelfe: {
+    {
         id: 36,
         name: 'Mélodelfe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/36.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/36.png',
         slug: 'Melodelfe',
+        type: ['Fée'],
     },
-    Goupix: {
+    {
         id: 37,
         name: 'Goupix',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/37.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/37.png',
         slug: 'Goupix',
+        type: ['Feu'],
     },
-    Feunard: {
+    {
         id: 38,
         name: 'Feunard',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/38.png',
         slug: 'Feunard',
+        type: ['Feu'],
     },
-    Rondoudou: {
+    {
         id: 39,
         name: 'Rondoudou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png',
         slug: 'Rondoudou',
+        type: ['Normal', 'Fée'],
     },
-    Grodoudou: {
+    {
         id: 40,
         name: 'Grodoudou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/40.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/40.png',
         slug: 'Grodoudou',
+        type: ['Normal', 'Fée'],
     },
-    Nosferapti: {
+    {
         id: 41,
         name: 'Nosferapti',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/41.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/41.png',
         slug: 'Nosferapti',
+        type: ['Vol', 'Poison'],
     },
-    Nosferalto: {
+    {
         id: 42,
         name: 'Nosferalto',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/42.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png',
         slug: 'Nosferalto',
+        type: ['Vol', 'Poison'],
     },
-    Mystherbe: {
+    {
         id: 43,
         name: 'Mystherbe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/43.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/43.png',
         slug: 'Mystherbe',
+        type: ['Poison', 'Plante'],
     },
-    Ortide: {
+    {
         id: 44,
         name: 'Ortide',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/44.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png',
         slug: 'Ortide',
+        type: ['Poison', 'Plante'],
     },
-    Rafflesia: {
+    {
         id: 45,
         name: 'Rafflesia',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/45.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/45.png',
         slug: 'Rafflesia',
+        type: ['Poison', 'Plante'],
     },
-    Paras: {
+    {
         id: 46,
         name: 'Paras',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/46.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/46.png',
         slug: 'Paras',
+        type: ['Insecte', 'Plante'],
     },
-    Parasect: {
+    {
         id: 47,
         name: 'Parasect',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/47.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/47.png',
         slug: 'Parasect',
+        type: ['Insecte', 'Plante'],
     },
-    Mimitoss: {
+    {
         id: 48,
         name: 'Mimitoss',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/48.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/48.png',
         slug: 'Mimitoss',
+        type: ['Poison', 'Insecte'],
     },
-    Aeromite: {
+    {
         id: 49,
         name: 'Aéromite',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/49.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/49.png',
         slug: 'Aeromite',
+        type: ['Poison', 'Insecte'],
     },
-    Taupiqueur: {
+    {
         id: 50,
         name: 'Taupiqueur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/50.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png',
         slug: 'Taupiqueur',
+        type: ['Sol'],
     },
-    Triopikeur: {
+    {
         id: 51,
         name: 'Triopikeur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/51.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/51.png',
         slug: 'Triopikeur',
+        type: ['Sol'],
     },
-    Miaouss: {
+    {
         id: 52,
         name: 'Miaouss',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png',
         slug: 'Miaouss',
+        type: ['Normal'],
     },
-    Persian: {
+    {
         id: 53,
         name: 'Persian',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/53.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/53.png',
         slug: 'Persian',
+        type: ['Normal'],
     },
-    Psykokwak: {
+    {
         id: 54,
         name: 'Psykokwak',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png',
         slug: 'Psykokwak',
+        type: ['Eau'],
     },
-    Akwakwak: {
+    {
         id: 55,
         name: 'Akwakwak',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/55.png',
         slug: 'Akwakwak',
+        type: ['Eau'],
     },
-    Ferosinge: {
+    {
         id: 56,
         name: 'Férosinge',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/56.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/56.png',
         slug: 'Ferosinge',
+        type: ['Combat'],
     },
-    Colossinge: {
+    {
         id: 57,
         name: 'Colossinge',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/57.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/57.png',
         slug: 'Colossinge',
+        type: ['Combat'],
     },
-    Caninos: {
+    {
         id: 58,
         name: 'Caninos',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/58.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/58.png',
         slug: 'Caninos',
+        type: ['Feu'],
     },
-    Arcanin: {
+    {
         id: 59,
         name: 'Arcanin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/59.png',
         slug: 'Arcanin',
+        type: ['Feu'],
     },
-    Ptitard: {
+    {
         id: 60,
         name: 'Ptitard',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/60.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png',
         slug: 'Ptitard',
+        type: ['Eau'],
     },
-    Tetarte: {
+    {
         id: 61,
         name: 'Têtarte',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/61.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/61.png',
         slug: 'Tetarte',
+        type: ['Eau'],
     },
-    Tartard: {
+    {
         id: 62,
         name: 'Tartard',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/62.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/62.png',
         slug: 'Tartard',
+        type: ['Combat', 'Eau'],
     },
-    Abra: {
+    {
         id: 63,
         name: 'Abra',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/63.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/63.png',
         slug: 'Abra',
+        type: ['Psy'],
     },
-    Kadabra: {
+    {
         id: 64,
         name: 'Kadabra',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/64.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/64.png',
         slug: 'Kadabra',
+        type: ['Psy'],
     },
-    Alakazam: {
+    {
         id: 65,
         name: 'Alakazam',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/65.png',
         slug: 'Alakazam',
+        type: ['Psy'],
     },
-    Machoc: {
+    {
         id: 66,
         name: 'Machoc',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/66.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/66.png',
         slug: 'Machoc',
+        type: ['Combat'],
     },
-    Machopeur: {
+    {
         id: 67,
         name: 'Machopeur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/67.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/67.png',
         slug: 'Machopeur',
+        type: ['Combat'],
     },
-    Mackogneur: {
+    {
         id: 68,
         name: 'Mackogneur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/68.png',
         slug: 'Mackogneur',
+        type: ['Combat'],
     },
-    Chetiflor: {
+    {
         id: 69,
         name: 'Chétiflor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/69.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/69.png',
         slug: 'Chetiflor',
+        type: ['Poison', 'Plante'],
     },
-    Boustiflor: {
+    {
         id: 70,
         name: 'Boustiflor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/70.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/70.png',
         slug: 'Boustiflor',
+        type: ['Poison', 'Plante'],
     },
-    Empiflor: {
+    {
         id: 71,
         name: 'Empiflor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/71.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/71.png',
         slug: 'Empiflor',
+        type: ['Poison', 'Plante'],
     },
-    Tentacool: {
+    {
         id: 72,
         name: 'Tentacool',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/72.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/72.png',
         slug: 'Tentacool',
+        type: ['Poison', 'Eau'],
     },
-    Tentacruel: {
+    {
         id: 73,
         name: 'Tentacruel',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/73.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/73.png',
         slug: 'Tentacruel',
+        type: ['Poison', 'Eau'],
     },
-    Racaillou: {
+    {
         id: 74,
         name: 'Racaillou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/74.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png',
         slug: 'Racaillou',
+        type: ['Sol', 'Roche'],
     },
-    Gravalanch: {
+    {
         id: 75,
         name: 'Gravalanch',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/75.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/75.png',
         slug: 'Gravalanch',
+        type: ['Sol', 'Roche'],
     },
-    Grolem: {
+    {
         id: 76,
         name: 'Grolem',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/76.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/76.png',
         slug: 'Grolem',
+        type: ['Sol', 'Roche'],
     },
-    Ponyta: {
+    {
         id: 77,
         name: 'Ponyta',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/77.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/77.png',
         slug: 'Ponyta',
+        type: ['Feu'],
     },
-    Galopa: {
+    {
         id: 78,
         name: 'Galopa',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/78.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/78.png',
         slug: 'Galopa',
+        type: ['Feu'],
     },
-    Ramoloss: {
+    {
         id: 79,
         name: 'Ramoloss',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/79.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79.png',
         slug: 'Ramoloss',
+        type: ['Eau', 'Psy'],
     },
-    Flagadoss: {
+    {
         id: 80,
         name: 'Flagadoss',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/80.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/80.png',
         slug: 'Flagadoss',
+        type: ['Eau', 'Psy'],
     },
-    Magneti: {
+    {
         id: 81,
         name: 'Magnéti',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/81.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/81.png',
         slug: 'Magneti',
+        type: ['Acier', 'Électrik'],
     },
-    Magneton: {
+    {
         id: 82,
         name: 'Magnéton',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/82.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/82.png',
         slug: 'Magneton',
+        type: ['Acier', 'Électrik'],
     },
-    Canarticho: {
+    {
         id: 83,
         name: 'Canarticho',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/83.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/83.png',
         slug: 'Canarticho',
+        type: ['Normal', 'Vol'],
     },
-    Doduo: {
+    {
         id: 84,
         name: 'Doduo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/84.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/84.png',
         slug: 'Doduo',
+        type: ['Normal', 'Vol'],
     },
-    Dodrio: {
+    {
         id: 85,
         name: 'Dodrio',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/85.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/85.png',
         slug: 'Dodrio',
+        type: ['Normal', 'Vol'],
     },
-    Otaria: {
+    {
         id: 86,
         name: 'Otaria',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/86.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/86.png',
         slug: 'Otaria',
+        type: ['Eau'],
     },
-    Lamantine: {
+    {
         id: 87,
         name: 'Lamantine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/87.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/87.png',
         slug: 'Lamantine',
+        type: ['Eau', 'Glace'],
     },
-    Tadmorv: {
+    {
         id: 88,
         name: 'Tadmorv',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/88.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/88.png',
         slug: 'Tadmorv',
+        type: ['Poison'],
     },
-    Grotadmorv: {
+    {
         id: 89,
         name: 'Grotadmorv',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/89.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/89.png',
         slug: 'Grotadmorv',
+        type: ['Poison'],
     },
-    Kokiyas: {
+    {
         id: 90,
         name: 'Kokiyas',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/90.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/90.png',
         slug: 'Kokiyas',
+        type: ['Eau'],
     },
-    Crustabri: {
+    {
         id: 91,
         name: 'Crustabri',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/91.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/91.png',
         slug: 'Crustabri',
+        type: ['Eau', 'Glace'],
     },
-    Fantominus: {
+    {
         id: 92,
         name: 'Fantominus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/92.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/92.png',
         slug: 'Fantominus',
+        type: ['Poison', 'Spectre'],
     },
-    Spectrum: {
+    {
         id: 93,
         name: 'Spectrum',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/93.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/93.png',
         slug: 'Spectrum',
+        type: ['Poison', 'Spectre'],
     },
-    Ectoplasma: {
+    {
         id: 94,
         name: 'Ectoplasma',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png',
         slug: 'Ectoplasma',
+        type: ['Poison', 'Spectre'],
     },
-    Onix: {
+    {
         id: 95,
         name: 'Onix',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/95.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/95.png',
         slug: 'Onix',
+        type: ['Sol', 'Roche'],
     },
-    Soporifik: {
+    {
         id: 96,
         name: 'Soporifik',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/96.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/96.png',
         slug: 'Soporifik',
+        type: ['Psy'],
     },
-    Hypnomade: {
+    {
         id: 97,
         name: 'Hypnomade',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/97.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/97.png',
         slug: 'Hypnomade',
+        type: ['Psy'],
     },
-    Krabby: {
+    {
         id: 98,
         name: 'Krabby',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/98.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/98.png',
         slug: 'Krabby',
+        type: ['Eau'],
     },
-    Krabboss: {
+    {
         id: 99,
         name: 'Krabboss',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/99.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/99.png',
         slug: 'Krabboss',
+        type: ['Eau'],
     },
-    Voltorbe: {
+    {
         id: 100,
         name: 'Voltorbe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/100.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/100.png',
         slug: 'Voltorbe',
+        type: ['Électrik'],
     },
-    Electrode: {
+    {
         id: 101,
         name: 'Électrode',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/101.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/101.png',
         slug: 'Electrode',
+        type: ['Électrik'],
     },
-    Noeunoeuf: {
+    {
         id: 102,
         name: 'Noeunoeuf',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/102.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/102.png',
         slug: 'Noeunoeuf',
+        type: ['Plante', 'Psy'],
     },
-    Noadkoko: {
+    {
         id: 103,
         name: 'Noadkoko',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/103.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/103.png',
         slug: 'Noadkoko',
+        type: ['Plante', 'Psy'],
     },
-    Osselait: {
+    {
         id: 104,
         name: 'Osselait',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/104.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/104.png',
         slug: 'Osselait',
+        type: ['Sol'],
     },
-    Ossatueur: {
+    {
         id: 105,
         name: 'Ossatueur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/105.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/105.png',
         slug: 'Ossatueur',
+        type: ['Sol'],
     },
-    Kicklee: {
+    {
         id: 106,
         name: 'Kicklee',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/106.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/106.png',
         slug: 'Kicklee',
+        type: ['Combat'],
     },
-    Tygnon: {
+    {
         id: 107,
         name: 'Tygnon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/107.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/107.png',
         slug: 'Tygnon',
+        type: ['Combat'],
     },
-    Excelangue: {
+    {
         id: 108,
         name: 'Excelangue',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/108.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/108.png',
         slug: 'Excelangue',
+        type: ['Normal'],
     },
-    Smogo: {
+    {
         id: 109,
         name: 'Smogo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/109.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/109.png',
         slug: 'Smogo',
+        type: ['Poison'],
     },
-    Smogogo: {
+    {
         id: 110,
         name: 'Smogogo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/110.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/110.png',
         slug: 'Smogogo',
+        type: ['Poison'],
     },
-    Rhinocorne: {
+    {
         id: 111,
         name: 'Rhinocorne',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/111.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/111.png',
         slug: 'Rhinocorne',
+        type: ['Sol', 'Roche'],
     },
-    Rhinoferos: {
+    {
         id: 112,
         name: 'Rhinoféros',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/112.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/112.png',
         slug: 'Rhinoferos',
+        type: ['Sol', 'Roche'],
     },
-    Leveinard: {
+    {
         id: 113,
         name: 'Leveinard',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/113.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/113.png',
         slug: 'Leveinard',
+        type: ['Normal'],
     },
-    Saquedeneu: {
+    {
         id: 114,
         name: 'Saquedeneu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/114.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/114.png',
         slug: 'Saquedeneu',
+        type: ['Plante'],
     },
-    Kangourex: {
+    {
         id: 115,
         name: 'Kangourex',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/115.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/115.png',
         slug: 'Kangourex',
+        type: ['Normal'],
     },
-    Hypotrempe: {
+    {
         id: 116,
         name: 'Hypotrempe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/116.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/116.png',
         slug: 'Hypotrempe',
+        type: ['Eau'],
     },
-    Hypocean: {
+    {
         id: 117,
         name: 'Hypocéan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/117.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/117.png',
         slug: 'Hypocean',
+        type: ['Eau'],
     },
-    Poissirene: {
+    {
         id: 118,
         name: 'Poissirène',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/118.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/118.png',
         slug: 'Poissirene',
+        type: ['Eau'],
     },
-    Poissoroy: {
+    {
         id: 119,
         name: 'Poissoroy',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/119.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/119.png',
         slug: 'Poissoroy',
+        type: ['Eau'],
     },
-    Stari: {
+    {
         id: 120,
         name: 'Stari',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/120.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/120.png',
         slug: 'Stari',
+        type: ['Eau'],
     },
-    Staross: {
+    {
         id: 121,
         name: 'Staross',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/121.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/121.png',
         slug: 'Staross',
+        type: ['Eau', 'Psy'],
     },
-    'M-Mime': {
+    {
         id: 122,
         name: 'M. Mime',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/122.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/122.png',
         slug: 'M-Mime',
+        type: ['Psy', 'Fée'],
     },
-    Insecateur: {
+    {
         id: 123,
         name: 'Insécateur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/123.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/123.png',
         slug: 'Insecateur',
+        type: ['Vol', 'Insecte'],
     },
-    Lippoutou: {
+    {
         id: 124,
         name: 'Lippoutou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/124.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/124.png',
         slug: 'Lippoutou',
+        type: ['Psy', 'Glace'],
     },
-    Elektek: {
+    {
         id: 125,
         name: 'Élektek',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/125.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/125.png',
         slug: 'Elektek',
+        type: ['Électrik'],
     },
-    Magmar: {
+    {
         id: 126,
         name: 'Magmar',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/126.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/126.png',
         slug: 'Magmar',
+        type: ['Feu'],
     },
-    Scarabrute: {
+    {
         id: 127,
         name: 'Scarabrute',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/127.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/127.png',
         slug: 'Scarabrute',
+        type: ['Insecte'],
     },
-    Tauros: {
+    {
         id: 128,
         name: 'Tauros',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/128.png',
         slug: 'Tauros',
+        type: ['Normal'],
     },
-    Magicarpe: {
+    {
         id: 129,
         name: 'Magicarpe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png',
         slug: 'Magicarpe',
+        type: ['Eau'],
     },
-    Leviator: {
+    {
         id: 130,
         name: 'Léviator',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png',
         slug: 'Leviator',
+        type: ['Vol', 'Eau'],
     },
-    Lokhlass: {
+    {
         id: 131,
         name: 'Lokhlass',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png',
         slug: 'Lokhlass',
+        type: ['Eau', 'Glace'],
     },
-    Metamorph: {
+    {
         id: 132,
         name: 'Métamorph',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png',
         slug: 'Metamorph',
+        type: ['Normal'],
     },
-    Evoli: {
+    {
         id: 133,
         name: 'Évoli',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png',
         slug: 'Evoli',
+        type: ['Normal'],
     },
-    Aquali: {
+    {
         id: 134,
         name: 'Aquali',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/134.png',
         slug: 'Aquali',
+        type: ['Eau'],
     },
-    Voltali: {
+    {
         id: 135,
         name: 'Voltali',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/135.png',
         slug: 'Voltali',
+        type: ['Électrik'],
     },
-    Pyroli: {
+    {
         id: 136,
         name: 'Pyroli',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/136.png',
         slug: 'Pyroli',
+        type: ['Feu'],
     },
-    Porygon: {
+    {
         id: 137,
         name: 'Porygon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/137.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/137.png',
         slug: 'Porygon',
+        type: ['Normal'],
     },
-    Amonita: {
+    {
         id: 138,
         name: 'Amonita',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/138.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/138.png',
         slug: 'Amonita',
+        type: ['Roche', 'Eau'],
     },
-    Amonistar: {
+    {
         id: 139,
         name: 'Amonistar',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/139.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/139.png',
         slug: 'Amonistar',
+        type: ['Roche', 'Eau'],
     },
-    Kabuto: {
+    {
         id: 140,
         name: 'Kabuto',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/140.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/140.png',
         slug: 'Kabuto',
+        type: ['Roche', 'Eau'],
     },
-    Kabutops: {
+    {
         id: 141,
         name: 'Kabutops',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/141.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/141.png',
         slug: 'Kabutops',
+        type: ['Roche', 'Eau'],
     },
-    Ptera: {
+    {
         id: 142,
         name: 'Ptéra',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/142.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/142.png',
         slug: 'Ptera',
+        type: ['Vol', 'Roche'],
     },
-    Ronflex: {
+    {
         id: 143,
         name: 'Ronflex',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png',
         slug: 'Ronflex',
+        type: ['Normal'],
     },
-    Artikodin: {
+    {
         id: 144,
         name: 'Artikodin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/144.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/144.png',
         slug: 'Artikodin',
+        type: ['Vol', 'Glace'],
     },
-    Electhor: {
+    {
         id: 145,
         name: 'Électhor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/145.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/145.png',
         slug: 'Electhor',
+        type: ['Vol', 'Électrik'],
     },
-    Sulfura: {
+    {
         id: 146,
         name: 'Sulfura',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/146.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/146.png',
         slug: 'Sulfura',
+        type: ['Vol', 'Feu'],
     },
-    Minidraco: {
+    {
         id: 147,
         name: 'Minidraco',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/147.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/147.png',
         slug: 'Minidraco',
+        type: ['Dragon'],
     },
-    Draco: {
+    {
         id: 148,
         name: 'Draco',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/148.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/148.png',
         slug: 'Draco',
+        type: ['Dragon'],
     },
-    Dracolosse: {
+    {
         id: 149,
         name: 'Dracolosse',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png',
         slug: 'Dracolosse',
+        type: ['Vol', 'Dragon'],
     },
-    Mewtwo: {
+    {
         id: 150,
         name: 'Mewtwo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png',
         slug: 'Mewtwo',
+        type: ['Psy'],
     },
-    Mew: {
+    {
         id: 151,
         name: 'Mew',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png',
         slug: 'Mew',
+        type: ['Psy'],
     },
-    Germignon: {
+    {
         id: 152,
         name: 'Germignon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/152.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/152.png',
         slug: 'Germignon',
+        type: ['Plante'],
     },
-    Macronium: {
+    {
         id: 153,
         name: 'Macronium',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/153.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/153.png',
         slug: 'Macronium',
+        type: ['Plante'],
     },
-    Meganium: {
+    {
         id: 154,
         name: 'Méganium',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/154.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/154.png',
         slug: 'Meganium',
+        type: ['Plante'],
     },
-    Hericendre: {
+    {
         id: 155,
         name: 'Héricendre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/155.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/155.png',
         slug: 'Hericendre',
+        type: ['Feu'],
     },
-    Feurisson: {
+    {
         id: 156,
         name: 'Feurisson',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/156.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/156.png',
         slug: 'Feurisson',
+        type: ['Feu'],
     },
-    Typhlosion: {
+    {
         id: 157,
         name: 'Typhlosion',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/157.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/157.png',
         slug: 'Typhlosion',
+        type: ['Feu'],
     },
-    Kaiminus: {
+    {
         id: 158,
         name: 'Kaiminus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/158.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/158.png',
         slug: 'Kaiminus',
+        type: ['Eau'],
     },
-    Crocrodil: {
+    {
         id: 159,
         name: 'Crocrodil',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/159.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/159.png',
         slug: 'Crocrodil',
+        type: ['Eau'],
     },
-    Aligatueur: {
+    {
         id: 160,
         name: 'Aligatueur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/160.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/160.png',
         slug: 'Aligatueur',
+        type: ['Eau'],
     },
-    Fouinette: {
+    {
         id: 161,
         name: 'Fouinette',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/161.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/161.png',
         slug: 'Fouinette',
+        type: ['Normal'],
     },
-    Fouinar: {
+    {
         id: 162,
         name: 'Fouinar',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/162.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/162.png',
         slug: 'Fouinar',
+        type: ['Normal'],
     },
-    Hoothoot: {
+    {
         id: 163,
         name: 'Hoothoot',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/163.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/163.png',
         slug: 'Hoothoot',
+        type: ['Normal', 'Vol'],
     },
-    Noarfang: {
+    {
         id: 164,
         name: 'Noarfang',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/164.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/164.png',
         slug: 'Noarfang',
+        type: ['Normal', 'Vol'],
     },
-    Coxy: {
+    {
         id: 165,
         name: 'Coxy',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/165.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/165.png',
         slug: 'Coxy',
+        type: ['Vol', 'Insecte'],
     },
-    Coxyclaque: {
+    {
         id: 166,
         name: 'Coxyclaque',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/166.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/166.png',
         slug: 'Coxyclaque',
+        type: ['Vol', 'Insecte'],
     },
-    Mimigal: {
+    {
         id: 167,
         name: 'Mimigal',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/167.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/167.png',
         slug: 'Mimigal',
+        type: ['Poison', 'Insecte'],
     },
-    Migalos: {
+    {
         id: 168,
         name: 'Migalos',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/168.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/168.png',
         slug: 'Migalos',
+        type: ['Poison', 'Insecte'],
     },
-    Nostenfer: {
+    {
         id: 169,
         name: 'Nostenfer',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/169.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/169.png',
         slug: 'Nostenfer',
+        type: ['Vol', 'Poison'],
     },
-    Loupio: {
+    {
         id: 170,
         name: 'Loupio',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/170.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/170.png',
         slug: 'Loupio',
+        type: ['Eau', 'Électrik'],
     },
-    Lanturn: {
+    {
         id: 171,
         name: 'Lanturn',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/171.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/171.png',
         slug: 'Lanturn',
+        type: ['Eau', 'Électrik'],
     },
-    Pichu: {
+    {
         id: 172,
         name: 'Pichu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/172.png',
         slug: 'Pichu',
+        type: ['Électrik'],
     },
-    Melo: {
+    {
         id: 173,
         name: 'Mélo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/173.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/173.png',
         slug: 'Melo',
+        type: ['Fée'],
     },
-    Toudoudou: {
+    {
         id: 174,
         name: 'Toudoudou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/174.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/174.png',
         slug: 'Toudoudou',
+        type: ['Normal', 'Fée'],
     },
-    Togepi: {
+    {
         id: 175,
         name: 'Togepi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/175.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/175.png',
         slug: 'Togepi',
+        type: ['Fée'],
     },
-    Togetic: {
+    {
         id: 176,
         name: 'Togetic',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/176.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/176.png',
         slug: 'Togetic',
+        type: ['Vol', 'Fée'],
     },
-    Natu: {
+    {
         id: 177,
         name: 'Natu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/177.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/177.png',
         slug: 'Natu',
+        type: ['Vol', 'Psy'],
     },
-    Xatu: {
+    {
         id: 178,
         name: 'Xatu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/178.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/178.png',
         slug: 'Xatu',
+        type: ['Vol', 'Psy'],
     },
-    Wattouat: {
+    {
         id: 179,
         name: 'Wattouat',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/179.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/179.png',
         slug: 'Wattouat',
+        type: ['Électrik'],
     },
-    Lainergie: {
+    {
         id: 180,
         name: 'Lainergie',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/180.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/180.png',
         slug: 'Lainergie',
+        type: ['Électrik'],
     },
-    Pharamp: {
+    {
         id: 181,
         name: 'Pharamp',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/181.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/181.png',
         slug: 'Pharamp',
+        type: ['Électrik'],
     },
-    Joliflor: {
+    {
         id: 182,
         name: 'Joliflor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/182.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/182.png',
         slug: 'Joliflor',
+        type: ['Plante'],
     },
-    Marill: {
+    {
         id: 183,
         name: 'Marill',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/183.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/183.png',
         slug: 'Marill',
+        type: ['Eau', 'Fée'],
     },
-    Azumarill: {
+    {
         id: 184,
         name: 'Azumarill',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/184.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/184.png',
         slug: 'Azumarill',
+        type: ['Eau', 'Fée'],
     },
-    Simularbre: {
+    {
         id: 185,
         name: 'Simularbre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/185.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/185.png',
         slug: 'Simularbre',
+        type: ['Roche'],
     },
-    Tarpaud: {
+    {
         id: 186,
         name: 'Tarpaud',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/186.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/186.png',
         slug: 'Tarpaud',
+        type: ['Eau'],
     },
-    Granivol: {
+    {
         id: 187,
         name: 'Granivol',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/187.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/187.png',
         slug: 'Granivol',
+        type: ['Vol', 'Plante'],
     },
-    Floravol: {
+    {
         id: 188,
         name: 'Floravol',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/188.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/188.png',
         slug: 'Floravol',
+        type: ['Vol', 'Plante'],
     },
-    Cotovol: {
+    {
         id: 189,
         name: 'Cotovol',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/189.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/189.png',
         slug: 'Cotovol',
+        type: ['Vol', 'Plante'],
     },
-    Capumain: {
+    {
         id: 190,
         name: 'Capumain',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/190.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/190.png',
         slug: 'Capumain',
+        type: ['Normal'],
     },
-    Tournegrin: {
+    {
         id: 191,
         name: 'Tournegrin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/191.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/191.png',
         slug: 'Tournegrin',
+        type: ['Plante'],
     },
-    Heliatronc: {
+    {
         id: 192,
         name: 'Héliatronc',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/192.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/192.png',
         slug: 'Heliatronc',
+        type: ['Plante'],
     },
-    Yanma: {
+    {
         id: 193,
         name: 'Yanma',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/193.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/193.png',
         slug: 'Yanma',
+        type: ['Vol', 'Insecte'],
     },
-    Axoloto: {
+    {
         id: 194,
         name: 'Axoloto',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/194.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/194.png',
         slug: 'Axoloto',
+        type: ['Sol', 'Eau'],
     },
-    Maraiste: {
+    {
         id: 195,
         name: 'Maraiste',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/195.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/195.png',
         slug: 'Maraiste',
+        type: ['Sol', 'Eau'],
     },
-    Mentali: {
+    {
         id: 196,
         name: 'Mentali',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/196.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png',
         slug: 'Mentali',
+        type: ['Psy'],
     },
-    Noctali: {
+    {
         id: 197,
         name: 'Noctali',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/197.png',
         slug: 'Noctali',
+        type: ['Ténèbres'],
     },
-    Cornebre: {
+    {
         id: 198,
         name: 'Cornèbre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/198.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/198.png',
         slug: 'Cornebre',
+        type: ['Vol', 'Ténèbres'],
     },
-    Roigada: {
+    {
         id: 199,
         name: 'Roigada',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/199.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/199.png',
         slug: 'Roigada',
+        type: ['Eau', 'Psy'],
     },
-    Feuforeve: {
+    {
         id: 200,
         name: 'Feuforêve',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/200.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/200.png',
         slug: 'Feuforeve',
+        type: ['Spectre'],
     },
-    Zarbi: {
+    {
         id: 201,
         name: 'Zarbi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/201.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png',
         slug: 'Zarbi',
+        type: ['Psy'],
     },
-    Qulbutoke: {
+    {
         id: 202,
         name: 'Qulbutoké',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/202.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/202.png',
         slug: 'Qulbutoke',
+        type: ['Psy'],
     },
-    Girafarig: {
+    {
         id: 203,
         name: 'Girafarig',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/203.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/203.png',
         slug: 'Girafarig',
+        type: ['Normal', 'Psy'],
     },
-    Pomdepik: {
+    {
         id: 204,
         name: 'Pomdepik',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/204.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/204.png',
         slug: 'Pomdepik',
+        type: ['Insecte'],
     },
-    Foretress: {
+    {
         id: 205,
         name: 'Foretress',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/205.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/205.png',
         slug: 'Foretress',
+        type: ['Insecte', 'Acier'],
     },
-    Insolourdo: {
+    {
         id: 206,
         name: 'Insolourdo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/206.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/206.png',
         slug: 'Insolourdo',
+        type: ['Normal'],
     },
-    Scorplane: {
+    {
         id: 207,
         name: 'Scorplane',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/207.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/207.png',
         slug: 'Scorplane',
+        type: ['Vol', 'Sol'],
     },
-    Steelix: {
+    {
         id: 208,
         name: 'Steelix',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/208.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/208.png',
         slug: 'Steelix',
+        type: ['Sol', 'Acier'],
     },
-    Snubbull: {
+    {
         id: 209,
         name: 'Snubbull',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/209.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/209.png',
         slug: 'Snubbull',
+        type: ['Fée'],
     },
-    Granbull: {
+    {
         id: 210,
         name: 'Granbull',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/210.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/210.png',
         slug: 'Granbull',
+        type: ['Fée'],
     },
-    Qwilfish: {
+    {
         id: 211,
         name: 'Qwilfish',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/211.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/211.png',
         slug: 'Qwilfish',
+        type: ['Poison', 'Eau'],
     },
-    Cizayox: {
+    {
         id: 212,
         name: 'Cizayox',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/212.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/212.png',
         slug: 'Cizayox',
+        type: ['Insecte', 'Acier'],
     },
-    Caratroc: {
+    {
         id: 213,
         name: 'Caratroc',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/213.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/213.png',
         slug: 'Caratroc',
+        type: ['Roche', 'Insecte'],
     },
-    Scarhino: {
+    {
         id: 214,
         name: 'Scarhino',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/214.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/214.png',
         slug: 'Scarhino',
+        type: ['Combat', 'Insecte'],
     },
-    Farfuret: {
+    {
         id: 215,
         name: 'Farfuret',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/215.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/215.png',
         slug: 'Farfuret',
+        type: ['Glace', 'Ténèbres'],
     },
-    Teddiursa: {
+    {
         id: 216,
         name: 'Teddiursa',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/216.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/216.png',
         slug: 'Teddiursa',
+        type: ['Normal'],
     },
-    Ursaring: {
+    {
         id: 217,
         name: 'Ursaring',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/217.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/217.png',
         slug: 'Ursaring',
+        type: ['Normal'],
     },
-    Limagma: {
+    {
         id: 218,
         name: 'Limagma',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/218.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/218.png',
         slug: 'Limagma',
+        type: ['Feu'],
     },
-    Volcaropod: {
+    {
         id: 219,
         name: 'Volcaropod',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/219.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/219.png',
         slug: 'Volcaropod',
+        type: ['Roche', 'Feu'],
     },
-    Marcacrin: {
+    {
         id: 220,
         name: 'Marcacrin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/220.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/220.png',
         slug: 'Marcacrin',
+        type: ['Sol', 'Glace'],
     },
-    Cochignon: {
+    {
         id: 221,
         name: 'Cochignon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/221.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/221.png',
         slug: 'Cochignon',
+        type: ['Sol', 'Glace'],
     },
-    Corayon: {
+    {
         id: 222,
         name: 'Corayon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/222.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/222.png',
         slug: 'Corayon',
+        type: ['Roche', 'Eau'],
     },
-    Remoraid: {
+    {
         id: 223,
         name: 'Rémoraid',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/223.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/223.png',
         slug: 'Remoraid',
+        type: ['Eau'],
     },
-    Octillery: {
+    {
         id: 224,
         name: 'Octillery',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/224.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/224.png',
         slug: 'Octillery',
+        type: ['Eau'],
     },
-    Cadoizo: {
+    {
         id: 225,
         name: 'Cadoizo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/225.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/225.png',
         slug: 'Cadoizo',
+        type: ['Vol', 'Glace'],
     },
-    Demanta: {
+    {
         id: 226,
         name: 'Démanta',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/226.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/226.png',
         slug: 'Demanta',
+        type: ['Vol', 'Eau'],
     },
-    Airmure: {
+    {
         id: 227,
         name: 'Airmure',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/227.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/227.png',
         slug: 'Airmure',
+        type: ['Vol', 'Acier'],
     },
-    Malosse: {
+    {
         id: 228,
         name: 'Malosse',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/228.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/228.png',
         slug: 'Malosse',
+        type: ['Feu', 'Ténèbres'],
     },
-    Demolosse: {
+    {
         id: 229,
         name: 'Démolosse',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/229.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/229.png',
         slug: 'Demolosse',
+        type: ['Feu', 'Ténèbres'],
     },
-    Hyporoi: {
+    {
         id: 230,
         name: 'Hyporoi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/230.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/230.png',
         slug: 'Hyporoi',
+        type: ['Eau', 'Dragon'],
     },
-    Phanpy: {
+    {
         id: 231,
         name: 'Phanpy',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/231.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/231.png',
         slug: 'Phanpy',
+        type: ['Sol'],
     },
-    Donphan: {
+    {
         id: 232,
         name: 'Donphan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/232.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/232.png',
         slug: 'Donphan',
+        type: ['Sol'],
     },
-    Porygon2: {
+    {
         id: 233,
         name: 'Porygon2',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/233.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/233.png',
         slug: 'Porygon2',
+        type: ['Normal'],
     },
-    Cerfrousse: {
+    {
         id: 234,
         name: 'Cerfrousse',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/234.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/234.png',
         slug: 'Cerfrousse',
+        type: ['Normal'],
     },
-    Queulorior: {
+    {
         id: 235,
         name: 'Queulorior',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/235.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/235.png',
         slug: 'Queulorior',
+        type: ['Normal'],
     },
-    Debugant: {
+    {
         id: 236,
         name: 'Debugant',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/236.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/236.png',
         slug: 'Debugant',
+        type: ['Combat'],
     },
-    Kapoera: {
+    {
         id: 237,
         name: 'Kapoera',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/237.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/237.png',
         slug: 'Kapoera',
+        type: ['Combat'],
     },
-    Lippouti: {
+    {
         id: 238,
         name: 'Lippouti',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/238.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/238.png',
         slug: 'Lippouti',
+        type: ['Psy', 'Glace'],
     },
-    Elekid: {
+    {
         id: 239,
         name: 'Élekid',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/239.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/239.png',
         slug: 'Elekid',
+        type: ['Électrik'],
     },
-    Magby: {
+    {
         id: 240,
         name: 'Magby',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/240.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/240.png',
         slug: 'Magby',
+        type: ['Feu'],
     },
-    Ecremeuh: {
+    {
         id: 241,
         name: 'Écrémeuh',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/241.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/241.png',
         slug: 'Ecremeuh',
+        type: ['Normal'],
     },
-    Leuphorie: {
+    {
         id: 242,
         name: 'Leuphorie',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/242.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/242.png',
         slug: 'Leuphorie',
+        type: ['Normal'],
     },
-    Raikou: {
+    {
         id: 243,
         name: 'Raikou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/243.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/243.png',
         slug: 'Raikou',
+        type: ['Électrik'],
     },
-    Entei: {
+    {
         id: 244,
         name: 'Entei',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/244.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/244.png',
         slug: 'Entei',
+        type: ['Feu'],
     },
-    Suicune: {
+    {
         id: 245,
         name: 'Suicune',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/245.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/245.png',
         slug: 'Suicune',
+        type: ['Eau'],
     },
-    Embrylex: {
+    {
         id: 246,
         name: 'Embrylex',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/246.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/246.png',
         slug: 'Embrylex',
+        type: ['Sol', 'Roche'],
     },
-    Ymphect: {
+    {
         id: 247,
         name: 'Ymphect',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/247.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/247.png',
         slug: 'Ymphect',
+        type: ['Sol', 'Roche'],
     },
-    Tyranocif: {
+    {
         id: 248,
         name: 'Tyranocif',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/248.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/248.png',
         slug: 'Tyranocif',
+        type: ['Roche', 'Ténèbres'],
     },
-    Lugia: {
+    {
         id: 249,
         name: 'Lugia',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/249.png',
         slug: 'Lugia',
+        type: ['Vol', 'Psy'],
     },
-    'Ho-Oh': {
+    {
         id: 250,
         name: 'Ho-Oh',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/250.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/250.png',
         slug: 'Ho-Oh',
+        type: ['Vol', 'Feu'],
     },
-    Celebi: {
+    {
         id: 251,
         name: 'Celebi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/251.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/251.png',
         slug: 'Celebi',
+        type: ['Plante', 'Psy'],
     },
-    Arcko: {
+    {
         id: 252,
         name: 'Arcko',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/252.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/252.png',
         slug: 'Arcko',
+        type: ['Plante'],
     },
-    Massko: {
+    {
         id: 253,
         name: 'Massko',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/253.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/253.png',
         slug: 'Massko',
+        type: ['Plante'],
     },
-    Jungko: {
+    {
         id: 254,
         name: 'Jungko',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/254.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/254.png',
         slug: 'Jungko',
+        type: ['Plante'],
     },
-    Poussifeu: {
+    {
         id: 255,
         name: 'Poussifeu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/255.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/255.png',
         slug: 'Poussifeu',
+        type: ['Feu'],
     },
-    Galifeu: {
+    {
         id: 256,
         name: 'Galifeu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/256.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/256.png',
         slug: 'Galifeu',
+        type: ['Combat', 'Feu'],
     },
-    Brasegali: {
+    {
         id: 257,
         name: 'Braségali',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/257.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/257.png',
         slug: 'Brasegali',
+        type: ['Combat', 'Feu'],
     },
-    Gobou: {
+    {
         id: 258,
         name: 'Gobou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/258.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/258.png',
         slug: 'Gobou',
+        type: ['Eau'],
     },
-    Flobio: {
+    {
         id: 259,
         name: 'Flobio',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/259.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/259.png',
         slug: 'Flobio',
+        type: ['Sol', 'Eau'],
     },
-    Laggron: {
+    {
         id: 260,
         name: 'Laggron',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/260.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/260.png',
         slug: 'Laggron',
+        type: ['Sol', 'Eau'],
     },
-    Medhyena: {
+    {
         id: 261,
         name: 'Medhyèna',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/261.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/261.png',
         slug: 'Medhyena',
+        type: ['Ténèbres'],
     },
-    Grahyena: {
+    {
         id: 262,
         name: 'Grahyèna',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/262.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/262.png',
         slug: 'Grahyena',
+        type: ['Ténèbres'],
     },
-    Zigzaton: {
+    {
         id: 263,
         name: 'Zigzaton',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/263.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/263.png',
         slug: 'Zigzaton',
+        type: ['Normal'],
     },
-    Lineon: {
+    {
         id: 264,
         name: 'Linéon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/264.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/264.png',
         slug: 'Lineon',
+        type: ['Normal'],
     },
-    Chenipotte: {
+    {
         id: 265,
         name: 'Chenipotte',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/265.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/265.png',
         slug: 'Chenipotte',
+        type: ['Insecte'],
     },
-    Armulys: {
+    {
         id: 266,
         name: 'Armulys',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/266.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/266.png',
         slug: 'Armulys',
+        type: ['Insecte'],
     },
-    Charmillon: {
+    {
         id: 267,
         name: 'Charmillon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/267.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/267.png',
         slug: 'Charmillon',
+        type: ['Vol', 'Insecte'],
     },
-    Blindalys: {
+    {
         id: 268,
         name: 'Blindalys',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/268.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/268.png',
         slug: 'Blindalys',
+        type: ['Insecte'],
     },
-    Papinox: {
+    {
         id: 269,
         name: 'Papinox',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/269.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/269.png',
         slug: 'Papinox',
+        type: ['Poison', 'Insecte'],
     },
-    Nenupiot: {
+    {
         id: 270,
         name: 'Nénupiot',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/270.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/270.png',
         slug: 'Nenupiot',
+        type: ['Eau', 'Plante'],
     },
-    Lombre: {
+    {
         id: 271,
         name: 'Lombre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/271.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/271.png',
         slug: 'Lombre',
+        type: ['Eau', 'Plante'],
     },
-    Ludicolo: {
+    {
         id: 272,
         name: 'Ludicolo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/272.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/272.png',
         slug: 'Ludicolo',
+        type: ['Eau', 'Plante'],
     },
-    Grainipiot: {
+    {
         id: 273,
         name: 'Grainipiot',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/273.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/273.png',
         slug: 'Grainipiot',
+        type: ['Plante'],
     },
-    Pifeuil: {
+    {
         id: 274,
         name: 'Pifeuil',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/274.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/274.png',
         slug: 'Pifeuil',
+        type: ['Plante', 'Ténèbres'],
     },
-    Tengalice: {
+    {
         id: 275,
         name: 'Tengalice',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/275.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/275.png',
         slug: 'Tengalice',
+        type: ['Plante', 'Ténèbres'],
     },
-    Nirondelle: {
+    {
         id: 276,
         name: 'Nirondelle',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/276.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/276.png',
         slug: 'Nirondelle',
+        type: ['Normal', 'Vol'],
     },
-    Heledelle: {
+    {
         id: 277,
         name: 'Hélédelle',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/277.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/277.png',
         slug: 'Heledelle',
+        type: ['Normal', 'Vol'],
     },
-    Goelise: {
+    {
         id: 278,
         name: 'Goélise',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/278.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/278.png',
         slug: 'Goelise',
+        type: ['Vol', 'Eau'],
     },
-    Bekipan: {
+    {
         id: 279,
         name: 'Bekipan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/279.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/279.png',
         slug: 'Bekipan',
+        type: ['Vol', 'Eau'],
     },
-    Tarsal: {
+    {
         id: 280,
         name: 'Tarsal',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/280.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/280.png',
         slug: 'Tarsal',
+        type: ['Psy', 'Fée'],
     },
-    Kirlia: {
+    {
         id: 281,
         name: 'Kirlia',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/281.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/281.png',
         slug: 'Kirlia',
+        type: ['Psy', 'Fée'],
     },
-    Gardevoir: {
+    {
         id: 282,
         name: 'Gardevoir',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/282.png',
         slug: 'Gardevoir',
+        type: ['Psy', 'Fée'],
     },
-    Arakdo: {
+    {
         id: 283,
         name: 'Arakdo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/283.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/283.png',
         slug: 'Arakdo',
+        type: ['Insecte', 'Eau'],
     },
-    Maskadra: {
+    {
         id: 284,
         name: 'Maskadra',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/284.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/284.png',
         slug: 'Maskadra',
+        type: ['Vol', 'Insecte'],
     },
-    Balignon: {
+    {
         id: 285,
         name: 'Balignon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/285.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/285.png',
         slug: 'Balignon',
+        type: ['Plante'],
     },
-    Chapignon: {
+    {
         id: 286,
         name: 'Chapignon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/286.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/286.png',
         slug: 'Chapignon',
+        type: ['Combat', 'Plante'],
     },
-    Parecool: {
+    {
         id: 287,
         name: 'Parecool',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/287.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/287.png',
         slug: 'Parecool',
+        type: ['Normal'],
     },
-    Vigoroth: {
+    {
         id: 288,
         name: 'Vigoroth',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/288.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/288.png',
         slug: 'Vigoroth',
+        type: ['Normal'],
     },
-    Monaflemit: {
+    {
         id: 289,
         name: 'Monaflèmit',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/289.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/289.png',
         slug: 'Monaflemit',
+        type: ['Normal'],
     },
-    Ningale: {
+    {
         id: 290,
         name: 'Ningale',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/290.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/290.png',
         slug: 'Ningale',
+        type: ['Sol', 'Insecte'],
     },
-    Ninjask: {
+    {
         id: 291,
         name: 'Ninjask',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/291.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/291.png',
         slug: 'Ninjask',
+        type: ['Vol', 'Insecte'],
     },
-    Munja: {
+    {
         id: 292,
         name: 'Munja',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/292.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/292.png',
         slug: 'Munja',
+        type: ['Insecte', 'Spectre'],
     },
-    Chuchmur: {
+    {
         id: 293,
         name: 'Chuchmur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/293.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/293.png',
         slug: 'Chuchmur',
+        type: ['Normal'],
     },
-    Ramboum: {
+    {
         id: 294,
         name: 'Ramboum',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/294.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/294.png',
         slug: 'Ramboum',
+        type: ['Normal'],
     },
-    Brouhabam: {
+    {
         id: 295,
         name: 'Brouhabam',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/295.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/295.png',
         slug: 'Brouhabam',
+        type: ['Normal'],
     },
-    Makuhita: {
+    {
         id: 296,
         name: 'Makuhita',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/296.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/296.png',
         slug: 'Makuhita',
+        type: ['Combat'],
     },
-    Hariyama: {
+    {
         id: 297,
         name: 'Hariyama',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/297.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/297.png',
         slug: 'Hariyama',
+        type: ['Combat'],
     },
-    Azurill: {
+    {
         id: 298,
         name: 'Azurill',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/298.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/298.png',
         slug: 'Azurill',
+        type: ['Normal', 'Fée'],
     },
-    Tarinor: {
+    {
         id: 299,
         name: 'Tarinor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/299.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/299.png',
         slug: 'Tarinor',
+        type: ['Roche'],
     },
-    Skitty: {
+    {
         id: 300,
         name: 'Skitty',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/300.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/300.png',
         slug: 'Skitty',
+        type: ['Normal'],
     },
-    Delcatty: {
+    {
         id: 301,
         name: 'Delcatty',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/301.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/301.png',
         slug: 'Delcatty',
+        type: ['Normal'],
     },
-    Tenefix: {
+    {
         id: 302,
         name: 'Ténéfix',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/302.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/302.png',
         slug: 'Tenefix',
+        type: ['Spectre', 'Ténèbres'],
     },
-    Mysdibule: {
+    {
         id: 303,
         name: 'Mysdibule',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/303.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/303.png',
         slug: 'Mysdibule',
+        type: ['Acier', 'Fée'],
     },
-    Galekid: {
+    {
         id: 304,
         name: 'Galekid',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/304.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/304.png',
         slug: 'Galekid',
+        type: ['Roche', 'Acier'],
     },
-    Galegon: {
+    {
         id: 305,
         name: 'Galegon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/305.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/305.png',
         slug: 'Galegon',
+        type: ['Roche', 'Acier'],
     },
-    Galeking: {
+    {
         id: 306,
         name: 'Galeking',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/306.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/306.png',
         slug: 'Galeking',
+        type: ['Roche', 'Acier'],
     },
-    Meditikka: {
+    {
         id: 307,
         name: 'Méditikka',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/307.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/307.png',
         slug: 'Meditikka',
+        type: ['Combat', 'Psy'],
     },
-    Charmina: {
+    {
         id: 308,
         name: 'Charmina',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/308.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/308.png',
         slug: 'Charmina',
+        type: ['Combat', 'Psy'],
     },
-    Dynavolt: {
+    {
         id: 309,
         name: 'Dynavolt',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/309.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/309.png',
         slug: 'Dynavolt',
+        type: ['Électrik'],
     },
-    Elecsprint: {
+    {
         id: 310,
         name: 'Élecsprint',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/310.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/310.png',
         slug: 'Elecsprint',
+        type: ['Électrik'],
     },
-    Posipi: {
+    {
         id: 311,
         name: 'Posipi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/311.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/311.png',
         slug: 'Posipi',
+        type: ['Électrik'],
     },
-    Negapi: {
+    {
         id: 312,
         name: 'Négapi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/312.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/312.png',
         slug: 'Negapi',
+        type: ['Électrik'],
     },
-    Muciole: {
+    {
         id: 313,
         name: 'Muciole',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/313.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/313.png',
         slug: 'Muciole',
+        type: ['Insecte'],
     },
-    Lumivole: {
+    {
         id: 314,
         name: 'Lumivole',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/314.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/314.png',
         slug: 'Lumivole',
+        type: ['Insecte'],
     },
-    Roselia: {
+    {
         id: 315,
         name: 'Rosélia',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/315.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/315.png',
         slug: 'Roselia',
+        type: ['Poison', 'Plante'],
     },
-    Gloupti: {
+    {
         id: 316,
         name: 'Gloupti',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/316.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/316.png',
         slug: 'Gloupti',
+        type: ['Poison'],
     },
-    Avaltout: {
+    {
         id: 317,
         name: 'Avaltout',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/317.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/317.png',
         slug: 'Avaltout',
+        type: ['Poison'],
     },
-    Carvanha: {
+    {
         id: 318,
         name: 'Carvanha',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/318.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/318.png',
         slug: 'Carvanha',
+        type: ['Eau', 'Ténèbres'],
     },
-    Sharpedo: {
+    {
         id: 319,
         name: 'Sharpedo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/319.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/319.png',
         slug: 'Sharpedo',
+        type: ['Eau', 'Ténèbres'],
     },
-    Wailmer: {
+    {
         id: 320,
         name: 'Wailmer',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/320.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/320.png',
         slug: 'Wailmer',
+        type: ['Eau'],
     },
-    Wailord: {
+    {
         id: 321,
         name: 'Wailord',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/321.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/321.png',
         slug: 'Wailord',
+        type: ['Eau'],
     },
-    Chamallot: {
+    {
         id: 322,
         name: 'Chamallot',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/322.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/322.png',
         slug: 'Chamallot',
+        type: ['Sol', 'Feu'],
     },
-    Camerupt: {
+    {
         id: 323,
         name: 'Camérupt',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/323.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/323.png',
         slug: 'Camerupt',
+        type: ['Sol', 'Feu'],
     },
-    Chartor: {
+    {
         id: 324,
         name: 'Chartor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/324.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/324.png',
         slug: 'Chartor',
+        type: ['Feu'],
     },
-    Spoink: {
+    {
         id: 325,
         name: 'Spoink',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/325.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/325.png',
         slug: 'Spoink',
+        type: ['Psy'],
     },
-    Groret: {
+    {
         id: 326,
         name: 'Groret',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/326.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/326.png',
         slug: 'Groret',
+        type: ['Psy'],
     },
-    Spinda: {
+    {
         id: 327,
         name: 'Spinda',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/327.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/327.png',
         slug: 'Spinda',
+        type: ['Normal'],
     },
-    Kraknoix: {
+    {
         id: 328,
         name: 'Kraknoix',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/328.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/328.png',
         slug: 'Kraknoix',
+        type: ['Sol'],
     },
-    Vibraninf: {
+    {
         id: 329,
         name: 'Vibraninf',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/329.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/329.png',
         slug: 'Vibraninf',
+        type: ['Sol', 'Dragon'],
     },
-    Libegon: {
+    {
         id: 330,
         name: 'Libégon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/330.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/330.png',
         slug: 'Libegon',
+        type: ['Sol', 'Dragon'],
     },
-    Cacnea: {
+    {
         id: 331,
         name: 'Cacnea',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/331.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/331.png',
         slug: 'Cacnea',
+        type: ['Plante'],
     },
-    Cacturne: {
+    {
         id: 332,
         name: 'Cacturne',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/332.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/332.png',
         slug: 'Cacturne',
+        type: ['Plante', 'Ténèbres'],
     },
-    Tylton: {
+    {
         id: 333,
         name: 'Tylton',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/333.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/333.png',
         slug: 'Tylton',
+        type: ['Normal', 'Vol'],
     },
-    Altaria: {
+    {
         id: 334,
         name: 'Altaria',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/334.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/334.png',
         slug: 'Altaria',
+        type: ['Vol', 'Dragon'],
     },
-    Mangriff: {
+    {
         id: 335,
         name: 'Mangriff',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/335.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/335.png',
         slug: 'Mangriff',
+        type: ['Normal'],
     },
-    Seviper: {
+    {
         id: 336,
         name: 'Séviper',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/336.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/336.png',
         slug: 'Seviper',
+        type: ['Poison'],
     },
-    Seleroc: {
+    {
         id: 337,
         name: 'Séléroc',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/337.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/337.png',
         slug: 'Seleroc',
+        type: ['Roche', 'Psy'],
     },
-    Solaroc: {
+    {
         id: 338,
         name: 'Solaroc',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/338.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/338.png',
         slug: 'Solaroc',
+        type: ['Roche', 'Psy'],
     },
-    Barloche: {
+    {
         id: 339,
         name: 'Barloche',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/339.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/339.png',
         slug: 'Barloche',
+        type: ['Sol', 'Eau'],
     },
-    Barbicha: {
+    {
         id: 340,
         name: 'Barbicha',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/340.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/340.png',
         slug: 'Barbicha',
+        type: ['Sol', 'Eau'],
     },
-    Ecrapince: {
+    {
         id: 341,
         name: 'Écrapince',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/341.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/341.png',
         slug: 'Ecrapince',
+        type: ['Eau'],
     },
-    Colhomard: {
+    {
         id: 342,
         name: 'Colhomard',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/342.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/342.png',
         slug: 'Colhomard',
+        type: ['Eau', 'Ténèbres'],
     },
-    Balbuto: {
+    {
         id: 343,
         name: 'Balbuto',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/343.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/343.png',
         slug: 'Balbuto',
+        type: ['Sol', 'Psy'],
     },
-    Kaorine: {
+    {
         id: 344,
         name: 'Kaorine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/344.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/344.png',
         slug: 'Kaorine',
+        type: ['Sol', 'Psy'],
     },
-    Lilia: {
+    {
         id: 345,
         name: 'Lilia',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/345.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/345.png',
         slug: 'Lilia',
+        type: ['Roche', 'Plante'],
     },
-    Vacilys: {
+    {
         id: 346,
         name: 'Vacilys',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/346.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/346.png',
         slug: 'Vacilys',
+        type: ['Roche', 'Plante'],
     },
-    Anorith: {
+    {
         id: 347,
         name: 'Anorith',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/347.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/347.png',
         slug: 'Anorith',
+        type: ['Roche', 'Insecte'],
     },
-    Armaldo: {
+    {
         id: 348,
         name: 'Armaldo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/348.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/348.png',
         slug: 'Armaldo',
+        type: ['Roche', 'Insecte'],
     },
-    Barpau: {
+    {
         id: 349,
         name: 'Barpau',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/349.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/349.png',
         slug: 'Barpau',
+        type: ['Eau'],
     },
-    Milobellus: {
+    {
         id: 350,
         name: 'Milobellus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/350.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/350.png',
         slug: 'Milobellus',
+        type: ['Eau'],
     },
-    Morpheo: {
+    {
         id: 351,
         name: 'Morphéo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/351.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/351.png',
         slug: 'Morpheo',
+        type: ['Normal'],
     },
-    Kecleon: {
+    {
         id: 352,
         name: 'Kecleon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/352.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/352.png',
         slug: 'Kecleon',
+        type: ['Normal'],
     },
-    Polichombr: {
+    {
         id: 353,
         name: 'Polichombr',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/353.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/353.png',
         slug: 'Polichombr',
+        type: ['Spectre'],
     },
-    Branette: {
+    {
         id: 354,
         name: 'Branette',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/354.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/354.png',
         slug: 'Branette',
+        type: ['Spectre'],
     },
-    Skelenox: {
+    {
         id: 355,
         name: 'Skelénox',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/355.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/355.png',
         slug: 'Skelenox',
+        type: ['Spectre'],
     },
-    Teraclope: {
+    {
         id: 356,
         name: 'Téraclope',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/356.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/356.png',
         slug: 'Teraclope',
+        type: ['Spectre'],
     },
-    Tropius: {
+    {
         id: 357,
         name: 'Tropius',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/357.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/357.png',
         slug: 'Tropius',
+        type: ['Vol', 'Plante'],
     },
-    Eoko: {
+    {
         id: 358,
         name: 'Éoko',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/358.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/358.png',
         slug: 'Eoko',
+        type: ['Psy'],
     },
-    Absol: {
+    {
         id: 359,
         name: 'Absol',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/359.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/359.png',
         slug: 'Absol',
+        type: ['Ténèbres'],
     },
-    Okeoke: {
+    {
         id: 360,
         name: 'Okéoké',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/360.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/360.png',
         slug: 'Okeoke',
+        type: ['Psy'],
     },
-    Stalgamin: {
+    {
         id: 361,
         name: 'Stalgamin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/361.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/361.png',
         slug: 'Stalgamin',
+        type: ['Glace'],
     },
-    Oniglali: {
+    {
         id: 362,
         name: 'Oniglali',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/362.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/362.png',
         slug: 'Oniglali',
+        type: ['Glace'],
     },
-    Obalie: {
+    {
         id: 363,
         name: 'Obalie',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/363.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/363.png',
         slug: 'Obalie',
+        type: ['Eau', 'Glace'],
     },
-    Phogleur: {
+    {
         id: 364,
         name: 'Phogleur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/364.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/364.png',
         slug: 'Phogleur',
+        type: ['Eau', 'Glace'],
     },
-    Kaimorse: {
+    {
         id: 365,
         name: 'Kaimorse',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/365.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/365.png',
         slug: 'Kaimorse',
+        type: ['Eau', 'Glace'],
     },
-    Coquiperl: {
+    {
         id: 366,
         name: 'Coquiperl',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/366.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/366.png',
         slug: 'Coquiperl',
+        type: ['Eau'],
     },
-    Serpang: {
+    {
         id: 367,
         name: 'Serpang',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/367.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/367.png',
         slug: 'Serpang',
+        type: ['Eau'],
     },
-    Rosabyss: {
+    {
         id: 368,
         name: 'Rosabyss',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/368.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/368.png',
         slug: 'Rosabyss',
+        type: ['Eau'],
     },
-    Relicanth: {
+    {
         id: 369,
         name: 'Relicanth',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/369.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/369.png',
         slug: 'Relicanth',
+        type: ['Roche', 'Eau'],
     },
-    Lovdisc: {
+    {
         id: 370,
         name: 'Lovdisc',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/370.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/370.png',
         slug: 'Lovdisc',
+        type: ['Eau'],
     },
-    Draby: {
+    {
         id: 371,
         name: 'Draby',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/371.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/371.png',
         slug: 'Draby',
+        type: ['Dragon'],
     },
-    Drakhaus: {
+    {
         id: 372,
         name: 'Drakhaus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/372.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/372.png',
         slug: 'Drakhaus',
+        type: ['Dragon'],
     },
-    Drattak: {
+    {
         id: 373,
         name: 'Drattak',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/373.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/373.png',
         slug: 'Drattak',
+        type: ['Vol', 'Dragon'],
     },
-    Terhal: {
+    {
         id: 374,
         name: 'Terhal',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/374.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/374.png',
         slug: 'Terhal',
+        type: ['Acier', 'Psy'],
     },
-    Metang: {
+    {
         id: 375,
         name: 'Métang',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/375.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/375.png',
         slug: 'Metang',
+        type: ['Acier', 'Psy'],
     },
-    Metalosse: {
+    {
         id: 376,
         name: 'Métalosse',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/376.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/376.png',
         slug: 'Metalosse',
+        type: ['Acier', 'Psy'],
     },
-    Regirock: {
+    {
         id: 377,
         name: 'Regirock',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/377.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/377.png',
         slug: 'Regirock',
+        type: ['Roche'],
     },
-    Regice: {
+    {
         id: 378,
         name: 'Regice',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/378.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/378.png',
         slug: 'Regice',
+        type: ['Glace'],
     },
-    Registeel: {
+    {
         id: 379,
         name: 'Registeel',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/379.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/379.png',
         slug: 'Registeel',
+        type: ['Acier'],
     },
-    Latias: {
+    {
         id: 380,
         name: 'Latias',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/380.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/380.png',
         slug: 'Latias',
+        type: ['Psy', 'Dragon'],
     },
-    Latios: {
+    {
         id: 381,
         name: 'Latios',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/381.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/381.png',
         slug: 'Latios',
+        type: ['Psy', 'Dragon'],
     },
-    Kyogre: {
+    {
         id: 382,
         name: 'Kyogre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/382.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/382.png',
         slug: 'Kyogre',
+        type: ['Eau'],
     },
-    Groudon: {
+    {
         id: 383,
         name: 'Groudon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/383.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/383.png',
         slug: 'Groudon',
+        type: ['Sol'],
     },
-    Rayquaza: {
+    {
         id: 384,
         name: 'Rayquaza',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/384.png',
         slug: 'Rayquaza',
+        type: ['Vol', 'Dragon'],
     },
-    Jirachi: {
+    {
         id: 385,
         name: 'Jirachi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/385.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/385.png',
         slug: 'Jirachi',
+        type: ['Acier', 'Psy'],
     },
-    Deoxys: {
+    {
         id: 386,
         name: 'Deoxys',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/386.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/386.png',
         slug: 'Deoxys',
+        type: ['Psy'],
     },
-    Tortipouss: {
+    {
         id: 387,
         name: 'Tortipouss',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/387.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/387.png',
         slug: 'Tortipouss',
+        type: ['Plante'],
     },
-    Boskara: {
+    {
         id: 388,
         name: 'Boskara',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/388.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/388.png',
         slug: 'Boskara',
+        type: ['Plante'],
     },
-    Torterra: {
+    {
         id: 389,
         name: 'Torterra',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/389.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/389.png',
         slug: 'Torterra',
+        type: ['Sol', 'Plante'],
     },
-    Ouisticram: {
+    {
         id: 390,
         name: 'Ouisticram',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/390.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/390.png',
         slug: 'Ouisticram',
+        type: ['Feu'],
     },
-    Chimpenfeu: {
+    {
         id: 391,
         name: 'Chimpenfeu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/391.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/391.png',
         slug: 'Chimpenfeu',
+        type: ['Combat', 'Feu'],
     },
-    Simiabraz: {
+    {
         id: 392,
         name: 'Simiabraz',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/392.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/392.png',
         slug: 'Simiabraz',
+        type: ['Combat', 'Feu'],
     },
-    Tiplouf: {
+    {
         id: 393,
         name: 'Tiplouf',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/393.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/393.png',
         slug: 'Tiplouf',
+        type: ['Eau'],
     },
-    Prinplouf: {
+    {
         id: 394,
         name: 'Prinplouf',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/394.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/394.png',
         slug: 'Prinplouf',
+        type: ['Eau'],
     },
-    Pingoleon: {
+    {
         id: 395,
         name: 'Pingoléon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/395.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/395.png',
         slug: 'Pingoleon',
+        type: ['Acier', 'Eau'],
     },
-    Etourmi: {
+    {
         id: 396,
         name: 'Étourmi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/396.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/396.png',
         slug: 'Etourmi',
+        type: ['Normal', 'Vol'],
     },
-    Etourvol: {
+    {
         id: 397,
         name: 'Étourvol',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/397.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/397.png',
         slug: 'Etourvol',
+        type: ['Normal', 'Vol'],
     },
-    Etouraptor: {
+    {
         id: 398,
         name: 'Étouraptor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/398.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/398.png',
         slug: 'Etouraptor',
+        type: ['Normal', 'Vol'],
     },
-    Keunotor: {
+    {
         id: 399,
         name: 'Keunotor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/399.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/399.png',
         slug: 'Keunotor',
+        type: ['Normal'],
     },
-    Castorno: {
+    {
         id: 400,
         name: 'Castorno',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/400.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/400.png',
         slug: 'Castorno',
+        type: ['Normal', 'Eau'],
     },
-    Crikzik: {
+    {
         id: 401,
         name: 'Crikzik',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/401.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/401.png',
         slug: 'Crikzik',
+        type: ['Insecte'],
     },
-    Melokrik: {
+    {
         id: 402,
         name: 'Mélokrik',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/402.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/402.png',
         slug: 'Melokrik',
+        type: ['Insecte'],
     },
-    Lixy: {
+    {
         id: 403,
         name: 'Lixy',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/403.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/403.png',
         slug: 'Lixy',
+        type: ['Électrik'],
     },
-    Luxio: {
+    {
         id: 404,
         name: 'Luxio',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/404.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/404.png',
         slug: 'Luxio',
+        type: ['Électrik'],
     },
-    Luxray: {
+    {
         id: 405,
         name: 'Luxray',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/405.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/405.png',
         slug: 'Luxray',
+        type: ['Électrik'],
     },
-    Rozbouton: {
+    {
         id: 406,
         name: 'Rozbouton',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/406.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/406.png',
         slug: 'Rozbouton',
+        type: ['Poison', 'Plante'],
     },
-    Roserade: {
+    {
         id: 407,
         name: 'Roserade',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/407.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/407.png',
         slug: 'Roserade',
+        type: ['Poison', 'Plante'],
     },
-    Kranidos: {
+    {
         id: 408,
         name: 'Kranidos',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/408.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/408.png',
         slug: 'Kranidos',
+        type: ['Roche'],
     },
-    Charkos: {
+    {
         id: 409,
         name: 'Charkos',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/409.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/409.png',
         slug: 'Charkos',
+        type: ['Roche'],
     },
-    Dinoclier: {
+    {
         id: 410,
         name: 'Dinoclier',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/410.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/410.png',
         slug: 'Dinoclier',
+        type: ['Roche', 'Acier'],
     },
-    Bastiodon: {
+    {
         id: 411,
         name: 'Bastiodon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/411.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/411.png',
         slug: 'Bastiodon',
+        type: ['Roche', 'Acier'],
     },
-    Cheniti: {
+    {
         id: 412,
         name: 'Cheniti',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/412.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/412.png',
         slug: 'Cheniti',
+        type: ['Insecte'],
     },
-    Cheniselle: {
+    {
         id: 413,
         name: 'Cheniselle',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/413.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/413.png',
         slug: 'Cheniselle',
+        type: ['Insecte', 'Plante'],
     },
-    Papilord: {
+    {
         id: 414,
         name: 'Papilord',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/414.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/414.png',
         slug: 'Papilord',
+        type: ['Vol', 'Insecte'],
     },
-    Apitrini: {
+    {
         id: 415,
         name: 'Apitrini',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/415.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/415.png',
         slug: 'Apitrini',
+        type: ['Vol', 'Insecte'],
     },
-    Apireine: {
+    {
         id: 416,
         name: 'Apireine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/416.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/416.png',
         slug: 'Apireine',
+        type: ['Vol', 'Insecte'],
     },
-    Pachirisu: {
+    {
         id: 417,
         name: 'Pachirisu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/417.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/417.png',
         slug: 'Pachirisu',
+        type: ['Électrik'],
     },
-    Mustebouee: {
+    {
         id: 418,
         name: 'Mustébouée',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/418.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/418.png',
         slug: 'Mustebouee',
+        type: ['Eau'],
     },
-    Musteflott: {
+    {
         id: 419,
         name: 'Mustéflott',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/419.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/419.png',
         slug: 'Musteflott',
+        type: ['Eau'],
     },
-    Ceribou: {
+    {
         id: 420,
         name: 'Ceribou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/420.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/420.png',
         slug: 'Ceribou',
+        type: ['Plante'],
     },
-    Ceriflor: {
+    {
         id: 421,
         name: 'Ceriflor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/421.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/421.png',
         slug: 'Ceriflor',
+        type: ['Plante'],
     },
-    Sancoki: {
+    {
         id: 422,
         name: 'Sancoki',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/422.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/422.png',
         slug: 'Sancoki',
+        type: ['Eau'],
     },
-    Tritosor: {
+    {
         id: 423,
         name: 'Tritosor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/423.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/423.png',
         slug: 'Tritosor',
+        type: ['Sol', 'Eau'],
     },
-    Capidextre: {
+    {
         id: 424,
         name: 'Capidextre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/424.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/424.png',
         slug: 'Capidextre',
+        type: ['Normal'],
     },
-    Baudrive: {
+    {
         id: 425,
         name: 'Baudrive',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/425.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/425.png',
         slug: 'Baudrive',
+        type: ['Vol', 'Spectre'],
     },
-    Grodrive: {
+    {
         id: 426,
         name: 'Grodrive',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/426.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/426.png',
         slug: 'Grodrive',
+        type: ['Vol', 'Spectre'],
     },
-    Laporeille: {
+    {
         id: 427,
         name: 'Laporeille',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/427.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/427.png',
         slug: 'Laporeille',
+        type: ['Normal'],
     },
-    Lockpin: {
+    {
         id: 428,
         name: 'Lockpin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/428.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/428.png',
         slug: 'Lockpin',
+        type: ['Normal'],
     },
-    Magireve: {
+    {
         id: 429,
         name: 'Magirêve',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/429.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/429.png',
         slug: 'Magireve',
+        type: ['Spectre'],
     },
-    Corboss: {
+    {
         id: 430,
         name: 'Corboss',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/430.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/430.png',
         slug: 'Corboss',
+        type: ['Vol', 'Ténèbres'],
     },
-    Chaglam: {
+    {
         id: 431,
         name: 'Chaglam',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/431.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/431.png',
         slug: 'Chaglam',
+        type: ['Normal'],
     },
-    Chaffreux: {
+    {
         id: 432,
         name: 'Chaffreux',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/432.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/432.png',
         slug: 'Chaffreux',
+        type: ['Normal'],
     },
-    Korillon: {
+    {
         id: 433,
         name: 'Korillon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/433.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/433.png',
         slug: 'Korillon',
+        type: ['Psy'],
     },
-    Moufouette: {
+    {
         id: 434,
         name: 'Moufouette',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/434.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/434.png',
         slug: 'Moufouette',
+        type: ['Poison', 'Ténèbres'],
     },
-    Moufflair: {
+    {
         id: 435,
         name: 'Moufflair',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/435.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/435.png',
         slug: 'Moufflair',
+        type: ['Poison', 'Ténèbres'],
     },
-    Archeomire: {
+    {
         id: 436,
         name: 'Archéomire',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/436.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/436.png',
         slug: 'Archeomire',
+        type: ['Acier', 'Psy'],
     },
-    Archeodong: {
+    {
         id: 437,
         name: 'Archéodong',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/437.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/437.png',
         slug: 'Archeodong',
+        type: ['Acier', 'Psy'],
     },
-    Manzai: {
+    {
         id: 438,
         name: 'Manzaï',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/438.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/438.png',
         slug: 'Manzai',
+        type: ['Roche'],
     },
-    'Mime-Jr': {
+    {
         id: 439,
         name: 'Mime Jr.',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/439.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/439.png',
         slug: 'Mime-Jr',
+        type: ['Psy', 'Fée'],
     },
-    Ptiravi: {
+    {
         id: 440,
         name: 'Ptiravi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/440.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/440.png',
         slug: 'Ptiravi',
+        type: ['Normal'],
     },
-    Pijako: {
+    {
         id: 441,
         name: 'Pijako',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/441.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/441.png',
         slug: 'Pijako',
+        type: ['Normal', 'Vol'],
     },
-    Spiritomb: {
+    {
         id: 442,
         name: 'Spiritomb',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/442.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/442.png',
         slug: 'Spiritomb',
+        type: ['Spectre', 'Ténèbres'],
     },
-    Griknot: {
+    {
         id: 443,
         name: 'Griknot',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/443.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/443.png',
         slug: 'Griknot',
+        type: ['Sol', 'Dragon'],
     },
-    Carmache: {
+    {
         id: 444,
         name: 'Carmache',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/444.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/444.png',
         slug: 'Carmache',
+        type: ['Sol', 'Dragon'],
     },
-    Carchacrok: {
+    {
         id: 445,
         name: 'Carchacrok',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/445.png',
         slug: 'Carchacrok',
+        type: ['Sol', 'Dragon'],
     },
-    Goinfrex: {
+    {
         id: 446,
         name: 'Goinfrex',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/446.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/446.png',
         slug: 'Goinfrex',
+        type: ['Normal'],
     },
-    Riolu: {
+    {
         id: 447,
         name: 'Riolu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/447.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/447.png',
         slug: 'Riolu',
+        type: ['Combat'],
     },
-    Lucario: {
+    {
         id: 448,
         name: 'Lucario',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/448.png',
         slug: 'Lucario',
+        type: ['Combat', 'Acier'],
     },
-    Hippopotas: {
+    {
         id: 449,
         name: 'Hippopotas',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/449.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/449.png',
         slug: 'Hippopotas',
+        type: ['Sol'],
     },
-    Hippodocus: {
+    {
         id: 450,
         name: 'Hippodocus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/450.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/450.png',
         slug: 'Hippodocus',
+        type: ['Sol'],
     },
-    Rapion: {
+    {
         id: 451,
         name: 'Rapion',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/451.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/451.png',
         slug: 'Rapion',
+        type: ['Poison', 'Insecte'],
     },
-    Drascore: {
+    {
         id: 452,
         name: 'Drascore',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/452.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/452.png',
         slug: 'Drascore',
+        type: ['Poison', 'Ténèbres'],
     },
-    Cradopaud: {
+    {
         id: 453,
         name: 'Cradopaud',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/453.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/453.png',
         slug: 'Cradopaud',
+        type: ['Combat', 'Poison'],
     },
-    Coatox: {
+    {
         id: 454,
         name: 'Coatox',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/454.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/454.png',
         slug: 'Coatox',
+        type: ['Combat', 'Poison'],
     },
-    Vortente: {
+    {
         id: 455,
         name: 'Vortente',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/455.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/455.png',
         slug: 'Vortente',
+        type: ['Plante'],
     },
-    Ecayon: {
+    {
         id: 456,
         name: 'Écayon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/456.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/456.png',
         slug: 'Ecayon',
+        type: ['Eau'],
     },
-    Lumineon: {
+    {
         id: 457,
         name: 'Luminéon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/457.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/457.png',
         slug: 'Lumineon',
+        type: ['Eau'],
     },
-    Babimanta: {
+    {
         id: 458,
         name: 'Babimanta',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/458.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/458.png',
         slug: 'Babimanta',
+        type: ['Vol', 'Eau'],
     },
-    Blizzi: {
+    {
         id: 459,
         name: 'Blizzi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/459.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/459.png',
         slug: 'Blizzi',
+        type: ['Plante', 'Glace'],
     },
-    Blizzaroi: {
+    {
         id: 460,
         name: 'Blizzaroi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/460.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/460.png',
         slug: 'Blizzaroi',
+        type: ['Plante', 'Glace'],
     },
-    Dimoret: {
+    {
         id: 461,
         name: 'Dimoret',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/461.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/461.png',
         slug: 'Dimoret',
+        type: ['Glace', 'Ténèbres'],
     },
-    Magnezone: {
+    {
         id: 462,
         name: 'Magnézone',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/462.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/462.png',
         slug: 'Magnezone',
+        type: ['Acier', 'Électrik'],
     },
-    Coudlangue: {
+    {
         id: 463,
         name: 'Coudlangue',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/463.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/463.png',
         slug: 'Coudlangue',
+        type: ['Normal'],
     },
-    Rhinastoc: {
+    {
         id: 464,
         name: 'Rhinastoc',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/464.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/464.png',
         slug: 'Rhinastoc',
+        type: ['Sol', 'Roche'],
     },
-    Bouldeneu: {
+    {
         id: 465,
         name: 'Bouldeneu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/465.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/465.png',
         slug: 'Bouldeneu',
+        type: ['Plante'],
     },
-    Elekable: {
+    {
         id: 466,
         name: 'Élekable',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/466.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/466.png',
         slug: 'Elekable',
+        type: ['Électrik'],
     },
-    Maganon: {
+    {
         id: 467,
         name: 'Maganon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/467.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/467.png',
         slug: 'Maganon',
+        type: ['Feu'],
     },
-    Togekiss: {
+    {
         id: 468,
         name: 'Togekiss',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/468.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/468.png',
         slug: 'Togekiss',
+        type: ['Vol', 'Fée'],
     },
-    Yanmega: {
+    {
         id: 469,
         name: 'Yanmega',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/469.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/469.png',
         slug: 'Yanmega',
+        type: ['Vol', 'Insecte'],
     },
-    Phyllali: {
+    {
         id: 470,
         name: 'Phyllali',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/470.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/470.png',
         slug: 'Phyllali',
+        type: ['Plante'],
     },
-    Givrali: {
+    {
         id: 471,
         name: 'Givrali',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/471.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/471.png',
         slug: 'Givrali',
+        type: ['Glace'],
     },
-    Scorvol: {
+    {
         id: 472,
         name: 'Scorvol',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/472.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/472.png',
         slug: 'Scorvol',
+        type: ['Vol', 'Sol'],
     },
-    Mammochon: {
+    {
         id: 473,
         name: 'Mammochon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/473.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/473.png',
         slug: 'Mammochon',
+        type: ['Sol', 'Glace'],
     },
-    'Porygon-Z': {
+    {
         id: 474,
         name: 'Porygon-Z',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/474.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/474.png',
         slug: 'Porygon-Z',
+        type: ['Normal'],
     },
-    Gallame: {
+    {
         id: 475,
         name: 'Gallame',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/475.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/475.png',
         slug: 'Gallame',
+        type: ['Combat', 'Psy'],
     },
-    Tarinorme: {
+    {
         id: 476,
         name: 'Tarinorme',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/476.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/476.png',
         slug: 'Tarinorme',
+        type: ['Roche', 'Acier'],
     },
-    Noctunoir: {
+    {
         id: 477,
         name: 'Noctunoir',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/477.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/477.png',
         slug: 'Noctunoir',
+        type: ['Spectre'],
     },
-    Momartik: {
+    {
         id: 478,
         name: 'Momartik',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/478.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/478.png',
         slug: 'Momartik',
+        type: ['Spectre', 'Glace'],
     },
-    Motisma: {
+    {
         id: 479,
         name: 'Motisma',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/479.png',
         slug: 'Motisma',
+        type: ['Spectre', 'Électrik'],
     },
-    Crehelf: {
+    {
         id: 480,
         name: 'Créhelf',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/480.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/480.png',
         slug: 'Crehelf',
+        type: ['Psy'],
     },
-    Crefollet: {
+    {
         id: 481,
         name: 'Créfollet',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/481.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/481.png',
         slug: 'Crefollet',
+        type: ['Psy'],
     },
-    Crefadet: {
+    {
         id: 482,
         name: 'Créfadet',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/482.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/482.png',
         slug: 'Crefadet',
+        type: ['Psy'],
     },
-    Dialga: {
+    {
         id: 483,
         name: 'Dialga',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/483.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/483.png',
         slug: 'Dialga',
+        type: ['Acier', 'Dragon'],
     },
-    Palkia: {
+    {
         id: 484,
         name: 'Palkia',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/484.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/484.png',
         slug: 'Palkia',
+        type: ['Eau', 'Dragon'],
     },
-    Heatran: {
+    {
         id: 485,
         name: 'Heatran',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/485.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/485.png',
         slug: 'Heatran',
+        type: ['Acier', 'Feu'],
     },
-    Regigigas: {
+    {
         id: 486,
         name: 'Regigigas',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/486.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/486.png',
         slug: 'Regigigas',
+        type: ['Normal'],
     },
-    Giratina: {
+    {
         id: 487,
         name: 'Giratina',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/487.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/487.png',
         slug: 'Giratina',
+        type: ['Spectre', 'Dragon'],
     },
-    Cresselia: {
+    {
         id: 488,
         name: 'Cresselia',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/488.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/488.png',
         slug: 'Cresselia',
+        type: ['Psy'],
     },
-    Phione: {
+    {
         id: 489,
         name: 'Phione',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/489.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/489.png',
         slug: 'Phione',
+        type: ['Eau'],
     },
-    Manaphy: {
+    {
         id: 490,
         name: 'Manaphy',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/490.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/490.png',
         slug: 'Manaphy',
+        type: ['Eau'],
     },
-    Darkrai: {
+    {
         id: 491,
         name: 'Darkrai',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/491.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/491.png',
         slug: 'Darkrai',
+        type: ['Ténèbres'],
     },
-    Shaymin: {
+    {
         id: 492,
         name: 'Shaymin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/492.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/492.png',
         slug: 'Shaymin',
+        type: ['Plante'],
     },
-    Arceus: {
+    {
         id: 493,
         name: 'Arceus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/493.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/493.png',
         slug: 'Arceus',
+        type: ['Normal'],
     },
-    Victini: {
+    {
         id: 494,
         name: 'Victini',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/494.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/494.png',
         slug: 'Victini',
+        type: ['Feu', 'Psy'],
     },
-    Vipelierre: {
+    {
         id: 495,
         name: 'Vipélierre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/495.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/495.png',
         slug: 'Vipelierre',
+        type: ['Plante'],
     },
-    Lianaja: {
+    {
         id: 496,
         name: 'Lianaja',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/496.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/496.png',
         slug: 'Lianaja',
+        type: ['Plante'],
     },
-    Majaspic: {
+    {
         id: 497,
         name: 'Majaspic',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/497.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/497.png',
         slug: 'Majaspic',
+        type: ['Plante'],
     },
-    Gruikui: {
+    {
         id: 498,
         name: 'Gruikui',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/498.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/498.png',
         slug: 'Gruikui',
+        type: ['Feu'],
     },
-    Grotichon: {
+    {
         id: 499,
         name: 'Grotichon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/499.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/499.png',
         slug: 'Grotichon',
+        type: ['Combat', 'Feu'],
     },
-    Roitiflam: {
+    {
         id: 500,
         name: 'Roitiflam',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/500.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/500.png',
         slug: 'Roitiflam',
+        type: ['Combat', 'Feu'],
     },
-    Moustillon: {
+    {
         id: 501,
         name: 'Moustillon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/501.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/501.png',
         slug: 'Moustillon',
+        type: ['Eau'],
     },
-    Mateloutre: {
+    {
         id: 502,
         name: 'Mateloutre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/502.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/502.png',
         slug: 'Mateloutre',
+        type: ['Eau'],
     },
-    Clamiral: {
+    {
         id: 503,
         name: 'Clamiral',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/503.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/503.png',
         slug: 'Clamiral',
+        type: ['Eau'],
     },
-    Ratentif: {
+    {
         id: 504,
         name: 'Ratentif',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/504.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/504.png',
         slug: 'Ratentif',
+        type: ['Normal'],
     },
-    Miradar: {
+    {
         id: 505,
         name: 'Miradar',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/505.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/505.png',
         slug: 'Miradar',
+        type: ['Normal'],
     },
-    Ponchiot: {
+    {
         id: 506,
         name: 'Ponchiot',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/506.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/506.png',
         slug: 'Ponchiot',
+        type: ['Normal'],
     },
-    Ponchien: {
+    {
         id: 507,
         name: 'Ponchien',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/507.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/507.png',
         slug: 'Ponchien',
+        type: ['Normal'],
     },
-    Mastouffe: {
+    {
         id: 508,
         name: 'Mastouffe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/508.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/508.png',
         slug: 'Mastouffe',
+        type: ['Normal'],
     },
-    Chacripan: {
+    {
         id: 509,
         name: 'Chacripan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/509.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/509.png',
         slug: 'Chacripan',
+        type: ['Ténèbres'],
     },
-    Leopardus: {
+    {
         id: 510,
         name: 'Léopardus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/510.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/510.png',
         slug: 'Leopardus',
+        type: ['Ténèbres'],
     },
-    Feuillajou: {
+    {
         id: 511,
         name: 'Feuillajou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/511.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/511.png',
         slug: 'Feuillajou',
+        type: ['Plante'],
     },
-    Feuiloutan: {
+    {
         id: 512,
         name: 'Feuiloutan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/512.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/512.png',
         slug: 'Feuiloutan',
+        type: ['Plante'],
     },
-    Flamajou: {
+    {
         id: 513,
         name: 'Flamajou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/513.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/513.png',
         slug: 'Flamajou',
+        type: ['Feu'],
     },
-    Flamoutan: {
+    {
         id: 514,
         name: 'Flamoutan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/514.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/514.png',
         slug: 'Flamoutan',
+        type: ['Feu'],
     },
-    Flotajou: {
+    {
         id: 515,
         name: 'Flotajou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/515.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/515.png',
         slug: 'Flotajou',
+        type: ['Eau'],
     },
-    Flotoutan: {
+    {
         id: 516,
         name: 'Flotoutan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/516.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/516.png',
         slug: 'Flotoutan',
+        type: ['Eau'],
     },
-    Munna: {
+    {
         id: 517,
         name: 'Munna',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/517.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/517.png',
         slug: 'Munna',
+        type: ['Psy'],
     },
-    Mushana: {
+    {
         id: 518,
         name: 'Mushana',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/518.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/518.png',
         slug: 'Mushana',
+        type: ['Psy'],
     },
-    Poichigeon: {
+    {
         id: 519,
         name: 'Poichigeon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/519.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/519.png',
         slug: 'Poichigeon',
+        type: ['Normal', 'Vol'],
     },
-    Colombeau: {
+    {
         id: 520,
         name: 'Colombeau',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/520.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/520.png',
         slug: 'Colombeau',
+        type: ['Normal', 'Vol'],
     },
-    Deflaisan: {
+    {
         id: 521,
         name: 'Déflaisan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/521.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/521.png',
         slug: 'Deflaisan',
+        type: ['Normal', 'Vol'],
     },
-    Zebibron: {
+    {
         id: 522,
         name: 'Zébibron',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/522.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/522.png',
         slug: 'Zebibron',
+        type: ['Électrik'],
     },
-    Zeblitz: {
+    {
         id: 523,
         name: 'Zéblitz',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/523.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/523.png',
         slug: 'Zeblitz',
+        type: ['Électrik'],
     },
-    Nodulithe: {
+    {
         id: 524,
         name: 'Nodulithe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/524.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/524.png',
         slug: 'Nodulithe',
+        type: ['Roche'],
     },
-    Geolithe: {
+    {
         id: 525,
         name: 'Géolithe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/525.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/525.png',
         slug: 'Geolithe',
+        type: ['Roche'],
     },
-    Gigalithe: {
+    {
         id: 526,
         name: 'Gigalithe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/526.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/526.png',
         slug: 'Gigalithe',
+        type: ['Roche'],
     },
-    Chovsourir: {
+    {
         id: 527,
         name: 'Chovsourir',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/527.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/527.png',
         slug: 'Chovsourir',
+        type: ['Vol', 'Psy'],
     },
-    Rhinolove: {
+    {
         id: 528,
         name: 'Rhinolove',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/528.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/528.png',
         slug: 'Rhinolove',
+        type: ['Vol', 'Psy'],
     },
-    Rototaupe: {
+    {
         id: 529,
         name: 'Rototaupe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/529.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/529.png',
         slug: 'Rototaupe',
+        type: ['Sol'],
     },
-    Minotaupe: {
+    {
         id: 530,
         name: 'Minotaupe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/530.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/530.png',
         slug: 'Minotaupe',
+        type: ['Sol', 'Acier'],
     },
-    Nanmeouie: {
+    {
         id: 531,
         name: 'Nanméouïe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/531.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/531.png',
         slug: 'Nanmeouie',
+        type: ['Normal'],
     },
-    Charpenti: {
+    {
         id: 532,
         name: 'Charpenti',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/532.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/532.png',
         slug: 'Charpenti',
+        type: ['Combat'],
     },
-    Ouvrifier: {
+    {
         id: 533,
         name: 'Ouvrifier',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/533.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/533.png',
         slug: 'Ouvrifier',
+        type: ['Combat'],
     },
-    Betochef: {
+    {
         id: 534,
         name: 'Bétochef',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/534.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/534.png',
         slug: 'Betochef',
+        type: ['Combat'],
     },
-    Tritonde: {
+    {
         id: 535,
         name: 'Tritonde',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/535.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/535.png',
         slug: 'Tritonde',
+        type: ['Eau'],
     },
-    Batracne: {
+    {
         id: 536,
         name: 'Batracné',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/536.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/536.png',
         slug: 'Batracne',
+        type: ['Sol', 'Eau'],
     },
-    Crapustule: {
+    {
         id: 537,
         name: 'Crapustule',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/537.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/537.png',
         slug: 'Crapustule',
+        type: ['Sol', 'Eau'],
     },
-    Judokrak: {
+    {
         id: 538,
         name: 'Judokrak',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/538.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/538.png',
         slug: 'Judokrak',
+        type: ['Combat'],
     },
-    Karaclee: {
+    {
         id: 539,
         name: 'Karaclée',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/539.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/539.png',
         slug: 'Karaclee',
+        type: ['Combat'],
     },
-    Larveyette: {
+    {
         id: 540,
         name: 'Larveyette',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/540.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/540.png',
         slug: 'Larveyette',
+        type: ['Insecte', 'Plante'],
     },
-    Couverdure: {
+    {
         id: 541,
         name: 'Couverdure',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/541.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/541.png',
         slug: 'Couverdure',
+        type: ['Insecte', 'Plante'],
     },
-    Manternel: {
+    {
         id: 542,
         name: 'Manternel',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/542.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/542.png',
         slug: 'Manternel',
+        type: ['Insecte', 'Plante'],
     },
-    Venipatte: {
+    {
         id: 543,
         name: 'Venipatte',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/543.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/543.png',
         slug: 'Venipatte',
+        type: ['Poison', 'Insecte'],
     },
-    Scobolide: {
+    {
         id: 544,
         name: 'Scobolide',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/544.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/544.png',
         slug: 'Scobolide',
+        type: ['Poison', 'Insecte'],
     },
-    Brutapode: {
+    {
         id: 545,
         name: 'Brutapode',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/545.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/545.png',
         slug: 'Brutapode',
+        type: ['Poison', 'Insecte'],
     },
-    Doudouvet: {
+    {
         id: 546,
         name: 'Doudouvet',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/546.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/546.png',
         slug: 'Doudouvet',
+        type: ['Plante', 'Fée'],
     },
-    Farfaduvet: {
+    {
         id: 547,
         name: 'Farfaduvet',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/547.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/547.png',
         slug: 'Farfaduvet',
+        type: ['Plante', 'Fée'],
     },
-    Chlorobule: {
+    {
         id: 548,
         name: 'Chlorobule',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/548.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/548.png',
         slug: 'Chlorobule',
+        type: ['Plante'],
     },
-    Fragilady: {
+    {
         id: 549,
         name: 'Fragilady',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/549.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/549.png',
         slug: 'Fragilady',
+        type: ['Plante'],
     },
-    Bargantua: {
+    {
         id: 550,
         name: 'Bargantua',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/550.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/550.png',
         slug: 'Bargantua',
+        type: ['Eau'],
     },
-    Mascaiman: {
+    {
         id: 551,
         name: 'Mascaïman',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/551.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/551.png',
         slug: 'Mascaiman',
+        type: ['Sol', 'Ténèbres'],
     },
-    Escroco: {
+    {
         id: 552,
         name: 'Escroco',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/552.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/552.png',
         slug: 'Escroco',
+        type: ['Sol', 'Ténèbres'],
     },
-    Crocorible: {
+    {
         id: 553,
         name: 'Crocorible',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/553.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/553.png',
         slug: 'Crocorible',
+        type: ['Sol', 'Ténèbres'],
     },
-    Darumarond: {
+    {
         id: 554,
         name: 'Darumarond',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/554.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/554.png',
         slug: 'Darumarond',
+        type: ['Feu'],
     },
-    Darumacho: {
+    {
         id: 555,
         name: 'Darumacho',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/555.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/555.png',
         slug: 'Darumacho',
+        type: ['Feu'],
     },
-    Maracachi: {
+    {
         id: 556,
         name: 'Maracachi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/556.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/556.png',
         slug: 'Maracachi',
+        type: ['Plante'],
     },
-    Crabicoque: {
+    {
         id: 557,
         name: 'Crabicoque',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/557.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/557.png',
         slug: 'Crabicoque',
+        type: ['Roche', 'Insecte'],
     },
-    Crabaraque: {
+    {
         id: 558,
         name: 'Crabaraque',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/558.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/558.png',
         slug: 'Crabaraque',
+        type: ['Roche', 'Insecte'],
     },
-    Baggiguane: {
+    {
         id: 559,
         name: 'Baggiguane',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/559.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/559.png',
         slug: 'Baggiguane',
+        type: ['Combat', 'Ténèbres'],
     },
-    Baggaid: {
+    {
         id: 560,
         name: 'Baggaïd',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/560.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/560.png',
         slug: 'Baggaid',
+        type: ['Combat', 'Ténèbres'],
     },
-    Cryptero: {
+    {
         id: 561,
         name: 'Cryptéro',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/561.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/561.png',
         slug: 'Cryptero',
+        type: ['Vol', 'Psy'],
     },
-    Tutafeh: {
+    {
         id: 562,
         name: 'Tutafeh',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/562.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/562.png',
         slug: 'Tutafeh',
+        type: ['Spectre'],
     },
-    Tutankafer: {
+    {
         id: 563,
         name: 'Tutankafer',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/563.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/563.png',
         slug: 'Tutankafer',
+        type: ['Spectre'],
     },
-    Carapagos: {
+    {
         id: 564,
         name: 'Carapagos',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/564.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/564.png',
         slug: 'Carapagos',
+        type: ['Roche', 'Eau'],
     },
-    Megapagos: {
+    {
         id: 565,
         name: 'Mégapagos',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/565.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/565.png',
         slug: 'Megapagos',
+        type: ['Roche', 'Eau'],
     },
-    Arkeapti: {
+    {
         id: 566,
         name: 'Arkéapti',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/566.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/566.png',
         slug: 'Arkeapti',
+        type: ['Vol', 'Roche'],
     },
-    Aeropteryx: {
+    {
         id: 567,
         name: 'Aéroptéryx',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/567.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/567.png',
         slug: 'Aeropteryx',
+        type: ['Vol', 'Roche'],
     },
-    Miamiasme: {
+    {
         id: 568,
         name: 'Miamiasme',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/568.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/568.png',
         slug: 'Miamiasme',
+        type: ['Poison'],
     },
-    Miasmax: {
+    {
         id: 569,
         name: 'Miasmax',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/569.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/569.png',
         slug: 'Miasmax',
+        type: ['Poison'],
     },
-    Zorua: {
+    {
         id: 570,
         name: 'Zorua',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/570.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/570.png',
         slug: 'Zorua',
+        type: ['Ténèbres'],
     },
-    Zoroark: {
+    {
         id: 571,
         name: 'Zoroark',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/571.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/571.png',
         slug: 'Zoroark',
+        type: ['Ténèbres'],
     },
-    Chinchidou: {
+    {
         id: 572,
         name: 'Chinchidou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/572.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/572.png',
         slug: 'Chinchidou',
+        type: ['Normal'],
     },
-    Pashmilla: {
+    {
         id: 573,
         name: 'Pashmilla',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/573.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/573.png',
         slug: 'Pashmilla',
+        type: ['Normal'],
     },
-    Scrutella: {
+    {
         id: 574,
         name: 'Scrutella',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/574.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/574.png',
         slug: 'Scrutella',
+        type: ['Psy'],
     },
-    Mesmerella: {
+    {
         id: 575,
         name: 'Mesmérella',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/575.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/575.png',
         slug: 'Mesmerella',
+        type: ['Psy'],
     },
-    Siderella: {
+    {
         id: 576,
         name: 'Sidérella',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/576.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/576.png',
         slug: 'Siderella',
+        type: ['Psy'],
     },
-    Nucleos: {
+    {
         id: 577,
         name: 'Nucléos',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/577.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/577.png',
         slug: 'Nucleos',
+        type: ['Psy'],
     },
-    Meios: {
+    {
         id: 578,
         name: 'Méios',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/578.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/578.png',
         slug: 'Meios',
+        type: ['Psy'],
     },
-    Symbios: {
+    {
         id: 579,
         name: 'Symbios',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/579.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/579.png',
         slug: 'Symbios',
+        type: ['Psy'],
     },
-    Couaneton: {
+    {
         id: 580,
         name: 'Couaneton',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/580.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/580.png',
         slug: 'Couaneton',
+        type: ['Vol', 'Eau'],
     },
-    Lakmecygne: {
+    {
         id: 581,
         name: 'Lakmécygne',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/581.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/581.png',
         slug: 'Lakmecygne',
+        type: ['Vol', 'Eau'],
     },
-    Sorbebe: {
+    {
         id: 582,
         name: 'Sorbébé',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/582.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/582.png',
         slug: 'Sorbebe',
+        type: ['Glace'],
     },
-    Sorboul: {
+    {
         id: 583,
         name: 'Sorboul',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/583.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/583.png',
         slug: 'Sorboul',
+        type: ['Glace'],
     },
-    Sorbouboul: {
+    {
         id: 584,
         name: 'Sorbouboul',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/584.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/584.png',
         slug: 'Sorbouboul',
+        type: ['Glace'],
     },
-    Vivaldaim: {
+    {
         id: 585,
         name: 'Vivaldaim',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/585.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/585.png',
         slug: 'Vivaldaim',
+        type: ['Normal', 'Plante'],
     },
-    Haydaim: {
+    {
         id: 586,
         name: 'Haydaim',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/586.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/586.png',
         slug: 'Haydaim',
+        type: ['Normal', 'Plante'],
     },
-    Emolga: {
+    {
         id: 587,
         name: 'Emolga',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/587.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/587.png',
         slug: 'Emolga',
+        type: ['Vol', 'Électrik'],
     },
-    Carabing: {
+    {
         id: 588,
         name: 'Carabing',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/588.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/588.png',
         slug: 'Carabing',
+        type: ['Insecte'],
     },
-    Lancargot: {
+    {
         id: 589,
         name: 'Lançargot',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/589.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/589.png',
         slug: 'Lancargot',
+        type: ['Insecte', 'Acier'],
     },
-    Trompignon: {
+    {
         id: 590,
         name: 'Trompignon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/590.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/590.png',
         slug: 'Trompignon',
+        type: ['Poison', 'Plante'],
     },
-    Gaulet: {
+    {
         id: 591,
         name: 'Gaulet',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/591.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/591.png',
         slug: 'Gaulet',
+        type: ['Poison', 'Plante'],
     },
-    Viskuse: {
+    {
         id: 592,
         name: 'Viskuse',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/592.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/592.png',
         slug: 'Viskuse',
+        type: ['Spectre', 'Eau'],
     },
-    Moyade: {
+    {
         id: 593,
         name: 'Moyade',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/593.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/593.png',
         slug: 'Moyade',
+        type: ['Spectre', 'Eau'],
     },
-    Mamanbo: {
+    {
         id: 594,
         name: 'Mamanbo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/594.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/594.png',
         slug: 'Mamanbo',
+        type: ['Eau'],
     },
-    Statitik: {
+    {
         id: 595,
         name: 'Statitik',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/595.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/595.png',
         slug: 'Statitik',
+        type: ['Insecte', 'Électrik'],
     },
-    Mygavolt: {
+    {
         id: 596,
         name: 'Mygavolt',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/596.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/596.png',
         slug: 'Mygavolt',
+        type: ['Insecte', 'Électrik'],
     },
-    Grindur: {
+    {
         id: 597,
         name: 'Grindur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/597.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/597.png',
         slug: 'Grindur',
+        type: ['Acier', 'Plante'],
     },
-    Noacier: {
+    {
         id: 598,
         name: 'Noacier',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/598.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/598.png',
         slug: 'Noacier',
+        type: ['Acier', 'Plante'],
     },
-    Tic: {
+    {
         id: 599,
         name: 'Tic',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/599.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/599.png',
         slug: 'Tic',
+        type: ['Acier'],
     },
-    Clic: {
+    {
         id: 600,
         name: 'Clic',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/600.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/600.png',
         slug: 'Clic',
+        type: ['Acier'],
     },
-    Cliticlic: {
+    {
         id: 601,
         name: 'Cliticlic',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/601.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/601.png',
         slug: 'Cliticlic',
+        type: ['Acier'],
     },
-    Anchwatt: {
+    {
         id: 602,
         name: 'Anchwatt',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/602.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/602.png',
         slug: 'Anchwatt',
+        type: ['Électrik'],
     },
-    Lamperoie: {
+    {
         id: 603,
         name: 'Lampéroie',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/603.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/603.png',
         slug: 'Lamperoie',
+        type: ['Électrik'],
     },
-    Ohmassacre: {
+    {
         id: 604,
         name: 'Ohmassacre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/604.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/604.png',
         slug: 'Ohmassacre',
+        type: ['Électrik'],
     },
-    Lewsor: {
+    {
         id: 605,
         name: 'Lewsor',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/605.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/605.png',
         slug: 'Lewsor',
+        type: ['Psy'],
     },
-    Neitram: {
+    {
         id: 606,
         name: 'Neitram',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/606.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/606.png',
         slug: 'Neitram',
+        type: ['Psy'],
     },
-    Funecire: {
+    {
         id: 607,
         name: 'Funécire',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/607.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/607.png',
         slug: 'Funecire',
+        type: ['Spectre', 'Feu'],
     },
-    Melancolux: {
+    {
         id: 608,
         name: 'Mélancolux',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/608.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/608.png',
         slug: 'Melancolux',
+        type: ['Spectre', 'Feu'],
     },
-    Lugulabre: {
+    {
         id: 609,
         name: 'Lugulabre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/609.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/609.png',
         slug: 'Lugulabre',
+        type: ['Spectre', 'Feu'],
     },
-    Coupenotte: {
+    {
         id: 610,
         name: 'Coupenotte',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/610.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/610.png',
         slug: 'Coupenotte',
+        type: ['Dragon'],
     },
-    Incisache: {
+    {
         id: 611,
         name: 'Incisache',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/611.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/611.png',
         slug: 'Incisache',
+        type: ['Dragon'],
     },
-    Tranchodon: {
+    {
         id: 612,
         name: 'Tranchodon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/612.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/612.png',
         slug: 'Tranchodon',
+        type: ['Dragon'],
     },
-    Polarhume: {
+    {
         id: 613,
         name: 'Polarhume',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/613.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/613.png',
         slug: 'Polarhume',
+        type: ['Glace'],
     },
-    Polagriffe: {
+    {
         id: 614,
         name: 'Polagriffe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/614.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/614.png',
         slug: 'Polagriffe',
+        type: ['Glace'],
     },
-    Hexagel: {
+    {
         id: 615,
         name: 'Hexagel',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/615.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/615.png',
         slug: 'Hexagel',
+        type: ['Glace'],
     },
-    Escargaume: {
+    {
         id: 616,
         name: 'Escargaume',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/616.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/616.png',
         slug: 'Escargaume',
+        type: ['Insecte'],
     },
-    Limaspeed: {
+    {
         id: 617,
         name: 'Limaspeed',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/617.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/617.png',
         slug: 'Limaspeed',
+        type: ['Insecte'],
     },
-    Limonde: {
+    {
         id: 618,
         name: 'Limonde',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/618.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/618.png',
         slug: 'Limonde',
+        type: ['Sol', 'Électrik'],
     },
-    Kungfouine: {
+    {
         id: 619,
         name: 'Kungfouine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/619.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/619.png',
         slug: 'Kungfouine',
+        type: ['Combat'],
     },
-    Shaofouine: {
+    {
         id: 620,
         name: 'Shaofouine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/620.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/620.png',
         slug: 'Shaofouine',
+        type: ['Combat'],
     },
-    Drakkarmin: {
+    {
         id: 621,
         name: 'Drakkarmin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/621.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/621.png',
         slug: 'Drakkarmin',
+        type: ['Dragon'],
     },
-    Gringolem: {
+    {
         id: 622,
         name: 'Gringolem',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/622.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/622.png',
         slug: 'Gringolem',
+        type: ['Sol', 'Spectre'],
     },
-    Golemastoc: {
+    {
         id: 623,
         name: 'Golemastoc',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/623.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/623.png',
         slug: 'Golemastoc',
+        type: ['Sol', 'Spectre'],
     },
-    Scalpion: {
+    {
         id: 624,
         name: 'Scalpion',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/624.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/624.png',
         slug: 'Scalpion',
+        type: ['Acier', 'Ténèbres'],
     },
-    Scalproie: {
+    {
         id: 625,
         name: 'Scalproie',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/625.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/625.png',
         slug: 'Scalproie',
+        type: ['Acier', 'Ténèbres'],
     },
-    Frison: {
+    {
         id: 626,
         name: 'Frison',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/626.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/626.png',
         slug: 'Frison',
+        type: ['Normal'],
     },
-    Furaiglon: {
+    {
         id: 627,
         name: 'Furaiglon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/627.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/627.png',
         slug: 'Furaiglon',
+        type: ['Normal', 'Vol'],
     },
-    Gueriaigle: {
+    {
         id: 628,
         name: 'Gueriaigle',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/628.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/628.png',
         slug: 'Gueriaigle',
+        type: ['Normal', 'Vol'],
     },
-    Vostourno: {
+    {
         id: 629,
         name: 'Vostourno',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/629.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/629.png',
         slug: 'Vostourno',
+        type: ['Vol', 'Ténèbres'],
     },
-    Vaututrice: {
+    {
         id: 630,
         name: 'Vaututrice',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/630.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/630.png',
         slug: 'Vaututrice',
+        type: ['Vol', 'Ténèbres'],
     },
-    Aflamanoir: {
+    {
         id: 631,
         name: 'Aflamanoir',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/631.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/631.png',
         slug: 'Aflamanoir',
+        type: ['Feu'],
     },
-    Fermite: {
+    {
         id: 632,
         name: 'Fermite',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/632.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/632.png',
         slug: 'Fermite',
+        type: ['Insecte', 'Acier'],
     },
-    Solochi: {
+    {
         id: 633,
         name: 'Solochi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/633.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/633.png',
         slug: 'Solochi',
+        type: ['Dragon', 'Ténèbres'],
     },
-    Diamat: {
+    {
         id: 634,
         name: 'Diamat',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/634.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/634.png',
         slug: 'Diamat',
+        type: ['Dragon', 'Ténèbres'],
     },
-    Trioxhydre: {
+    {
         id: 635,
         name: 'Trioxhydre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/635.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/635.png',
         slug: 'Trioxhydre',
+        type: ['Dragon', 'Ténèbres'],
     },
-    Pyronille: {
+    {
         id: 636,
         name: 'Pyronille',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/636.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/636.png',
         slug: 'Pyronille',
+        type: ['Insecte', 'Feu'],
     },
-    Pyrax: {
+    {
         id: 637,
         name: 'Pyrax',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/637.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/637.png',
         slug: 'Pyrax',
+        type: ['Insecte', 'Feu'],
     },
-    Cobaltium: {
+    {
         id: 638,
         name: 'Cobaltium',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/638.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/638.png',
         slug: 'Cobaltium',
+        type: ['Combat', 'Acier'],
     },
-    Terrakium: {
+    {
         id: 639,
         name: 'Terrakium',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/639.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/639.png',
         slug: 'Terrakium',
+        type: ['Combat', 'Roche'],
     },
-    Viridium: {
+    {
         id: 640,
         name: 'Viridium',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/640.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/640.png',
         slug: 'Viridium',
+        type: ['Combat', 'Plante'],
     },
-    Boreas: {
+    {
         id: 641,
         name: 'Boréas',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/641.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/641.png',
         slug: 'Boreas',
+        type: ['Vol'],
     },
-    Fulguris: {
+    {
         id: 642,
         name: 'Fulguris',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/642.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/642.png',
         slug: 'Fulguris',
+        type: ['Vol', 'Électrik'],
     },
-    Reshiram: {
+    {
         id: 643,
         name: 'Reshiram',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/643.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/643.png',
         slug: 'Reshiram',
+        type: ['Feu', 'Dragon'],
     },
-    Zekrom: {
+    {
         id: 644,
         name: 'Zekrom',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/644.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/644.png',
         slug: 'Zekrom',
+        type: ['Électrik', 'Dragon'],
     },
-    Demeteros: {
+    {
         id: 645,
         name: 'Démétéros',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/645.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/645.png',
         slug: 'Demeteros',
+        type: ['Vol', 'Sol'],
     },
-    Kyurem: {
+    {
         id: 646,
         name: 'Kyurem',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/646.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/646.png',
         slug: 'Kyurem',
+        type: ['Glace', 'Dragon'],
     },
-    Keldeo: {
+    {
         id: 647,
         name: 'Keldeo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/647.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/647.png',
         slug: 'Keldeo',
+        type: ['Combat', 'Eau'],
     },
-    Meloetta: {
+    {
         id: 648,
         name: 'Meloetta',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/648.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/648.png',
         slug: 'Meloetta',
+        type: ['Normal', 'Psy'],
     },
-    Genesect: {
+    {
         id: 649,
         name: 'Genesect',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/649.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/649.png',
         slug: 'Genesect',
+        type: ['Insecte', 'Acier'],
     },
-    Marisson: {
+    {
         id: 650,
         name: 'Marisson',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/650.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/650.png',
         slug: 'Marisson',
+        type: ['Plante'],
     },
-    Boguerisse: {
+    {
         id: 651,
         name: 'Boguérisse',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/651.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/651.png',
         slug: 'Boguerisse',
+        type: ['Plante'],
     },
-    Blindepique: {
+    {
         id: 652,
         name: 'Blindépique',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/652.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/652.png',
         slug: 'Blindepique',
+        type: ['Combat', 'Plante'],
     },
-    Feunnec: {
+    {
         id: 653,
         name: 'Feunnec',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/653.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/653.png',
         slug: 'Feunnec',
+        type: ['Feu'],
     },
-    Roussil: {
+    {
         id: 654,
         name: 'Roussil',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/654.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/654.png',
         slug: 'Roussil',
+        type: ['Feu'],
     },
-    Goupelin: {
+    {
         id: 655,
         name: 'Goupelin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/655.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/655.png',
         slug: 'Goupelin',
+        type: ['Feu', 'Psy'],
     },
-    Grenousse: {
+    {
         id: 656,
         name: 'Grenousse',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/656.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/656.png',
         slug: 'Grenousse',
+        type: ['Eau'],
     },
-    Croaporal: {
+    {
         id: 657,
         name: 'Croâporal',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/657.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/657.png',
         slug: 'Croaporal',
+        type: ['Eau'],
     },
-    Amphinobi: {
+    {
         id: 658,
         name: 'Amphinobi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/658.png',
         slug: 'Amphinobi',
+        type: ['Eau', 'Ténèbres'],
     },
-    Sapereau: {
+    {
         id: 659,
         name: 'Sapereau',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/659.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/659.png',
         slug: 'Sapereau',
+        type: ['Normal'],
     },
-    Excavarenne: {
+    {
         id: 660,
         name: 'Excavarenne',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/660.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/660.png',
         slug: 'Excavarenne',
+        type: ['Normal', 'Sol'],
     },
-    Passerouge: {
+    {
         id: 661,
         name: 'Passerouge',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/661.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/661.png',
         slug: 'Passerouge',
+        type: ['Normal', 'Vol'],
     },
-    Braisillon: {
+    {
         id: 662,
         name: 'Braisillon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/662.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/662.png',
         slug: 'Braisillon',
+        type: ['Vol', 'Feu'],
     },
-    Flambusard: {
+    {
         id: 663,
         name: 'Flambusard',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/663.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/663.png',
         slug: 'Flambusard',
+        type: ['Vol', 'Feu'],
     },
-    Lepidonille: {
+    {
         id: 664,
         name: 'Lépidonille',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/664.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/664.png',
         slug: 'Lepidonille',
+        type: ['Insecte'],
     },
-    Peregrain: {
+    {
         id: 665,
         name: 'Pérégrain',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/665.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/665.png',
         slug: 'Peregrain',
+        type: ['Insecte'],
     },
-    Prismillon: {
+    {
         id: 666,
         name: 'Prismillon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/666.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/666.png',
         slug: 'Prismillon',
+        type: ['Vol', 'Insecte'],
     },
-    Helionceau: {
+    {
         id: 667,
         name: 'Hélionceau',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/667.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/667.png',
         slug: 'Helionceau',
+        type: ['Normal', 'Feu'],
     },
-    Nemelios: {
+    {
         id: 668,
         name: 'Némélios',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/668.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/668.png',
         slug: 'Nemelios',
+        type: ['Normal', 'Feu'],
     },
-    Flabebe: {
+    {
         id: 669,
         name: 'Flabébé',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/669.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/669.png',
         slug: 'Flabebe',
+        type: ['Fée'],
     },
-    Floette: {
+    {
         id: 670,
         name: 'Floette',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/670.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/670.png',
         slug: 'Floette',
+        type: ['Fée'],
     },
-    Florges: {
+    {
         id: 671,
         name: 'Florges',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/671.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/671.png',
         slug: 'Florges',
+        type: ['Fée'],
     },
-    Cabriolaine: {
+    {
         id: 672,
         name: 'Cabriolaine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/672.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/672.png',
         slug: 'Cabriolaine',
+        type: ['Plante'],
     },
-    Chevroum: {
+    {
         id: 673,
         name: 'Chevroum',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/673.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/673.png',
         slug: 'Chevroum',
+        type: ['Plante'],
     },
-    Pandespiegle: {
+    {
         id: 674,
         name: 'Pandespiègle',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/674.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/674.png',
         slug: 'Pandespiegle',
+        type: ['Combat'],
     },
-    Pandarbare: {
+    {
         id: 675,
         name: 'Pandarbare',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/675.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/675.png',
         slug: 'Pandarbare',
+        type: ['Combat', 'Ténèbres'],
     },
-    Couafarel: {
+    {
         id: 676,
         name: 'Couafarel',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/676.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/676.png',
         slug: 'Couafarel',
+        type: ['Normal'],
     },
-    Psystigri: {
+    {
         id: 677,
         name: 'Psystigri',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/677.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/677.png',
         slug: 'Psystigri',
+        type: ['Psy'],
     },
-    Mistigrix: {
+    {
         id: 678,
         name: 'Mistigrix',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/678.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/678.png',
         slug: 'Mistigrix',
+        type: ['Psy'],
     },
-    Monorpale: {
+    {
         id: 679,
         name: 'Monorpale',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/679.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/679.png',
         slug: 'Monorpale',
+        type: ['Spectre', 'Acier'],
     },
-    Dimocles: {
+    {
         id: 680,
         name: 'Dimoclès',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/680.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/680.png',
         slug: 'Dimocles',
+        type: ['Spectre', 'Acier'],
     },
-    Exagide: {
+    {
         id: 681,
         name: 'Exagide',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/681.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/681.png',
         slug: 'Exagide',
+        type: ['Spectre', 'Acier'],
     },
-    Fluvetin: {
+    {
         id: 682,
         name: 'Fluvetin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/682.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/682.png',
         slug: 'Fluvetin',
+        type: ['Fée'],
     },
-    Cocotine: {
+    {
         id: 683,
         name: 'Cocotine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/683.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/683.png',
         slug: 'Cocotine',
+        type: ['Fée'],
     },
-    Sucroquin: {
+    {
         id: 684,
         name: 'Sucroquin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/684.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/684.png',
         slug: 'Sucroquin',
+        type: ['Fée'],
     },
-    Cupcanaille: {
+    {
         id: 685,
         name: 'Cupcanaille',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/685.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/685.png',
         slug: 'Cupcanaille',
+        type: ['Fée'],
     },
-    Sepiatop: {
+    {
         id: 686,
         name: 'Sepiatop',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/686.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/686.png',
         slug: 'Sepiatop',
+        type: ['Psy', 'Ténèbres'],
     },
-    Sepiatroce: {
+    {
         id: 687,
         name: 'Sepiatroce',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/687.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/687.png',
         slug: 'Sepiatroce',
+        type: ['Psy', 'Ténèbres'],
     },
-    Opermine: {
+    {
         id: 688,
         name: 'Opermine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/688.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/688.png',
         slug: 'Opermine',
+        type: ['Roche', 'Eau'],
     },
-    Golgopathe: {
+    {
         id: 689,
         name: 'Golgopathe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/689.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/689.png',
         slug: 'Golgopathe',
+        type: ['Roche', 'Eau'],
     },
-    Venalgue: {
+    {
         id: 690,
         name: 'Venalgue',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/690.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/690.png',
         slug: 'Venalgue',
+        type: ['Poison', 'Eau'],
     },
-    Kravarech: {
+    {
         id: 691,
         name: 'Kravarech',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/691.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/691.png',
         slug: 'Kravarech',
+        type: ['Poison', 'Dragon'],
     },
-    Flingouste: {
+    {
         id: 692,
         name: 'Flingouste',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/692.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/692.png',
         slug: 'Flingouste',
+        type: ['Eau'],
     },
-    Gamblast: {
+    {
         id: 693,
         name: 'Gamblast',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/693.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/693.png',
         slug: 'Gamblast',
+        type: ['Eau'],
     },
-    Galvaran: {
+    {
         id: 694,
         name: 'Galvaran',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/694.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/694.png',
         slug: 'Galvaran',
+        type: ['Normal', 'Électrik'],
     },
-    Iguolta: {
+    {
         id: 695,
         name: 'Iguolta',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/695.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/695.png',
         slug: 'Iguolta',
+        type: ['Normal', 'Électrik'],
     },
-    Ptyranidur: {
+    {
         id: 696,
         name: 'Ptyranidur',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/696.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/696.png',
         slug: 'Ptyranidur',
+        type: ['Roche', 'Dragon'],
     },
-    Rexillius: {
+    {
         id: 697,
         name: 'Rexillius',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/697.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/697.png',
         slug: 'Rexillius',
+        type: ['Roche', 'Dragon'],
     },
-    Amagara: {
+    {
         id: 698,
         name: 'Amagara',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/698.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/698.png',
         slug: 'Amagara',
+        type: ['Roche', 'Glace'],
     },
-    Dragmara: {
+    {
         id: 699,
         name: 'Dragmara',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/699.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/699.png',
         slug: 'Dragmara',
+        type: ['Roche', 'Glace'],
     },
-    Nymphali: {
+    {
         id: 700,
         name: 'Nymphali',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/700.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/700.png',
         slug: 'Nymphali',
+        type: ['Fée'],
     },
-    Brutalibre: {
+    {
         id: 701,
         name: 'Brutalibré',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/701.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/701.png',
         slug: 'Brutalibre',
+        type: ['Combat', 'Vol'],
     },
-    Dedenne: {
+    {
         id: 702,
         name: 'Dedenne',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/702.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/702.png',
         slug: 'Dedenne',
+        type: ['Électrik', 'Fée'],
     },
-    Strassie: {
+    {
         id: 703,
         name: 'Strassie',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/703.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/703.png',
         slug: 'Strassie',
+        type: ['Roche', 'Fée'],
     },
-    Mucuscule: {
+    {
         id: 704,
         name: 'Mucuscule',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/704.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/704.png',
         slug: 'Mucuscule',
+        type: ['Dragon'],
     },
-    Colimucus: {
+    {
         id: 705,
         name: 'Colimucus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/705.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/705.png',
         slug: 'Colimucus',
+        type: ['Dragon'],
     },
-    Muplodocus: {
+    {
         id: 706,
         name: 'Muplodocus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/706.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/706.png',
         slug: 'Muplodocus',
+        type: ['Dragon'],
     },
-    Trousselin: {
+    {
         id: 707,
         name: 'Trousselin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/707.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/707.png',
         slug: 'Trousselin',
+        type: ['Acier', 'Fée'],
     },
-    Brocelome: {
+    {
         id: 708,
         name: 'Brocélôme',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/708.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/708.png',
         slug: 'Brocelome',
+        type: ['Spectre', 'Plante'],
     },
-    Desseliande: {
+    {
         id: 709,
         name: 'Desséliande',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/709.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/709.png',
         slug: 'Desseliande',
+        type: ['Spectre', 'Plante'],
     },
-    Pitrouille: {
+    {
         id: 710,
         name: 'Pitrouille',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/710.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/710.png',
         slug: 'Pitrouille',
+        type: ['Spectre', 'Plante'],
     },
-    Banshitrouye: {
+    {
         id: 711,
         name: 'Banshitrouye',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/711.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/711.png',
         slug: 'Banshitrouye',
+        type: ['Spectre', 'Plante'],
     },
-    Grelacon: {
+    {
         id: 712,
         name: 'Grelaçon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/712.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/712.png',
         slug: 'Grelacon',
+        type: ['Glace'],
     },
-    Seracrawl: {
+    {
         id: 713,
         name: 'Séracrawl',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/713.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/713.png',
         slug: 'Seracrawl',
+        type: ['Glace'],
     },
-    Sonistrelle: {
+    {
         id: 714,
         name: 'Sonistrelle',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/714.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/714.png',
         slug: 'Sonistrelle',
+        type: ['Vol', 'Dragon'],
     },
-    Bruyverne: {
+    {
         id: 715,
         name: 'Bruyverne',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/715.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/715.png',
         slug: 'Bruyverne',
+        type: ['Vol', 'Dragon'],
     },
-    Xerneas: {
+    {
         id: 716,
         name: 'Xerneas',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/716.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/716.png',
         slug: 'Xerneas',
+        type: ['Fée'],
     },
-    Yveltal: {
+    {
         id: 717,
         name: 'Yveltal',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/717.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/717.png',
         slug: 'Yveltal',
+        type: ['Vol', 'Ténèbres'],
     },
-    Zygarde: {
+    {
         id: 718,
         name: 'Zygarde',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/718.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/718.png',
         slug: 'Zygarde',
+        type: ['Sol', 'Dragon'],
     },
-    Diancie: {
+    {
         id: 719,
         name: 'Diancie',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/719.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/719.png',
         slug: 'Diancie',
+        type: ['Roche', 'Fée'],
     },
-    Hoopa: {
+    {
         id: 720,
         name: 'Hoopa',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/720.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/720.png',
         slug: 'Hoopa',
+        type: ['Spectre', 'Psy'],
     },
-    Volcanion: {
+    {
         id: 721,
         name: 'Volcanion',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/721.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/721.png',
         slug: 'Volcanion',
+        type: ['Feu', 'Eau'],
     },
-    Brindibou: {
+    {
         id: 722,
         name: 'Brindibou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/722.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/722.png',
         slug: 'Brindibou',
+        type: ['Vol', 'Plante'],
     },
-    Effleche: {
+    {
         id: 723,
         name: 'Efflèche',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/723.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/723.png',
         slug: 'Effleche',
+        type: ['Vol', 'Plante'],
     },
-    Archeduc: {
+    {
         id: 724,
         name: 'Archéduc',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/724.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/724.png',
         slug: 'Archeduc',
+        type: ['Spectre', 'Plante'],
     },
-    Flamiaou: {
+    {
         id: 725,
         name: 'Flamiaou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/725.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/725.png',
         slug: 'Flamiaou',
+        type: ['Feu'],
     },
-    Matoufeu: {
+    {
         id: 726,
         name: 'Matoufeu',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/726.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/726.png',
         slug: 'Matoufeu',
+        type: ['Feu'],
     },
-    Felinferno: {
+    {
         id: 727,
         name: 'Félinferno',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/727.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/727.png',
         slug: 'Felinferno',
+        type: ['Feu', 'Ténèbres'],
     },
-    Otaquin: {
+    {
         id: 728,
         name: 'Otaquin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/728.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/728.png',
         slug: 'Otaquin',
+        type: ['Eau'],
     },
-    Otarlette: {
+    {
         id: 729,
         name: 'Otarlette',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/729.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/729.png',
         slug: 'Otarlette',
+        type: ['Eau'],
     },
-    Oratoria: {
+    {
         id: 730,
         name: 'Oratoria',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/730.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/730.png',
         slug: 'Oratoria',
+        type: ['Eau', 'Fée'],
     },
-    Picassaut: {
+    {
         id: 731,
         name: 'Picassaut',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/731.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/731.png',
         slug: 'Picassaut',
+        type: ['Normal', 'Vol'],
     },
-    Piclairon: {
+    {
         id: 732,
         name: 'Piclairon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/732.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/732.png',
         slug: 'Piclairon',
+        type: ['Normal', 'Vol'],
     },
-    Bazoucan: {
+    {
         id: 733,
         name: 'Bazoucan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/733.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/733.png',
         slug: 'Bazoucan',
+        type: ['Normal', 'Vol'],
     },
-    Manglouton: {
+    {
         id: 734,
         name: 'Manglouton',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/734.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/734.png',
         slug: 'Manglouton',
+        type: ['Normal'],
     },
-    Argouste: {
+    {
         id: 735,
         name: 'Argouste',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/735.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/735.png',
         slug: 'Argouste',
+        type: ['Normal'],
     },
-    Larvibule: {
+    {
         id: 736,
         name: 'Larvibule',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/736.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/736.png',
         slug: 'Larvibule',
+        type: ['Insecte'],
     },
-    Chrysapile: {
+    {
         id: 737,
         name: 'Chrysapile',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/737.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/737.png',
         slug: 'Chrysapile',
+        type: ['Insecte', 'Électrik'],
     },
-    Lucanon: {
+    {
         id: 738,
         name: 'Lucanon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/738.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/738.png',
         slug: 'Lucanon',
+        type: ['Insecte', 'Électrik'],
     },
-    Crabagarre: {
+    {
         id: 739,
         name: 'Crabagarre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/739.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/739.png',
         slug: 'Crabagarre',
+        type: ['Combat'],
     },
-    Crabominable: {
+    {
         id: 740,
         name: 'Crabominable',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/740.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/740.png',
         slug: 'Crabominable',
+        type: ['Combat', 'Glace'],
     },
-    Plumeline: {
+    {
         id: 741,
         name: 'Plumeline',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/741.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/741.png',
         slug: 'Plumeline',
+        type: ['Vol', 'Feu'],
     },
-    Bombydou: {
+    {
         id: 742,
         name: 'Bombydou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/742.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/742.png',
         slug: 'Bombydou',
+        type: ['Insecte', 'Fée'],
     },
-    Rubombelle: {
+    {
         id: 743,
         name: 'Rubombelle',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/743.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/743.png',
         slug: 'Rubombelle',
+        type: ['Insecte', 'Fée'],
     },
-    Rocabot: {
+    {
         id: 744,
         name: 'Rocabot',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/744.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/744.png',
         slug: 'Rocabot',
+        type: ['Roche'],
     },
-    Lougaroc: {
+    {
         id: 745,
         name: 'Lougaroc',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/745.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/745.png',
         slug: 'Lougaroc',
+        type: ['Roche'],
     },
-    Froussardine: {
+    {
         id: 746,
         name: 'Froussardine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/746.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/746.png',
         slug: 'Froussardine',
+        type: ['Eau'],
     },
-    Vorasterie: {
+    {
         id: 747,
         name: 'Vorastérie',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/747.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/747.png',
         slug: 'Vorasterie',
+        type: ['Poison', 'Eau'],
     },
-    Predasterie: {
+    {
         id: 748,
         name: 'Prédastérie',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/748.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/748.png',
         slug: 'Predasterie',
+        type: ['Poison', 'Eau'],
     },
-    Tiboudet: {
+    {
         id: 749,
         name: 'Tiboudet',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/749.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/749.png',
         slug: 'Tiboudet',
+        type: ['Sol'],
     },
-    Bourrinos: {
+    {
         id: 750,
         name: 'Bourrinos',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/750.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/750.png',
         slug: 'Bourrinos',
+        type: ['Sol'],
     },
-    Araqua: {
+    {
         id: 751,
         name: 'Araqua',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/751.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/751.png',
         slug: 'Araqua',
+        type: ['Insecte', 'Eau'],
     },
-    Tarenbulle: {
+    {
         id: 752,
         name: 'Tarenbulle',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/752.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/752.png',
         slug: 'Tarenbulle',
+        type: ['Insecte', 'Eau'],
     },
-    Mimantis: {
+    {
         id: 753,
         name: 'Mimantis',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/753.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/753.png',
         slug: 'Mimantis',
+        type: ['Plante'],
     },
-    Floramantis: {
+    {
         id: 754,
         name: 'Floramantis',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/754.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/754.png',
         slug: 'Floramantis',
+        type: ['Plante'],
     },
-    Spododo: {
+    {
         id: 755,
         name: 'Spododo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/755.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/755.png',
         slug: 'Spododo',
+        type: ['Plante', 'Fée'],
     },
-    Lampignon: {
+    {
         id: 756,
         name: 'Lampignon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/756.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/756.png',
         slug: 'Lampignon',
+        type: ['Plante', 'Fée'],
     },
-    Tritox: {
+    {
         id: 757,
         name: 'Tritox',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/757.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/757.png',
         slug: 'Tritox',
+        type: ['Poison', 'Feu'],
     },
-    Malamandre: {
+    {
         id: 758,
         name: 'Malamandre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/758.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/758.png',
         slug: 'Malamandre',
+        type: ['Poison', 'Feu'],
     },
-    Nounourson: {
+    {
         id: 759,
         name: 'Nounourson',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/759.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/759.png',
         slug: 'Nounourson',
+        type: ['Normal', 'Combat'],
     },
-    Chelours: {
+    {
         id: 760,
         name: 'Chelours',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/760.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/760.png',
         slug: 'Chelours',
+        type: ['Normal', 'Combat'],
     },
-    Croquine: {
+    {
         id: 761,
         name: 'Croquine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/761.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/761.png',
         slug: 'Croquine',
+        type: ['Plante'],
     },
-    Candine: {
+    {
         id: 762,
         name: 'Candine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/762.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/762.png',
         slug: 'Candine',
+        type: ['Plante'],
     },
-    Sucreine: {
+    {
         id: 763,
         name: 'Sucreine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/763.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/763.png',
         slug: 'Sucreine',
+        type: ['Plante'],
     },
-    Guerilande: {
+    {
         id: 764,
         name: 'Guérilande',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/764.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/764.png',
         slug: 'Guerilande',
+        type: ['Fée'],
     },
-    Gouroutan: {
+    {
         id: 765,
         name: 'Gouroutan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/765.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/765.png',
         slug: 'Gouroutan',
+        type: ['Normal', 'Psy'],
     },
-    Quartermac: {
+    {
         id: 766,
         name: 'Quartermac',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/766.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/766.png',
         slug: 'Quartermac',
+        type: ['Combat'],
     },
-    Sovkipou: {
+    {
         id: 767,
         name: 'Sovkipou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/767.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/767.png',
         slug: 'Sovkipou',
+        type: ['Insecte', 'Eau'],
     },
-    Sarmurai: {
+    {
         id: 768,
         name: 'Sarmuraï',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/768.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/768.png',
         slug: 'Sarmurai',
+        type: ['Insecte', 'Eau'],
     },
-    Bacabouh: {
+    {
         id: 769,
         name: 'Bacabouh',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/769.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/769.png',
         slug: 'Bacabouh',
+        type: ['Sol', 'Spectre'],
     },
-    Trepassable: {
+    {
         id: 770,
         name: 'Trépassable',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/770.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/770.png',
         slug: 'Trepassable',
+        type: ['Sol', 'Spectre'],
     },
-    Concombaffe: {
+    {
         id: 771,
         name: 'Concombaffe',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/771.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/771.png',
         slug: 'Concombaffe',
+        type: ['Eau'],
     },
-    'Type-0': {
+    {
         id: 772,
         name: 'Type:0',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/772.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/772.png',
         slug: 'Type-0',
+        type: ['Normal'],
     },
-    Silvallie: {
+    {
         id: 773,
         name: 'Silvallié',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/773.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/773.png',
         slug: 'Silvallie',
+        type: ['Normal'],
     },
-    Meteno: {
+    {
         id: 774,
         name: 'Météno',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/774.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/774.png',
         slug: 'Meteno',
+        type: ['Vol', 'Roche'],
     },
-    Dodoala: {
+    {
         id: 775,
         name: 'Dodoala',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/775.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/775.png',
         slug: 'Dodoala',
+        type: ['Normal'],
     },
-    Boumata: {
+    {
         id: 776,
         name: 'Boumata',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/776.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/776.png',
         slug: 'Boumata',
+        type: ['Feu', 'Dragon'],
     },
-    Togedemaru: {
+    {
         id: 777,
         name: 'Togedemaru',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/777.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/777.png',
         slug: 'Togedemaru',
+        type: ['Acier', 'Électrik'],
     },
-    Mimiqui: {
+    {
         id: 778,
         name: 'Mimiqui',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/778.png',
         slug: 'Mimiqui',
+        type: ['Spectre', 'Fée'],
     },
-    Denticrisse: {
+    {
         id: 779,
         name: 'Denticrisse',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/779.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/779.png',
         slug: 'Denticrisse',
+        type: ['Eau', 'Psy'],
     },
-    Draieul: {
+    {
         id: 780,
         name: 'Draïeul',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/780.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/780.png',
         slug: 'Draieul',
+        type: ['Normal', 'Dragon'],
     },
-    Sinistrail: {
+    {
         id: 781,
         name: 'Sinistrail',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/781.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/781.png',
         slug: 'Sinistrail',
+        type: ['Spectre', 'Plante'],
     },
-    Bebecaille: {
+    {
         id: 782,
         name: 'Bébécaille',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/782.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/782.png',
         slug: 'Bebecaille',
+        type: ['Dragon'],
     },
-    Ecaid: {
+    {
         id: 783,
         name: 'Écaïd',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/783.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/783.png',
         slug: 'Ecaid',
+        type: ['Combat', 'Dragon'],
     },
-    Ekaiser: {
+    {
         id: 784,
         name: 'Ékaïser',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/784.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/784.png',
         slug: 'Ekaiser',
+        type: ['Combat', 'Dragon'],
     },
-    Tokorico: {
+    {
         id: 785,
         name: 'Tokorico',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/785.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/785.png',
         slug: 'Tokorico',
+        type: ['Électrik', 'Fée'],
     },
-    Tokopiyon: {
+    {
         id: 786,
         name: 'Tokopiyon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/786.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/786.png',
         slug: 'Tokopiyon',
+        type: ['Psy', 'Fée'],
     },
-    Tokotoro: {
+    {
         id: 787,
         name: 'Tokotoro',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/787.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/787.png',
         slug: 'Tokotoro',
+        type: ['Plante', 'Fée'],
     },
-    Tokopisco: {
+    {
         id: 788,
         name: 'Tokopisco',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/788.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/788.png',
         slug: 'Tokopisco',
+        type: ['Eau', 'Fée'],
     },
-    Cosmog: {
+    {
         id: 789,
         name: 'Cosmog',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/789.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/789.png',
         slug: 'Cosmog',
+        type: ['Psy'],
     },
-    Cosmovum: {
+    {
         id: 790,
         name: 'Cosmovum',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/790.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/790.png',
         slug: 'Cosmovum',
+        type: ['Psy'],
     },
-    Solgaleo: {
+    {
         id: 791,
         name: 'Solgaleo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/791.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/791.png',
         slug: 'Solgaleo',
+        type: ['Acier', 'Psy'],
     },
-    Lunala: {
+    {
         id: 792,
         name: 'Lunala',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/792.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/792.png',
         slug: 'Lunala',
+        type: ['Spectre', 'Psy'],
     },
-    Zeroid: {
+    {
         id: 793,
         name: 'Zéroïd',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/793.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/793.png',
         slug: 'Zeroid',
+        type: ['Poison', 'Roche'],
     },
-    Mouscoto: {
+    {
         id: 794,
         name: 'Mouscoto',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/794.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/794.png',
         slug: 'Mouscoto',
+        type: ['Combat', 'Insecte'],
     },
-    Cancrelove: {
+    {
         id: 795,
         name: 'Cancrelove',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/795.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/795.png',
         slug: 'Cancrelove',
+        type: ['Combat', 'Insecte'],
     },
-    Cablifere: {
+    {
         id: 796,
         name: 'Câblifère',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/796.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/796.png',
         slug: 'Cablifere',
+        type: ['Électrik'],
     },
-    Bamboiselle: {
+    {
         id: 797,
         name: 'Bamboiselle',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/797.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/797.png',
         slug: 'Bamboiselle',
+        type: ['Vol', 'Acier'],
     },
-    Katagami: {
+    {
         id: 798,
         name: 'Katagami',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/798.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/798.png',
         slug: 'Katagami',
+        type: ['Acier', 'Plante'],
     },
-    Engloutyran: {
+    {
         id: 799,
         name: 'Engloutyran',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/799.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/799.png',
         slug: 'Engloutyran',
+        type: ['Dragon', 'Ténèbres'],
     },
-    Necrozma: {
+    {
         id: 800,
         name: 'Necrozma',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/800.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/800.png',
         slug: 'Necrozma',
+        type: ['Psy'],
     },
-    Magearna: {
+    {
         id: 801,
         name: 'Magearna',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/801.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/801.png',
         slug: 'Magearna',
+        type: ['Acier', 'Fée'],
     },
-    Marshadow: {
+    {
         id: 802,
         name: 'Marshadow',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/802.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/802.png',
         slug: 'Marshadow',
+        type: ['Combat', 'Spectre'],
     },
-    Vemini: {
+    {
         id: 803,
         name: 'Vémini',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/803.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/803.png',
         slug: 'Vemini',
+        type: ['Poison'],
     },
-    Mandrillon: {
+    {
         id: 804,
         name: 'Mandrillon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/804.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/804.png',
         slug: 'Mandrillon',
+        type: ['Poison', 'Dragon'],
     },
-    'Ama-Ama': {
+    {
         id: 805,
         name: 'Ama-Ama',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/805.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/805.png',
         slug: 'Ama-Ama',
+        type: ['Roche', 'Acier'],
     },
-    Pierroteknik: {
+    {
         id: 806,
         name: 'Pierroteknik',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/806.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/806.png',
         slug: 'Pierroteknik',
+        type: ['Spectre', 'Feu'],
     },
-    Zeraora: {
+    {
         id: 807,
         name: 'Zeraora',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/807.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/807.png',
         slug: 'Zeraora',
+        type: ['Électrik'],
     },
-    Meltan: {
+    {
         id: 808,
         name: 'Meltan',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/808.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/808.png',
         slug: 'Meltan',
+        type: ['Acier'],
     },
-    Melmetal: {
+    {
         id: 809,
         name: 'Melmetal',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/809.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/809.png',
         slug: 'Melmetal',
+        type: ['Acier'],
     },
-    Ouistempo: {
+    {
         id: 810,
         name: 'Ouistempo',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/810.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/810.png',
         slug: 'Ouistempo',
+        type: ['Plante'],
     },
-    Badabouin: {
+    {
         id: 811,
         name: 'Badabouin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/811.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/811.png',
         slug: 'Badabouin',
+        type: ['Plante'],
     },
-    Gorythmic: {
+    {
         id: 812,
         name: 'Gorythmic',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/812.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/812.png',
         slug: 'Gorythmic',
+        type: ['Plante'],
     },
-    Flambino: {
+    {
         id: 813,
         name: 'Flambino',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/813.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/813.png',
         slug: 'Flambino',
+        type: ['Feu'],
     },
-    Lapyro: {
+    {
         id: 814,
         name: 'Lapyro',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/814.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/814.png',
         slug: 'Lapyro',
+        type: ['Feu'],
     },
-    Pyrobut: {
+    {
         id: 815,
         name: 'Pyrobut',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/815.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/815.png',
         slug: 'Pyrobut',
+        type: ['Feu'],
     },
-    Larmeleon: {
+    {
         id: 816,
         name: 'Larméléon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/816.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/816.png',
         slug: 'Larmeleon',
+        type: ['Eau'],
     },
-    Arrozard: {
+    {
         id: 817,
         name: 'Arrozard',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/817.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/817.png',
         slug: 'Arrozard',
+        type: ['Eau'],
     },
-    Lezargus: {
+    {
         id: 818,
         name: 'Lézargus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/818.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/818.png',
         slug: 'Lezargus',
+        type: ['Eau'],
     },
-    Rongourmand: {
+    {
         id: 819,
         name: 'Rongourmand',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/819.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/819.png',
         slug: 'Rongourmand',
+        type: ['Normal'],
     },
-    Rongrigou: {
+    {
         id: 820,
         name: 'Rongrigou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/820.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/820.png',
         slug: 'Rongrigou',
+        type: ['Normal'],
     },
-    Minisange: {
+    {
         id: 821,
         name: 'Minisange',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/821.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/821.png',
         slug: 'Minisange',
+        type: ['Vol'],
     },
-    Bleuseille: {
+    {
         id: 822,
         name: 'Bleuseille',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/822.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/822.png',
         slug: 'Bleuseille',
+        type: ['Vol'],
     },
-    Corvaillus: {
+    {
         id: 823,
         name: 'Corvaillus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/823.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/823.png',
         slug: 'Corvaillus',
+        type: ['Vol', 'Acier'],
     },
-    Larvadar: {
+    {
         id: 824,
         name: 'Larvadar',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/824.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/824.png',
         slug: 'Larvadar',
+        type: ['Insecte'],
     },
-    Coleodome: {
+    {
         id: 825,
         name: 'Coléodôme',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/825.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/825.png',
         slug: 'Coleodome',
+        type: ['Insecte', 'Psy'],
     },
-    Astronelle: {
+    {
         id: 826,
         name: 'Astronelle',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/826.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/826.png',
         slug: 'Astronelle',
+        type: ['Insecte', 'Psy'],
     },
-    Goupilou: {
+    {
         id: 827,
         name: 'Goupilou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/827.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/827.png',
         slug: 'Goupilou',
+        type: ['Ténèbres'],
     },
-    Roublenard: {
+    {
         id: 828,
         name: 'Roublenard',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/828.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/828.png',
         slug: 'Roublenard',
+        type: ['Ténèbres'],
     },
-    Tournicoton: {
+    {
         id: 829,
         name: 'Tournicoton',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/829.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/829.png',
         slug: 'Tournicoton',
+        type: ['Plante'],
     },
-    Blancoton: {
+    {
         id: 830,
         name: 'Blancoton',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/830.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/830.png',
         slug: 'Blancoton',
+        type: ['Plante'],
     },
-    Moumouton: {
+    {
         id: 831,
         name: 'Moumouton',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/831.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/831.png',
         slug: 'Moumouton',
+        type: ['Normal'],
     },
-    Moumouflon: {
+    {
         id: 832,
         name: 'Moumouflon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/832.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/832.png',
         slug: 'Moumouflon',
+        type: ['Normal'],
     },
-    Khelocrok: {
+    {
         id: 833,
         name: 'Khélocrok',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/833.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/833.png',
         slug: 'Khelocrok',
+        type: ['Eau'],
     },
-    Torgamord: {
+    {
         id: 834,
         name: 'Torgamord',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/834.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/834.png',
         slug: 'Torgamord',
+        type: ['Roche', 'Eau'],
     },
-    Voltoutou: {
+    {
         id: 835,
         name: 'Voltoutou',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/835.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/835.png',
         slug: 'Voltoutou',
+        type: ['Électrik'],
     },
-    Fulgudog: {
+    {
         id: 836,
         name: 'Fulgudog',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/836.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/836.png',
         slug: 'Fulgudog',
+        type: ['Électrik'],
     },
-    Charbi: {
+    {
         id: 837,
         name: 'Charbi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/837.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/837.png',
         slug: 'Charbi',
+        type: ['Roche'],
     },
-    Wagomine: {
+    {
         id: 838,
         name: 'Wagomine',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/838.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/838.png',
         slug: 'Wagomine',
+        type: ['Roche', 'Feu'],
     },
-    Monthracite: {
+    {
         id: 839,
         name: 'Monthracite',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/839.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/839.png',
         slug: 'Monthracite',
+        type: ['Roche', 'Feu'],
     },
-    Verpom: {
+    {
         id: 840,
         name: 'Verpom',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/840.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/840.png',
         slug: 'Verpom',
+        type: ['Plante', 'Dragon'],
     },
-    Pomdrapi: {
+    {
         id: 841,
         name: 'Pomdrapi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/841.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/841.png',
         slug: 'Pomdrapi',
+        type: ['Plante', 'Dragon'],
     },
-    Dratatin: {
+    {
         id: 842,
         name: 'Dratatin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/842.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/842.png',
         slug: 'Dratatin',
+        type: ['Plante', 'Dragon'],
     },
-    Dunaja: {
+    {
         id: 843,
         name: 'Dunaja',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/843.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/843.png',
         slug: 'Dunaja',
+        type: ['Sol'],
     },
-    Dunaconda: {
+    {
         id: 844,
         name: 'Dunaconda',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/844.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/844.png',
         slug: 'Dunaconda',
+        type: ['Sol'],
     },
-    Nigosier: {
+    {
         id: 845,
         name: 'Nigosier',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/845.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/845.png',
         slug: 'Nigosier',
+        type: ['Vol', 'Eau'],
     },
-    Embrochet: {
+    {
         id: 846,
         name: 'Embrochet',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/846.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/846.png',
         slug: 'Embrochet',
+        type: ['Eau'],
     },
-    Hastacuda: {
+    {
         id: 847,
         name: 'Hastacuda',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/847.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/847.png',
         slug: 'Hastacuda',
+        type: ['Eau'],
     },
-    Toxizap: {
+    {
         id: 848,
         name: 'Toxizap',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/848.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/848.png',
         slug: 'Toxizap',
+        type: ['Poison', 'Électrik'],
     },
-    Salarsen: {
+    {
         id: 849,
         name: 'Salarsen',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/849.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/849.png',
         slug: 'Salarsen',
+        type: ['Poison', 'Électrik'],
     },
-    Grillepattes: {
+    {
         id: 850,
         name: 'Grillepattes',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/850.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/850.png',
         slug: 'Grillepattes',
+        type: ['Insecte', 'Feu'],
     },
-    Scolocendre: {
+    {
         id: 851,
         name: 'Scolocendre',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/851.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/851.png',
         slug: 'Scolocendre',
+        type: ['Insecte', 'Feu'],
     },
-    Poulpaf: {
+    {
         id: 852,
         name: 'Poulpaf',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/852.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/852.png',
         slug: 'Poulpaf',
+        type: ['Combat'],
     },
-    Krakos: {
+    {
         id: 853,
         name: 'Krakos',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/853.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/853.png',
         slug: 'Krakos',
+        type: ['Combat'],
     },
-    Theffroi: {
+    {
         id: 854,
         name: 'Théffroi',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/854.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/854.png',
         slug: 'Theffroi',
+        type: ['Spectre'],
     },
-    Polthegeist: {
+    {
         id: 855,
         name: 'Polthégeist',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/855.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/855.png',
         slug: 'Polthegeist',
+        type: ['Spectre'],
     },
-    Bibichut: {
+    {
         id: 856,
         name: 'Bibichut',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/856.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/856.png',
         slug: 'Bibichut',
+        type: ['Psy'],
     },
-    Chapotus: {
+    {
         id: 857,
         name: 'Chapotus',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/857.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/857.png',
         slug: 'Chapotus',
+        type: ['Psy'],
     },
-    Sorcilence: {
+    {
         id: 858,
         name: 'Sorcilence',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/858.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/858.png',
         slug: 'Sorcilence',
+        type: ['Psy', 'Fée'],
     },
-    Grimalin: {
+    {
         id: 859,
         name: 'Grimalin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/859.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/859.png',
         slug: 'Grimalin',
+        type: ['Ténèbres', 'Fée'],
     },
-    Fourbelin: {
+    {
         id: 860,
         name: 'Fourbelin',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/860.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/860.png',
         slug: 'Fourbelin',
+        type: ['Ténèbres', 'Fée'],
     },
-    Angoliath: {
+    {
         id: 861,
         name: 'Angoliath',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/861.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/861.png',
         slug: 'Angoliath',
+        type: ['Ténèbres', 'Fée'],
     },
-    Ixon: {
+    {
         id: 862,
         name: 'Ixon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/862.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/862.png',
         slug: 'Ixon',
+        type: ['Normal', 'Ténèbres'],
     },
-    Berserkatt: {
+    {
         id: 863,
         name: 'Berserkatt',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/863.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/863.png',
         slug: 'Berserkatt',
+        type: ['Acier'],
     },
-    Corayome: {
+    {
         id: 864,
         name: 'Corayôme',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/864.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/864.png',
         slug: 'Corayome',
+        type: ['Spectre'],
     },
-    Palarticho: {
+    {
         id: 865,
         name: 'Palarticho',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/865.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/865.png',
         slug: 'Palarticho',
+        type: ['Combat'],
     },
-    'M-Glaquette': {
+    {
         id: 866,
         name: 'M. Glaquette',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/866.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/866.png',
         slug: 'M-Glaquette',
+        type: ['Psy', 'Glace'],
     },
-    Tutetekri: {
+    {
         id: 867,
         name: 'Tutétékri',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/867.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/867.png',
         slug: 'Tutetekri',
+        type: ['Sol', 'Spectre'],
     },
-    Cremy: {
+    {
         id: 868,
         name: 'Crèmy',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/868.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/868.png',
         slug: 'Cremy',
+        type: ['Fée'],
     },
-    Charmilly: {
+    {
         id: 869,
         name: 'Charmilly',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/869.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/869.png',
         slug: 'Charmilly',
+        type: ['Fée'],
     },
-    Hexadron: {
+    {
         id: 870,
         name: 'Hexadron',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/870.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/870.png',
         slug: 'Hexadron',
+        type: ['Combat'],
     },
-    Wattapik: {
+    {
         id: 871,
         name: 'Wattapik',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/871.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/871.png',
         slug: 'Wattapik',
+        type: ['Électrik'],
     },
-    Frissonille: {
+    {
         id: 872,
         name: 'Frissonille',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/872.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/872.png',
         slug: 'Frissonille',
+        type: ['Insecte', 'Glace'],
     },
-    Beldeneige: {
+    {
         id: 873,
         name: 'Beldeneige',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/873.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/873.png',
         slug: 'Beldeneige',
+        type: ['Insecte', 'Glace'],
     },
-    Dolman: {
+    {
         id: 874,
         name: 'Dolman',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/874.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/874.png',
         slug: 'Dolman',
+        type: ['Roche'],
     },
-    Bekaglacon: {
+    {
         id: 875,
         name: 'Bekaglaçon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/875.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/875.png',
         slug: 'Bekaglacon',
+        type: ['Glace'],
     },
-    Wimessir: {
+    {
         id: 876,
         name: 'Wimessir',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/876.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/876.png',
         slug: 'Wimessir',
+        type: ['Normal', 'Psy'],
     },
-    Morpeko: {
+    {
         id: 877,
         name: 'Morpeko',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/877.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/877.png',
         slug: 'Morpeko',
+        type: ['Électrik', 'Ténèbres'],
     },
-    Charibari: {
+    {
         id: 878,
         name: 'Charibari',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/878.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/878.png',
         slug: 'Charibari',
+        type: ['Acier'],
     },
-    Pachyradjah: {
+    {
         id: 879,
         name: 'Pachyradjah',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/879.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/879.png',
         slug: 'Pachyradjah',
+        type: ['Acier'],
     },
-    Galvagon: {
+    {
         id: 880,
         name: 'Galvagon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/880.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/880.png',
         slug: 'Galvagon',
+        type: ['Électrik', 'Dragon'],
     },
-    Galvagla: {
+    {
         id: 881,
         name: 'Galvagla',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/881.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/881.png',
         slug: 'Galvagla',
+        type: ['Électrik', 'Glace'],
     },
-    Hydragon: {
+    {
         id: 882,
         name: 'Hydragon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/882.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/882.png',
         slug: 'Hydragon',
+        type: ['Eau', 'Dragon'],
     },
-    Hydragla: {
+    {
         id: 883,
         name: 'Hydragla',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/883.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/883.png',
         slug: 'Hydragla',
+        type: ['Eau', 'Glace'],
     },
-    Duralugon: {
+    {
         id: 884,
         name: 'Duralugon',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/884.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/884.png',
         slug: 'Duralugon',
+        type: ['Acier', 'Dragon'],
     },
-    Fantyrm: {
+    {
         id: 885,
         name: 'Fantyrm',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/885.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/885.png',
         slug: 'Fantyrm',
+        type: ['Spectre', 'Dragon'],
     },
-    Dispareptil: {
+    {
         id: 886,
         name: 'Dispareptil',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/886.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/886.png',
         slug: 'Dispareptil',
+        type: ['Spectre', 'Dragon'],
     },
-    Lanssorien: {
+    {
         id: 887,
         name: 'Lanssorien',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/887.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/887.png',
         slug: 'Lanssorien',
+        type: ['Spectre', 'Dragon'],
     },
-    Zacian: {
+    {
         id: 888,
         name: 'Zacian',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/888.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/888.png',
         slug: 'Zacian',
+        type: ['Fée'],
     },
-    Zamazent: {
+    {
         id: 889,
         name: 'Zamazent',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/889.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/889.png',
         slug: 'Zamazent',
+        type: ['Combat'],
     },
-    Ethernatos: {
+    {
         id: 890,
         name: 'Éthernatos',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/890.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/890.png',
         slug: 'Ethernatos',
+        type: ['Poison', 'Dragon'],
     },
-    Wushours: {
+    {
         id: 891,
         name: 'Wushours',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/891.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/891.png',
         slug: 'Wushours',
+        type: ['Combat'],
     },
-    Shifours: {
+    {
         id: 892,
         name: 'Shifours',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/892.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/892.png',
         slug: 'Shifours',
+        type: ['Combat', 'Ténèbres'],
     },
-    Zarude: {
+    {
         id: 893,
         name: 'Zarude',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/893.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/893.png',
         slug: 'Zarude',
+        type: ['Plante', 'Ténèbres'],
     },
-    Regieleki: {
+    {
         id: 894,
         name: 'Regieleki',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/894.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/894.png',
         slug: 'Regieleki',
+        type: ['Électrik'],
     },
-    Regidrago: {
+    {
         id: 895,
         name: 'Regidrago',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/895.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/895.png',
         slug: 'Regidrago',
+        type: ['Dragon'],
     },
-    Blizzeval: {
+    {
         id: 896,
         name: 'Blizzeval',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/896.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/896.png',
         slug: 'Blizzeval',
+        type: ['Glace'],
     },
-    Spectreval: {
+    {
         id: 897,
         name: 'Spectreval',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/897.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/897.png',
         slug: 'Spectreval',
+        type: ['Spectre'],
     },
-    Sylveroy: {
+    {
         id: 898,
         name: 'Sylveroy',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/898.png',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/898.png',
         slug: 'Sylveroy',
+        type: ['Plante', 'Psy'],
     },
-};
+] as const;
