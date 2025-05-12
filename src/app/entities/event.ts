@@ -1,8 +1,8 @@
-import { PokemonInterface } from '../repositories/get-all.service';
+import { PokemonInterface } from '../repositories/pokemon/get-all.service';
 
 export interface EventInterface {
     name: string;
     slug: string;
-    savagePokemons: PokemonInterface[];
+    savagePokemons: (PokemonInterface & { mega?: PokemonInterface })[];
     eggPokemons: PokemonInterface[];
 }

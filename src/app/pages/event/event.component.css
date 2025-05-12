@@ -1,0 +1,11 @@
+.table {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 0.25em;
+    column-gap: 1em;
+    .type {
+        & > *:has(+ *) {
+            margin-right: 0.25em;
+        }
+    }
+}

@@ -1,5 +1,30 @@
 @if (event) {
 <div>{{ event.name }}</div>
-@for (savage of event.savagePokemons; track $index) {
-<div>{{ savage.name }}</div>
-} }
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Type</th>
+            @for (mega of megas; track $index) {
+            <th>{{ mega.name }}</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (savage of event.savagePokemons; track $index) {
+        <tr>
+            <td>{{ savage.name }}</td>
+            <td class="type">
+                @for (type of savage.type; track $index) {
+
+                <span>{{ type }}</span>
+                }
+            </td>
+            @for (mega of megas; track $index) {
+            <td>@if (bddEvent.haveTypeInCommon(mega, savage)) { {{ mega.name }}}</td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
+}
