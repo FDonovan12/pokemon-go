@@ -34,6 +34,20 @@ export class BddEvent {
                     pokemons.Sovkipou,
                 ],
             },
+            { 
+            name: 'Semaine Combat GO : Attaque finale !', // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale)
+            slug: 'semaine-combat-go-attaque-finale', // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale)
+            savagePokemons: [
+                pokemons.Ferosinge,
+                pokemons.Otaria,
+                pokemons.Zigzaton,
+                pokemons.Meditikka,
+                pokemons.Grenousse,
+                pokemons.Solochi,
+                pokemons.Goupilou,
+            ], 
+            eggPokemons: []
+        },
         ];
         return result;
     }

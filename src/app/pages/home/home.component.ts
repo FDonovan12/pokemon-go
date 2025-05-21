@@ -63,6 +63,18 @@ export class HomeComponent {
             ]),
         },
         {
+            label: 'Semaine Combat GO : Attaque finale !', // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale)
+            query: this.join([
+                this.getAllService.pokemonIndex.byName.Ferosinge,
+                this.getAllService.pokemonIndex.byName.Otaria,
+                this.getAllService.pokemonIndex.byName.Zigzaton,
+                this.getAllService.pokemonIndex.byName.Meditikka,
+                this.getAllService.pokemonIndex.byName.Grenousse,
+                this.getAllService.pokemonIndex.byName.Solochi,
+                this.getAllService.pokemonIndex.byName.Goupilou,
+            ]),
+        },
+        {
             label: 'Choc des couronnes', // L’événement se déroule du vendredi 10 mai à 10h au mercredi 18 mai 20h (heure locale)
             query: this.join([
                 this.getAllService.pokemonIndex.byName.Ramoloss,
