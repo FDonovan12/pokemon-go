@@ -14,6 +14,8 @@ export class BddEvent {
             {
                 name: "Grandir et s'épanouir", // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale)
                 slug: 'grandir-et-s-epanouir', // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale)
+                startAt: new Date(2025, 4, 2, 10),
+                endAt: new Date(2025, 4, 7, 20),
                 savagePokemons: [
                     pokemons.Magicarpe,
                     pokemons.Wailmer,
@@ -34,21 +36,24 @@ export class BddEvent {
                     pokemons.Sovkipou,
                 ],
             },
-            { 
-            name: 'Semaine Combat GO : Attaque finale !', // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale)
-            slug: 'semaine-combat-go-attaque-finale', // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale)
-            savagePokemons: [
-                pokemons.Ferosinge,
-                pokemons.Otaria,
-                pokemons.Zigzaton,
-                pokemons.Meditikka,
-                pokemons.Grenousse,
-                pokemons.Solochi,
-                pokemons.Goupilou,
-            ], 
-            eggPokemons: []
-        },
+            {
+                name: 'Semaine Combat GO : Attaque finale !', // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale)
+                slug: 'semaine-combat-go-attaque-finale', // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale)
+                startAt: new Date(2025, 4, 21, 10),
+                endAt: new Date(2025, 4, 27, 20),
+                savagePokemons: [
+                    pokemons.Ferosinge,
+                    pokemons.Otaria,
+                    pokemons.Zigzaton,
+                    pokemons.Meditikka,
+                    pokemons.Grenousse,
+                    pokemons.Solochi,
+                    pokemons.Goupilou,
+                ],
+                eggPokemons: [],
+            },
         ];
+        console.log(result.map((event) => event.startAt));
         return result;
     }
 

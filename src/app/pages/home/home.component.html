@@ -1,5 +1,7 @@
 <h1>Accueil!</h1>
-@for (filter of filters; track $index) {
+@if (currentEvent) {
+<a [routerLink]="'/event/' + currentEvent.slug">Event courant : {{ currentEvent.name }}</a>
+} @for (filter of filters; track $index) {
 <div>
     <button (click)="copy(filter.query)">{{ filter.label }}</button>
 </div>

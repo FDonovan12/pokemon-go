@@ -1,5 +1,5 @@
 import { Component, inject, input, InputSignal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { EventInterface } from '../../entities/event';
 import { BddEvent } from '../../repositories/event/event';
 import { GetAllService, PokemonInterface } from '../../repositories/pokemon/get-all.service';
@@ -7,7 +7,7 @@ import { GetAllService, PokemonInterface } from '../../repositories/pokemon/get-
 @Component({
     selector: 'app-event',
     standalone: true,
-    imports: [],
+    imports: [RouterLink],
     templateUrl: './event.component.html',
     styleUrl: './event.component.css',
 })

@@ -1,17 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { EventInterface } from '../../entities/event';
+import { BddEvent } from '../../repositories/event/event';
 import { GetAllService, PokemonInterface } from '../../repositories/pokemon/get-all.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [],
+    imports: [RouterLink],
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
 })
 export class HomeComponent {
     private readonly httpClient: HttpClient = inject(HttpClient);
     private readonly getAllService: GetAllService = inject(GetAllService);
+    readonly bddEvent: BddEvent = inject(BddEvent);
 
     join = (arr: (PokemonInterface | string)[]) => ' & ' + arr.map(this.getName).join(', ') + ' & ';
 
@@ -21,6 +25,10 @@ export class HomeComponent {
     pokemonsList = this.getAllService.pokemonIndex;
 
     private readonly pokemons = this.getAllService.pokemonIndex.byName;
+
+    currentEvent: EventInterface | undefined = this.bddEvent
+        .getEventsPokemon()
+        .filter((event) => event.startAt <= new Date() && new Date() <= event.endAt)[0];
 
     filters = [
         { label: 'IV PVP', query: ' & 2-pv & 2-défense & -1attaque & ' },
@@ -162,6 +170,7 @@ export class HomeComponent {
             });
     }
     ngOnInit(): void {
+        console.log(this.currentEvent);
         this.getData();
         // console.log(Object.entries(pokemons).map((ob) => ob[1]));
     }
