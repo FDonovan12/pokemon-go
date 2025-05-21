@@ -1,13 +1,32 @@
 import { Injectable } from '@angular/core';
 import { pokemonsList } from '../../bdd/bdd-pokemons';
 
+type typePokemon =
+    | 'Acier'
+    | 'Combat'
+    | 'Dragon'
+    | 'Eau'
+    | 'Électrik'
+    | 'Fée'
+    | 'Feu'
+    | 'Glace'
+    | 'Insecte'
+    | 'Normal'
+    | 'Plante'
+    | 'Poison'
+    | 'Psy'
+    | 'Roche'
+    | 'Sol'
+    | 'Spectre'
+    | 'Ténèbres'
+    | 'Vol';
 export interface PokemonInterface {
     id: number;
     name: string;
     image: string;
     sprite: string;
     slug: string;
-    type: readonly string[];
+    type: readonly typePokemon[];
 }
 
 type Pokemon = (typeof pokemonsList)[number];
@@ -28,7 +47,6 @@ export class GetAllService {
     megaList = this.buildMegaList();
 
     private buildMegaList(): PokemonInterface[] {
-
         const listBase: PokemonInterface[] = [
             this.pokemonIndex.byName.Florizarre,
             this.pokemonIndex.byName.Tortank,
@@ -70,13 +88,13 @@ export class GetAllService {
             this.pokemonIndex.byName.Mysdibule,
             this.pokemonIndex.byName.Gallame,
         ];
-        listBase.push({ ...this.pokemonIndex.byName.Dracaufeu, name: 'Dracofeu-X', type: ['Feu', 'Dragon'] })
-        listBase.push({ ...this.pokemonIndex.byName.Dracaufeu, name: 'Dracofeu-Y' })
-        listBase.push({ ...this.pokemonIndex.byName.Leviator, type: ['Eau', 'Ténébre'] })
-        listBase.push({ ...this.pokemonIndex.byName.Kyogre, type: ['Eau', 'Insecte', 'Electrik'] })
-        listBase.push({ ...this.pokemonIndex.byName.Groudon, type: ['Feu', 'Sol', 'Plante'] })
-        listBase.push({ ...this.pokemonIndex.byName.Rayquaza, type: ['Dragon', 'Vol', 'Psy'] })
-        listBase.push({ ...this.pokemonIndex.byName.Nanmeouie, type: ['Normal', 'Fée'] })
+        listBase.push({ ...this.pokemonIndex.byName.Dracaufeu, name: 'Dracofeu-X', type: ['Feu', 'Dragon'] });
+        listBase.push({ ...this.pokemonIndex.byName.Dracaufeu, name: 'Dracofeu-Y' });
+        listBase.push({ ...this.pokemonIndex.byName.Leviator, type: ['Eau', 'Ténèbres'] });
+        listBase.push({ ...this.pokemonIndex.byName.Kyogre, type: ['Eau', 'Insecte', 'Électrik'] });
+        listBase.push({ ...this.pokemonIndex.byName.Groudon, type: ['Feu', 'Sol', 'Plante'] });
+        listBase.push({ ...this.pokemonIndex.byName.Rayquaza, type: ['Dragon', 'Vol', 'Psy'] });
+        listBase.push({ ...this.pokemonIndex.byName.Nanmeouie, type: ['Normal', 'Fée'] });
         return listBase;
     }
 }
