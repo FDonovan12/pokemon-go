@@ -5,7 +5,32 @@
   "projects": {
     "pokemon-go": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:pipe": {
+          "flat": false,
+          "path": "src/app/pipes"
+        },
+        "@schematics/angular:service": {
+          "flat": false,
+          "path": "src/app/services"
+        },
+        "@schematics/angular:interceptor": {
+          "flat": false,
+          "path": "src/app/interceptors"
+        },
+        "@schematics/angular:component": {
+          "flat": false,
+          "path": "src/app/components"
+        },
+        "@schematics/angular:directive": {
+          "flat": false,
+          "path": "src/app/directives"
+        },
+        "@schematics/angular:guard": {
+          "flat": false,
+          "path": "src/app/guards"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",

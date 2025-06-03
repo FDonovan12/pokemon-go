@@ -3,11 +3,56 @@
     "tabWidth": 4,
     "printWidth": 120,
     "singleAttributePerLine": true,
+    "semi": true,
+    "useTabs": false,
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "htmlWhitespaceSensitivity": "ignore",
+    "endOfLine": "lf",
+    "quoteProps": "as-needed",
+    "embeddedLanguageFormatting": "auto",
+    "proseWrap": "preserve",
     "overrides": [
+        {
+            "files": "*.component.html",
+            "options": {
+                "parser": "angular"
+            }
+        },
+        {
+            "files": "*.ts",
+            "options": {
+                "tabWidth": 4,
+                "printWidth": 120
+            }
+        },
         {
             "files": "*.html",
             "options": {
-                "parser": "angular"
+                "tabWidth": 4,
+                "printWidth": 140
+            }
+        },
+        {
+            "files": "*.json",
+            "options": {
+                "tabWidth": 2,
+                "printWidth": 140
+            }
+        },
+        {
+            "files": "*.yml",
+            "options": {
+                "tabWidth": 2,
+                "printWidth": 140
+            }
+        },
+        {
+            "files": "*.css",
+            "options": {
+                "tabWidth": 4,
+                "printWidth": 120
             }
         }
     ]
