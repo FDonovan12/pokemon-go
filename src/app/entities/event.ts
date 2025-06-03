@@ -5,6 +5,32 @@ export interface EventInterface {
     slug: string;
     startAt: Date;
     endAt: Date;
-    savagePokemons: (PokemonInterface & { mega?: PokemonInterface })[];
+    savagePokemons: SavagePokemons[];
     eggPokemons: PokemonInterface[];
 }
+
+export interface SavagePokemons {
+    title?: string;
+    pokemons: PokemonInterface[];
+    megas?: PokemonInterface[];
+}
+
+export type typePokemon =
+    | 'Acier'
+    | 'Combat'
+    | 'Dragon'
+    | 'Eau'
+    | 'Électrik'
+    | 'Fée'
+    | 'Feu'
+    | 'Glace'
+    | 'Insecte'
+    | 'Normal'
+    | 'Plante'
+    | 'Poison'
+    | 'Psy'
+    | 'Roche'
+    | 'Sol'
+    | 'Spectre'
+    | 'Ténèbres'
+    | 'Vol';

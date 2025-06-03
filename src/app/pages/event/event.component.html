@@ -1,31 +1,25 @@
 <a routerLink="/">Accueil</a>
 @if (event) {
-<div>{{ event.name }}</div>
+<h1>{{ event.name }}</h1>
 <table>
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Type</th>
-            @for (mega of megas; track $index) {
-            <th>{{ mega.name }}</th>
-            }
-        </tr>
-    </thead>
     <tbody>
-        @for (savage of event.savagePokemons; track $index) {
+        @for (location of event.savagePokemons; track $index) { @if(location.title) {
+        <h2>{{ location.title }}</h2>
+        } @for (savage of location.pokemons; track $index) {
         <tr>
             <td>{{ savage.name }}</td>
             <td class="type">
                 @for (type of savage.type; track $index) {
 
-                <span>{{ type }}</span>
+                <!-- <span>{{ type }}</span> -->
+                <app-type [type]="type"></app-type>
                 }
             </td>
-            @for (mega of megas; track $index) {
+            @for (mega of location.megas; track $index) {
             <td>@if (bddEvent.haveTypeInCommon(mega, savage)) { {{ mega.name }}}</td>
             }
         </tr>
-        }
+        } }
     </tbody>
 </table>
 }

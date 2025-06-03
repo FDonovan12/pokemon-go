@@ -12,21 +12,70 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventInterface[] = [
             {
+                name: 'Go Fest 2025', // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale)
+                slug: 'go-fest-2025', // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale)
+                startAt: new Date(2025, 4, 28, 10),
+                endAt: new Date(2025, 5, 29, 18),
+                savagePokemons: [
+                    {
+                        title: 'Volcan',
+                        pokemons: [
+                            pokemons.Malosse,
+                            pokemons.Chamallot,
+                            pokemons.Skelenox,
+                            pokemons.Scrutella,
+                            pokemons.Gringolem,
+                            pokemons.Passerouge,
+                            pokemons.Flabebe,
+                            pokemons.Venalgue,
+                            pokemons.Chochodile,
+                            pokemons.Strassie,
+                        ],
+                    },
+                    {
+                        title: 'Volcan',
+                        pokemons: [
+                            pokemons.Malosse,
+                            pokemons.Chamallot,
+                            pokemons.Skelenox,
+                            pokemons.Scrutella,
+                            pokemons.Gringolem,
+                            pokemons.Passerouge,
+                            pokemons.Flabebe,
+                            pokemons.Venalgue,
+                            pokemons.Chochodile,
+                            pokemons.Strassie,
+                        ],
+                    },
+                ],
+                eggPokemons: [
+                    pokemons.Ptiravi,
+                    pokemons['Mime-Jr'],
+                    pokemons.Toxizap,
+                    pokemons.Riolu,
+                    pokemons.Sovkipou,
+                ],
+            },
+            {
                 name: "Grandir et s'épanouir", // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale)
                 slug: 'grandir-et-s-epanouir', // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale)
                 startAt: new Date(2025, 4, 2, 10),
                 endAt: new Date(2025, 4, 7, 20),
                 savagePokemons: [
-                    pokemons.Magicarpe,
-                    pokemons.Wailmer,
-                    pokemons.Tylton,
-                    pokemons.Trompignon,
-                    pokemons.Dedenne,
-                    pokemons.Bombydou,
-                    pokemons.Munna,
-                    pokemons.Sovkipou,
-                    pokemons.Minisange,
-                    //'Lilliterelle',
+                    {
+                        pokemons: [
+                            pokemons.Magicarpe,
+                            pokemons.Wailmer,
+                            pokemons.Tylton,
+                            pokemons.Trompignon,
+                            pokemons.Dedenne,
+                            pokemons.Bombydou,
+                            pokemons.Munna,
+                            pokemons.Sovkipou,
+                            pokemons.Minisange,
+                            //'Lilliterelle',
+                        ],
+                    },
                 ],
                 eggPokemons: [
                     pokemons.Ptiravi,
@@ -42,13 +91,17 @@ export class BddEvent {
                 startAt: new Date(2025, 4, 21, 10),
                 endAt: new Date(2025, 4, 27, 20),
                 savagePokemons: [
-                    pokemons.Ferosinge,
-                    pokemons.Otaria,
-                    pokemons.Zigzaton,
-                    pokemons.Meditikka,
-                    pokemons.Grenousse,
-                    pokemons.Solochi,
-                    pokemons.Goupilou,
+                    {
+                        pokemons: [
+                            pokemons.Ferosinge,
+                            pokemons.Otaria,
+                            pokemons.Zigzaton,
+                            pokemons.Meditikka,
+                            pokemons.Grenousse,
+                            pokemons.Solochi,
+                            pokemons.Goupilou,
+                        ],
+                    },
                 ],
                 eggPokemons: [],
             },

@@ -1,25 +1,8 @@
 import { Injectable } from '@angular/core';
+import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 import { pokemonsList } from '../../bdd/bdd-pokemons';
+import { typePokemon } from '../../entities/event';
 
-type typePokemon =
-    | 'Acier'
-    | 'Combat'
-    | 'Dragon'
-    | 'Eau'
-    | 'Électrik'
-    | 'Fée'
-    | 'Feu'
-    | 'Glace'
-    | 'Insecte'
-    | 'Normal'
-    | 'Plante'
-    | 'Poison'
-    | 'Psy'
-    | 'Roche'
-    | 'Sol'
-    | 'Spectre'
-    | 'Ténèbres'
-    | 'Vol';
 export interface PokemonInterface {
     id: number;
     name: string;
@@ -29,7 +12,7 @@ export interface PokemonInterface {
     type: readonly typePokemon[];
 }
 
-type Pokemon = (typeof pokemonsList)[number];
+type Pokemon = (typeof pokemonsList | typeof pokemonsListHomeMade)[number];
 type PokemonIndex = {
     byId: Record<Pokemon['id'], Pokemon>;
     byName: Record<Pokemon['slug'], Pokemon>;
@@ -38,12 +21,17 @@ type PokemonIndex = {
     providedIn: 'root',
 })
 export class GetAllService {
-    private buildPokemonIndex = (list: readonly Pokemon[]): PokemonIndex => ({
-        byId: Object.fromEntries(list.map((p) => [p.id, p])) as Record<Pokemon['id'], Pokemon>,
-        byName: Object.fromEntries(list.map((p) => [p.slug, p])) as Record<Pokemon['slug'], Pokemon>,
-    });
-
-    pokemonIndex = this.buildPokemonIndex(pokemonsList);
+    private buildPokemonIndex = (
+        listFromAPI: readonly Pokemon[],
+        listHomemade: readonly Pokemon[] = [],
+    ): PokemonIndex => {
+        const list = [...listFromAPI, ...listHomemade];
+        return {
+            byId: Object.fromEntries(list.map((p) => [p.id, p])) as Record<Pokemon['id'], Pokemon>,
+            byName: Object.fromEntries(list.map((p) => [p.slug, p])) as Record<Pokemon['slug'], Pokemon>,
+        };
+    };
+    pokemonIndex = this.buildPokemonIndex(pokemonsList, pokemonsListHomeMade);
     megaList = this.buildMegaList();
 
     private buildMegaList(): PokemonInterface[] {
