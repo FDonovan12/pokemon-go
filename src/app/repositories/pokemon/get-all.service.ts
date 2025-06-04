@@ -1,38 +1,50 @@
 import { Injectable } from '@angular/core';
+import { PokemonInterface } from '@entities/pokemon';
+import * as pokemonsData from 'app/bdd/bdd-pokemons.json';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
-import { pokemonsList } from '../../bdd/bdd-pokemons';
-import { typePokemon } from '../../entities/event';
 
-export interface PokemonInterface {
-    id: number;
-    name: string;
-    image: string;
-    sprite: string;
-    slug: string;
-    type: readonly typePokemon[];
-}
+// export interface PokemonInterface {
+//     id: number;
+//     name: string;
+//     image: string;
+//     sprite: string;
+//     slug: string;
+//     type: readonly typePokemon[];
+// }
+
+const pokemonsList = pokemonsData as PokemonInterface[];
 
 type Pokemon = (typeof pokemonsList | typeof pokemonsListHomeMade)[number];
+
 type PokemonIndex = {
-    byId: Record<Pokemon['id'], Pokemon>;
-    byName: Record<Pokemon['slug'], Pokemon>;
+    byId: Record<PokemonInterface['id'], PokemonInterface>;
+    byName: Record<PokemonInterface['slug'], PokemonInterface>;
 };
 @Injectable({
     providedIn: 'root',
 })
 export class GetAllService {
     private buildPokemonIndex = (
-        listFromAPI: readonly Pokemon[],
+        listFromAPI: readonly PokemonInterface[],
         listHomemade: readonly Pokemon[] = [],
     ): PokemonIndex => {
-        const list = [...listFromAPI, ...listHomemade];
+        const list = [...listFromAPI, ...listHomemade] as PokemonInterface[];
+
+        console.log(pokemonsList.map((poke) => poke.slug));
         return {
-            byId: Object.fromEntries(list.map((p) => [p.id, p])) as Record<Pokemon['id'], Pokemon>,
-            byName: Object.fromEntries(list.map((p) => [p.slug, p])) as Record<Pokemon['slug'], Pokemon>,
+            byId: Object.fromEntries(list.map((p) => [p.id, p])) as Record<PokemonInterface['id'], PokemonInterface>,
+            byName: Object.fromEntries(list.map((p) => [p.slug, p])) as Record<
+                PokemonInterface['slug'],
+                PokemonInterface
+            >,
         };
     };
     pokemonIndex = this.buildPokemonIndex(pokemonsList, pokemonsListHomeMade);
     megaList = this.buildMegaList();
+    ngOnInit(): void {
+        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+        //Add 'implements OnInit' to the class.
+    }
 
     private buildMegaList(): PokemonInterface[] {
         const listBase: PokemonInterface[] = [

@@ -1,4 +1,4 @@
-import { PokemonInterface } from '../repositories/pokemon/get-all.service';
+import { PokemonInterface } from './pokemon';
 
 export interface EventInterface {
     name: string;
@@ -15,23 +15,3 @@ export interface SavagePokemons {
     pokemons: PokemonInterface[];
     megas?: PokemonInterface[];
 }
-
-export type typePokemon =
-    | 'Acier'
-    | 'Combat'
-    | 'Dragon'
-    | 'Eau'
-    | 'Électrik'
-    | 'Fée'
-    | 'Feu'
-    | 'Glace'
-    | 'Insecte'
-    | 'Normal'
-    | 'Plante'
-    | 'Poison'
-    | 'Psy'
-    | 'Roche'
-    | 'Sol'
-    | 'Spectre'
-    | 'Ténèbres'
-    | 'Vol';

@@ -39,4 +39,4 @@ export const pokemonsListHomeMade = [
         slug: 'LimondeGalar',
         type: ['Sol', 'Acier'],
     },
-] as const;
+] as const; //satisfies readonly PokemonInterface[];

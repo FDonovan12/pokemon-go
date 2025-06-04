@@ -4,7 +4,8 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EventInterface } from '../../entities/event';
 import { BddEvent } from '../../repositories/event/event';
-import { GetAllService, PokemonInterface } from '../../repositories/pokemon/get-all.service';
+import { PokemonInterface } from '@entities/pokemon';
+import { GetAllService } from '@repositories/pokemon/get-all.service';
 
 @Component({
     selector: 'app-home',
@@ -61,8 +62,7 @@ export class HomeComponent {
         'Poussacha',
         'Coiffeton',
     ];
-
-    filters = [
+    baseFilters = [
         { label: 'IV PVP', query: ' & 2-pv & 2-défense & -1attaque & ' },
         {
             label: 'Filtre level 1',
@@ -83,6 +83,8 @@ export class HomeComponent {
             label: 'Starter',
             query: this.join(this.starterPokemon),
         },
+    ];
+    filters = [
         {
             label: 'Semaine Combat GO : Attaque finale !', // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale)
             query: this.join([
