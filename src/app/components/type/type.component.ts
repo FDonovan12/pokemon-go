@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { typePokemon } from '@entities/event';
+import { typePokemon } from '@entities/pokemon';
 
 @Component({
     selector: 'app-type',

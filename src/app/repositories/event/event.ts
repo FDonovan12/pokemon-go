@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { EventInterface } from '../../entities/event';
 import { PokemonInterface } from '@entities/pokemon';
 import { GetAllService } from '@repositories/pokemon/get-all.service';
+import { EventInterface } from '../../entities/event';
 
 @Injectable({
     providedIn: 'root',
@@ -206,7 +206,7 @@ export class BddEvent {
                 eggPokemons: [],
             },
         ];
-        result.sort((a, b) => a.startAt.getTime() - b.startAt.getTime());
+        result.sort((a, b) => b.startAt.getTime() - a.startAt.getTime());
         return result;
     }
 

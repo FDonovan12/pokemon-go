@@ -3,9 +3,9 @@
 <h1>{{ event.name }}</h1>
 <table>
     <tbody>
-        @for (location of event.savagePokemons; track $index) { @if(location.title) {
-        <h2>{{ location.title }}</h2>
-        } @for (savage of location.pokemons; track $index) {
+        @for (group of event.savagePokemons; track $index) { @if(group.title) {
+        <h2>{{ group.title }}</h2>
+        } @for (savage of group.pokemons; track $index) {
         <tr>
             <td>
                 <img
@@ -22,7 +22,7 @@
                 <app-type [type]="type"></app-type>
                 }
             </td>
-            @for (mega of location.megas; track $index) {
+            @for (mega of group.megas; track $index) {
             <td>
                 @if (bddEvent.haveTypeInCommon(mega, savage)) {
                 <img

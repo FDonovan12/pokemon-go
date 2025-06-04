@@ -1,9 +1,9 @@
 import { Component, inject, input, InputSignal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { TypeComponent } from '../../components/type/type.component';
-import { EventInterface } from '../../entities/event';
-import { BddEvent } from '../../repositories/event/event';
-import { GetAllService, PokemonInterface } from '../../repositories/pokemon/get-all.service';
+import { EventInterface } from '@entities/event';
+import { BddEvent } from '@repositories/event/event';
+import { GetAllService } from '@repositories/pokemon/get-all.service';
+import { TypeComponent } from 'app/components/type/type.component';
 
 @Component({
     selector: 'app-event',
@@ -20,9 +20,6 @@ export class EventComponent {
     private readonly router: Router = inject(Router);
 
     event!: EventInterface;
-    possibleMega: PokemonInterface[] = [];
-
-    megas!: PokemonInterface[];
 
     ngOnInit(): void {
         const eventTemp = this.bddEvent.getEventsPokemon().find((event) => event.slug === this.slug());
@@ -34,9 +31,6 @@ export class EventComponent {
                 );
                 return savagePokemon;
             });
-            // this.megas = this.getAllService.megaList.filter((mega) =>
-            //     this.bddEvent.countTypeBoost(mega, eventTemp.savagePokemons)
-            // );
         } else {
             this.router.navigateByUrl('');
         }

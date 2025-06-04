@@ -2,10 +2,10 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { EventInterface } from '../../entities/event';
-import { BddEvent } from '../../repositories/event/event';
 import { PokemonInterface } from '@entities/pokemon';
 import { GetAllService } from '@repositories/pokemon/get-all.service';
+import { EventInterface } from '../../entities/event';
+import { BddEvent } from '../../repositories/event/event';
 
 @Component({
     selector: 'app-home',
@@ -21,7 +21,7 @@ export class HomeComponent {
 
     today = new Date();
 
-    join = (arr: (PokemonInterface | string)[]) => ' & ' + arr.map(this.getName).join(', ') + ' & ';
+    join = (arr: PokemonInterface[]) => ' & ' + arr.map(this.getName).join(', ') + ' & ';
 
     getName(pokemon: PokemonInterface | string): string {
         return typeof pokemon === 'string' ? pokemon : pokemon.name;
@@ -30,7 +30,12 @@ export class HomeComponent {
 
     private readonly pokemons = this.getAllService.pokemonIndex.byName;
 
-    futureEvents: EventInterface[] = this.bddEvent.getEventsPokemon().filter((event) => new Date() <= event.endAt);
+    futureEvents: EventInterface[] = this.bddEvent
+        .getEventsPokemon()
+        .filter((event) => new Date() <= event.endAt)
+        .slice()
+        .sort((a, b) => (a.startAt <= b.startAt ? -1 : 1));
+
     private readonly onlySavagePokemons = ' & !raid & !éclos & !étude & ';
 
     private readonly starterPokemon = [
@@ -59,8 +64,8 @@ export class HomeComponent {
         this.pokemons.Flambino,
         this.pokemons.Larmeleon,
         this.pokemons.Chochodile,
-        'Poussacha',
-        'Coiffeton',
+        this.pokemons.Poussacha,
+        this.pokemons.Coiffeton,
     ];
     baseFilters = [
         { label: 'IV PVP', query: ' & 2-pv & 2-défense & -1attaque & ' },
@@ -85,50 +90,14 @@ export class HomeComponent {
         },
     ];
     filters = [
-        {
-            label: 'Semaine Combat GO : Attaque finale !', // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale)
-            query: this.join([
-                this.pokemons.Ferosinge,
-                this.pokemons.Otaria,
-                this.pokemons.Zigzaton,
-                this.pokemons.Meditikka,
-                this.pokemons.Grenousse,
-                this.pokemons.Solochi,
-                this.pokemons.Goupilou,
-            ]),
-        },
-        {
-            label: 'Choc des couronnes', // L’événement se déroule du vendredi 10 mai à 10h au mercredi 18 mai 20h (heure locale)
-            query: this.join([
-                this.pokemons.Ramoloss,
-                this.pokemons.Parecool,
-                this.pokemons.Tiplouf,
-                this.pokemons.Apitrini,
-                this.pokemons.Vipelierre,
-                this.pokemons.Helionceau,
-                this.pokemons.Scalpion,
-                this.pokemons.Nidoking,
-                this.pokemons.Nidoqueen,
-            ]),
-        },
-        {
-            label: "Grandir et s'épanouir", // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale)
-            query: this.join([
-                this.pokemons.Magicarpe,
-                this.pokemons.Wailmer,
-                this.pokemons.Tylton,
-                this.pokemons.Trompignon,
-                this.pokemons.Dedenne,
-                this.pokemons.Bombydou,
-                this.pokemons.Munna,
-                this.pokemons.Sovkipou,
-                this.pokemons.Minisange,
-                'Lilliterelle',
-                this.pokemons.Ptiravi,
-                this.pokemons['Mime-Jr'],
-                this.pokemons.Toxizap,
-            ]),
-        },
+        ...this.baseFilters,
+        ...this.bddEvent
+            .getEventsPokemon()
+            .filter((event) => event.startAt <= new Date(Date.now() + 1 * 86400000))
+            .map((event) => ({
+                label: event.name,
+                query: this.join(event.savagePokemons.map((group) => group.pokemons).flat()),
+            })),
     ];
 
     copy(string: string) {

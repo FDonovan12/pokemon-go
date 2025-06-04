@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PokemonInterface } from '@entities/pokemon';
-import * as pokemonsData from 'app/bdd/bdd-pokemons.json';
+import pokemonsData from 'app/bdd/bdd-pokemons.json';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 
 // export interface PokemonInterface {
@@ -30,7 +30,6 @@ export class GetAllService {
     ): PokemonIndex => {
         const list = [...listFromAPI, ...listHomemade] as PokemonInterface[];
 
-        console.log(pokemonsList.map((poke) => poke.slug));
         return {
             byId: Object.fromEntries(list.map((p) => [p.id, p])) as Record<PokemonInterface['id'], PokemonInterface>,
             byName: Object.fromEntries(list.map((p) => [p.slug, p])) as Record<

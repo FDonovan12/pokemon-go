@@ -1,5 +1,21 @@
 export const pokemonsListHomeMade = [
     {
+        id: 903,
+        name: 'Poussacha',
+        image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/903.png',
+        sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/903.png',
+        slug: 'Poussacha',
+        type: ['Plante'],
+    },
+    {
+        id: 906,
+        name: 'Coiffeton',
+        image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/906.png',
+        sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/906.png',
+        slug: 'Coiffeton',
+        type: ['Eau'],
+    },
+    {
         id: 909,
         name: 'Chochodile',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/909.png',
@@ -14,6 +30,14 @@ export const pokemonsListHomeMade = [
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/938.png',
         slug: 'Tetampoule',
         type: ['Électrik'],
+    },
+    {
+        id: 9999999,
+        name: 'Lilliterelle',
+        image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9999999.png',
+        sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9999999.png',
+        slug: 'Lilliterelle',
+        type: ['Insecte'],
     },
     {
         id: 996,

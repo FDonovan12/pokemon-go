@@ -15,7 +15,7 @@ export interface PokemonInterface {
     image: string;
     sprite: string;
     slug: PokemonSlug;
-    type: string[];
+    type: typePokemon[];
 }
 
 export type typePokemon =
