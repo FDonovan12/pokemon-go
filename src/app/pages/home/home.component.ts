@@ -1,14 +1,15 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { EventInterface } from '../../entities/event';
 import { BddEvent } from '../../repositories/event/event';
 import { GetAllService, PokemonInterface } from '../../repositories/pokemon/get-all.service';
-import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [RouterLink],
+    imports: [RouterLink, DatePipe],
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
 })
@@ -16,6 +17,8 @@ export class HomeComponent {
     private readonly httpClient: HttpClient = inject(HttpClient);
     private readonly getAllService: GetAllService = inject(GetAllService);
     readonly bddEvent: BddEvent = inject(BddEvent);
+
+    today = new Date();
 
     join = (arr: (PokemonInterface | string)[]) => ' & ' + arr.map(this.getName).join(', ') + ' & ';
 
@@ -26,9 +29,13 @@ export class HomeComponent {
 
     private readonly pokemons = this.getAllService.pokemonIndex.byName;
 
-    currentEvent: EventInterface | undefined = this.bddEvent
-        .getEventsPokemon()
-        .filter((event) => event.startAt <= new Date() && new Date() <= event.endAt)[0];
+    currentEvent: EventInterface | undefined =
+        this.bddEvent
+            .getEventsPokemon()
+            .filter((event) => event.startAt <= new Date() && new Date() <= event.endAt)[0] ??
+        this.bddEvent.getEventsPokemon().filter((event) => event.startAt >= new Date())[0];
+
+    futureEvents: EventInterface[] = this.bddEvent.getEventsPokemon().filter((event) => new Date() <= event.endAt);
 
     filters = [
         { label: 'IV PVP', query: ' & 2-pv & 2-défense & -1attaque & ' },
@@ -169,9 +176,12 @@ export class HomeComponent {
                 console.error('Error copying text: ', err);
             });
     }
+
     ngOnInit(): void {
         console.log(this.currentEvent);
         this.getData();
+
+        // this.futureEvents.sort((a, b) => a.startAt.getTime() - b.startAt.getTime());
         // console.log(Object.entries(pokemons).map((ob) => ob[1]));
     }
 

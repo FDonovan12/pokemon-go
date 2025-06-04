@@ -1,6 +1,16 @@
 <h1>Accueil!</h1>
-@if (currentEvent) {
-<a [routerLink]="'/event/' + currentEvent.slug">Event courant : {{ currentEvent.name }}</a>
+@for (futureEvent of futureEvents; track $index) {
+<div>
+    <a [routerLink]="'/event/' + futureEvent.slug">
+        @if (futureEvent.startAt <= today) { Event en cours :
+        {{ futureEvent.name }}
+        } @else { l’événement
+        {{ futureEvent.name }}
+        commence le
+        {{ futureEvent.startAt | date : 'longDate' }}
+        }
+    </a>
+</div>
 } @for (filter of filters; track $index) {
 <div>
     <button (click)="copy(filter.query)">{{ filter.label }}</button>
