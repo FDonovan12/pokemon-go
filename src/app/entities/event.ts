@@ -7,6 +7,7 @@ export interface EventInterface {
     endAt: Date;
     savagePokemons: SavagePokemons[];
     eggPokemons: PokemonInterface[];
+    raidPokemons?: PokemonInterface[];
 }
 
 export interface SavagePokemons {

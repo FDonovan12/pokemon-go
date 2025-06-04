@@ -7,7 +7,14 @@
         <h2>{{ location.title }}</h2>
         } @for (savage of location.pokemons; track $index) {
         <tr>
-            <td>{{ savage.name }}</td>
+            <td>
+                <img
+                    [src]="savage.image"
+                    alt=""
+                    style="max-height: 50px"
+                />
+                <!-- {{ savage.name }} -->
+            </td>
             <td class="type">
                 @for (type of savage.type; track $index) {
 
@@ -16,7 +23,16 @@
                 }
             </td>
             @for (mega of location.megas; track $index) {
-            <td>@if (bddEvent.haveTypeInCommon(mega, savage)) { {{ mega.name }}}</td>
+            <td>
+                @if (bddEvent.haveTypeInCommon(mega, savage)) {
+                <img
+                    [src]="mega.image"
+                    alt=""
+                    style="max-height: 50px"
+                />
+                <!-- {{ mega.name }} -->
+                }
+            </td>
             }
         </tr>
         } }

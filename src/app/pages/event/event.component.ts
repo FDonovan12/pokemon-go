@@ -40,31 +40,5 @@ export class EventComponent {
         } else {
             this.router.navigateByUrl('');
         }
-        console.log(eventTemp);
-        this.findIndex(2, [0, 1, 2, 3, 4, 5, 6, 7]);
-        this.findIndex(4, [0, 1, 2, 3, 4, 5, 6, 7]);
-        this.findIndex(5, [0, 1, 2, 3, 4, 6, 7]);
-        this.findIndex(7, [0, 1, 2, 3, 4, 5, 6, 7]);
-    }
-
-    private findIndex(number: number, list: number[]) {
-        console.log(list);
-        let left = 0;
-        let right = list.length - 1;
-        let currentIndex = Math.floor((left + right) / 2);
-
-        while (number !== list[currentIndex] && left !== right) {
-            console.log(currentIndex, left, right, list[currentIndex]);
-            if (number < list[currentIndex]) {
-                right = currentIndex - 1;
-            } else {
-                left = currentIndex + 1;
-            }
-            console.log(currentIndex, left, right, list[currentIndex]);
-            currentIndex = Math.floor((left + right) / 2);
-        }
-        if (number !== list[currentIndex]) console.log('not exist');
-        console.log('finale', currentIndex, 'inpout', number, '\n');
-        console.log('----------------');
     }
 }
