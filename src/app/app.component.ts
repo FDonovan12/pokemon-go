@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { GetAllService } from './repositories/pokemon/get-all.service';
+import { PokemonRepository } from './repositories/pokemon/pokemon.repository';
 
 @Component({
     selector: 'app-root',
@@ -12,7 +12,7 @@ import { GetAllService } from './repositories/pokemon/get-all.service';
 })
 export class AppComponent {
     private readonly httpClient: HttpClient = inject(HttpClient);
-    private readonly getAllService: GetAllService = inject(GetAllService);
+    private readonly getAllService: PokemonRepository = inject(PokemonRepository);
     ngOnInit(): void {
         // this.getData();
         // console.log(Object.entries(pokemons).map((ob) => ob[1]));

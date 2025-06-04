@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PokemonInterface } from '@entities/pokemon';
-import { GetAllService } from '@repositories/pokemon/get-all.service';
+import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { EventInterface } from '../../entities/event';
-import { BddEvent } from '../../repositories/event/event';
+import { EventRepository } from '../../repositories/event/event.repository';
 
 @Component({
     selector: 'app-home',
@@ -16,8 +16,8 @@ import { BddEvent } from '../../repositories/event/event';
 })
 export class HomeComponent {
     private readonly httpClient: HttpClient = inject(HttpClient);
-    private readonly getAllService: GetAllService = inject(GetAllService);
-    readonly bddEvent: BddEvent = inject(BddEvent);
+    private readonly getAllService: PokemonRepository = inject(PokemonRepository);
+    readonly bddEvent: EventRepository = inject(EventRepository);
 
     today = new Date();
 
@@ -31,42 +31,13 @@ export class HomeComponent {
     private readonly pokemons = this.getAllService.pokemonIndex.byName;
 
     futureEvents: EventInterface[] = this.bddEvent
-        .getEventsPokemon()
+        .getAllEventsPokemon()
         .filter((event) => new Date() <= event.endAt)
         .slice()
         .sort((a, b) => (a.startAt <= b.startAt ? -1 : 1));
 
-    private readonly onlySavagePokemons = ' & !raid & !éclos & !étude & ';
+    private readonly onlySavagePokemons = ' & !raid & !éclos & !étude & !dynamax & !gigamax & ';
 
-    private readonly starterPokemon = [
-        this.pokemons.Bulbizarre,
-        this.pokemons.Salameche,
-        this.pokemons.Carapuce,
-        this.pokemons.Germignon,
-        this.pokemons.Hericendre,
-        this.pokemons.Kaiminus,
-        this.pokemons.Arcko,
-        this.pokemons.Poussifeu,
-        this.pokemons.Tortipouss,
-        this.pokemons.Ouisticram,
-        this.pokemons.Tiplouf,
-        this.pokemons.Gobou,
-        this.pokemons.Vipelierre,
-        this.pokemons.Gruikui,
-        this.pokemons.Moustillon,
-        this.pokemons.Marisson,
-        this.pokemons.Feunnec,
-        this.pokemons.Grenousse,
-        this.pokemons.Brindibou,
-        this.pokemons.Flamiaou,
-        this.pokemons.Otaquin,
-        this.pokemons.Ouistempo,
-        this.pokemons.Flambino,
-        this.pokemons.Larmeleon,
-        this.pokemons.Chochodile,
-        this.pokemons.Poussacha,
-        this.pokemons.Coiffeton,
-    ];
     baseFilters = [
         { label: 'IV PVP', query: ' & 2-pv & 2-défense & -1attaque & ' },
         {
@@ -86,13 +57,14 @@ export class HomeComponent {
         { label: 'Filtre level 4', query: this.onlySavagePokemons + ' & 0*, 1*, 2* & !# & âge0 & pc-100 & ' },
         {
             label: 'Starter',
-            query: this.join(this.starterPokemon),
+            query: this.join(this.getAllService.starterPokemon),
         },
     ];
+
     filters = [
         ...this.baseFilters,
         ...this.bddEvent
-            .getEventsPokemon()
+            .getAllEventsPokemon()
             .filter((event) => event.startAt <= new Date(Date.now() + 1 * 86400000))
             .map((event) => ({
                 label: event.name,

@@ -3,15 +3,6 @@ import { PokemonInterface } from '@entities/pokemon';
 import pokemonsData from 'app/bdd/bdd-pokemons.json';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 
-// export interface PokemonInterface {
-//     id: number;
-//     name: string;
-//     image: string;
-//     sprite: string;
-//     slug: string;
-//     type: readonly typePokemon[];
-// }
-
 const pokemonsList = pokemonsData as PokemonInterface[];
 
 type Pokemon = (typeof pokemonsList | typeof pokemonsListHomeMade)[number];
@@ -23,7 +14,7 @@ type PokemonIndex = {
 @Injectable({
     providedIn: 'root',
 })
-export class GetAllService {
+export class PokemonRepository {
     private buildPokemonIndex = (
         listFromAPI: readonly PokemonInterface[],
         listHomemade: readonly Pokemon[] = [],
@@ -39,11 +30,38 @@ export class GetAllService {
         };
     };
     pokemonIndex = this.buildPokemonIndex(pokemonsList, pokemonsListHomeMade);
+
+    starterPokemon = [
+        this.pokemonIndex.byName.Bulbizarre,
+        this.pokemonIndex.byName.Salameche,
+        this.pokemonIndex.byName.Carapuce,
+        this.pokemonIndex.byName.Germignon,
+        this.pokemonIndex.byName.Hericendre,
+        this.pokemonIndex.byName.Kaiminus,
+        this.pokemonIndex.byName.Arcko,
+        this.pokemonIndex.byName.Poussifeu,
+        this.pokemonIndex.byName.Tortipouss,
+        this.pokemonIndex.byName.Ouisticram,
+        this.pokemonIndex.byName.Tiplouf,
+        this.pokemonIndex.byName.Gobou,
+        this.pokemonIndex.byName.Vipelierre,
+        this.pokemonIndex.byName.Gruikui,
+        this.pokemonIndex.byName.Moustillon,
+        this.pokemonIndex.byName.Marisson,
+        this.pokemonIndex.byName.Feunnec,
+        this.pokemonIndex.byName.Grenousse,
+        this.pokemonIndex.byName.Brindibou,
+        this.pokemonIndex.byName.Flamiaou,
+        this.pokemonIndex.byName.Otaquin,
+        this.pokemonIndex.byName.Ouistempo,
+        this.pokemonIndex.byName.Flambino,
+        this.pokemonIndex.byName.Larmeleon,
+        this.pokemonIndex.byName.Chochodile,
+        this.pokemonIndex.byName.Poussacha,
+        this.pokemonIndex.byName.Coiffeton,
+    ];
+
     megaList = this.buildMegaList();
-    ngOnInit(): void {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
-    }
 
     private buildMegaList(): PokemonInterface[] {
         const listBase: PokemonInterface[] = [
