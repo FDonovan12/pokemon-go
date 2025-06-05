@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
+import { EventPokemon } from '@entities/event';
 import { PokemonInterface } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
-import { EventInterface } from '../../entities/event';
 import { BddEvent } from './bdd-event';
 
 @Injectable({
@@ -11,20 +11,23 @@ export class EventRepository {
     private readonly getAllService: PokemonRepository = inject(PokemonRepository);
     private readonly bddEvent: BddEvent = inject(BddEvent);
 
-    getAllEventsPokemon(): EventInterface[] {
+    getAllEventsPokemon(): EventPokemon[] {
         const pokemons = this.getAllService.pokemonIndex.byName;
-        const result: EventInterface[] = this.bddEvent.getEventsPokemon();
+        const result: EventPokemon[] = this.bddEvent.getEventsPokemon();
 
         result.sort((a, b) => b.startAt.getTime() - a.startAt.getTime());
         return result;
     }
 
-    getEventBySlug(slug: string): EventInterface | undefined {
+    getEventBySlug(slug: string): EventPokemon | undefined {
         const eventTemp = this.getAllEventsPokemon().find((event) => event.slug === slug);
         if (eventTemp) {
-            eventTemp.savagePokemons = eventTemp.savagePokemons.map((savagePokemon) => {
+            eventTemp.savageGroups = eventTemp.savageGroups.map((savagePokemon) => {
                 savagePokemon.megas = this.getAllService.megaList.filter((mega) =>
-                    this.countTypeBoost(mega, savagePokemon.pokemons),
+                    this.countTypeBoost(
+                        mega,
+                        savagePokemon.pokemons.map((withRarity) => withRarity.pokemon),
+                    ),
                 );
                 return savagePokemon;
             });

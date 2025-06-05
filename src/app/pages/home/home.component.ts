@@ -4,7 +4,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PokemonInterface } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
-import { EventInterface } from '../../entities/event';
+import { EventPokemon } from '../../entities/event';
 import { EventRepository } from '../../repositories/event/event.repository';
 
 @Component({
@@ -30,7 +30,7 @@ export class HomeComponent {
 
     private readonly pokemons = this.getAllService.pokemonIndex.byName;
 
-    futureEvents: EventInterface[] = this.bddEvent
+    futureEvents: EventPokemon[] = this.bddEvent
         .getAllEventsPokemon()
         .filter((event) => new Date() <= event.endAt)
         .slice()
@@ -68,7 +68,7 @@ export class HomeComponent {
             .filter((event) => event.startAt <= new Date(Date.now() + 1 * 86400000))
             .map((event) => ({
                 label: event.name,
-                query: this.join(event.savagePokemons.map((group) => group.pokemons).flat()),
+                query: this.join(event.allSavagePokemons.map((withRarity) => withRarity.pokemon)),
             })),
     ];
 
