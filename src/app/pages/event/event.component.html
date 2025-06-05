@@ -3,9 +3,9 @@
 <h1>{{ event.name }}</h1>
 <table>
     <tbody>
-        @for (group of event.savagePokemons; track $index) { @if(group.title) {
+        @for (group of event.savageGroups; track $index) { @if(group.title) {
         <h2>{{ group.title }}</h2>
-        } @for (savage of group.pokemons; track $index) {
+        } @for (savage of group.pokemonsFlat; track $index) {
         <tr>
             <td>
                 <img

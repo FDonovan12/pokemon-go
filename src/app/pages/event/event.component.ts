@@ -1,6 +1,6 @@
 import { Component, inject, input, InputSignal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { EventInterface } from '@entities/event';
+import { EventPokemon } from '@entities/event';
 import { EventRepository } from '@repositories/event/event.repository';
 import { TypeComponent } from 'app/components/type/type.component';
 
@@ -18,7 +18,7 @@ export class EventComponent {
 
     private readonly router: Router = inject(Router);
 
-    event!: EventInterface;
+    event!: EventPokemon;
 
     ngOnInit(): void {
         const eventTemp = this.bddEvent.getEventBySlug(this.slug());
