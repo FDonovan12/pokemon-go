@@ -23,6 +23,7 @@
     "resolveJsonModule": true,
     "baseUrl": "src/",
     "paths": {
+      "@components/*": ["app/components/*"],
       "@atoms/*": ["app/components/atoms/*"],
       "@molecules/*": ["app/components/molecules/*"],
       "@organisms/*": ["app/components/organisms/*"],

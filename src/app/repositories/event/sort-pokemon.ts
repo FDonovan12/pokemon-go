@@ -4,7 +4,7 @@ import { PokemonInterface } from '@entities/pokemon';
 @Injectable({
     providedIn: 'root',
 })
-export class SortPokemon3Service {
+export class SortPokemonService {
     private pokemons!: PokemonInterface[];
     private megaPokemons!: PokemonInterface[];
     private nameMap!: Map<string, PokemonInterface>;

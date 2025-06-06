@@ -8,40 +8,9 @@
         <table>
             <tbody>
                 @for (group of event.savageGroups; track $index) {
-                    @if (group.title) {
-                        <tr>
-                            <td colspan="5">
-                                <h2>{{ group.title }}</h2>
-                            </td>
-                        </tr>
-                    }
-                    @for (savage of group.pokemons; track $index) {
-                        <tr>
-                            <td>
-                                <img
-                                    [src]="savage.image"
-                                    [alt]="savage.name"
-                                    style="max-height: 50px"
-                                />
-                            </td>
-                            <td class="type">
-                                @for (type of savage.type; track $index) {
-                                    <app-type [type]="type"></app-type>
-                                }
-                            </td>
-                            @for (mega of group.megas; track $index) {
-                                <td>
-                                    @if (bddEvent.haveTypeInCommon(mega, savage.pokemon)) {
-                                        <img
-                                            [src]="mega.image"
-                                            [alt]="mega.name"
-                                            style="max-height: 50px"
-                                        />
-                                    }
-                                </td>
-                            }
-                        </tr>
-                    }
+                    <div>
+                        <app-savage-group [group]="group"></app-savage-group>
+                    </div>
                 }
             </tbody>
         </table>
