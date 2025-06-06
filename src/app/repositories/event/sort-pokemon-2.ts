@@ -4,19 +4,17 @@ import { PokemonInterface } from '@entities/pokemon';
 @Injectable({
     providedIn: 'root',
 })
-export class SortPokemon3Service {
+export class SortPokemon2Service {
     private pokemons!: PokemonInterface[];
-    private megaPokemons!: PokemonInterface[];
     private nameMap!: Map<string, PokemonInterface>;
 
-    private setAttribut(pokemons: PokemonInterface[], megaPokemons: PokemonInterface[]) {
+    private setAttribut(pokemons: PokemonInterface[]) {
         this.pokemons = pokemons;
-        this.megaPokemons = megaPokemons;
         this.nameMap = new Map(pokemons.map((p) => [p.name, p]));
     }
 
-    public getOrderedList(pokemons: PokemonInterface[], megaPokemons: PokemonInterface[]): PokemonInterface[] {
-        this.setAttribut(pokemons, megaPokemons);
+    public getOrderedList(pokemons: PokemonInterface[]): PokemonInterface[] {
+        this.setAttribut(pokemons);
 
         const result: PokemonInterface[] = [];
         const remaining = new Set(pokemons.map((p) => p.name));
@@ -35,7 +33,7 @@ export class SortPokemon3Service {
                 remaining.delete(name);
             }
 
-            // Si aucun chemin trouvé
+            // Si aucun chemin trouvé (pokémon isolé), ajoute arbitrairement le premier restant
             if (bestChain.length === 0) {
                 const name = [...remaining][0];
                 const poke = this.nameMap.get(name);
@@ -53,12 +51,7 @@ export class SortPokemon3Service {
         for (const a of pokemons) {
             for (const b of pokemons) {
                 if (a.name === b.name) continue;
-
-                const directTypeCount = this.commonTypeCount(a, b);
-                const megaBridgeCount = this.megaCommonBridgeCount(a, b);
-
-                const weight = directTypeCount * 100 + megaBridgeCount * 0.1;
-
+                const weight = this.commonTypeCount(a, b);
                 if (weight > 0) {
                     if (!graph.has(a.name)) graph.set(a.name, []);
                     graph.get(a.name)!.push({ target: b.name, weight });
@@ -71,17 +64,6 @@ export class SortPokemon3Service {
 
     private commonTypeCount(a: PokemonInterface, b: PokemonInterface): number {
         return a.type.filter((type) => b.type.includes(type)).length;
-    }
-
-    /**
-     * Compte les méga-Pokémon qui ont un type en commun à la fois avec A et avec B
-     */
-    private megaCommonBridgeCount(a: PokemonInterface, b: PokemonInterface): number {
-        return this.megaPokemons.filter((mega) => {
-            const hasWithA = a.type.some((t) => mega.type.includes(t));
-            const hasWithB = b.type.some((t) => mega.type.includes(t));
-            return hasWithA && hasWithB;
-        }).length;
     }
 
     private findMaxWeightPath(graph: Map<string, { target: string; weight: number }[]>, nodes: string[]): string[] {

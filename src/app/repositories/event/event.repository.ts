@@ -3,7 +3,7 @@ import { EventPokemon, PokemonWithRarity } from '@entities/event';
 import { PokemonInterface } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { BddEvent } from './bdd-event';
-import { SortPokemonService } from './sort-pokemon';
+import { SortPokemonService } from './sort-pokemon-3';
 
 @Injectable({
     providedIn: 'root',
@@ -44,7 +44,7 @@ export class EventRepository {
                 console.log(megasGroup);
             });
             eventTemp.savageGroups.forEach((savage) => {
-                const newList = this.sortPokemonService.getOrderedList(savage.pokemonsFlat);
+                const newList = this.sortPokemonService.getOrderedList(savage.pokemonsFlat, savage.megas);
                 const withRarity = newList.map(
                     (pokemon) => new PokemonWithRarity(pokemon, !!savage.rarePokemons.find((p) => (p.id = pokemon.id))),
                 );

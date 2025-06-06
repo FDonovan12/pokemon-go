@@ -85,7 +85,6 @@ export class PokemonRepository {
             this.pokemonIndex.byName.Latios,
             this.pokemonIndex.byName.Cizayox,
             this.pokemonIndex.byName.Alakazam,
-            this.pokemonIndex.byName.Galeking,
             this.pokemonIndex.byName.Branette,
             this.pokemonIndex.byName.Laggron,
             this.pokemonIndex.byName.Jungko,
@@ -111,6 +110,7 @@ export class PokemonRepository {
         listBase.push({ ...this.pokemonIndex.byName.Groudon, type: ['Feu', 'Sol', 'Plante'] });
         listBase.push({ ...this.pokemonIndex.byName.Rayquaza, type: ['Dragon', 'Vol', 'Psy'] });
         listBase.push({ ...this.pokemonIndex.byName.Nanmeouie, type: ['Normal', 'Fée'] });
+        listBase.push({ ...this.pokemonIndex.byName.Galeking, type: ['Acier'] });
         return listBase;
     }
 }
