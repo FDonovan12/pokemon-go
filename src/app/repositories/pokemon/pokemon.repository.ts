@@ -97,7 +97,6 @@ export class PokemonRepository {
             this.pokemonIndex.byName.Scarabrute,
             this.pokemonIndex.byName.Tenefix,
             this.pokemonIndex.byName.Tyranocif,
-            this.pokemonIndex.byName.Rayquaza,
             this.pokemonIndex.byName.Diancie,
             this.pokemonIndex.byName.Carchacrok,
             this.pokemonIndex.byName.Scarhino,

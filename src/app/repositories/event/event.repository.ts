@@ -22,6 +22,7 @@ export class EventRepository {
     getEventBySlug(slug: string): EventPokemon | undefined {
         const eventTemp = this.getAllEventsPokemon().find((event) => event.slug === slug);
         if (eventTemp) {
+            console.log(this.getAllService.megaList);
             eventTemp.savageGroups = eventTemp.savageGroups.map((savagePokemon) => {
                 savagePokemon.megas = this.getAllService.megaList.filter((mega) =>
                     this.countTypeBoost(
@@ -30,6 +31,15 @@ export class EventRepository {
                     ),
                 );
                 return savagePokemon;
+            });
+            eventTemp.savageGroups.forEach((group) => {
+                const megas = group.megas;
+                const megasGroup = megas.map((mega) => ({
+                    mega: mega,
+                    pokemonBoost: group.pokemonsFlat.filter((pokemon) => this.haveTypeInCommon(mega, pokemon)),
+                }));
+                group.megasGroup = megasGroup;
+                console.log(megasGroup);
             });
         }
         return eventTemp;

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
+import { EventBuilder, EventPokemon, PokemonWithRarity } from '@entities/event';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
-import { EventBuilder, EventPokemon } from '../../entities/event';
 
 @Injectable({
     providedIn: 'root',
@@ -17,61 +17,87 @@ export class BddEvent {
                 .withEndAt(new Date(2025, 5, 29, 18))
                 .addSavageGroup(
                     [
-                        pokemons.Malosse,
-                        pokemons.Chamallot,
-                        pokemons.Skelenox,
-                        pokemons.Scrutella,
-                        pokemons.Gringolem,
-                        pokemons.Passerouge,
-                        pokemons.Flabebe,
-                        pokemons.Venalgue,
-                        pokemons.Chochodile,
-                        pokemons.Strassie,
+                        new PokemonWithRarity(pokemons.Leveinard),
+                        new PokemonWithRarity(pokemons.Airmure),
+                        new PokemonWithRarity(pokemons.Embrylex),
+                        new PokemonWithRarity(pokemons.Dinoclier),
+                        new PokemonWithRarity(pokemons.Escargaume),
+                        new PokemonWithRarity(pokemons.Vostourno),
+                        new PokemonWithRarity(pokemons.Gouroutan),
+                        new PokemonWithRarity(pokemons.Mucuscule, true),
+                    ],
+                    'Samedi',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.CanartichoGalar),
+                        new PokemonWithRarity(pokemons.Osselait),
+                        new PokemonWithRarity(pokemons.Tarsal),
+                        new PokemonWithRarity(pokemons.Carabing),
+                        new PokemonWithRarity(pokemons.Scalpion),
+                        new PokemonWithRarity(pokemons.Solochi),
+                        new PokemonWithRarity(pokemons.Quartermac),
+                        new PokemonWithRarity(pokemons.Bebecaille, true),
+                    ],
+                    'Dimanche',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Malosse),
+                        new PokemonWithRarity(pokemons.Chamallot),
+                        new PokemonWithRarity(pokemons.Skelenox),
+                        new PokemonWithRarity(pokemons.Scrutella),
+                        new PokemonWithRarity(pokemons.Gringolem),
+                        new PokemonWithRarity(pokemons.Passerouge),
+                        new PokemonWithRarity(pokemons.Flabebe),
+                        new PokemonWithRarity(pokemons.Venalgue),
+                        new PokemonWithRarity(pokemons.Chochodile),
+                        new PokemonWithRarity(pokemons.Strassie, true),
                     ],
                     'Volcan',
                 )
                 .addSavageGroup(
                     [
-                        pokemons.Machoc,
-                        pokemons.Elektek,
-                        pokemons.Teddiursa,
-                        pokemons.Baggiguane,
-                        pokemons.Marisson,
-                        pokemons.Flabebe,
-                        pokemons.Pandespiegle,
-                        pokemons.Dedenne,
-                        pokemons.Crabagarre,
-                        pokemons.Kungfouine,
+                        new PokemonWithRarity(pokemons.Machoc),
+                        new PokemonWithRarity(pokemons.Elektek),
+                        new PokemonWithRarity(pokemons.Teddiursa),
+                        new PokemonWithRarity(pokemons.Baggiguane),
+                        new PokemonWithRarity(pokemons.Marisson),
+                        new PokemonWithRarity(pokemons.Flabebe),
+                        new PokemonWithRarity(pokemons.Pandespiegle),
+                        new PokemonWithRarity(pokemons.Dedenne),
+                        new PokemonWithRarity(pokemons.Crabagarre),
+                        new PokemonWithRarity(pokemons.Kungfouine, true),
                     ],
                     'Dojo',
                 )
                 .addSavageGroup(
                     [
-                        pokemons.SabletteAlola,
-                        pokemons.Marcacrin,
-                        pokemons.Obalie,
-                        pokemons.Tiplouf,
-                        pokemons.Blizzi,
-                        pokemons.Munna,
-                        pokemons.Lewsor,
-                        pokemons.Flabebe,
-                        pokemons.Grelacon,
-                        pokemons.Frigodo,
+                        new PokemonWithRarity(pokemons.SabletteAlola),
+                        new PokemonWithRarity(pokemons.Marcacrin),
+                        new PokemonWithRarity(pokemons.Obalie),
+                        new PokemonWithRarity(pokemons.Tiplouf),
+                        new PokemonWithRarity(pokemons.Blizzi),
+                        new PokemonWithRarity(pokemons.Munna),
+                        new PokemonWithRarity(pokemons.Lewsor),
+                        new PokemonWithRarity(pokemons.Flabebe),
+                        new PokemonWithRarity(pokemons.Grelacon),
+                        new PokemonWithRarity(pokemons.Frigodo, true),
                     ],
                     'Tundra',
                 )
                 .addSavageGroup(
                     [
-                        pokemons.Melofee,
-                        pokemons.Tentacool,
-                        pokemons.Mysdibule,
-                        pokemons.Gloupti,
-                        pokemons.Venipatte,
-                        pokemons.Otaquin,
-                        pokemons.Vorasterie,
-                        pokemons.Spododo,
-                        pokemons.Togetic,
-                        pokemons.Flabebe,
+                        new PokemonWithRarity(pokemons.Melofee),
+                        new PokemonWithRarity(pokemons.Tentacool),
+                        new PokemonWithRarity(pokemons.Mysdibule),
+                        new PokemonWithRarity(pokemons.Gloupti),
+                        new PokemonWithRarity(pokemons.Venipatte),
+                        new PokemonWithRarity(pokemons.Otaquin),
+                        new PokemonWithRarity(pokemons.Vorasterie),
+                        new PokemonWithRarity(pokemons.Spododo),
+                        new PokemonWithRarity(pokemons.Togetic, true),
+                        new PokemonWithRarity(pokemons.Flabebe, true),
                     ],
                     'Swamp',
                 )
@@ -82,16 +108,16 @@ export class BddEvent {
                 .withEndAt(new Date(2025, 5, 18, 20))
 
                 .addSavageGroup([
-                    pokemons.Rhinocorne,
-                    pokemons.Skelenox,
-                    pokemons.Rapion,
-                    pokemons.Rototaupe,
-                    pokemons.Arkeapti,
-                    pokemons.Scrutella,
-                    pokemons.Gringolem,
-                    pokemons.Brocelome,
-                    pokemons.Eoko,
-                    pokemons.Tenefix,
+                    new PokemonWithRarity(pokemons.Rhinocorne),
+                    new PokemonWithRarity(pokemons.Skelenox),
+                    new PokemonWithRarity(pokemons.Rapion),
+                    new PokemonWithRarity(pokemons.Rototaupe),
+                    new PokemonWithRarity(pokemons.Arkeapti),
+                    new PokemonWithRarity(pokemons.Scrutella),
+                    new PokemonWithRarity(pokemons.Gringolem),
+                    new PokemonWithRarity(pokemons.Brocelome),
+                    new PokemonWithRarity(pokemons.Eoko),
+                    new PokemonWithRarity(pokemons.Tenefix),
                 ])
                 .build(),
             new EventBuilder()
@@ -100,15 +126,15 @@ export class BddEvent {
                 .withEndAt(new Date(2025, 5, 11, 20))
 
                 .addSavageGroup([
-                    pokemons.Miaouss,
-                    pokemons.Granivol,
-                    pokemons.Grindur,
-                    pokemons.LimondeGalar,
-                    pokemons.Gringolem,
-                    pokemons.Tetampoule,
-                    pokemons.Terhal,
-                    pokemons.Hexadron,
-                    pokemons.Eoko,
+                    new PokemonWithRarity(pokemons.Miaouss),
+                    new PokemonWithRarity(pokemons.Granivol),
+                    new PokemonWithRarity(pokemons.Grindur),
+                    new PokemonWithRarity(pokemons.LimondeGalar),
+                    new PokemonWithRarity(pokemons.Gringolem),
+                    new PokemonWithRarity(pokemons.Tetampoule),
+                    new PokemonWithRarity(pokemons.Terhal),
+                    new PokemonWithRarity(pokemons.Hexadron),
+                    new PokemonWithRarity(pokemons.Eoko),
                 ])
                 .withRaidPokemons([
                     pokemons.Miaouss,
@@ -124,15 +150,15 @@ export class BddEvent {
                 .withEndAt(new Date(2025, 5, 3, 20))
 
                 .addSavageGroup([
-                    pokemons.Leveinard,
-                    pokemons.Marill,
-                    pokemons.Couafarel,
-                    pokemons.Bombydou,
-                    pokemons.Spododo,
-                    pokemons.Dodoala,
-                    pokemons.Bibichut,
-                    pokemons.Ronflex,
-                    pokemons.Eoko,
+                    new PokemonWithRarity(pokemons.Leveinard),
+                    new PokemonWithRarity(pokemons.Marill),
+                    new PokemonWithRarity(pokemons.Couafarel),
+                    new PokemonWithRarity(pokemons.Bombydou),
+                    new PokemonWithRarity(pokemons.Spododo),
+                    new PokemonWithRarity(pokemons.Dodoala),
+                    new PokemonWithRarity(pokemons.Bibichut),
+                    new PokemonWithRarity(pokemons.Ronflex),
+                    new PokemonWithRarity(pokemons.Eoko),
                 ])
                 .withEggPokemons([pokemons.Korillon, pokemons.Munna, pokemons.Fluvetin, pokemons.Sucroquin])
                 .build(),
@@ -142,16 +168,16 @@ export class BddEvent {
                 .withEndAt(new Date(2025, 4, 7, 20))
 
                 .addSavageGroup([
-                    pokemons.Magicarpe,
-                    pokemons.Wailmer,
-                    pokemons.Tylton,
-                    pokemons.Trompignon,
-                    pokemons.Dedenne,
-                    pokemons.Bombydou,
-                    pokemons.Munna,
-                    pokemons.Sovkipou,
-                    pokemons.Minisange,
-                    pokemons.Lilliterelle,
+                    new PokemonWithRarity(pokemons.Magicarpe),
+                    new PokemonWithRarity(pokemons.Wailmer),
+                    new PokemonWithRarity(pokemons.Tylton),
+                    new PokemonWithRarity(pokemons.Trompignon),
+                    new PokemonWithRarity(pokemons.Dedenne),
+                    new PokemonWithRarity(pokemons.Bombydou),
+                    new PokemonWithRarity(pokemons.Munna),
+                    new PokemonWithRarity(pokemons.Sovkipou),
+                    new PokemonWithRarity(pokemons.Minisange),
+                    new PokemonWithRarity(pokemons.Lilliterelle),
                 ])
                 .withEggPokemons([
                     pokemons.Ptiravi,
@@ -167,13 +193,13 @@ export class BddEvent {
                 .withEndAt(new Date(2025, 4, 27, 20))
 
                 .addSavageGroup([
-                    pokemons.Ferosinge,
-                    pokemons.Otaria,
-                    pokemons.Zigzaton,
-                    pokemons.Meditikka,
-                    pokemons.Grenousse,
-                    pokemons.Solochi,
-                    pokemons.Goupilou,
+                    new PokemonWithRarity(pokemons.Ferosinge),
+                    new PokemonWithRarity(pokemons.Otaria),
+                    new PokemonWithRarity(pokemons.Zigzaton),
+                    new PokemonWithRarity(pokemons.Meditikka),
+                    new PokemonWithRarity(pokemons.Grenousse),
+                    new PokemonWithRarity(pokemons.Solochi),
+                    new PokemonWithRarity(pokemons.Goupilou),
                 ])
                 .build(),
         ];

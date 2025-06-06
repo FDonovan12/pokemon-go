@@ -56,6 +56,14 @@ export const pokemonsListHomeMade = [
         type: ['Glace', 'Acier'],
     },
     {
+        id: 10166,
+        name: 'Canarticho de Galar',
+        image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10166.png',
+        sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10166.png',
+        slug: 'CanartichoGalar',
+        type: ['Combat'],
+    },
+    {
         id: 10180,
         name: 'Limonde de Galar',
         image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10180.png',

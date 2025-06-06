@@ -30,6 +30,7 @@ export class SavageGroup {
         pokemons: (PokemonWithRarity | PokemonInterface)[],
         public title: string | undefined = undefined,
         public megas: PokemonInterface[] = [],
+        public megasGroup: MegaGroup[] = [],
     ) {
         this.pokemons = pokemons.map((p) => (p instanceof PokemonWithRarity ? p : new PokemonWithRarity(p)));
     }
@@ -45,6 +46,11 @@ export class SavageGroup {
     get commonPokemons(): PokemonWithRarity[] {
         return this.pokemons.filter((p) => !p.isRare);
     }
+}
+
+export interface MegaGroup {
+    mega: PokemonInterface;
+    pokemonBoost: PokemonInterface[];
 }
 
 export class PokemonWithRarity {

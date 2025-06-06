@@ -20,6 +20,8 @@ export class EventComponent {
 
     event!: EventPokemon;
 
+    viewTable = true;
+
     ngOnInit(): void {
         const eventTemp = this.bddEvent.getEventBySlug(this.slug());
         if (eventTemp) {
@@ -27,5 +29,9 @@ export class EventComponent {
         } else {
             this.router.navigateByUrl('');
         }
+    }
+
+    toggleView(): void {
+        this.viewTable = !this.viewTable;
     }
 }

@@ -1,41 +1,71 @@
 <a routerLink="/">Accueil</a>
 @if (event) {
-<h1>{{ event.name }}</h1>
-<table>
-    <tbody>
-        @for (group of event.savageGroups; track $index) { @if(group.title) {
-        <h2>{{ group.title }}</h2>
-        } @for (savage of group.pokemonsFlat; track $index) {
-        <tr>
-            <td>
-                <img
-                    [src]="savage.image"
-                    alt=""
-                    style="max-height: 50px"
-                />
-                <!-- {{ savage.name }} -->
-            </td>
-            <td class="type">
-                @for (type of savage.type; track $index) {
-
-                <!-- <span>{{ type }}</span> -->
-                <app-type [type]="type"></app-type>
+    <div>
+        <h1>{{ event.name }}</h1>
+        <button (click)="toggleView()">Switch de vue</button>
+    </div>
+    @if (viewTable) {
+        <table>
+            <tbody>
+                @for (group of event.savageGroups; track $index) {
+                    @if (group.title) {
+                        <tr>
+                            <td colspan="5">
+                                <h2>{{ group.title }}</h2>
+                            </td>
+                        </tr>
+                    }
+                    @for (savage of group.pokemons; track $index) {
+                        <tr>
+                            <td>
+                                <img
+                                    [src]="savage.image"
+                                    [alt]="savage.name"
+                                    style="max-height: 50px"
+                                />
+                            </td>
+                            <td class="type">
+                                @for (type of savage.type; track $index) {
+                                    <app-type [type]="type"></app-type>
+                                }
+                            </td>
+                            @for (mega of group.megas; track $index) {
+                                <td>
+                                    @if (bddEvent.haveTypeInCommon(mega, savage.pokemon)) {
+                                        <img
+                                            [src]="mega.image"
+                                            [alt]="mega.name"
+                                            style="max-height: 50px"
+                                        />
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
                 }
-            </td>
-            @for (mega of group.megas; track $index) {
-            <td>
-                @if (bddEvent.haveTypeInCommon(mega, savage)) {
-                <img
-                    [src]="mega.image"
-                    alt=""
-                    style="max-height: 50px"
-                />
-                <!-- {{ mega.name }} -->
-                }
-            </td>
+            </tbody>
+        </table>
+    } @else {
+        @for (group of event.savageGroups; track $index) {
+            @if (group.title) {
+                <h2>{{ group.title }}</h2>
             }
-        </tr>
-        } }
-    </tbody>
-</table>
+            @for (megaGroup of group.megasGroup; track $index) {
+                <div style="flex-wrap: nowrap; display: flex">
+                    <img
+                        [src]="megaGroup.mega.image"
+                        [alt]="megaGroup.mega.name"
+                        style="max-height: 50px; margin-right: 20px"
+                    />
+                    @for (pokemon of megaGroup.pokemonBoost; track $index) {
+                        <img
+                            [src]="pokemon.image"
+                            [alt]="pokemon.name"
+                            style="max-height: 50px"
+                        />
+                    }
+                </div>
+            }
+        }
+    }
 }
