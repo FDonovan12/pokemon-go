@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { PokemonInterface } from '@entities/pokemon';
+import { Pokemon, PokemonInterface } from '@entities/pokemon';
 import pokemonsData from 'app/bdd/bdd-pokemons.json';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 
 const pokemonsList = pokemonsData as PokemonInterface[];
 
-type Pokemon = (typeof pokemonsList | typeof pokemonsListHomeMade)[number];
+type PokemonHomeMade = (typeof pokemonsListHomeMade)[number];
 
 type PokemonIndex = {
     byId: Record<PokemonInterface['id'], PokemonInterface>;
@@ -17,7 +17,7 @@ type PokemonIndex = {
 export class PokemonRepository {
     private buildPokemonIndex = (
         listFromAPI: readonly PokemonInterface[],
-        listHomemade: readonly Pokemon[] = [],
+        listHomemade: readonly PokemonHomeMade[] = [],
     ): PokemonIndex => {
         const list = [...listFromAPI, ...listHomemade] as PokemonInterface[];
 
@@ -65,52 +65,59 @@ export class PokemonRepository {
 
     private buildMegaList(): PokemonInterface[] {
         const listBase: PokemonInterface[] = [
-            this.pokemonIndex.byName.Florizarre,
-            this.pokemonIndex.byName.Tortank,
-            this.pokemonIndex.byName.Dardargnan,
-            this.pokemonIndex.byName.Roucarnage,
-            this.pokemonIndex.byName.Ectoplasma,
-            this.pokemonIndex.byName.Demolosse,
-            this.pokemonIndex.byName.Blizzaroi,
-            this.pokemonIndex.byName.Pharamp,
-            this.pokemonIndex.byName.Elecsprint,
-            this.pokemonIndex.byName.Lockpin,
-            this.pokemonIndex.byName.Altaria,
-            this.pokemonIndex.byName.Flagadoss,
-            this.pokemonIndex.byName.Absol,
-            this.pokemonIndex.byName.Steelix,
-            this.pokemonIndex.byName.Ptera,
-            this.pokemonIndex.byName.Kangourex,
-            this.pokemonIndex.byName.Latias,
-            this.pokemonIndex.byName.Latios,
-            this.pokemonIndex.byName.Cizayox,
-            this.pokemonIndex.byName.Alakazam,
-            this.pokemonIndex.byName.Branette,
-            this.pokemonIndex.byName.Laggron,
-            this.pokemonIndex.byName.Jungko,
-            this.pokemonIndex.byName.Brasegali,
-            this.pokemonIndex.byName.Oniglali,
-            this.pokemonIndex.byName.Drattak,
-            this.pokemonIndex.byName.Gardevoir,
-            this.pokemonIndex.byName.Charmina,
-            this.pokemonIndex.byName.Scarabrute,
-            this.pokemonIndex.byName.Tenefix,
-            this.pokemonIndex.byName.Tyranocif,
-            this.pokemonIndex.byName.Diancie,
-            this.pokemonIndex.byName.Carchacrok,
-            this.pokemonIndex.byName.Scarhino,
-            this.pokemonIndex.byName.Lucario,
-            this.pokemonIndex.byName.Mysdibule,
-            this.pokemonIndex.byName.Gallame,
+            new Pokemon({ ...this.pokemonIndex.byName.Florizarre, id: 10033 }),
+            new Pokemon({ ...this.pokemonIndex.byName.Tortank, id: 10036 }),
+            new Pokemon({ ...this.pokemonIndex.byName.Dardargnan }),
+            new Pokemon({ ...this.pokemonIndex.byName.Roucarnage }),
+            new Pokemon({ ...this.pokemonIndex.byName.Ectoplasma }),
+            new Pokemon({ ...this.pokemonIndex.byName.Demolosse }),
+            new Pokemon({ ...this.pokemonIndex.byName.Blizzaroi }),
+            new Pokemon({ ...this.pokemonIndex.byName.Pharamp }),
+            new Pokemon({ ...this.pokemonIndex.byName.Elecsprint }),
+            new Pokemon({ ...this.pokemonIndex.byName.Lockpin }),
+            new Pokemon({ ...this.pokemonIndex.byName.Altaria }),
+            new Pokemon({ ...this.pokemonIndex.byName.Flagadoss }),
+            new Pokemon({ ...this.pokemonIndex.byName.Absol }),
+            new Pokemon({ ...this.pokemonIndex.byName.Steelix }),
+            new Pokemon({ ...this.pokemonIndex.byName.Ptera }),
+            new Pokemon({ ...this.pokemonIndex.byName.Kangourex }),
+            new Pokemon({ ...this.pokemonIndex.byName.Latias }),
+            new Pokemon({ ...this.pokemonIndex.byName.Latios }),
+            new Pokemon({ ...this.pokemonIndex.byName.Cizayox }),
+            new Pokemon({ ...this.pokemonIndex.byName.Alakazam }),
+            new Pokemon({ ...this.pokemonIndex.byName.Branette }),
+            new Pokemon({ ...this.pokemonIndex.byName.Laggron }),
+            new Pokemon({ ...this.pokemonIndex.byName.Jungko }),
+            new Pokemon({ ...this.pokemonIndex.byName.Brasegali }),
+            new Pokemon({ ...this.pokemonIndex.byName.Oniglali }),
+            new Pokemon({ ...this.pokemonIndex.byName.Drattak }),
+            new Pokemon({ ...this.pokemonIndex.byName.Gardevoir }),
+            new Pokemon({ ...this.pokemonIndex.byName.Charmina }),
+            new Pokemon({ ...this.pokemonIndex.byName.Scarabrute }),
+            new Pokemon({ ...this.pokemonIndex.byName.Tenefix }),
+            new Pokemon({ ...this.pokemonIndex.byName.Tyranocif }),
+            new Pokemon({ ...this.pokemonIndex.byName.Diancie }),
+            new Pokemon({ ...this.pokemonIndex.byName.Carchacrok }),
+            new Pokemon({ ...this.pokemonIndex.byName.Scarhino }),
+            new Pokemon({ ...this.pokemonIndex.byName.Lucario }),
+            new Pokemon({ ...this.pokemonIndex.byName.Mysdibule }),
+            new Pokemon({ ...this.pokemonIndex.byName.Gallame }),
         ];
-        listBase.push({ ...this.pokemonIndex.byName.Dracaufeu, name: 'Dracofeu-X', type: ['Feu', 'Dragon'] });
-        listBase.push({ ...this.pokemonIndex.byName.Dracaufeu, name: 'Dracofeu-Y' });
-        listBase.push({ ...this.pokemonIndex.byName.Leviator, type: ['Eau', 'Ténèbres'] });
-        listBase.push({ ...this.pokemonIndex.byName.Kyogre, type: ['Eau', 'Insecte', 'Électrik'] });
-        listBase.push({ ...this.pokemonIndex.byName.Groudon, type: ['Feu', 'Sol', 'Plante'] });
-        listBase.push({ ...this.pokemonIndex.byName.Rayquaza, type: ['Dragon', 'Vol', 'Psy'] });
-        listBase.push({ ...this.pokemonIndex.byName.Nanmeouie, type: ['Normal', 'Fée'] });
-        listBase.push({ ...this.pokemonIndex.byName.Galeking, type: ['Acier'] });
+        listBase.push(
+            new Pokemon({
+                ...this.pokemonIndex.byName.Dracaufeu,
+                name: 'Dracofeu-X',
+                type: ['Feu', 'Dragon'],
+                id: 10034,
+            }),
+        );
+        listBase.push(new Pokemon({ ...this.pokemonIndex.byName.Dracaufeu, name: 'Dracofeu-Y', id: 10035 }));
+        listBase.push(new Pokemon({ ...this.pokemonIndex.byName.Leviator, type: ['Eau', 'Ténèbres'] }));
+        listBase.push(new Pokemon({ ...this.pokemonIndex.byName.Kyogre, type: ['Eau', 'Insecte', 'Électrik'] }));
+        listBase.push(new Pokemon({ ...this.pokemonIndex.byName.Groudon, type: ['Feu', 'Sol', 'Plante'] }));
+        listBase.push(new Pokemon({ ...this.pokemonIndex.byName.Rayquaza, type: ['Dragon', 'Vol', 'Psy'] }));
+        listBase.push(new Pokemon({ ...this.pokemonIndex.byName.Nanmeouie, type: ['Normal', 'Fée'] }));
+        listBase.push(new Pokemon({ ...this.pokemonIndex.byName.Galeking, type: ['Acier'] }));
         return listBase;
     }
 }

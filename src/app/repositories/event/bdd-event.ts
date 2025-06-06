@@ -12,6 +12,83 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Saison Jours heureux')
+                .withStartAt(new Date(2025, 5, 3, 10))
+                .withEndAt(new Date(2025, 8, 2, 10))
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.VoltorbeHisui),
+                        new PokemonWithRarity(pokemons.Arcko),
+                        new PokemonWithRarity(pokemons.Poussifeu),
+                        new PokemonWithRarity(pokemons.Gobou),
+                        new PokemonWithRarity(pokemons.Vivaldaim),
+                        new PokemonWithRarity(pokemons.Mucuscule),
+                        new PokemonWithRarity(pokemons.Mimantis),
+                    ],
+                    'Nord',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.QwilfishHisui),
+                        new PokemonWithRarity(pokemons.Draby),
+                        new PokemonWithRarity(pokemons.Tortipouss),
+                        new PokemonWithRarity(pokemons.Ouisticram),
+                        new PokemonWithRarity(pokemons.Tiplouf),
+                        new PokemonWithRarity(pokemons.Vivaldaim),
+                        new PokemonWithRarity(pokemons.Grelacon),
+                    ],
+                    'Sud',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Roucarnage),
+                        new PokemonWithRarity(pokemons.MiaoussAlola),
+                        new PokemonWithRarity(pokemons.Cheniti),
+                        new PokemonWithRarity(pokemons.Chaglam),
+                        new PokemonWithRarity(pokemons.Baggiguane),
+                        new PokemonWithRarity(pokemons.Funecire),
+                        new PokemonWithRarity(pokemons.Patachiot),
+                    ],
+                    'Villes',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.PonytaGalar),
+                        new PokemonWithRarity(pokemons.Pharamp),
+                        new PokemonWithRarity(pokemons.Simularbre),
+                        new PokemonWithRarity(pokemons.Cheniti),
+                        new PokemonWithRarity(pokemons.Ratentif),
+                        new PokemonWithRarity(pokemons.Chlorobule),
+                        new PokemonWithRarity(pokemons.Tournicoton),
+                    ],
+                    'Forêts',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.RacaillouAlola),
+                        new PokemonWithRarity(pokemons.Tarinor),
+                        new PokemonWithRarity(pokemons.Galeking),
+                        new PokemonWithRarity(pokemons.Cheniti),
+                        new PokemonWithRarity(pokemons.LimondeGalar),
+                        new PokemonWithRarity(pokemons.Sapereau),
+                        new PokemonWithRarity(pokemons.Minisange),
+                    ],
+                    'Montagnes',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.RamolossGalar),
+                        new PokemonWithRarity(pokemons.Leviator),
+                        new PokemonWithRarity(pokemons.Demanta),
+                        new PokemonWithRarity(pokemons.Keunotor),
+                        new PokemonWithRarity(pokemons.Araqua),
+                        new PokemonWithRarity(pokemons.Denticrisse),
+                        new PokemonWithRarity(pokemons.Tetampoule),
+                    ],
+                    'Plages',
+                )
+                .build(),
+            new EventBuilder()
                 .withName('Go Fest 2025') // L’événement se déroule du samedi 28 juin à 10h au samedi 29 juin 18h (heure locale))
                 .withStartAt(new Date(2025, 5, 28, 10))
                 .withEndAt(new Date(2025, 5, 29, 18))

@@ -18,6 +18,25 @@ export interface PokemonInterface {
     type: typePokemon[];
 }
 
+export class Pokemon implements PokemonInterface {
+    id: number;
+    name: string;
+    slug: PokemonSlug;
+    type: typePokemon[];
+    constructor(rawData: PokemonInterface) {
+        this.id = rawData.id;
+        this.name = rawData.name;
+        this.slug = rawData.slug;
+        this.type = rawData.type;
+    }
+    get image(): string {
+        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${this.id}.png`;
+    }
+    get sprite(): string {
+        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.id}.png`;
+    }
+}
+
 export type typePokemon =
     | 'Acier'
     | 'Combat'
