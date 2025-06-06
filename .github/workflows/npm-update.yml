@@ -30,11 +30,11 @@ jobs:
           devDeps=$(jq -r '.devDependencies // {} | keys[]' package.json)
 
           for dep in $deps; do
-            npm install "$dep@latest"
+            npm install "$dep@latest" --legacy-peer-deps
           done
 
           for dep in $devDeps; do
-            npm install --save-dev "$dep@latest"
+            npm install --save-dev "$dep@latest" --legacy-peer-deps
           done
 
       - name: Commit updated dependencies
