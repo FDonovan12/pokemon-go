@@ -1,40 +1,59 @@
-name: Auto NPM Update
+name: Auto NPM Update (Latest)
 
 on:
   schedule:
-    - cron: '0 3 * * 1' # chaque lundi à 3h du matin
-  workflow_dispatch: # exécutable manuellement
+    - cron: '0 3 * * 1' # chaque lundi à 3h
+  workflow_dispatch:
 
 jobs:
   npm-update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo (main)
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: main # ou master selon ta branche par défaut
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
+      - name: Install deps
         run: npm install
 
-      - name: Update dependencies
-        run: npm update
+      - name: Upgrade all dependencies to latest
+        run: |
+          # Met à jour toutes les deps vers la dernière version (stable)
+          deps=$(jq -r '.dependencies // {} | keys[]' package.json)
+          devDeps=$(jq -r '.devDependencies // {} | keys[]' package.json)
+
+          for dep in $deps; do
+            npm install "$dep@latest"
+          done
+
+          for dep in $devDeps; do
+            npm install --save-dev "$dep@latest"
+          done
+
+      - name: Commit updated dependencies
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b chore/npm-update-${{ github.run_id }}
+          git add package.json package-lock.json
+          git commit -m "chore(deps): update all dependencies to latest"
+          git push origin HEAD
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'chore(deps): update all npm dependencies'
-          title: 'chore(deps): update all npm dependencies'
+          commit-message: 'chore(deps): update all dependencies to latest'
+          title: 'chore(deps): update all dependencies to latest'
           body: |
-            This PR was automatically generated to update all NPM dependencies using `npm update`.
-            Please review the changes and merge if everything looks good.
+            This PR was automatically generated to update all dependencies (including Angular) to their latest available versions.
+            Please test and review before merging.
           branch: chore/npm-update-${{ github.run_id }}
           delete-branch: true
