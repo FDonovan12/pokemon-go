@@ -10,10 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repo (main)
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main # ou master selon ta branche par défaut
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -25,15 +26,6 @@ jobs:
 
       - name: Update dependencies
         run: npm update
-
-      - name: Commit updated dependencies
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b chore/npm-update-${{ github.run_id }}
-          git add package.json package-lock.json
-          git commit -m "chore(deps): update all npm dependencies"
-          git push origin HEAD
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
