@@ -18,7 +18,7 @@ export class EventPokemon {
         return this.savageGroups.flatMap((group) => group.pokemons);
     }
 
-    get rareSavagePokemons(): PokemonWithRarity[] {
+    get rareSavagePokemons(): PokemonInterface[] {
         return this.savageGroups.flatMap((group) => group.rarePokemons);
     }
 }
@@ -39,12 +39,12 @@ export class SavageGroup {
         return this.pokemons.map((p) => p.pokemon);
     }
 
-    get rarePokemons(): PokemonWithRarity[] {
-        return this.pokemons.filter((p) => p.isRare);
+    get rarePokemons(): PokemonInterface[] {
+        return this.pokemons.filter((p) => p.isRare).map((p) => p.pokemon);
     }
 
-    get commonPokemons(): PokemonWithRarity[] {
-        return this.pokemons.filter((p) => !p.isRare);
+    get commonPokemons(): PokemonInterface[] {
+        return this.pokemons.filter((p) => !p.isRare).map((p) => p.pokemon);
     }
 }
 
@@ -54,7 +54,10 @@ export interface MegaGroup {
 }
 
 export class PokemonWithRarity {
-    constructor(public pokemon: PokemonInterface, public isRare: boolean = false) {}
+    constructor(
+        public pokemon: PokemonInterface,
+        public isRare: boolean = false,
+    ) {}
 
     get name(): string {
         return this.pokemon.name;
