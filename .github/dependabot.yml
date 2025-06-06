@@ -6,6 +6,10 @@ updates:
     schedule:
       interval: 'weekly' # "daily", "weekly", ou "monthly"
     open-pull-requests-limit: 5
+    groups:
+      angular:
+        patterns:
+          - '@angular/*'
     commit-message:
       prefix: 'chore(deps)'
     rebase-strategy: 'auto'
