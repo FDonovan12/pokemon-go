@@ -5,7 +5,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { Logger } from '@services/logger/logger';
 import { LoggerDev } from '@services/logger/logger.dev';
 import { LoggerProd } from '@services/logger/logger.prod';
-import { environment } from 'environments/environment.development';
+import { environment } from 'environments/environment';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
