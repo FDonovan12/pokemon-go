@@ -27,7 +27,7 @@ export const StoreSavageGroup = signalStore(
             patchState(store, { ...group });
             const sortedGroup = sortPokemonService.getOrderedList(group.pokemonsFlat, store.megaPokemon());
             const withRarity = sortedGroup.map(
-                (pokemon) => new PokemonWithRarity(pokemon, !!group.rarePokemons.find((p) => (p.id = pokemon.id))),
+                (pokemon) => new PokemonWithRarity(pokemon, !!group.rarePokemons.find((p) => p.id === pokemon.id)),
             );
             patchState(store, { pokemons: withRarity });
         },
@@ -41,8 +41,10 @@ function haveTypeInCommon(pokemon1: PokemonInterface, pokemon2: PokemonInterface
 function countTypeBoost(mega: PokemonInterface, savages: PokemonInterface[], minCount: number = 2): boolean {
     if (mega.type.length < minCount) return false;
     let totalListCount = 0;
-    const listPokemonBuffPerType: any = Object.fromEntries(mega.type.map((type) => [type, []]));
-    const countBoostPerType: any = mega.type.reduce((obj: any, key) => {
+    const listPokemonBuffPerType: Record<string, PokemonInterface[]> = Object.fromEntries(
+        mega.type.map((type) => [type, []]),
+    );
+    const countBoostPerType: Record<string, number> = mega.type.reduce((obj: any, key) => {
         obj[key] = 0;
         return obj;
     }, {});

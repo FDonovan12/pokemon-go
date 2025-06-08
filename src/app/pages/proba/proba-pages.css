@@ -1,0 +1,9 @@
+.grid-proba {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    & > div {
+        display: grid;
+        grid-column: span 3;
+        grid-template-columns: subgrid;
+    }
+}

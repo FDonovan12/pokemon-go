@@ -183,7 +183,6 @@ export class BddEvent {
                 .withName('Ruines fantômes') // L’événement se déroule du samedi 14 juin à 10h au mercredi 18 juin 20h (heure locale))
                 .withStartAt(new Date(2025, 5, 14, 10))
                 .withEndAt(new Date(2025, 5, 18, 20))
-
                 .addSavageGroup([
                     new PokemonWithRarity(pokemons.Rhinocorne),
                     new PokemonWithRarity(pokemons.Skelenox),
@@ -201,7 +200,6 @@ export class BddEvent {
                 .withName('Prodiges Mécaniques') // L’événement se déroule du samedi 7 juin à 10h au mercredi 11 juin 20h (heure locale))
                 .withStartAt(new Date(2025, 5, 7, 10))
                 .withEndAt(new Date(2025, 5, 11, 20))
-
                 .addSavageGroup([
                     new PokemonWithRarity(pokemons.Miaouss),
                     new PokemonWithRarity(pokemons.Granivol),
@@ -225,7 +223,6 @@ export class BddEvent {
                 .withName('Retraite Sereine') // L’événement se déroule du vendredi 30 mai à 10h au mardi 3 juin 20h (heure locale))
                 .withStartAt(new Date(2025, 4, 30, 10))
                 .withEndAt(new Date(2025, 5, 3, 20))
-
                 .addSavageGroup([
                     new PokemonWithRarity(pokemons.Leveinard),
                     new PokemonWithRarity(pokemons.Marill),
@@ -243,7 +240,6 @@ export class BddEvent {
                 .withName("Grandir et s'épanouir") // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale))
                 .withStartAt(new Date(2025, 4, 2, 10))
                 .withEndAt(new Date(2025, 4, 7, 20))
-
                 .addSavageGroup([
                     new PokemonWithRarity(pokemons.Magicarpe),
                     new PokemonWithRarity(pokemons.Wailmer),
@@ -268,7 +264,6 @@ export class BddEvent {
                 .withName('Semaine Combat GO : Attaque finale !') // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale))
                 .withStartAt(new Date(2025, 4, 21, 10))
                 .withEndAt(new Date(2025, 4, 27, 20))
-
                 .addSavageGroup([
                     new PokemonWithRarity(pokemons.Ferosinge),
                     new PokemonWithRarity(pokemons.Otaria),
