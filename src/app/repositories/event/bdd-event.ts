@@ -179,7 +179,7 @@ export class BddEvent {
                     'Swamp',
                 )
                 .build(),
-            (new EventBuilder()
+            new EventBuilder()
                 .withName('Ruines fantômes')
                 .withStartAt(new Date(2025, 5, 14, 10))
                 .withEndAt(new Date(2025, 5, 18, 20))
@@ -218,7 +218,7 @@ export class BddEvent {
                     pokemons.Limonde.alternatives?.Galar!,
                     pokemons.Hexadron,
                 ])
-                .build()),
+                .build(),
             new EventBuilder()
                 .withName('Retraite Sereine')
                 .withStartAt(new Date(2025, 4, 30, 10))
