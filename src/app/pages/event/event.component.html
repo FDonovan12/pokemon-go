@@ -4,37 +4,15 @@
         <h1>{{ event.name }}</h1>
         <button (click)="toggleView()">Switch de vue</button>
     </div>
-    @if (viewTable) {
-        <table>
-            <tbody>
-                @for (group of event.savageGroups; track $index) {
-                    <div>
-                        <app-savage-group [group]="group"></app-savage-group>
-                    </div>
-                }
-            </tbody>
-        </table>
-    } @else {
-        @for (group of event.savageGroups; track $index) {
-            @if (group.title) {
-                <h2>{{ group.title }}</h2>
+    <table>
+        <tbody>
+            @for (group of event.savageGroups; track $index) {
+                <app-savage-group
+                    style="display: block"
+                    [group]="group"
+                    [viewTable]="viewTable"
+                ></app-savage-group>
             }
-            @for (megaGroup of group.megasGroup; track $index) {
-                <div style="flex-wrap: nowrap; display: flex">
-                    <img
-                        [src]="megaGroup.mega.image"
-                        [alt]="megaGroup.mega.name"
-                        style="max-height: 50px; margin-right: 20px"
-                    />
-                    @for (pokemon of megaGroup.pokemonBoost; track $index) {
-                        <img
-                            [src]="pokemon.image"
-                            [alt]="pokemon.name"
-                            style="max-height: 50px"
-                        />
-                    }
-                </div>
-            }
-        }
-    }
+        </tbody>
+    </table>
 }

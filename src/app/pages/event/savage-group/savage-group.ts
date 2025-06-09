@@ -13,11 +13,13 @@ import { StoreSavageGroup } from './store-savage-group/store-savage-group';
 })
 export class SavageGroupComponent {
     group = input.required<SavageGroup>();
+    viewTable = input.required<boolean>();
 
     readonly eventRepository: EventRepository = inject(EventRepository);
     readonly store = inject(StoreSavageGroup);
 
     ngOnInit() {
         this.store.setGroup(this.group());
+        console.log(this.viewTable());
     }
 }

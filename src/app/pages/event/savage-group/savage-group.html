@@ -1,35 +1,59 @@
 @if (group().title) {
-<tr>
-    <td colspan="5">
-        <h2>{{ store.title() }}</h2>
-    </td>
-</tr>
-} @for (savage of store.pokemons(); track $index) {
-<tr>
-    <td>
-        <img
-            [src]="savage.image"
-            [alt]="savage.name"
-            [title]="savage.name"
-            style="max-height: 50px"
-        />
-    </td>
-    <td class="type">
-        @for (type of savage.type; track $index) {
-        <app-type [type]="type"></app-type>
-        }
-    </td>
-    @for (mega of store.megaPokemon(); track $index) {
-    <td>
-        @if (eventRepository.haveTypeInCommon(mega, savage.pokemon)) {
-        <img
-            [src]="mega.image"
-            [alt]="mega.name"
-            [title]="mega.name"
-            style="max-height: 50px"
-        />
-        }
-    </td>
+    <tr>
+        <td colspan="50">
+            <h2>{{ store.title() }}</h2>
+        </td>
+    </tr>
+}
+@if (viewTable()) {
+    @for (savage of store.pokemons(); track $index) {
+        <tr>
+            <td>
+                <img
+                    [src]="savage.image"
+                    [alt]="savage.name"
+                    [title]="savage.name"
+                    style="max-height: 50px"
+                />
+            </td>
+            <td class="type">
+                @for (type of savage.type; track $index) {
+                    <app-type [type]="type"></app-type>
+                }
+            </td>
+            @for (mega of store.megaPokemon(); track $index) {
+                <td>
+                    @if (eventRepository.haveTypeInCommon(mega, savage.pokemon)) {
+                        <img
+                            [src]="mega.image"
+                            [alt]="mega.name"
+                            [title]="mega.name"
+                            style="max-height: 50px"
+                        />
+                    }
+                </td>
+            }
+        </tr>
     }
-</tr>
+} @else {
+    @for (megaGroup of store.getMegaGroups(); track $index) {
+        <tr style="flex-wrap: nowrap; display: flex">
+            <td>
+                <img
+                    [src]="megaGroup.mega.image"
+                    [alt]="megaGroup.mega.name"
+                    style="max-height: 50px; margin-right: 20px"
+                />
+            </td>
+            @for (pokemon of megaGroup.pokemonBoost; track $index) {
+                <td>
+                    <img
+                        [src]="pokemon.image"
+                        [alt]="pokemon.name"
+                        style="max-height: 50px"
+                    />
+                </td>
+            }
+        </tr>
+    }
 }

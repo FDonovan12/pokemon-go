@@ -31,6 +31,12 @@ export const StoreSavageGroup = signalStore(
             );
             patchState(store, { pokemons: withRarity });
         },
+        getMegaGroups() {
+            return store.megaPokemon().map((mega) => ({
+                mega: mega,
+                pokemonBoost: store.pokemons().filter((pokemon) => haveTypeInCommon(mega, pokemon.pokemon)),
+            }));
+        },
     })),
 );
 

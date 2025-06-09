@@ -18,16 +18,6 @@ export class EventRepository {
 
     getEventBySlug(slug: string): EventPokemon | undefined {
         const eventTemp = this.getAllEventsPokemon().find((event) => event.slug === slug);
-        if (eventTemp) {
-            eventTemp.savageGroups.forEach((group) => {
-                const megas = group.megas;
-                const megasGroup = megas.map((mega) => ({
-                    mega: mega,
-                    pokemonBoost: group.pokemonsFlat.filter((pokemon) => this.haveTypeInCommon(mega, pokemon)),
-                }));
-                group.megasGroup = megasGroup;
-            });
-        }
         return eventTemp;
     }
 
