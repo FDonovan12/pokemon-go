@@ -17,7 +17,7 @@ export class BddEvent {
                 .withEndAt(new Date(2025, 8, 2, 10))
                 .addSavageGroup(
                     [
-                        new PokemonWithRarity(pokemons.VoltorbeHisui),
+                        new PokemonWithRarity(pokemons.Voltorbe.alternatives?.Hisui!),
                         new PokemonWithRarity(pokemons.Arcko),
                         new PokemonWithRarity(pokemons.Poussifeu),
                         new PokemonWithRarity(pokemons.Gobou),
@@ -29,7 +29,7 @@ export class BddEvent {
                 )
                 .addSavageGroup(
                     [
-                        new PokemonWithRarity(pokemons.QwilfishHisui),
+                        new PokemonWithRarity(pokemons.Qwilfish.alternatives?.Hisui!),
                         new PokemonWithRarity(pokemons.Draby),
                         new PokemonWithRarity(pokemons.Tortipouss),
                         new PokemonWithRarity(pokemons.Ouisticram),
@@ -42,7 +42,7 @@ export class BddEvent {
                 .addSavageGroup(
                     [
                         new PokemonWithRarity(pokemons.Roucarnage),
-                        new PokemonWithRarity(pokemons.MiaoussAlola),
+                        new PokemonWithRarity(pokemons.Miaouss.alternatives?.Alola!),
                         new PokemonWithRarity(pokemons.Cheniti),
                         new PokemonWithRarity(pokemons.Chaglam),
                         new PokemonWithRarity(pokemons.Baggiguane),
@@ -53,7 +53,7 @@ export class BddEvent {
                 )
                 .addSavageGroup(
                     [
-                        new PokemonWithRarity(pokemons.PonytaGalar),
+                        new PokemonWithRarity(pokemons.Ponyta.alternatives?.Galar!),
                         new PokemonWithRarity(pokemons.Pharamp),
                         new PokemonWithRarity(pokemons.Simularbre),
                         new PokemonWithRarity(pokemons.Cheniti),
@@ -65,11 +65,11 @@ export class BddEvent {
                 )
                 .addSavageGroup(
                     [
-                        new PokemonWithRarity(pokemons.RacaillouAlola),
+                        new PokemonWithRarity(pokemons.Racaillou.alternatives?.Alola!),
                         new PokemonWithRarity(pokemons.Tarinor),
                         new PokemonWithRarity(pokemons.Galeking),
                         new PokemonWithRarity(pokemons.Cheniti),
-                        new PokemonWithRarity(pokemons.LimondeGalar),
+                        new PokemonWithRarity(pokemons.Limonde.alternatives?.Galar!),
                         new PokemonWithRarity(pokemons.Sapereau),
                         new PokemonWithRarity(pokemons.Minisange),
                     ],
@@ -77,7 +77,7 @@ export class BddEvent {
                 )
                 .addSavageGroup(
                     [
-                        new PokemonWithRarity(pokemons.RamolossGalar),
+                        new PokemonWithRarity(pokemons.Ramoloss.alternatives?.Galar!),
                         new PokemonWithRarity(pokemons.Leviator),
                         new PokemonWithRarity(pokemons.Demanta),
                         new PokemonWithRarity(pokemons.Keunotor),
@@ -89,7 +89,7 @@ export class BddEvent {
                 )
                 .build(),
             new EventBuilder()
-                .withName('Go Fest 2025') // L’événement se déroule du samedi 28 juin à 10h au samedi 29 juin 18h (heure locale))
+                .withName('Go Fest 2025')
                 .withStartAt(new Date(2025, 5, 28, 10))
                 .withEndAt(new Date(2025, 5, 29, 18))
                 .addSavageGroup(
@@ -107,7 +107,7 @@ export class BddEvent {
                 )
                 .addSavageGroup(
                     [
-                        new PokemonWithRarity(pokemons.CanartichoGalar),
+                        new PokemonWithRarity(pokemons.Canarticho.alternatives?.Galar!),
                         new PokemonWithRarity(pokemons.Osselait),
                         new PokemonWithRarity(pokemons.Tarsal),
                         new PokemonWithRarity(pokemons.Carabing),
@@ -150,7 +150,7 @@ export class BddEvent {
                 )
                 .addSavageGroup(
                     [
-                        new PokemonWithRarity(pokemons.SabletteAlola),
+                        new PokemonWithRarity(pokemons.Sabelette.alternatives?.Alola!),
                         new PokemonWithRarity(pokemons.Marcacrin),
                         new PokemonWithRarity(pokemons.Obalie),
                         new PokemonWithRarity(pokemons.Tiplouf),
@@ -179,8 +179,8 @@ export class BddEvent {
                     'Swamp',
                 )
                 .build(),
-            new EventBuilder()
-                .withName('Ruines fantômes') // L’événement se déroule du samedi 14 juin à 10h au mercredi 18 juin 20h (heure locale))
+            (new EventBuilder()
+                .withName('Ruines fantômes')
                 .withStartAt(new Date(2025, 5, 14, 10))
                 .withEndAt(new Date(2025, 5, 18, 20))
                 .addSavageGroup([
@@ -197,14 +197,14 @@ export class BddEvent {
                 ])
                 .build(),
             new EventBuilder()
-                .withName('Prodiges Mécaniques') // L’événement se déroule du samedi 7 juin à 10h au mercredi 11 juin 20h (heure locale))
+                .withName('Prodiges Mécaniques')
                 .withStartAt(new Date(2025, 5, 7, 10))
                 .withEndAt(new Date(2025, 5, 11, 20))
                 .addSavageGroup([
                     new PokemonWithRarity(pokemons.Miaouss),
                     new PokemonWithRarity(pokemons.Granivol),
                     new PokemonWithRarity(pokemons.Grindur),
-                    new PokemonWithRarity(pokemons.LimondeGalar),
+                    new PokemonWithRarity(pokemons.Limonde.alternatives?.Galar!),
                     new PokemonWithRarity(pokemons.Gringolem),
                     new PokemonWithRarity(pokemons.Tetampoule),
                     new PokemonWithRarity(pokemons.Terhal),
@@ -215,12 +215,12 @@ export class BddEvent {
                     pokemons.Miaouss,
                     pokemons.Terhal,
                     pokemons.Grindur,
-                    pokemons.LimondeGalar,
+                    pokemons.Limonde.alternatives?.Galar!,
                     pokemons.Hexadron,
                 ])
-                .build(),
+                .build()),
             new EventBuilder()
-                .withName('Retraite Sereine') // L’événement se déroule du vendredi 30 mai à 10h au mardi 3 juin 20h (heure locale))
+                .withName('Retraite Sereine')
                 .withStartAt(new Date(2025, 4, 30, 10))
                 .withEndAt(new Date(2025, 5, 3, 20))
                 .addSavageGroup([
@@ -237,7 +237,7 @@ export class BddEvent {
                 .withEggPokemons([pokemons.Korillon, pokemons.Munna, pokemons.Fluvetin, pokemons.Sucroquin])
                 .build(),
             new EventBuilder()
-                .withName("Grandir et s'épanouir") // L’événement se déroule du vendredi 2 mai à 10h au mercredi 7 mai 20h (heure locale))
+                .withName("Grandir et s'épanouir")
                 .withStartAt(new Date(2025, 4, 2, 10))
                 .withEndAt(new Date(2025, 4, 7, 20))
                 .addSavageGroup([
@@ -254,14 +254,14 @@ export class BddEvent {
                 ])
                 .withEggPokemons([
                     pokemons.Ptiravi,
-                    pokemons['Mime-Jr'],
+                    pokemons['Mime-jr'],
                     pokemons.Toxizap,
                     pokemons.Riolu,
                     pokemons.Sovkipou,
                 ])
                 .build(),
             new EventBuilder()
-                .withName('Semaine Combat GO : Attaque finale !') // L’événement se déroule du mercredi 21 mai à 10 h au mardi 27 mai à 20 h (heure locale))
+                .withName('Semaine Combat GO : Attaque finale !')
                 .withStartAt(new Date(2025, 4, 21, 10))
                 .withEndAt(new Date(2025, 4, 27, 20))
                 .addSavageGroup([

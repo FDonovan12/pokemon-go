@@ -24,6 +24,7 @@ export class HomeComponent {
     join = (arr: PokemonInterface[]) => ' & ' + arr.map(this.getName).join(', ') + ' & ';
 
     getName(pokemon: PokemonInterface | string): string {
+        if (!pokemon) return '';
         return typeof pokemon === 'string' ? pokemon : pokemon.name;
     }
     pokemonsList = this.getAllService.pokemonIndex;
@@ -101,10 +102,13 @@ export class HomeComponent {
                 };
             });
             console.log(test);
-            const pokemonMap = test.reduce((acc: any, pokemon: any) => {
-                acc[pokemon.slug] = pokemon;
-                return acc;
-            }, {} as Record<string, (typeof test)[number]>);
+            const pokemonMap = test.reduce(
+                (acc: any, pokemon: any) => {
+                    acc[pokemon.slug] = pokemon;
+                    return acc;
+                },
+                {} as Record<string, (typeof test)[number]>,
+            );
             console.log(pokemonMap);
         });
     }
