@@ -22,4 +22,11 @@ export class SavageGroupComponent {
         this.store.setGroup(this.group());
         console.log(this.viewTable());
     }
+
+    switchSortImplementation() {
+        this.store.changeSortImplementation();
+    }
+    randomList() {
+        this.store.randomGroup();
+    }
 }

@@ -23,10 +23,6 @@ export class EventPokemon {
     }
 }
 
-export interface SavageGroupInterface {
-    pokemons: PokemonWithRarity[];
-    title: string | undefined;
-}
 export class SavageGroup {
     public pokemons: PokemonWithRarity[];
 

@@ -1,11 +1,15 @@
 @if (group().title) {
     <tr>
         <td colspan="50">
-            <h2>{{ store.title() }}</h2>
+            <div style="display: flex; align-items: center; gap: 10px">
+                <h2>{{ store.title() }}</h2>
+            </div>
         </td>
     </tr>
 }
 @if (viewTable()) {
+    <button (click)="switchSortImplementation()">Switch système de tri</button>
+    <button (click)="randomList()">Random</button>
     @for (savage of store.pokemons(); track $index) {
         <tr>
             <td>
