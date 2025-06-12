@@ -22,7 +22,7 @@ export interface PokemonInterface {
     slug: PokemonSlug;
     image: string;
     sprite: string;
-    type: typePokemon[];
+    type: TypePokemon[];
     isLegendary: boolean;
     isMythical: boolean;
     mega?: { id: number; type: string[] };
@@ -34,7 +34,7 @@ export class Pokemon implements PokemonInterface {
     id: number;
     name: string;
     slug: PokemonSlug;
-    type: typePokemon[];
+    type: TypePokemon[];
     isLegendary: boolean;
     isMythical: boolean;
     mega?: { id: number; type: string[] } | undefined;
@@ -58,22 +58,25 @@ export class Pokemon implements PokemonInterface {
     }
 }
 
-export type typePokemon =
-    | 'Acier'
-    | 'Combat'
-    | 'Dragon'
-    | 'Eau'
-    | 'Électrik'
-    | 'Fée'
-    | 'Feu'
-    | 'Glace'
-    | 'Insecte'
-    | 'Normal'
-    | 'Plante'
-    | 'Poison'
-    | 'Psy'
-    | 'Roche'
-    | 'Sol'
-    | 'Spectre'
-    | 'Ténèbres'
-    | 'Vol';
+export const allTypes = [
+    'Acier',
+    'Combat',
+    'Dragon',
+    'Eau',
+    'Électrik',
+    'Fée',
+    'Feu',
+    'Glace',
+    'Insecte',
+    'Normal',
+    'Plante',
+    'Poison',
+    'Psy',
+    'Roche',
+    'Sol',
+    'Spectre',
+    'Ténèbres',
+    'Vol',
+];
+
+export type TypePokemon = (typeof allTypes)[number];

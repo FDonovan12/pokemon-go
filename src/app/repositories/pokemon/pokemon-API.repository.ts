@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { PokemonInterface, typePokemon } from '@entities/pokemon';
+import { PokemonInterface, TypePokemon } from '@entities/pokemon';
 import pokemonsData from 'app/bdd/bdd-pokemons-copy.json';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 
@@ -52,7 +52,7 @@ export class PokemonAPIRepository {
         } as any;
     }
 
-    updateType(type: string): typePokemon {
+    updateType(type: string): TypePokemon {
         switch (type.toLowerCase()) {
             case 'normal':
                 return 'Normal';
@@ -91,7 +91,7 @@ export class PokemonAPIRepository {
             case 'fairy':
                 return 'Fée';
             default:
-                return type as typePokemon;
+                return type as TypePokemon;
         }
     }
 

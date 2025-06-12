@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { typePokemon } from '@entities/pokemon';
+import { TypePokemon } from '@entities/pokemon';
 
 @Component({
     selector: 'app-type',
@@ -9,7 +9,7 @@ import { typePokemon } from '@entities/pokemon';
     styles: '',
 })
 export class TypeComponent {
-    type = input.required<typePokemon>();
+    type = input.required<TypePokemon>();
 
     urlType = computed(() => `https://www.pokebip.com/pokedex/images/${this.type().slugify().capitalize()}.png`);
 }

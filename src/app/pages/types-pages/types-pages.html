@@ -1,0 +1,56 @@
+<table>
+    <thead>
+        <tr>
+            <th>Attaquant ↓ / Défenseur →</th>
+            @for (defender of typesList; track defender) {
+                <th>{{ defender }}</th>
+            }
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td colspan="50">count effective</td></tr>
+        <tr>
+            <td>count effective</td>
+            @for (cell of store.countSuperEffective(); track cell.attacker) {
+                <td>{{ cell.values }}</td>
+            }
+            <td>{{ store.getTotalEffective() }}</td>
+            <td>{{ store.getTotalTeamsEffectiveness() }}</td>
+        </tr>
+        <tr>
+            <td>count double effective</td>
+            @for (cell of store.countDoubleSuperEffective(); track cell.attacker) {
+                <td>{{ cell.values }}</td>
+            }
+            <td>{{ store.getTotalDoubleEffective() }}</td>
+            <td>{{ store.getTotalTeamsDoubleEffectiveness() }}</td>
+        </tr>
+        <tr>
+            <td>my teams effectivness</td>
+            @for (type of typesList; track type) {
+                <td>
+                    <input
+                        type="checkbox"
+                        [name]="type"
+                        [id]="type"
+                        [checked]="store.currentTeamBuilded().has(type)"
+                        (change)="toggleTeam(type)"
+                    />
+                </td>
+            }
+        </tr>
+
+        @for (row of store.typeRows(); track row.attacker) {
+            <tr>
+                <td>
+                    <strong>{{ row.attacker }}</strong>
+                </td>
+                @for (cell of row.values; track cell.defender) {
+                    <td>{{ cell.count || '' }}</td>
+                }
+                <td>{{ store.getTotalType().get(row.attacker) }}</td>
+            </tr>
+        }
+    </tbody>
+</table>

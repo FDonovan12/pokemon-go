@@ -1,5 +1,5 @@
 import { Component, inject, input, InputSignal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { EventPokemon } from '@entities/event';
 import { EventRepository } from '@repositories/event/event.repository';
 import { Logger } from '@services/logger/logger';
@@ -8,7 +8,7 @@ import { SavageGroupComponent } from './savage-group/savage-group';
 @Component({
     selector: 'app-event',
     standalone: true,
-    imports: [RouterLink, SavageGroupComponent],
+    imports: [SavageGroupComponent],
     templateUrl: './event.component.html',
     styleUrl: './event.component.css',
 })

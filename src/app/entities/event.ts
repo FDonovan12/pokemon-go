@@ -1,4 +1,4 @@
-import { PokemonInterface, typePokemon } from '@entities/pokemon';
+import { PokemonInterface, TypePokemon } from '@entities/pokemon';
 
 export class EventPokemon {
     public slug: string;
@@ -63,7 +63,7 @@ export class PokemonWithRarity {
         return this.pokemon.name;
     }
 
-    get type(): typePokemon[] {
+    get type(): TypePokemon[] {
         return this.pokemon.type;
     }
 
