@@ -1,33 +1,17 @@
 <table>
     <thead>
         <tr>
-            <th>Attaquant ↓ / Défenseur →</th>
+            <th></th>
             @for (defender of typesList; track defender) {
                 <th>{{ defender }}</th>
             }
-            <th>Total</th>
+            <th>Effectiveness</th>
+            <th>Double Effectiveness</th>
         </tr>
     </thead>
     <tbody>
-        <tr><td colspan="50">count effective</td></tr>
         <tr>
-            <td>count effective</td>
-            @for (cell of store.countSuperEffective(); track cell.attacker) {
-                <td>{{ cell.values }}</td>
-            }
-            <td>{{ store.getTotalEffective() }}</td>
-            <td>{{ store.getTotalTeamsEffectiveness() }}</td>
-        </tr>
-        <tr>
-            <td>count double effective</td>
-            @for (cell of store.countDoubleSuperEffective(); track cell.attacker) {
-                <td>{{ cell.values }}</td>
-            }
-            <td>{{ store.getTotalDoubleEffective() }}</td>
-            <td>{{ store.getTotalTeamsDoubleEffectiveness() }}</td>
-        </tr>
-        <tr>
-            <td>my teams effectivness</td>
+            <td>My teams</td>
             @for (type of typesList; track type) {
                 <td>
                     <input
@@ -39,17 +23,32 @@
                     />
                 </td>
             }
+            <td>
+                {{ store.test().total }} /
+                {{ store.base().total }}
+            </td>
+            <td>
+                {{ store.testDouble().total }} /
+                {{ store.baseDouble().total }}
+            </td>
         </tr>
 
-        @for (row of store.typeRows(); track row.attacker) {
+        @for (type1 of typesList; track type1) {
             <tr>
                 <td>
-                    <strong>{{ row.attacker }}</strong>
+                    <strong>{{ type1 }}</strong>
                 </td>
-                @for (cell of row.values; track cell.defender) {
-                    <td>{{ cell.count || '' }}</td>
+                @for (type2 of typesList; track type2) {
+                    <td>{{ store.pokemonTypeCount().get(type1)?.get(type2) }}</td>
                 }
-                <td>{{ store.getTotalType().get(row.attacker) }}</td>
+                <td>
+                    {{ store.test().totalPerTypeDefensive.get(type1) }} /
+                    {{ store.base().totalPerTypeDefensive.get(type1) }}
+                </td>
+                <td>
+                    {{ store.testDouble().totalPerTypeDefensive.get(type1) }} /
+                    {{ store.baseDouble().totalPerTypeDefensive.get(type1) }}
+                </td>
             </tr>
         }
     </tbody>
