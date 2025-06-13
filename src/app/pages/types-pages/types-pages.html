@@ -2,27 +2,31 @@
     <thead>
         <tr>
             <th></th>
-            @for (defender of typesList; track defender) {
-                <th>{{ defender }}</th>
-            }
-            <th>Effectiveness</th>
-            <th>Double Effectiveness</th>
+            <th>Efficacité</th>
+            <th>Efficacité double</th>
+            <th>Coverage</th>
+            <th>Faibles</th>
+            <th>Doubles-faibles</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>My teams</td>
-            @for (type of typesList; track type) {
-                <td>
+            <td><b>All</b></td>
+            <td></td>
+            <td></td>
+            <td>
+                <div
+                    style="display: grid; place-items: center"
+                    (click)="toggleTeamAll()"
+                >
                     <input
                         type="checkbox"
-                        [name]="type"
-                        [id]="type"
-                        [checked]="store.currentTeamBuilded().has(type)"
-                        (change)="toggleTeam(type)"
+                        name="allCoverage"
+                        id="allCoverage"
+                        [checked]="store.currentTeamBuilded().size === typesList.length"
                     />
-                </td>
-            }
+                </div>
+            </td>
             <td
                 app-percent-color
                 [value]="store.coverageTeam().total"
@@ -38,11 +42,27 @@
         @for (type1 of typesList; track type1) {
             <tr>
                 <td>
-                    <strong>{{ type1 }}</strong>
+                    <app-type [type]="type1"></app-type>
                 </td>
-                @for (type2 of typesList; track type2) {
-                    <td>{{ store.pokemonTypeCount().get(type1)?.get(type2) }}</td>
-                }
+                <td>
+                    {{ store.coverageTeam().totalPerTypeOffensive.get(type1) }}
+                </td>
+                <td>
+                    {{ store.coverageTeamDouble().totalPerTypeOffensive.get(type1) }}
+                </td>
+                <td>
+                    <div
+                        style="display: grid; place-items: center"
+                        (click)="toggleTeam(type1)"
+                    >
+                        <input
+                            type="checkbox"
+                            [name]="type1"
+                            [id]="type1"
+                            [checked]="store.currentTeamBuilded().has(type1)"
+                        />
+                    </div>
+                </td>
                 <td
                     app-percent-color
                     [value]="store.coverageTeam().totalPerTypeDefensive.get(type1)!"

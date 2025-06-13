@@ -12,17 +12,15 @@ const initialState = {
 export const TypesStore = signalStore(
     withState(initialState),
     withComputed((store, typeEffectivenessService = inject(TypeEffectivenessService)) => ({
-        coverageAllTypes: computed(() =>
-            makeCoverageStats(allTypes, store.pokemonTypeCount(), typeEffectivenessService),
-        ),
+        coverageAllTypes: computed(() => makeCoverageStats(store.pokemonTypeCount(), typeEffectivenessService)),
         coverageAllTypesDouble: computed(() =>
-            makeCoverageStats(allTypes, store.pokemonTypeCount(), typeEffectivenessService, 4),
+            makeCoverageStats(store.pokemonTypeCount(), typeEffectivenessService, allTypes, 4),
         ),
         coverageTeam: computed(() =>
-            makeCoverageStats(store.currentTeamBuilded(), store.pokemonTypeCount(), typeEffectivenessService),
+            makeCoverageStats(store.pokemonTypeCount(), typeEffectivenessService, store.currentTeamBuilded()),
         ),
         coverageTeamDouble: computed(() =>
-            makeCoverageStats(store.currentTeamBuilded(), store.pokemonTypeCount(), typeEffectivenessService, 4),
+            makeCoverageStats(store.pokemonTypeCount(), typeEffectivenessService, store.currentTeamBuilded(), 4),
         ),
     })),
     withMethods((store) => ({
@@ -33,6 +31,15 @@ export const TypesStore = signalStore(
             } else {
                 currentTeamBuilded.add(team);
             }
+            localStorage.setItem('currentTeamBuilded', JSON.stringify(Array.from(currentTeamBuilded)));
+            patchState(store, { currentTeamBuilded: currentTeamBuilded });
+        },
+        toggleTeamAll() {
+            let currentTeamBuilded = new Set(allTypes);
+            if (store.currentTeamBuilded().size === allTypes.length) {
+                currentTeamBuilded = new Set();
+            }
+            localStorage.setItem('currentTeamBuilded', JSON.stringify(Array.from(currentTeamBuilded)));
             patchState(store, { currentTeamBuilded: currentTeamBuilded });
         },
     })),
@@ -55,8 +62,12 @@ export const TypesStore = signalStore(
                 megaAndLegendaryPokemon.forEach((pokemon) =>
                     incrementTable(pokemonTypeCount, pokemon.type[0], pokemon.type[1]),
                 );
+
+                const saved = localStorage.getItem('currentTeamBuilded');
+                const currentTeamBuilded = saved ? new Set<string>(JSON.parse(saved)) : new Set<string>();
                 patchState(store, {
                     pokemonTypeCount: pokemonTypeCount,
+                    currentTeamBuilded: currentTeamBuilded,
                 });
             },
         }),
@@ -64,26 +75,49 @@ export const TypesStore = signalStore(
 );
 
 function makeCoverageStats(
-    coverage: Set<TypePokemon> | TypePokemon[],
+    pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>,
+    typeEffectivenessService: TypeEffectivenessService,
+    coverage: Set<TypePokemon> | TypePokemon[] = allTypes,
+    minEffectiveness = 2,
+) {
+    const generalMapCoverge = buildGridCountEffectiveness(
+        pokemonTypeCount,
+        typeEffectivenessService,
+        coverage,
+        minEffectiveness,
+    );
+    const totalPerTypeDefensive = getTotalCountPerType(generalMapCoverge);
+    const total = getTotalCount(generalMapCoverge);
+    const totalPerTypeOffensive = buildMapEffectiveness(pokemonTypeCount, typeEffectivenessService, minEffectiveness);
+    console.log(totalPerTypeOffensive);
+    return { totalPerTypeDefensive, total, totalPerTypeOffensive };
+}
+
+function buildMapEffectiveness(
     pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>,
     typeEffectivenessService: TypeEffectivenessService,
     minEffectiveness = 2,
 ) {
-    const generalMap = buildGridCountEffectiveness(
-        coverage,
-        pokemonTypeCount,
-        typeEffectivenessService,
-        minEffectiveness,
-    );
-    const totalPerTypeDefensive = getTotalCountPerType(generalMap);
-    const total = getTotalCount(generalMap);
-    return { totalPerTypeDefensive, total };
+    const result = new Map<TypePokemon, number>();
+    for (const type2 of allTypes) {
+        result.set(type2, 0);
+    }
+    for (const type1 of allTypes) {
+        for (const type2 of allTypes) {
+            for (const attacker of allTypes) {
+                if (typeEffectivenessService.calculEffectivness(attacker, type1, type2) >= minEffectiveness) {
+                    result.set(attacker, (result.get(attacker) ?? 0) + (pokemonTypeCount.get(type1)?.get(type2) ?? 0));
+                }
+            }
+        }
+    }
+    return result;
 }
 
 function buildGridCountEffectiveness(
-    coverage: Set<TypePokemon> | TypePokemon[],
     pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>,
     typeEffectivenessService: TypeEffectivenessService,
+    coverage: Set<TypePokemon> | TypePokemon[],
     minEffectiveness: number = 2,
 ): Map<TypePokemon, Map<TypePokemon, number>> {
     const result = initTypeTable();
