@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TypePokemon } from '@entities/pokemon';
+import { damageRelation } from './table-damage-relation';
 
 @Injectable({
     providedIn: 'root',
@@ -7,8 +8,9 @@ import { TypePokemon } from '@entities/pokemon';
 export class TypeEffectivenessService {
     private typeEffectiveness?: Map<TypePokemon, Map<TypePokemon, number>>;
 
-    async ngOnInit(): Promise<void> {
-        this.typeEffectiveness = await this.fetchDamageRelations();
+    ngOnInit(): void {
+        this.typeEffectiveness = this.getDamageRelations();
+        this.isInitialized = true;
     }
     private isInitialized = false;
     private initPromise?: Promise<void>;
@@ -17,14 +19,14 @@ export class TypeEffectivenessService {
         if (this.isInitialized) return;
 
         if (!this.initPromise) {
-            this.initPromise = this.fetchDamageRelations().then((map) => {
-                this.typeEffectiveness = map;
-                this.isInitialized = true;
-            });
+            const map = this.getDamageRelations();
+            this.typeEffectiveness = map;
+            this.isInitialized = true;
         }
 
         return this.initPromise;
     }
+
     calculEffectivness(attacker: TypePokemon, type1: TypePokemon, type2: TypePokemon): number {
         const eff1 = this.typeEffectiveness?.get(attacker)?.get(type1) ?? 1;
         let eff2 = 1;
@@ -32,6 +34,12 @@ export class TypeEffectivenessService {
         const combinedEff = eff1 * eff2;
         return combinedEff;
     }
+
+    getDamageRelations(): Map<TypePokemon, Map<TypePokemon, number>> {
+        const table: [TypePokemon, [TypePokemon, number][]][] = damageRelation;
+        return new Map(table.map(([key, innerArr]) => [key, new Map<TypePokemon, number>(innerArr)]));
+    }
+
     async fetchDamageRelations() {
         const typesCount = new Map<TypePokemon, Map<TypePokemon, number>>();
 
@@ -59,6 +67,8 @@ export class TypeEffectivenessService {
 
             typesCount.set(frType as TypePokemon, innerMap);
         }
+        const table = Array.from(typesCount.entries()).map(([key, innerMap]) => [key, Array.from(innerMap.entries())]);
+        console.log(table);
         return typesCount;
     }
     typeMapFrToEn: Record<TypePokemon, string> = {

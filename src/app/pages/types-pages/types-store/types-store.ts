@@ -10,6 +10,7 @@ const initialState = {
 };
 
 export const TypesStore = signalStore(
+    { providedIn: 'root' },
     withState(initialState),
     withComputed((store, typeEffectivenessService = inject(TypeEffectivenessService)) => ({
         coverageAllTypes: computed(() => makeCoverageStats(store.pokemonTypeCount(), typeEffectivenessService)),
