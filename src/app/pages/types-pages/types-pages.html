@@ -25,13 +25,13 @@
             }
             <td
                 app-percent-color
-                [value]="store.test().total"
-                [maximumValue]="store.base().total"
+                [value]="store.coverageTeam().total"
+                [maximumValue]="store.coverageAllTypes().total"
             ></td>
             <td
                 app-percent-color
-                [value]="store.testDouble().total"
-                [maximumValue]="store.baseDouble().total"
+                [value]="store.coverageTeamDouble().total"
+                [maximumValue]="store.coverageAllTypesDouble().total"
             ></td>
         </tr>
 
@@ -45,13 +45,13 @@
                 }
                 <td
                     app-percent-color
-                    [value]="store.test().totalPerTypeDefensive.get(type1)!"
-                    [maximumValue]="store.base().totalPerTypeDefensive.get(type1)!"
+                    [value]="store.coverageTeam().totalPerTypeDefensive.get(type1)!"
+                    [maximumValue]="store.coverageAllTypes().totalPerTypeDefensive.get(type1)!"
                 ></td>
                 <td
                     app-percent-color
-                    [value]="store.testDouble().totalPerTypeDefensive.get(type1)!"
-                    [maximumValue]="store.baseDouble().totalPerTypeDefensive.get(type1)!"
+                    [value]="store.coverageTeamDouble().totalPerTypeDefensive.get(type1)!"
+                    [maximumValue]="store.coverageAllTypesDouble().totalPerTypeDefensive.get(type1)!"
                 ></td>
             </tr>
         }

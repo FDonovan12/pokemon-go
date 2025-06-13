@@ -19,6 +19,7 @@
           "path": "src/app/interceptors"
         },
         "@schematics/angular:component": {
+          "changeDetection": "OnPush",
           "flat": false,
           "path": "src/app/components"
         },
