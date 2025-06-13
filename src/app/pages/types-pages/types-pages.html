@@ -23,14 +23,16 @@
                     />
                 </td>
             }
-            <td>
-                {{ store.test().total }} /
-                {{ store.base().total }}
-            </td>
-            <td>
-                {{ store.testDouble().total }} /
-                {{ store.baseDouble().total }}
-            </td>
+            <td
+                app-percent-color
+                [value]="store.test().total"
+                [maximumValue]="store.base().total"
+            ></td>
+            <td
+                app-percent-color
+                [value]="store.testDouble().total"
+                [maximumValue]="store.baseDouble().total"
+            ></td>
         </tr>
 
         @for (type1 of typesList; track type1) {
@@ -41,14 +43,16 @@
                 @for (type2 of typesList; track type2) {
                     <td>{{ store.pokemonTypeCount().get(type1)?.get(type2) }}</td>
                 }
-                <td>
-                    {{ store.test().totalPerTypeDefensive.get(type1) }} /
-                    {{ store.base().totalPerTypeDefensive.get(type1) }}
-                </td>
-                <td>
-                    {{ store.testDouble().totalPerTypeDefensive.get(type1) }} /
-                    {{ store.baseDouble().totalPerTypeDefensive.get(type1) }}
-                </td>
+                <td
+                    app-percent-color
+                    [value]="store.test().totalPerTypeDefensive.get(type1)!"
+                    [maximumValue]="store.base().totalPerTypeDefensive.get(type1)!"
+                ></td>
+                <td
+                    app-percent-color
+                    [value]="store.testDouble().totalPerTypeDefensive.get(type1)!"
+                    [maximumValue]="store.baseDouble().totalPerTypeDefensive.get(type1)!"
+                ></td>
             </tr>
         }
     </tbody>

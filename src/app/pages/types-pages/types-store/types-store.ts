@@ -12,9 +12,6 @@ const initialState = {
 export const TypesStore = signalStore(
     withState(initialState),
     withComputed((store) => ({
-        countSuperEffective: computed(() =>
-            computeSuperEffectiveTargets(store.typeEffectivenessTable(), store.pokemonTypeCount()),
-        ),
         base: computed(() => {
             const generalMap = name(allTypes, store.typeEffectivenessTable(), store.pokemonTypeCount());
             const totalPerTypeDefensive = getTotalCountPerType(generalMap);
@@ -116,16 +113,17 @@ function name(
     return result;
 }
 
-function initTypeTable(): Map<TypePokemon, Map<TypePokemon, number>> {
-    const typeTable = new Map<TypePokemon, Map<TypePokemon, number>>();
-    for (const type1 of allTypes) {
-        const innerMap = new Map<TypePokemon, number>();
-        for (const type2 of allTypes) {
-            innerMap.set(type2, 0);
-        }
-        typeTable.set(type1, innerMap);
-    }
-    return typeTable;
+function calculEffectivness(
+    attacker: TypePokemon,
+    typeEffectiveness: Map<TypePokemon, Map<TypePokemon, number>>,
+    type1: TypePokemon,
+    type2: TypePokemon,
+) {
+    const eff1 = typeEffectiveness.get(attacker)?.get(type1) ?? 1;
+    let eff2 = 1;
+    if (type1 !== type2) eff2 = typeEffectiveness.get(attacker)?.get(type2) ?? 1;
+    const combinedEff = eff1 * eff2;
+    return combinedEff;
 }
 
 function getTotalCountPerType(pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>): Map<TypePokemon, number> {
@@ -145,34 +143,6 @@ function getTotalCountPerType(pokemonTypeCount: Map<TypePokemon, Map<TypePokemon
     return result;
 }
 
-function incrementTable(
-    table: Map<TypePokemon, Map<TypePokemon, number>>,
-    attacker: TypePokemon,
-    defender: TypePokemon,
-) {
-    const firstType = attacker;
-    const secondType = defender ?? firstType;
-    const firstTypeMap = table.get(firstType);
-    const secondTypeCount = firstTypeMap?.get(secondType);
-    firstTypeMap?.set(secondType, (secondTypeCount ?? 0) + 1);
-}
-
-function computeSuperEffectiveTargets(
-    typeEffectiveness: Map<TypePokemon, Map<TypePokemon, number>>,
-    pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>,
-    minEffectiveness: number = 2,
-): Map<TypePokemon, number> {
-    const result = new Map<TypePokemon, number>();
-
-    for (const attacker of allTypes) {
-        let total = calculTotalEffectivness(attacker, typeEffectiveness, pokemonTypeCount, minEffectiveness);
-
-        result.set(attacker, total);
-    }
-
-    return result;
-}
-
 function getTotalCount(pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>) {
     let total = 0;
     for (const [defType1, subMap] of pokemonTypeCount) {
@@ -183,38 +153,28 @@ function getTotalCount(pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, numbe
     return total;
 }
 
-function calculEffectivness(
-    attacker: TypePokemon,
-    typeEffectiveness: Map<TypePokemon, Map<TypePokemon, number>>,
-    type1: TypePokemon,
-    type2: TypePokemon,
-) {
-    const eff1 = typeEffectiveness.get(attacker)?.get(type1) ?? 1;
-    const eff2 = typeEffectiveness.get(attacker)?.get(type2) ?? 1;
-    const combinedEff = eff1 * eff2;
-    return combinedEff;
+function initTypeTable(): Map<TypePokemon, Map<TypePokemon, number>> {
+    const typeTable = new Map<TypePokemon, Map<TypePokemon, number>>();
+    for (const type1 of allTypes) {
+        const innerMap = new Map<TypePokemon, number>();
+        for (const type2 of allTypes) {
+            innerMap.set(type2, 0);
+        }
+        typeTable.set(type1, innerMap);
+    }
+    return typeTable;
 }
 
-function calculTotalEffectivness(
+function incrementTable(
+    table: Map<TypePokemon, Map<TypePokemon, number>>,
     attacker: TypePokemon,
-    typeEffectiveness: Map<TypePokemon, Map<TypePokemon, number>>,
-    pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>,
-    minEffectiveness: number = 2,
+    defender: TypePokemon,
 ) {
-    let total = 0;
-
-    for (const type1 of allTypes) {
-        for (const type2 of allTypes) {
-            const count = pokemonTypeCount.get(type1)?.get(type2) ?? 0;
-            if (count === 0) continue;
-            const combinedEff = calculEffectivness(attacker, typeEffectiveness, type1, type2);
-
-            if (combinedEff >= minEffectiveness) {
-                total += count;
-            }
-        }
-    }
-    return total;
+    const firstType = attacker;
+    const secondType = defender ?? firstType;
+    const firstTypeMap = table.get(firstType);
+    const secondTypeCount = firstTypeMap?.get(secondType);
+    firstTypeMap?.set(secondType, (secondTypeCount ?? 0) + 1);
 }
 
 async function fetchDamageRelations() {
