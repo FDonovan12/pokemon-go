@@ -20,7 +20,6 @@ export class SavageGroupComponent {
 
     ngOnInit() {
         this.store.setGroup(this.group());
-        console.log(this.viewTable());
     }
 
     switchSortImplementation() {

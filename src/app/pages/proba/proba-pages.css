@@ -1,6 +1,7 @@
 .grid-proba {
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(3, max-content);
+    gap: 0.125em 0.375em;
     & > div {
         display: grid;
         grid-column: span 3;

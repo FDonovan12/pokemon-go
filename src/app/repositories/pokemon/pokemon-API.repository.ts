@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { PokemonInterface, TypePokemon } from '@entities/pokemon';
-import pokemonsData from 'app/bdd/bdd-pokemons-copy.json';
+import pokemonsData from 'app/bdd/bdd-pokemons.json';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 
 const pokemonsList = pokemonsData as PokemonInterface[];
@@ -97,7 +97,6 @@ export class PokemonAPIRepository {
 
     public getData() {
         this.httpClient.get('https://pokebuildapi.fr/api/v1/pokemon').subscribe((data: any) => {
-            console.log(data);
             const test = data.map((pokemon: any) => {
                 return {
                     id: pokemon.id,
@@ -108,7 +107,6 @@ export class PokemonAPIRepository {
                     type: pokemon.apiTypes.map((type: any) => type.name),
                 };
             });
-            console.log(test);
             const pokemonMap = test.reduce(
                 (acc: any, pokemon: any) => {
                     acc[pokemon.slug] = pokemon;
@@ -116,7 +114,6 @@ export class PokemonAPIRepository {
                 },
                 {} as Record<string, (typeof test)[number]>,
             );
-            console.log(pokemonMap);
         });
     }
 
@@ -128,7 +125,6 @@ export class PokemonAPIRepository {
         const results: PokemonInfo[] = [];
 
         for (let i = 0; i < listData.results.length; i++) {
-            console.log(i);
             const entry = listData.results[i];
             // extraire l'id
             const match = entry.url.match(/\/pokemon\/(\d+)\//);
@@ -206,7 +202,6 @@ export class PokemonAPIRepository {
             }
         }
         const newResult = results.sort((a, b) => a.id - b.id);
-        console.log(newResult);
         return newResult;
     }
 }
