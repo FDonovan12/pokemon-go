@@ -1,6 +1,6 @@
 import { computed, inject } from '@angular/core';
 import { allTypes, TypePokemon } from '@entities/pokemon';
-import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { TypeEffectivenessService } from '@services/type-effectiveness-service/type-effectiveness-service';
 
@@ -11,17 +11,21 @@ const initialState = {
 
 export const TypesStore = signalStore(
     { providedIn: 'root' },
+    withProps(() => ({
+        _typeEffectivenessService: inject(TypeEffectivenessService),
+        _pokemonRepository: inject(PokemonRepository),
+    })),
     withState(initialState),
-    withComputed((store, typeEffectivenessService = inject(TypeEffectivenessService)) => ({
-        coverageAllTypes: computed(() => makeCoverageStats(store.pokemonTypeCount(), typeEffectivenessService)),
+    withComputed((store) => ({
+        coverageAllTypes: computed(() => makeCoverageStats(store.pokemonTypeCount(), store._typeEffectivenessService)),
         coverageAllTypesDouble: computed(() =>
-            makeCoverageStats(store.pokemonTypeCount(), typeEffectivenessService, allTypes, 4),
+            makeCoverageStats(store.pokemonTypeCount(), store._typeEffectivenessService, allTypes, 4),
         ),
         coverageTeam: computed(() =>
-            makeCoverageStats(store.pokemonTypeCount(), typeEffectivenessService, store.currentTeamBuilded()),
+            makeCoverageStats(store.pokemonTypeCount(), store._typeEffectivenessService, store.currentTeamBuilded()),
         ),
         coverageTeamDouble: computed(() =>
-            makeCoverageStats(store.pokemonTypeCount(), typeEffectivenessService, store.currentTeamBuilded(), 4),
+            makeCoverageStats(store.pokemonTypeCount(), store._typeEffectivenessService, store.currentTeamBuilded(), 4),
         ),
     })),
     withMethods((store) => ({
@@ -44,35 +48,29 @@ export const TypesStore = signalStore(
             patchState(store, { currentTeamBuilded: currentTeamBuilded });
         },
     })),
-    withHooks(
-        (
-            store,
-            pokemonRepository = inject(PokemonRepository),
-            typeEffectivenessService = inject(TypeEffectivenessService),
-        ) => ({
-            async onInit() {
-                await typeEffectivenessService.initIfNeeded();
-                const legendaryPokemon = Object.entries(pokemonRepository.pokemonIndex.byName)
-                    .map(([key, pokemon]) => pokemon)
-                    .filter((pokemon) => pokemon.isLegendary);
-                const megaPokemon = pokemonRepository.megaList;
-                const megaAndLegendaryPokemon = megaPokemon.concat(legendaryPokemon);
+    withHooks((store) => ({
+        async onInit() {
+            await store._typeEffectivenessService.initIfNeeded();
+            const legendaryPokemon = Object.entries(store._pokemonRepository.pokemonIndex.byName)
+                .map(([key, pokemon]) => pokemon)
+                .filter((pokemon) => pokemon.isLegendary);
+            const megaPokemon = store._pokemonRepository.megaList;
+            const megaAndLegendaryPokemon = megaPokemon.concat(legendaryPokemon);
 
-                const pokemonTypeCount = initTypeTable();
+            const pokemonTypeCount = initTypeTable();
 
-                megaAndLegendaryPokemon.forEach((pokemon) =>
-                    incrementTable(pokemonTypeCount, pokemon.type[0], pokemon.type[1]),
-                );
+            megaAndLegendaryPokemon.forEach((pokemon) =>
+                incrementTable(pokemonTypeCount, pokemon.type[0], pokemon.type[1]),
+            );
 
-                const saved = localStorage.getItem('currentTeamBuilded');
-                const currentTeamBuilded = saved ? new Set<string>(JSON.parse(saved)) : new Set<string>();
-                patchState(store, {
-                    pokemonTypeCount: pokemonTypeCount,
-                    currentTeamBuilded: currentTeamBuilded,
-                });
-            },
-        }),
-    ),
+            const saved = localStorage.getItem('currentTeamBuilded');
+            const currentTeamBuilded = saved ? new Set<string>(JSON.parse(saved)) : new Set<string>();
+            patchState(store, {
+                pokemonTypeCount: pokemonTypeCount,
+                currentTeamBuilded: currentTeamBuilded,
+            });
+        },
+    })),
 );
 
 function makeCoverageStats(
@@ -90,7 +88,6 @@ function makeCoverageStats(
     const totalPerTypeDefensive = getTotalCountPerType(generalMapCoverge);
     const total = getTotalCount(generalMapCoverge);
     const totalPerTypeOffensive = buildMapEffectiveness(pokemonTypeCount, typeEffectivenessService, minEffectiveness);
-    console.log(totalPerTypeOffensive);
     return { totalPerTypeDefensive, total, totalPerTypeOffensive };
 }
 

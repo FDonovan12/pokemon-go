@@ -1,7 +1,7 @@
 import { computed, inject } from '@angular/core';
 import { PokemonWithRarity, SavageGroup } from '@entities/event';
 import { PokemonInterface } from '@entities/pokemon';
-import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withMethods, withProps, withState } from '@ngrx/signals';
 import { SortPokemonService } from '@repositories/event/sort-pokemon';
 import { PokemonPathService } from '@repositories/event/sort-pokemon-new';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
@@ -13,14 +13,19 @@ export interface SavageGroupInterface {
 const initialState: SavageGroupInterface = {
     pokemons: [],
     title: '',
-    firstSortImplemntation: false,
+    firstSortImplemntation: true,
 };
 
 export const StoreSavageGroup = signalStore(
+    withProps(() => ({
+        _pokemonRepository: inject(PokemonRepository),
+        _sortPokemonService: inject(SortPokemonService),
+        _pokemonPathService: inject(PokemonPathService),
+    })),
     withState(initialState),
-    withComputed((store, getAllService = inject(PokemonRepository)) => ({
+    withComputed((store) => ({
         megaPokemon: computed(() => {
-            return getAllService.megaList.filter((mega) =>
+            return store._pokemonRepository.megaList.filter((mega) =>
                 countTypeBoost(
                     mega,
                     store.pokemons().map((withRarity) => withRarity.pokemon),
@@ -28,57 +33,51 @@ export const StoreSavageGroup = signalStore(
             );
         }),
     })),
-    withMethods(
-        (store, sortPokemonService = inject(SortPokemonService), pokemonPathService = inject(PokemonPathService)) => ({
-            setGroup(group: SavageGroup) {
-                patchState(store, { ...group });
-                let sortedGroup = pokemonPathService.findBestPath(group.pokemonsFlat, store.megaPokemon());
-                if (store.firstSortImplemntation()) {
-                    sortedGroup = sortPokemonService.getOrderedList(group.pokemonsFlat, store.megaPokemon());
-                }
-                const withRarity = sortedGroup.map(
-                    (pokemon) => new PokemonWithRarity(pokemon, !!group.rarePokemons.find((p) => p.id === pokemon.id)),
-                );
-                patchState(store, { pokemons: withRarity });
-            },
-            randomGroup() {
-                console.log('randomGroup');
-                const group = store
-                    .pokemons()
-                    .map((withRarity) => withRarity.pokemon)
-                    .shuffle();
-                let sortedGroup = pokemonPathService.findBestPath(group, store.megaPokemon());
-                if (store.firstSortImplemntation()) {
-                    sortedGroup = sortPokemonService.getOrderedList(group, store.megaPokemon());
-                }
-                const withRarity = sortedGroup.map(
-                    (pokemon) => new PokemonWithRarity(pokemon, !!group.find((p) => p.id === pokemon.id)),
-                );
-                patchState(store, { pokemons: withRarity });
-            },
-            changeSortImplementation() {
-                console.log('switch');
-                patchState(store, { firstSortImplemntation: !store.firstSortImplemntation() });
-                const group = store.pokemons().map((withRarity) => withRarity.pokemon);
-                console.log(group);
-                let sortedGroup = pokemonPathService.findBestPath(group, store.megaPokemon());
-                if (store.firstSortImplemntation()) {
-                    console.log('first');
-                    sortedGroup = sortPokemonService.getOrderedList(group, store.megaPokemon());
-                }
-                const withRarity = sortedGroup.map(
-                    (pokemon) => new PokemonWithRarity(pokemon, !!group.find((p) => p.id === pokemon.id)),
-                );
-                patchState(store, { pokemons: withRarity });
-            },
-            getMegaGroups() {
-                return store.megaPokemon().map((mega) => ({
-                    mega: mega,
-                    pokemonBoost: store.pokemons().filter((pokemon) => haveTypeInCommon(mega, pokemon.pokemon)),
-                }));
-            },
-        }),
-    ),
+    withMethods((store) => ({
+        setGroup(group: SavageGroup) {
+            patchState(store, { ...group });
+            let sortedGroup = store._pokemonPathService.findBestPath(group.pokemonsFlat, store.megaPokemon());
+            if (store.firstSortImplemntation()) {
+                sortedGroup = store._sortPokemonService.getOrderedList(group.pokemonsFlat, store.megaPokemon());
+            }
+            const withRarity = sortedGroup.map(
+                (pokemon) => new PokemonWithRarity(pokemon, !!group.rarePokemons.find((p) => p.id === pokemon.id)),
+            );
+            patchState(store, { pokemons: withRarity });
+        },
+        randomGroup() {
+            const group = store
+                .pokemons()
+                .map((withRarity) => withRarity.pokemon)
+                .shuffle();
+            let sortedGroup = store._pokemonPathService.findBestPath(group, store.megaPokemon());
+            if (store.firstSortImplemntation()) {
+                sortedGroup = store._sortPokemonService.getOrderedList(group, store.megaPokemon());
+            }
+            const withRarity = sortedGroup.map(
+                (pokemon) => new PokemonWithRarity(pokemon, !!group.find((p) => p.id === pokemon.id)),
+            );
+            patchState(store, { pokemons: withRarity });
+        },
+        changeSortImplementation() {
+            patchState(store, { firstSortImplemntation: !store.firstSortImplemntation() });
+            const group = store.pokemons().map((withRarity) => withRarity.pokemon);
+            let sortedGroup = store._pokemonPathService.findBestPath(group, store.megaPokemon());
+            if (store.firstSortImplemntation()) {
+                sortedGroup = store._sortPokemonService.getOrderedList(group, store.megaPokemon());
+            }
+            const withRarity = sortedGroup.map(
+                (pokemon) => new PokemonWithRarity(pokemon, !!group.find((p) => p.id === pokemon.id)),
+            );
+            patchState(store, { pokemons: withRarity });
+        },
+        getMegaGroups() {
+            return store.megaPokemon().map((mega) => ({
+                mega: mega,
+                pokemonBoost: store.pokemons().filter((pokemon) => haveTypeInCommon(mega, pokemon.pokemon)),
+            }));
+        },
+    })),
 );
 
 function haveTypeInCommon(pokemon1: PokemonInterface, pokemon2: PokemonInterface): boolean {
