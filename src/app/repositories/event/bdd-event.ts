@@ -12,6 +12,26 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Sur les traces de Voltoutou')
+                .withStartAt(new Date(2025, 5, 20, 1))
+                .withEndAt(new Date(2025, 5, 22, 23))
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Caninos.alternatives?.Hisui!, true),
+                        new PokemonWithRarity(pokemons.Caninos),
+                        new PokemonWithRarity(pokemons.Snubbull),
+                        new PokemonWithRarity(pokemons.Malosse),
+                        new PokemonWithRarity(pokemons.Medhyena),
+                        new PokemonWithRarity(pokemons.Dynavolt),
+                        new PokemonWithRarity(pokemons.Ponchiot),
+                        new PokemonWithRarity(pokemons.Couafarel),
+                        new PokemonWithRarity(pokemons.Patachiot),
+                        new PokemonWithRarity(pokemons.Voltoutou, true),
+                    ],
+                    'Nord',
+                )
+                .build(),
+            new EventBuilder()
                 .withName('Saison Jours heureux')
                 .withStartAt(new Date(2025, 5, 3, 10))
                 .withEndAt(new Date(2025, 8, 2, 10))
