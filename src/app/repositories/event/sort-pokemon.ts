@@ -7,38 +7,38 @@ import { PokemonInterface } from '@entities/pokemon';
 export class SortPokemonService {
     private pokemons!: PokemonInterface[];
     private megaPokemons!: PokemonInterface[];
-    private nameMap!: Map<string, PokemonInterface>;
+    private idMap!: Map<number, PokemonInterface>;
 
     private setAttribut(pokemons: PokemonInterface[], megaPokemons: PokemonInterface[]) {
         this.pokemons = pokemons;
         this.megaPokemons = megaPokemons;
-        this.nameMap = new Map(pokemons.map((p) => [p.name, p]));
+        this.idMap = new Map(pokemons.map((p) => [p.id, p]));
     }
 
     public getOrderedList(pokemons: PokemonInterface[], megaPokemons: PokemonInterface[]): PokemonInterface[] {
         this.setAttribut(pokemons, megaPokemons);
 
         const result: PokemonInterface[] = [];
-        const remaining = new Set(pokemons.map((p) => p.name));
+        const remaining = new Set(pokemons.map((p) => p.id));
 
         while (remaining.size > 0) {
-            const subList = this.pokemons.filter((p) => remaining.has(p.name));
+            const subList = this.pokemons.filter((p) => remaining.has(p.id));
             const graph = this.buildWeightedGraph(subList);
             const bestChain = this.findMaxWeightPath(
                 graph,
-                subList.map((p) => p.name),
+                subList.map((p) => p.id),
             );
 
-            for (const name of bestChain) {
-                const poke = this.nameMap.get(name);
+            for (const id of bestChain) {
+                const poke = this.idMap.get(id);
                 if (poke) result.push(poke);
-                remaining.delete(name);
+                remaining.delete(id);
             }
 
             // Si aucun chemin trouvé
             if (bestChain.length === 0) {
                 const name = [...remaining][0];
-                const poke = this.nameMap.get(name);
+                const poke = this.idMap.get(name);
                 if (poke) result.push(poke);
                 remaining.delete(name);
             }
@@ -47,12 +47,12 @@ export class SortPokemonService {
         return result;
     }
 
-    private buildWeightedGraph(pokemons: PokemonInterface[]): Map<string, { target: string; weight: number }[]> {
-        const graph = new Map<string, { target: string; weight: number }[]>();
+    private buildWeightedGraph(pokemons: PokemonInterface[]): Map<number, { target: number; weight: number }[]> {
+        const graph = new Map<number, { target: number; weight: number }[]>();
 
         for (const a of pokemons) {
             for (const b of pokemons) {
-                if (a.name === b.name) continue;
+                if (a.id === b.id) continue;
 
                 const directTypeCount = this.commonTypeCount(a, b);
                 const megaBridgeCount = this.megaCommonBridgeCount(a, b);
@@ -60,8 +60,8 @@ export class SortPokemonService {
                 const weight = directTypeCount * 100 + megaBridgeCount * 0.1;
 
                 if (weight > 0) {
-                    if (!graph.has(a.name)) graph.set(a.name, []);
-                    graph.get(a.name)!.push({ target: b.name, weight });
+                    if (!graph.has(a.id)) graph.set(a.id, []);
+                    graph.get(a.id)!.push({ target: b.id, weight });
                 }
             }
         }
@@ -84,12 +84,12 @@ export class SortPokemonService {
         }).length;
     }
 
-    private findMaxWeightPath(graph: Map<string, { target: string; weight: number }[]>, nodes: string[]): string[] {
-        let bestPath: string[] = [];
+    private findMaxWeightPath(graph: Map<number, { target: number; weight: number }[]>, nodes: number[]): number[] {
+        let bestPath: number[] = [];
         let maxWeight = -1;
 
         for (const start of nodes) {
-            const visited = new Set<string>();
+            const visited = new Set<number>();
             const { path, weight } = this.dfsMaxWeight(start, graph, visited, 0, []);
             if (weight > maxWeight) {
                 bestPath = path;
@@ -101,12 +101,12 @@ export class SortPokemonService {
     }
 
     private dfsMaxWeight(
-        current: string,
-        graph: Map<string, { target: string; weight: number }[]>,
-        visited: Set<string>,
+        current: number,
+        graph: Map<number, { target: number; weight: number }[]>,
+        visited: Set<number>,
         totalWeight: number,
-        path: string[],
-    ): { path: string[]; weight: number } {
+        path: number[],
+    ): { path: number[]; weight: number } {
         visited.add(current);
         const newPath = [...path, current];
 
