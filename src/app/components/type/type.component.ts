@@ -5,11 +5,12 @@ import { TypePokemon } from '@entities/pokemon';
     selector: 'app-type',
     standalone: true,
     imports: [],
-    template: '<span><img [src]="urlType()"/></span>',
+    template: '<span><img [src]="urlType()" [style.width.px]="size()"/></span>',
     styles: '',
 })
 export class TypeComponent {
     type = input.required<TypePokemon>();
+    size = input<number>();
 
     urlType = computed(() => `https://www.pokebip.com/pokedex/images/${this.type().slugify().capitalize()}.png`);
 }

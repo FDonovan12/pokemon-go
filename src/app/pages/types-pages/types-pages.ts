@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { allTypes, TypePokemon } from '@entities/pokemon';
 import { PercentColor } from '../../components/percent-color/percent-color';
-import { TypeComponent } from '../../components/type/type.component';
+import { RelationTypeComponent } from './components/relation-type-component/relation-type-component';
 import { TypesStore } from './types-store/types-store';
+import { TypeComponent } from '@components/type/type.component';
 
 @Component({
     selector: 'app-types-pages',
-    imports: [PercentColor, TypeComponent],
+    imports: [PercentColor, TypeComponent, RelationTypeComponent],
     templateUrl: './types-pages.html',
     styleUrl: './types-pages.css',
     providers: [TypesStore],

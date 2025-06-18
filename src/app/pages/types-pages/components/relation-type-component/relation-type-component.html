@@ -1,0 +1,40 @@
+<div
+    class="type-rows"
+    style="place-content: center"
+>
+    <div>
+        @for (type of resistanceOfCurrentType(); track $index) {
+            <app-type [type]="type" />
+        }
+    </div>
+</div>
+<div
+    class="type-rows"
+    style="grid-template-columns: subgrid"
+>
+    <div style="display: flex; align-items: center; justify-content: end">
+        @for (type of weaknessesOfCurrentType(); track $index) {
+            <app-type [type]="type" />
+        }
+    </div>
+    <app-type
+        [type]="currentType()"
+        [size]="60"
+        style="padding: 0.5em 1em"
+    />
+    <div style="display: flex; align-items: center">
+        @for (type of weaknessesToCurrentType(); track $index) {
+            <app-type [type]="type" />
+        }
+    </div>
+</div>
+<div
+    class="type-rows"
+    style="place-content: center"
+>
+    <div>
+        @for (type of resistanceToCurrentType(); track $index) {
+            <app-type [type]="type" />
+        }
+    </div>
+</div>

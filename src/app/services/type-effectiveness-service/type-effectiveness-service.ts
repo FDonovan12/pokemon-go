@@ -28,16 +28,50 @@ export class TypeEffectivenessService {
     }
 
     calculEffectivness(attacker: TypePokemon, type1: TypePokemon, type2: TypePokemon): number {
-        const eff1 = this.typeEffectiveness?.get(attacker)?.get(type1) ?? 1;
+        const eff1 = this.getDamageRelations().get(attacker)?.get(type1) ?? 1;
         let eff2 = 1;
-        if (type1 !== type2) eff2 = this.typeEffectiveness?.get(attacker)?.get(type2) ?? 1;
+        if (type1 !== type2) eff2 = this.getDamageRelations().get(attacker)?.get(type2) ?? 1;
         const combinedEff = eff1 * eff2;
         return combinedEff;
     }
 
     getDamageRelations(): Map<TypePokemon, Map<TypePokemon, number>> {
-        const table: [TypePokemon, [TypePokemon, number][]][] = damageRelation;
-        return new Map(table.map(([key, innerArr]) => [key, new Map<TypePokemon, number>(innerArr)]));
+        if (!this.typeEffectiveness) {
+            const table: [TypePokemon, [TypePokemon, number][]][] = damageRelation;
+            this.typeEffectiveness = new Map(
+                table.map(([key, innerArr]) => [key, new Map<TypePokemon, number>(innerArr)]),
+            );
+        }
+        return this.typeEffectiveness;
+    }
+
+    getWeaknessesOf(defender: TypePokemon): TypePokemon[] {
+        if (!this.typeEffectiveness) return [];
+        return Array.from(this.typeEffectiveness.entries())
+            .filter(([, map]) => (map.get(defender) ?? 1) > 1)
+            .map(([attacker]) => attacker);
+    }
+    getResistancesOf(defender: TypePokemon): TypePokemon[] {
+        if (!this.typeEffectiveness) return [];
+        return Array.from(this.typeEffectiveness.entries())
+            .filter(([, map]) => (map.get(defender) ?? 1) < 1)
+            .map(([attacker]) => attacker);
+    }
+
+    getTypesWeakTo(attacker: TypePokemon): TypePokemon[] {
+        const map = this.getDamageRelations().get(attacker);
+        if (!map) return [];
+        return Array.from(map.entries())
+            .filter(([, multiplier]) => multiplier > 1)
+            .map(([defender]) => defender);
+    }
+
+    getTypesResistantTo(attacker: TypePokemon): TypePokemon[] {
+        const map = this.getDamageRelations().get(attacker);
+        if (!map) return [];
+        return Array.from(map.entries())
+            .filter(([, multiplier]) => multiplier < 1)
+            .map(([defender]) => defender);
     }
 
     async fetchDamageRelations() {
@@ -68,7 +102,6 @@ export class TypeEffectivenessService {
             typesCount.set(frType as TypePokemon, innerMap);
         }
         const table = Array.from(typesCount.entries()).map(([key, innerMap]) => [key, Array.from(innerMap.entries())]);
-        console.log(table);
         return typesCount;
     }
     typeMapFrToEn: Record<TypePokemon, string> = {
