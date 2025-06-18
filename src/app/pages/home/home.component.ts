@@ -4,6 +4,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PokemonInterface } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { FilterService } from '@services/filter-service/filter-service';
 import { EventPokemon } from '../../entities/event';
 import { EventRepository } from '../../repositories/event/event.repository';
 
@@ -15,9 +16,10 @@ import { EventRepository } from '../../repositories/event/event.repository';
     styleUrl: './home.component.css',
 })
 export class HomeComponent {
-    private readonly httpClient: HttpClient = inject(HttpClient);
-    private readonly getAllService: PokemonRepository = inject(PokemonRepository);
-    readonly bddEvent: EventRepository = inject(EventRepository);
+    private readonly httpClient = inject(HttpClient);
+    private readonly getAllService = inject(PokemonRepository);
+    readonly bddEvent = inject(EventRepository);
+    readonly filterService = inject(FilterService);
 
     today = new Date();
 
@@ -40,7 +42,29 @@ export class HomeComponent {
     private readonly onlySavagePokemons = ' & !raid & !éclos & !étude & !dynamax & !gigamax & ';
 
     baseFilters = [
-        { label: 'IV PVP', query: ' & 2-pv & 2-défense & -1attaque & ' },
+        { label: 'IV PVP 1 ', query: this.filterService.buildFilter({ and: ['2-pv', '2-défense', '-1attaque'] }) },
+        { label: 'IV PVP 2 ', query: this.filterService.buildFilter({ and: ['3-pv', '3-défense', '-2attaque'] }) },
+        // {
+        //     label: 'IV PVP 3 ',
+        //     query: this.filterService.buildFilter({
+        //         or: [{ and: ['2-pv', '2-défense', '-1attaque'] }, { and: ['3-pv', '3-défense', '-2attaque'] }],
+        //     }),
+        // },
+        // {
+        //     label: 'IV PVP 3 ',
+        //     query: this.filterService.buildFilterString({
+        //         or: [{ and: ['2-pv', '2-défense', '-1attaque'] }, { and: ['3-pv', '3-défense', '-2attaque'] }],
+        //     }),
+        // },
+
+        {
+            label: 'Filtre level and',
+            query: this.filterService.test({ not: { and: ['bleu', 'rond'] } }).toString(),
+        },
+        {
+            label: 'Filtre level or',
+            query: this.filterService.test({ not: { or: ['bleu', 'rond'] } }).toString(),
+        },
         {
             label: 'Filtre level 1',
             query:
@@ -90,7 +114,6 @@ export class HomeComponent {
 
     public getData() {
         this.httpClient.get('https://pokebuildapi.fr/api/v1/pokemon').subscribe((data: any) => {
-            console.log(data);
             const test = data.map((pokemon: any) => {
                 return {
                     id: pokemon.id,
@@ -101,7 +124,6 @@ export class HomeComponent {
                     type: pokemon.apiTypes.map((type: any) => type.name),
                 };
             });
-            console.log(test);
             const pokemonMap = test.reduce(
                 (acc: any, pokemon: any) => {
                     acc[pokemon.slug] = pokemon;
@@ -109,7 +131,6 @@ export class HomeComponent {
                 },
                 {} as Record<string, (typeof test)[number]>,
             );
-            console.log(pokemonMap);
         });
     }
 }
