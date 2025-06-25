@@ -1,7 +1,9 @@
-import { inject } from '@angular/core';
+import { effect, inject } from '@angular/core';
 import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+
+const LOCAL_STORAGE_KEEP = 'pokemon-want-keep';
 
 const initialState = {
     allFamilyPokemon: new Map<number, PokemonInterface[]>(),
@@ -24,11 +26,13 @@ export const KeepStore = signalStore(
             patchState(store, { generationSelected: generation });
         },
         selectPokemon(pokemon: PokemonInterface) {
-            if (store.pokemonWantKeep().has(pokemon)) {
-                store.pokemonWantKeep().delete(pokemon);
+            const set = new Set<PokemonInterface>(store.pokemonWantKeep());
+            if (set.has(pokemon)) {
+                set.delete(pokemon);
             } else {
-                store.pokemonWantKeep().add(pokemon);
+                set.add(pokemon);
             }
+            patchState(store, { pokemonWantKeep: set });
         },
         exportKeepPokemon() {
             const slugs = Array.from(store.pokemonWantKeep()).map((p) => p.slug); // Ou plus si tu veux
@@ -62,6 +66,10 @@ export const KeepStore = signalStore(
     })),
     withHooks((store) => ({
         onInit() {
+            effect(() => {
+                const list = [...store.pokemonWantKeep()].map((p) => p.slug);
+                localStorage.setItem(LOCAL_STORAGE_KEEP, JSON.stringify(list));
+            });
             const pokemonsByName = store._pokemonRepository.pokemonIndex.byName;
             const allFamilyPokemons = store._pokemonRepository.pokemonFamilyName
                 .map((pokemonName) => pokemonsByName[pokemonName])
@@ -72,7 +80,10 @@ export const KeepStore = signalStore(
                 list.push(pokemon);
                 map.set(pokemon.generation, list);
             });
-            patchState(store, { allFamilyPokemon: map });
+            const storageKeep = localStorage.getItem(LOCAL_STORAGE_KEEP);
+            const storageSlugs: PokemonSlug[] = storageKeep ? JSON.parse(storageKeep) : [];
+            const newSet = new Set<PokemonInterface>(storageSlugs.map((slug) => pokemonsByName[slug]));
+            patchState(store, { allFamilyPokemon: map, pokemonWantKeep: newSet });
         },
     })),
 );

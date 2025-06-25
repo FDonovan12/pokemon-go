@@ -19,7 +19,7 @@
         [alt]="pokemon.name"
         [title]="pokemon.name"
         loading="lazy"
-        style="height: 50px; width: 50px"
+        style="height: 75px; aspect-ratio: 1"
         (click)="store.selectPokemon(pokemon)"
         [class.selected]="store.pokemonWantKeep().has(pokemon)"
     />
@@ -31,6 +31,6 @@
         [alt]="pokemon.name"
         [title]="pokemon.name"
         loading="lazy"
-        style="height: 50px; width: 50px"
+        style="height: 75px; aspect-ratio: 1"
     />
 }
