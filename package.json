@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-github": "npm run build -- --configuration production --output-path=dist/pokemon-go",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

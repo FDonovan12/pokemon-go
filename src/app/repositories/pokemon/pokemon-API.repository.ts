@@ -18,7 +18,7 @@ type PokemonIndex = {
 export class PokemonAPIRepository {
     private readonly httpClient: HttpClient = inject(HttpClient);
 
-    update(pokemon: PokemonInterface) {
+    updatePokemonData(pokemon: PokemonInterface) {
         pokemon.type = pokemon.type.map(this.updateType);
         let newId = pokemon.id;
         if (pokemon.sprite) {
@@ -31,7 +31,7 @@ export class PokemonAPIRepository {
 
         if (pokemon.alternatives) {
             for (let [key, object] of Object.entries(pokemon.alternatives)) {
-                this.update(object);
+                this.updatePokemonData(object);
             }
         }
         return pokemon;

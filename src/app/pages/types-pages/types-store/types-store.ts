@@ -40,9 +40,11 @@ export const TypesStore = signalStore(
             patchState(store, { currentTeamBuilded: currentTeamBuilded });
         },
         toggleTeamAll() {
-            let currentTeamBuilded = new Set(allTypes);
+            let currentTeamBuilded: Set<TypePokemon>;
             if (store.currentTeamBuilded().size === allTypes.length) {
                 currentTeamBuilded = new Set();
+            } else {
+                currentTeamBuilded = new Set(allTypes);
             }
             localStorage.setItem('currentTeamBuilded', JSON.stringify(Array.from(currentTeamBuilded)));
             patchState(store, { currentTeamBuilded: currentTeamBuilded });

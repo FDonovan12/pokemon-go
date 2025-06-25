@@ -1,0 +1,100 @@
+import { inject } from '@angular/core';
+import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
+import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+
+const initialState = {
+    allFamilyPokemon: new Map<number, PokemonInterface[]>(),
+    generationSelected: 1,
+    pokemonWantKeep: new Set<PokemonInterface>(),
+};
+
+export const KeepStore = signalStore(
+    { providedIn: 'root' },
+    withProps(() => ({
+        _pokemonRepository: inject(PokemonRepository),
+    })),
+    withState(initialState),
+    withComputed((store) => ({})),
+    withMethods((store) => ({
+        unselectAll() {
+            patchState(store, { pokemonWantKeep: new Set<PokemonInterface>() });
+        },
+        selectGeneration(generation: number) {
+            patchState(store, { generationSelected: generation });
+        },
+        selectPokemon(pokemon: PokemonInterface) {
+            if (store.pokemonWantKeep().has(pokemon)) {
+                store.pokemonWantKeep().delete(pokemon);
+            } else {
+                store.pokemonWantKeep().add(pokemon);
+            }
+        },
+        exportKeepPokemon() {
+            const slugs = Array.from(store.pokemonWantKeep()).map((p) => p.slug); // Ou plus si tu veux
+            const blob = new Blob([JSON.stringify(slugs, null, 2)], {
+                type: 'application/json',
+            });
+
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'keep-pokemon.json';
+            a.click();
+
+            URL.revokeObjectURL(a.href);
+        },
+        onFilesSelected(event: Event) {
+            const input = event.target as HTMLInputElement;
+            if (!input.files) return;
+
+            const files = Array.from(input.files);
+            const promises = files.map((file) => readFile(file));
+
+            Promise.all(promises).then((arraysOfSlugs) => {
+                const allSlugs: PokemonSlug[] = arraysOfSlugs.flat();
+                const set = new Set<PokemonInterface>([...store.pokemonWantKeep()]);
+                allSlugs.forEach((pokemonName) => set.add(store._pokemonRepository.pokemonIndex.byName[pokemonName]));
+                console.log(set);
+                patchState(store, { pokemonWantKeep: set });
+                console.log(store.pokemonWantKeep());
+            });
+        },
+    })),
+    withHooks((store) => ({
+        onInit() {
+            const pokemonsByName = store._pokemonRepository.pokemonIndex.byName;
+            const allFamilyPokemons = store._pokemonRepository.pokemonFamilyName
+                .map((pokemonName) => pokemonsByName[pokemonName])
+                .filter((pokemon) => !pokemon.isLegendary && !pokemon.isMythical);
+            const map = new Map<number, PokemonInterface[]>();
+            allFamilyPokemons.forEach((pokemon) => {
+                const list = map.get(pokemon.generation) ?? [];
+                list.push(pokemon);
+                map.set(pokemon.generation, list);
+            });
+            patchState(store, { allFamilyPokemon: map });
+        },
+    })),
+);
+
+function readFile(file: File): Promise<PokemonSlug[]> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            try {
+                const json = JSON.parse(reader.result as string);
+                if (Array.isArray(json)) {
+                    resolve(json);
+                } else {
+                    reject('JSON non valide : doit être un tableau de slug');
+                }
+            } catch (e) {
+                reject('Erreur parsing JSON');
+            }
+        };
+
+        reader.onerror = () => reject(reader.error);
+        reader.readAsText(file);
+    });
+}
