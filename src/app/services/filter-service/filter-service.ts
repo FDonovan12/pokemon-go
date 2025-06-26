@@ -101,6 +101,7 @@ export class FilterService {
 
     test(filter: Filter): Filter {
         const res = this.simplifyFilter(filter);
+        console.log(res);
         return res;
     }
 

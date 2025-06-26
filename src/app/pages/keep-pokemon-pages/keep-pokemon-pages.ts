@@ -7,7 +7,6 @@ import { KeepStore } from './keep-store/keep-store';
     templateUrl: './keep-pokemon-pages.html',
     styleUrl: './keep-pokemon-pages.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [KeepStore],
 })
 export class KeepPokemonPages {
     store = inject(KeepStore);

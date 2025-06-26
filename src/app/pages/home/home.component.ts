@@ -7,6 +7,7 @@ import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { EventPokemon } from '../../entities/event';
 import { EventRepository } from '../../repositories/event/event.repository';
+import { KeepStore } from './../keep-pokemon-pages/keep-store/keep-store';
 
 @Component({
     selector: 'app-home',
@@ -20,6 +21,7 @@ export class HomeComponent {
     private readonly getAllService = inject(PokemonRepository);
     readonly bddEvent = inject(EventRepository);
     readonly filterService = inject(FilterService);
+    readonly keepStore = inject(KeepStore);
 
     today = new Date();
 
@@ -57,14 +59,14 @@ export class HomeComponent {
         //     }),
         // },
 
-        {
-            label: 'Filtre level and',
-            query: this.filterService.test({ not: { and: ['bleu', 'rond'] } }).toString(),
-        },
-        {
-            label: 'Filtre level or',
-            query: this.filterService.test({ not: { or: ['bleu', 'rond'] } }).toString(),
-        },
+        // {
+        //     label: 'Filtre level and',
+        //     query: this.filterService.test({ not: { and: ['bleu', 'rond'] } }).toString(),
+        // },
+        // {
+        //     label: 'Filtre level or',
+        //     query: this.filterService.test({ not: { or: ['bleu', 'rond'] } }).toString(),
+        // },
         {
             label: 'Filtre level 1',
             query:
@@ -83,6 +85,24 @@ export class HomeComponent {
         {
             label: 'Starter',
             query: this.join(this.getAllService.starterPokemon),
+        },
+        {
+            label: 'Veut garder',
+            query: this.join([...this.keepStore.pokemonWantKeep()]),
+        },
+        {
+            label: 'Ne veut pas',
+            query: this.filterService.buildFilter(
+                this.filterService.test({
+                    not: {
+                        or: [
+                            ...[...this.keepStore.pokemonWantKeep()].map((pokemon) => pokemon.name),
+                            'légendaire',
+                            'fabuleux',
+                        ],
+                    },
+                }),
+            ),
         },
     ];
 
