@@ -1,4 +1,4 @@
-import { effect, inject } from '@angular/core';
+import { computed, effect, inject } from '@angular/core';
 import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
@@ -17,7 +17,14 @@ export const KeepStore = signalStore(
         _pokemonRepository: inject(PokemonRepository),
     })),
     withState(initialState),
-    withComputed((store) => ({})),
+    withComputed((store) => ({
+        pokemonWantKeepMap: computed(() => {
+            const list = [...store.pokemonWantKeep()];
+            list.sortAsc((pokemon) => pokemon.id);
+            const map = list.groupBy((pokemon) => pokemon.generation);
+            return map;
+        }),
+    })),
     withMethods((store) => ({
         unselectAll() {
             patchState(store, { pokemonWantKeep: new Set<PokemonInterface>() });

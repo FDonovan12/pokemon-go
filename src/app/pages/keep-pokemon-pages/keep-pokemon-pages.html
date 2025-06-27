@@ -25,13 +25,18 @@
     />
 }
 <div>Pokemon sélectionné</div>
-@for (pokemon of store.pokemonWantKeep(); track $index) {
-    <img
-        [src]="pokemon.image"
-        [alt]="pokemon.name"
-        [title]="pokemon.name"
-        loading="lazy"
-        style="height: 75px; aspect-ratio: 1"
-        (click)="store.selectPokemon(pokemon)"
-    />
+@for (generation of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track $index) {
+    @if (store.pokemonWantKeepMap()[generation] && store.pokemonWantKeepMap()[generation].length !== 0) {
+        <h3>Generation {{ generation }}</h3>
+        @for (pokemon of store.pokemonWantKeepMap()[generation]; track $index) {
+            <img
+                [src]="pokemon.image"
+                [alt]="pokemon.name"
+                [title]="pokemon.name"
+                loading="lazy"
+                style="height: 75px; aspect-ratio: 1"
+                (click)="store.selectPokemon(pokemon)"
+            />
+        }
+    }
 }
