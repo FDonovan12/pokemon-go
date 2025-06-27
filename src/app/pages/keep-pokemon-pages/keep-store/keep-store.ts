@@ -20,8 +20,8 @@ export const KeepStore = signalStore(
     withComputed((store) => ({
         pokemonWantKeepMap: computed(() => {
             const list = [...store.pokemonWantKeep()];
-            list.sortAsc((pokemon) => pokemon.id);
-            const map = list.groupBy((pokemon) => pokemon.generation);
+            const sorted = list.sortAsc((pokemon) => pokemon.id);
+            const map = sorted.groupBy((pokemon) => pokemon.generation);
             return map;
         }),
     })),
