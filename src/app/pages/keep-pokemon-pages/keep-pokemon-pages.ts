@@ -1,13 +1,22 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KeepStore } from './keep-store/keep-store';
 
 @Component({
     selector: 'app-keep-pokemon-pages',
-    imports: [],
+    imports: [FormsModule, ReactiveFormsModule],
     templateUrl: './keep-pokemon-pages.html',
     styleUrl: './keep-pokemon-pages.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeepPokemonPages {
     store = inject(KeepStore);
+    @ViewChild('searchInput') inputRef!: ElementRef<HTMLInputElement>;
+
+    constructor() {
+        effect(() => {
+            this.store.search();
+            queueMicrotask(() => this.inputRef.nativeElement.focus());
+        });
+    }
 }

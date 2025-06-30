@@ -6,9 +6,10 @@ import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 const LOCAL_STORAGE_KEEP = 'pokemon-want-keep';
 
 const initialState = {
-    allFamilyPokemon: new Map<number, PokemonInterface[]>(),
+    allFamilyPokemon: [] as PokemonInterface[],
     generationSelected: 1,
     pokemonWantKeep: new Set<PokemonInterface>(),
+    search: '',
 };
 
 export const KeepStore = signalStore(
@@ -24,6 +25,17 @@ export const KeepStore = signalStore(
             const map = sorted.groupBy((pokemon) => pokemon.generation);
             return map;
         }),
+        resultSelected: computed(() => {
+            if (store.search()) {
+                return store
+                    .allFamilyPokemon()
+                    .filter((pokemon) => pokemon.slug.slugify().includes(store.search().slugify()));
+            }
+            return store.allFamilyPokemon().filter((pokemon) => pokemon.generation === store.generationSelected());
+        }),
+        resultSearch: computed(() =>
+            store.allFamilyPokemon().filter((pokemon) => pokemon.name.includes(store.search())),
+        ),
     })),
     withMethods((store) => ({
         unselectAll() {
@@ -39,7 +51,7 @@ export const KeepStore = signalStore(
             } else {
                 set.add(pokemon);
             }
-            patchState(store, { pokemonWantKeep: set });
+            patchState(store, { pokemonWantKeep: set, search: '' });
         },
         exportKeepPokemon() {
             const slugs = Array.from(store.pokemonWantKeep()).map((p) => p.slug); // Ou plus si tu veux
@@ -70,6 +82,7 @@ export const KeepStore = signalStore(
                 console.log(store.pokemonWantKeep());
             });
         },
+        setSearch: (value: string) => patchState(store, { search: value }),
     })),
     withHooks((store) => ({
         onInit() {
@@ -81,16 +94,16 @@ export const KeepStore = signalStore(
             const allFamilyPokemons = store._pokemonRepository.pokemonFamilyName
                 .map((pokemonName) => pokemonsByName[pokemonName])
                 .filter((pokemon) => !pokemon.isLegendary && !pokemon.isMythical);
-            const map = new Map<number, PokemonInterface[]>();
-            allFamilyPokemons.forEach((pokemon) => {
-                const list = map.get(pokemon.generation) ?? [];
-                list.push(pokemon);
-                map.set(pokemon.generation, list);
-            });
+            // const map = new Map<number, PokemonInterface[]>();
+            // allFamilyPokemons.forEach((pokemon) => {
+            //     const list = map.get(pokemon.generation) ?? [];
+            //     list.push(pokemon);
+            //     map.set(pokemon.generation, list);
+            // });
             const storageKeep = localStorage.getItem(LOCAL_STORAGE_KEEP);
             const storageSlugs: PokemonSlug[] = storageKeep ? JSON.parse(storageKeep) : [];
             const newSet = new Set<PokemonInterface>(storageSlugs.map((slug) => pokemonsByName[slug]));
-            patchState(store, { allFamilyPokemon: map, pokemonWantKeep: newSet });
+            patchState(store, { allFamilyPokemon: allFamilyPokemons, pokemonWantKeep: newSet });
         },
     })),
 );
