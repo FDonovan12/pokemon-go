@@ -12,7 +12,7 @@
     <button (click)="randomList()">Random</button>
     @for (savage of store.pokemons(); track $index) {
         <tr>
-            <td>
+            <td [style.background]="savage.isRare ? 'hsl(0 80 60 / 0.5)' : 'transparent'">
                 <img
                     [src]="savage.image"
                     [alt]="savage.name"
