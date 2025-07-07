@@ -12,6 +12,64 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Ultra Bonus : D’acier et d’écailles')
+                .withStartAt(new Date(2025, 6, 22, 10))
+                .withEndAt(new Date(2025, 6, 27, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Magneti),
+                    new PokemonWithRarity(pokemons.Minidraco),
+                    new PokemonWithRarity(pokemons.Galekid),
+                    new PokemonWithRarity(pokemons.Terhal),
+                    new PokemonWithRarity(pokemons.Grindur),
+                    new PokemonWithRarity(pokemons.Sonistrelle),
+                    new PokemonWithRarity(pokemons.Minisange),
+                    new PokemonWithRarity(pokemons.Coupenotte, true),
+                    new PokemonWithRarity(pokemons.Mucuscule, true),
+                ])
+                .build(),
+            new EventBuilder()
+                .withName('Festival Aquatique')
+                .withStartAt(new Date(2025, 6, 15, 10))
+                .withEndAt(new Date(2025, 6, 20, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Carapuce),
+                    new PokemonWithRarity(pokemons.Ramoloss),
+                    new PokemonWithRarity(pokemons.Krabby),
+                    new PokemonWithRarity(pokemons.Stari),
+                    new PokemonWithRarity(pokemons.Magicarpe),
+                    new PokemonWithRarity(pokemons.Marill),
+                    new PokemonWithRarity(pokemons.Barloche),
+                    new PokemonWithRarity(pokemons.Coquiperl),
+                    new PokemonWithRarity(pokemons.Mustebouee),
+                    new PokemonWithRarity(pokemons.Ecayon),
+                    new PokemonWithRarity(pokemons.Sovkipou),
+                    new PokemonWithRarity(pokemons.Lanturn, true),
+                    new PokemonWithRarity(pokemons.Barpau, true),
+                    new PokemonWithRarity(pokemons.Batracne, true),
+                    new PokemonWithRarity(pokemons.Carapagos, true),
+                ])
+                .build(),
+            new EventBuilder()
+                .withName('Ultra Bonus : Célébration de Hisui')
+                .withStartAt(new Date(2025, 6, 8, 10))
+                .withEndAt(new Date(2025, 6, 13, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Nosferapti),
+                    new PokemonWithRarity(pokemons.Voltorbe.alternatives?.Hisui!),
+                    new PokemonWithRarity(pokemons.Qwilfish.alternatives?.Hisui!),
+                    new PokemonWithRarity(pokemons.Zorua.alternatives?.Hisui!),
+                    new PokemonWithRarity(pokemons.Magicarpe),
+                    new PokemonWithRarity(pokemons.Etourmi),
+                    new PokemonWithRarity(pokemons.Cradopaud),
+                    new PokemonWithRarity(pokemons.Chlorobule),
+                    new PokemonWithRarity(pokemons.Furaiglon),
+                    new PokemonWithRarity(pokemons.Grelacon),
+                    new PokemonWithRarity(pokemons.Farfuret, true),
+                    new PokemonWithRarity(pokemons.Embrylex, true),
+                    new PokemonWithRarity(pokemons.Draby, true),
+                ])
+                .build(),
+            new EventBuilder()
                 .withName('Sur les traces de Voltoutou')
                 .withStartAt(new Date(2025, 5, 20, 1))
                 .withEndAt(new Date(2025, 5, 22, 23))
