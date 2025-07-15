@@ -29,25 +29,15 @@ export const StoreSavageGroup = signalStore(
             );
         }),
     })),
+    withComputed((store) => ({
+        sortedGroup: computed(() => store._sortPokemonService.getOrderedList(store.pokemons(), store.megaPokemon())),
+    })),
     withMethods((store) => ({
         setGroup(group: SavageGroup) {
-            patchState(store, { ...group });
-            const sortedGroup = store._sortPokemonService.getOrderedList(group.pokemonsFlat, store.megaPokemon());
-            const withRarity = sortedGroup.map(
-                (pokemon) => new PokemonWithRarity(pokemon, !!group.rarePokemons.find((p) => p.id === pokemon.id)),
-            );
-            patchState(store, { pokemons: withRarity });
+            patchState(store, { pokemons: group.pokemons });
         },
-        randomGroup() {
-            const group = store
-                .pokemons()
-                .map((withRarity) => withRarity.pokemon)
-                .shuffle();
-            const sortedGroup = store._sortPokemonService.getOrderedList(group, store.megaPokemon());
-            const withRarity = sortedGroup.map(
-                (pokemon) => new PokemonWithRarity(pokemon, !!group.find((p) => p.id === pokemon.id)),
-            );
-            patchState(store, { pokemons: withRarity });
+        shuffleGroup() {
+            patchState(store, { pokemons: store.pokemons().shuffle() });
         },
         getMegaGroups() {
             return store.megaPokemon().map((mega) => ({

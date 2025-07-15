@@ -1,4 +1,4 @@
-import { PokemonInterface, TypePokemon } from '@entities/pokemon';
+import { PokemonFamily, PokemonInterface, PokemonSlug, TypePokemon } from '@entities/pokemon';
 
 export class EventPokemon {
     public slug: string;
@@ -53,11 +53,19 @@ export interface MegaGroup {
     pokemonBoost: PokemonInterface[];
 }
 
-export class PokemonWithRarity {
+export class PokemonWithRarity implements PokemonInterface {
     constructor(
         public pokemon: PokemonInterface,
         public isRare: boolean = false,
     ) {}
+
+    get id(): number {
+        return this.pokemon.id;
+    }
+
+    get slug(): PokemonSlug {
+        return this.pokemon.slug;
+    }
 
     get name(): string {
         return this.pokemon.name;
@@ -73,6 +81,22 @@ export class PokemonWithRarity {
 
     get sprite(): string {
         return this.pokemon.sprite;
+    }
+
+    get isLegendary(): boolean {
+        return this.pokemon.isLegendary;
+    }
+
+    get isMythical(): boolean {
+        return this.pokemon.isMythical;
+    }
+
+    get family(): PokemonFamily {
+        return this.pokemon.family;
+    }
+
+    get generation(): number {
+        return this.pokemon.generation;
     }
 }
 

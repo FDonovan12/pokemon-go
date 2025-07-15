@@ -9,8 +9,8 @@
 }
 @if (viewTable()) {
     <!-- <button (click)="this.store.changeSortImplementation()">Switch système de tri</button> -->
-    <button (click)="this.store.randomGroup()">Random</button>
-    @for (savage of store.pokemons(); track $index) {
+    <button (click)="this.store.shuffleGroup()">Random</button>
+    @for (savage of store.sortedGroup(); track $index) {
         <tr>
             <td [style.background]="savage.isRare ? 'hsl(0 80 60 / 0.5)' : 'transparent'">
                 <app-image-pokemon [pokemon]="savage"></app-image-pokemon>

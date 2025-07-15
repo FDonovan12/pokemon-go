@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
+import { PokemonWithRarity } from '@entities/event';
 import { PokemonInterface } from '@entities/pokemon';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SortPokemonService {
-    private idMap = new Map<number, PokemonInterface>();
+    private idMap = new Map<number, PokemonWithRarity>();
 
-    public getOrderedList(pokemons: PokemonInterface[], megaPokemons: PokemonInterface[]): PokemonInterface[] {
+    public getOrderedList(pokemons: PokemonWithRarity[], megaPokemons: PokemonInterface[]): PokemonWithRarity[] {
         this.idMap = new Map(pokemons.map((p) => [p.id, p]));
 
         const graph = this.buildWeightedGraph(pokemons, megaPokemons);
         const visited = new Set<number>();
-        const orderedResult: PokemonInterface[] = [];
+        const orderedResult: PokemonWithRarity[] = [];
 
         for (const pokemon of pokemons) {
             if (visited.has(pokemon.id)) continue;
