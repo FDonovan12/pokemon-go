@@ -13,12 +13,7 @@
     @for (savage of store.pokemons(); track $index) {
         <tr>
             <td [style.background]="savage.isRare ? 'hsl(0 80 60 / 0.5)' : 'transparent'">
-                <img
-                    [src]="savage.image"
-                    [alt]="savage.name"
-                    [title]="savage.name"
-                    style="max-height: 50px"
-                />
+                <app-image-pokemon [pokemon]="savage"></app-image-pokemon>
             </td>
             <td class="type">
                 @for (type of savage.type; track $index) {
@@ -28,12 +23,7 @@
             @for (mega of store.megaPokemon(); track $index) {
                 <td>
                     @if (eventRepository.haveTypeInCommon(mega, savage.pokemon)) {
-                        <img
-                            [src]="mega.image"
-                            [alt]="mega.name"
-                            [title]="mega.name"
-                            style="max-height: 50px"
-                        />
+                        <app-image-pokemon [pokemon]="mega"></app-image-pokemon>
                     }
                 </td>
             }
@@ -43,19 +33,11 @@
     @for (megaGroup of store.getMegaGroups(); track $index) {
         <tr style="flex-wrap: nowrap; display: flex">
             <td>
-                <img
-                    [src]="megaGroup.mega.image"
-                    [alt]="megaGroup.mega.name"
-                    style="max-height: 50px; margin-right: 20px"
-                />
+                <app-image-pokemon [pokemon]="megaGroup.mega"></app-image-pokemon>
             </td>
             @for (pokemon of megaGroup.pokemonBoost; track $index) {
                 <td>
-                    <img
-                        [src]="pokemon.image"
-                        [alt]="pokemon.name"
-                        style="max-height: 50px"
-                    />
+                    <app-image-pokemon [pokemon]="pokemon"></app-image-pokemon>
                 </td>
             }
         </tr>

@@ -1,4 +1,5 @@
 import { Component, inject, input } from '@angular/core';
+import { ImagePokemon } from '@components/image-pokemon/image-pokemon';
 import { TypeComponent } from '@components/type/type.component';
 import { SavageGroup } from '@entities/event';
 import { EventRepository } from '@repositories/event/event.repository';
@@ -6,7 +7,7 @@ import { StoreSavageGroup } from './store-savage-group/store-savage-group';
 
 @Component({
     selector: 'app-savage-group',
-    imports: [TypeComponent],
+    imports: [TypeComponent, ImagePokemon],
     templateUrl: './savage-group.html',
     styleUrl: './savage-group.css',
     providers: [StoreSavageGroup],

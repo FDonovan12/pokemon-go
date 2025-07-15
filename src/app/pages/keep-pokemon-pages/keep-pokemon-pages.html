@@ -49,15 +49,12 @@
     <h2>Generation {{ store.generationSelected() }}</h2>
 }
 @for (pokemon of store.resultSelected(); track pokemon.id) {
-    <img
-        [src]="pokemon.image"
-        [alt]="pokemon.name"
-        [title]="pokemon.name"
-        loading="lazy"
-        style="height: 75px; aspect-ratio: 1"
+    <app-image-pokemon
+        [pokemon]="pokemon"
+        [height]="75"
         (click)="store.selectPokemon(pokemon)"
         [class.selected]="store.selectedPokemonWantKeep().has(pokemon)"
-    />
+    ></app-image-pokemon>
 }
 <h2>Pokemon sélectionné</h2>
 <button (click)="store.unselectAll()">Reset</button>
@@ -65,14 +62,11 @@
     @if (store.pokemonWantKeepMap()[generation] && store.pokemonWantKeepMap()[generation].length !== 0) {
         <h3>Generation {{ generation }}</h3>
         @for (pokemon of store.pokemonWantKeepMap()[generation]; track $index) {
-            <img
-                [src]="pokemon.image"
-                [alt]="pokemon.name"
-                [title]="pokemon.name"
-                loading="lazy"
-                style="height: 75px; aspect-ratio: 1"
+            <app-image-pokemon
+                [pokemon]="pokemon"
+                [height]="75"
                 (click)="store.selectPokemon(pokemon)"
-            />
+            ></app-image-pokemon>
         }
     }
 }
