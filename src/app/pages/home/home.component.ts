@@ -88,7 +88,7 @@ export class HomeComponent {
         },
         {
             label: 'Veut garder',
-            query: this.join([...this.keepStore.pokemonWantKeep()]),
+            query: this.join([...this.keepStore.selectedPokemonWantKeep()]),
         },
         {
             label: 'Ne veut pas',
@@ -96,7 +96,7 @@ export class HomeComponent {
                 this.filterService.test({
                     not: {
                         or: [
-                            ...[...this.keepStore.pokemonWantKeep()].map((pokemon) => pokemon.name),
+                            ...[...this.keepStore.selectedPokemonWantKeep()].map((pokemon) => pokemon.name),
                             'légendaire',
                             'fabuleux',
                         ],
