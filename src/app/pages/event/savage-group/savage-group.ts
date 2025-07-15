@@ -21,11 +21,4 @@ export class SavageGroupComponent {
     ngOnInit() {
         this.store.setGroup(this.group());
     }
-
-    switchSortImplementation() {
-        this.store.changeSortImplementation();
-    }
-    randomList() {
-        this.store.randomGroup();
-    }
 }

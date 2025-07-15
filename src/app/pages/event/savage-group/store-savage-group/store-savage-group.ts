@@ -3,24 +3,20 @@ import { PokemonWithRarity, SavageGroup } from '@entities/event';
 import { PokemonInterface } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withMethods, withProps, withState } from '@ngrx/signals';
 import { SortPokemonService } from '@repositories/event/sort-pokemon';
-import { PokemonPathService } from '@repositories/event/sort-pokemon-new';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 export interface SavageGroupInterface {
     pokemons: PokemonWithRarity[];
     title: string | undefined;
-    firstSortImplemntation: boolean;
 }
 const initialState: SavageGroupInterface = {
     pokemons: [],
     title: '',
-    firstSortImplemntation: true,
 };
 
 export const StoreSavageGroup = signalStore(
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
         _sortPokemonService: inject(SortPokemonService),
-        _pokemonPathService: inject(PokemonPathService),
     })),
     withState(initialState),
     withComputed((store) => ({
@@ -36,10 +32,7 @@ export const StoreSavageGroup = signalStore(
     withMethods((store) => ({
         setGroup(group: SavageGroup) {
             patchState(store, { ...group });
-            let sortedGroup = store._pokemonPathService.findBestPath(group.pokemonsFlat, store.megaPokemon());
-            if (store.firstSortImplemntation()) {
-                sortedGroup = store._sortPokemonService.getOrderedList(group.pokemonsFlat, store.megaPokemon());
-            }
+            const sortedGroup = store._sortPokemonService.getOrderedList(group.pokemonsFlat, store.megaPokemon());
             const withRarity = sortedGroup.map(
                 (pokemon) => new PokemonWithRarity(pokemon, !!group.rarePokemons.find((p) => p.id === pokemon.id)),
             );
@@ -50,22 +43,7 @@ export const StoreSavageGroup = signalStore(
                 .pokemons()
                 .map((withRarity) => withRarity.pokemon)
                 .shuffle();
-            let sortedGroup = store._pokemonPathService.findBestPath(group, store.megaPokemon());
-            if (store.firstSortImplemntation()) {
-                sortedGroup = store._sortPokemonService.getOrderedList(group, store.megaPokemon());
-            }
-            const withRarity = sortedGroup.map(
-                (pokemon) => new PokemonWithRarity(pokemon, !!group.find((p) => p.id === pokemon.id)),
-            );
-            patchState(store, { pokemons: withRarity });
-        },
-        changeSortImplementation() {
-            patchState(store, { firstSortImplemntation: !store.firstSortImplemntation() });
-            const group = store.pokemons().map((withRarity) => withRarity.pokemon);
-            let sortedGroup = store._pokemonPathService.findBestPath(group, store.megaPokemon());
-            if (store.firstSortImplemntation()) {
-                sortedGroup = store._sortPokemonService.getOrderedList(group, store.megaPokemon());
-            }
+            const sortedGroup = store._sortPokemonService.getOrderedList(group, store.megaPokemon());
             const withRarity = sortedGroup.map(
                 (pokemon) => new PokemonWithRarity(pokemon, !!group.find((p) => p.id === pokemon.id)),
             );
