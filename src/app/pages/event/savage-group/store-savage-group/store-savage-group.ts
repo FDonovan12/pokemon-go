@@ -31,6 +31,12 @@ export const StoreSavageGroup = signalStore(
     })),
     withComputed((store) => ({
         sortedGroup: computed(() => store._sortPokemonService.getOrderedList(store.pokemons(), store.megaPokemon())),
+        getMegaGroups: computed(() => {
+            return store.megaPokemon().map((mega) => ({
+                mega: mega,
+                pokemonBoost: store.pokemons().filter((pokemon) => haveTypeInCommon(mega, pokemon.pokemon)),
+            }));
+        }),
     })),
     withMethods((store) => ({
         setGroup(group: SavageGroup) {
@@ -38,12 +44,6 @@ export const StoreSavageGroup = signalStore(
         },
         shuffleGroup() {
             patchState(store, { pokemons: store.pokemons().shuffle() });
-        },
-        getMegaGroups() {
-            return store.megaPokemon().map((mega) => ({
-                mega: mega,
-                pokemonBoost: store.pokemons().filter((pokemon) => haveTypeInCommon(mega, pokemon.pokemon)),
-            }));
         },
     })),
 );
