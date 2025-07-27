@@ -12,6 +12,22 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Journée Étude Fossiles')
+                .withStartAt(new Date(2025, 7, 2, 14))
+                .withEndAt(new Date(2025, 7, 2, 17))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Amonita),
+                    new PokemonWithRarity(pokemons.Kabuto),
+                    new PokemonWithRarity(pokemons.Lilia),
+                    new PokemonWithRarity(pokemons.Anorith),
+                    new PokemonWithRarity(pokemons.Kranidos),
+                    new PokemonWithRarity(pokemons.Dinoclier),
+                    new PokemonWithRarity(pokemons.Kabuto),
+                    new PokemonWithRarity(pokemons.Arkeapti, true),
+                    new PokemonWithRarity(pokemons.Carapagos, true),
+                ])
+                .build(),
+            new EventBuilder()
                 .withName('Ultra Bonus : D’acier et d’écailles')
                 .withStartAt(new Date(2025, 6, 22, 10))
                 .withEndAt(new Date(2025, 6, 27, 20))
