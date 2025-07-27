@@ -20,6 +20,7 @@ export class BddEvent {
                     new PokemonWithRarity(pokemons.Minidraco),
                     new PokemonWithRarity(pokemons.Galekid),
                     new PokemonWithRarity(pokemons.Terhal),
+                    new PokemonWithRarity(pokemons.Draby),
                     new PokemonWithRarity(pokemons.Grindur),
                     new PokemonWithRarity(pokemons.Sonistrelle),
                     new PokemonWithRarity(pokemons.Minisange),
