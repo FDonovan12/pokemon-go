@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal, Signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { PokemonInterface } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { ClipboardService } from '@services/clipboard-service';
 import { FilterService } from '@services/filter-service/filter-service';
 import { EventPokemon } from '../../entities/event';
 import { EventRepository } from '../../repositories/event/event.repository';
@@ -12,7 +14,7 @@ import { KeepStore } from './../keep-pokemon-pages/keep-store/keep-store';
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [RouterLink, DatePipe],
+    imports: [RouterLink, DatePipe, FormsModule],
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
 })
@@ -22,10 +24,9 @@ export class HomeComponent {
     readonly bddEvent = inject(EventRepository);
     readonly filterService = inject(FilterService);
     readonly keepStore = inject(KeepStore);
+    readonly clipboardService = inject(ClipboardService);
 
     today = new Date();
-
-    join = (arr: PokemonInterface[]) => ' & ' + arr.map(this.getName).join(', ') + ' & ';
 
     getName(pokemon: PokemonInterface | string): string {
         if (!pokemon) return '';
@@ -35,11 +36,34 @@ export class HomeComponent {
 
     private readonly pokemons = this.getAllService.pokemonIndex.byName;
 
-    futureEvents: EventPokemon[] = this.bddEvent
-        .getAllEventsPokemon()
-        .filter((event) => new Date() <= event.endAt)
-        .slice()
-        .sort((a, b) => (a.startAt <= b.startAt ? -1 : 1));
+    pastDays: Signal<number> = signal(10);
+
+    pastEvents: Signal<EventPokemon[]> = computed(() =>
+        this.bddEvent
+            .getAllEventsPokemon()
+            .filter(
+                (event) =>
+                    new Date(Date.now() - this.pastDays() * 86400000) <= event.endAt && event.endAt <= new Date(),
+            )
+            .slice()
+            .sort((a, b) => (a.startAt <= b.startAt ? -1 : 1)),
+    );
+
+    currentEvents: Signal<EventPokemon[]> = computed(() =>
+        this.bddEvent
+            .getAllEventsPokemon()
+            .filter((event) => new Date() <= event.endAt && new Date() >= event.startAt)
+            .slice()
+            .sort((a, b) => (a.startAt <= b.startAt ? -1 : 1)),
+    );
+
+    futureEvents: Signal<EventPokemon[]> = computed(() =>
+        this.bddEvent
+            .getAllEventsPokemon()
+            .filter((event) => new Date() <= event.startAt)
+            .slice()
+            .sort((a, b) => (a.startAt <= b.startAt ? -1 : 1)),
+    );
 
     private readonly onlySavagePokemons = ' & !raid & !éclos & !étude & !dynamax & !gigamax & ';
 
@@ -84,49 +108,19 @@ export class HomeComponent {
         { label: 'Filtre level 4', query: this.onlySavagePokemons + ' & 0*, 1*, 2* & !# & âge0 & pc-100 & ' },
         {
             label: 'Starter',
-            query: this.join(this.getAllService.starterPokemon),
+            query: this.filterService.buildAllPokemon(this.getAllService.starterPokemon),
         },
         {
             label: 'Veut garder',
-            query: this.join([...this.keepStore.selectedPokemonWantKeep()]),
+            query: this.filterService.buildAllPokemon([...this.keepStore.selectedPokemonWantKeep()]),
         },
         {
             label: 'Ne veut pas',
-            query: this.filterService.buildFilter(
-                this.filterService.test({
-                    not: {
-                        or: [
-                            ...[...this.keepStore.selectedPokemonWantKeep()].map((pokemon) => pokemon.name),
-                            'légendaire',
-                            'fabuleux',
-                        ],
-                    },
-                }),
-            ),
+            query: this.filterService.buildNeitherPokemon([...this.keepStore.selectedPokemonWantKeep()]),
         },
     ];
 
-    filters = [
-        ...this.baseFilters,
-        ...this.bddEvent
-            .getAllEventsPokemon()
-            .filter((event) => event.startAt <= new Date(Date.now() + 1 * 86400000))
-            .map((event) => ({
-                label: event.name,
-                query: this.join(event.allSavagePokemons.map((withRarity) => withRarity.pokemon)),
-            })),
-    ];
-
-    copy(string: string) {
-        navigator.clipboard
-            .writeText(string)
-            .then(() => {
-                console.log('Text copied to clipboard:', string);
-            })
-            .catch((err) => {
-                console.error('Error copying text: ', err);
-            });
-    }
+    filters = [...this.baseFilters];
 
     ngOnInit(): void {
         // this.getData();

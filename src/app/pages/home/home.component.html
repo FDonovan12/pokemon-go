@@ -1,18 +1,63 @@
 <h1>Accueil!</h1>
-@for (futureEvent of futureEvents; track $index) {
 <div>
-    <a [routerLink]="'/event/' + futureEvent.slug">
-        @if (futureEvent.startAt <= today) { Event en cours :
-        {{ futureEvent.name }}
-        } @else { l’événement
-        {{ futureEvent.name }}
-        commence le
-        {{ futureEvent.startAt | date : 'longDate' }}
+    <label>
+        Événements passés dans les
+        <input
+            type="number"
+            [(ngModel)]="pastDays"
+            min="0"
+            style="width: 60px"
+        />
+        derniers jours
+    </label>
+</div>
+@if (pastEvents().length) {
+    <div>
+        <h2>Event Passé</h2>
+        @for (pastEvent of pastEvents(); track $index) {
+            <p>
+                <a [routerLink]="'/event/' + pastEvent.slug">
+                    l’événement
+                    {{ pastEvent.name }}
+                    c'est fini le
+                    {{ pastEvent.endAt | date: 'longDate' }}
+                </a>
+            </p>
         }
-    </a>
-</div>
-} @for (filter of filters; track $index) {
-<div>
-    <button (click)="copy(filter.query)">{{ filter.label }}</button>
-</div>
+    </div>
+}
+@if (currentEvents().length) {
+    <div>
+        <h2>Event en cours</h2>
+        @for (currentEvent of currentEvents(); track $index) {
+            <p>
+                <a [routerLink]="'/event/' + currentEvent.slug">
+                    l’événement
+                    {{ currentEvent.name }}
+                    ce fini le
+                    {{ currentEvent.endAt | date: 'longDate' }}
+                </a>
+            </p>
+        }
+    </div>
+}
+@if (futureEvents().length) {
+    <div>
+        <h2>Future event</h2>
+        @for (futureEvent of futureEvents(); track $index) {
+            <p>
+                <a [routerLink]="'/event/' + futureEvent.slug">
+                    l’événement
+                    {{ futureEvent.name }}
+                    commence le
+                    {{ futureEvent.startAt | date: 'longDate' }}
+                </a>
+            </p>
+        }
+    </div>
+}
+@for (filter of filters; track $index) {
+    <p>
+        <button (click)="clipboardService.copyToClipboard(filter.query)">{{ filter.label }}</button>
+    </p>
 }
