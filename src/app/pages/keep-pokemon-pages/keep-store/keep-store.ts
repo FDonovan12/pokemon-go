@@ -95,10 +95,33 @@ export const KeepStore = signalStore(
         },
         addList: (nameList: string) => {
             const oldList = store.listName();
-            const newList = [...oldList, nameList]; // créer un nouveau tableau
+            const oldListSlugify = oldList.map((list) => list.slugify());
+            if (oldListSlugify.includes(nameList.slugify())) {
+                window.alert('Vous ne pouvez pas ajouter une liste qui existe déjà');
+                return;
+            }
+            const newList = [...oldList, nameList];
             patchState(store, { listName: newList });
         },
         setSearch: (value: string) => patchState(store, { search: value }),
+    })),
+    withMethods((store) => ({
+        deleteSelectedList: () => {
+            if (store.listName().length === 1) {
+                window.alert('Vous ne pouvez pas supprimer la dérnière liste');
+                return;
+            }
+            if (
+                window.confirm(
+                    `Etes vous sur de supprimer la liste ${store.selectedListName()} avec les ${store.selectedPokemonWantKeep().size} Pokemon`,
+                )
+            ) {
+                const oldList = store.listName();
+                const newList = oldList.filter((name) => name !== store.selectedListName());
+                const selectedListName = newList.first();
+                patchState(store, { listName: newList, selectedListName });
+            }
+        },
     })),
     withHooks((store) => ({
         onInit() {

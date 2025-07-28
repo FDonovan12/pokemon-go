@@ -134,7 +134,6 @@ export class FilterService {
 }
 
 type FilterElement = string | PokemonInterface;
-// type FilterElement = string;
 
 type Filter = { and: Filter[] } | { or: Filter[] } | { not: Filter } | FilterElement;
 

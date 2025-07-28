@@ -11,14 +11,21 @@
         (change)="store.onFilesSelected($event)"
     />
 </div>
-<div id="test">test</div>
 <br />
 <form (submit)="store.addList(newListName.value)">
-    <input
-        type="text"
-        #newListName
-    />
-    <button type="submit">Ajouter liste</button>
+    <div>
+        <input
+            type="text"
+            #newListName
+        />
+        <button type="submit">Ajouter liste</button>
+    </div>
+    <button
+        type="button"
+        (click)="store.deleteSelectedList()"
+    >
+        supprimer liste actuelle
+    </button>
 </form>
 <br />
 <select
@@ -32,6 +39,12 @@
         </option>
     }
 </select>
+<p>
+    <button (click)="clipboardService.copyToClipboard(filterAll())">Copie filtre tout les Pokémon sélectionné</button>
+</p>
+<p>
+    <button (click)="clipboardService.copyToClipboard(filterNeither())">Copie filtre tout les Pokémon non sélectionné</button>
+</p>
 <br />
 <label for="searchInput">Recherche :</label>
 <input
