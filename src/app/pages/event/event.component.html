@@ -2,6 +2,7 @@
     <div>
         <h1>{{ event.name }}</h1>
         <button (click)="toggleView()">Switch de vue</button>
+        <button (click)="clipboardService.copyToClipboard(filterService.buildAllPokemon(event.allSavagePokemons))">Filtre</button>
     </div>
     <table>
         <tbody>
