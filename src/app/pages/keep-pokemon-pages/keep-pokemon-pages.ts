@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImagePokemon } from '@components/image-pokemon/image-pokemon';
-import { ClipboardService } from '@services/clipboard-service';
+import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { FilterService } from '@services/filter-service/filter-service';
 import { KeepStore } from './keep-store/keep-store';
 

@@ -22,7 +22,6 @@ export class BddEvent {
                     new PokemonWithRarity(pokemons.Anorith),
                     new PokemonWithRarity(pokemons.Kranidos),
                     new PokemonWithRarity(pokemons.Dinoclier),
-                    new PokemonWithRarity(pokemons.Kabuto),
                     new PokemonWithRarity(pokemons.Arkeapti, true),
                     new PokemonWithRarity(pokemons.Carapagos, true),
                 ])

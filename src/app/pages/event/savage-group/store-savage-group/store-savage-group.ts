@@ -2,8 +2,8 @@ import { computed, inject } from '@angular/core';
 import { PokemonWithRarity, SavageGroup } from '@entities/event';
 import { PokemonInterface } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withMethods, withProps, withState } from '@ngrx/signals';
-import { SortPokemonService } from '@repositories/event/sort-pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { SortPokemonService } from '@services/sort-pokemon/sort-pokemon';
 export interface SavageGroupInterface {
     pokemons: PokemonWithRarity[];
     title: string | undefined;

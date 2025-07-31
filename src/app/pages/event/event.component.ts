@@ -2,7 +2,7 @@ import { Component, inject, input, InputSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventPokemon } from '@entities/event';
 import { EventRepository } from '@repositories/event/event.repository';
-import { ClipboardService } from '@services/clipboard-service';
+import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { FilterService } from '@services/filter-service/filter-service';
 import { Logger } from '@services/logger/logger';
 import { SavageGroupComponent } from './savage-group/savage-group';
