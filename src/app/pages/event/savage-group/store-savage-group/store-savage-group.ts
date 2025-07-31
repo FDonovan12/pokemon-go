@@ -40,7 +40,7 @@ export const StoreSavageGroup = signalStore(
     })),
     withMethods((store) => ({
         setGroup(group: SavageGroup) {
-            patchState(store, { pokemons: group.pokemons });
+            patchState(store, { pokemons: group.pokemons, title: group.title });
         },
         shuffleGroup() {
             patchState(store, { pokemons: store.pokemons().shuffle() });

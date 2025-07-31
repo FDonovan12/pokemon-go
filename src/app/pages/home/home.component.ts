@@ -110,14 +110,6 @@ export class HomeComponent {
             label: 'Starter',
             query: this.filterService.buildAllPokemon(this.getAllService.starterPokemon),
         },
-        {
-            label: 'Veut garder',
-            query: this.filterService.buildAllPokemon([...this.keepStore.selectedPokemonWantKeep()]),
-        },
-        {
-            label: 'Ne veut pas',
-            query: this.filterService.buildNeitherPokemon([...this.keepStore.selectedPokemonWantKeep()]),
-        },
     ];
 
     filters = [...this.baseFilters];
