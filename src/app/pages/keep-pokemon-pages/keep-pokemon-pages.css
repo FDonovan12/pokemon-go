@@ -1,3 +1,4 @@
 .selected {
     opacity: 0.4;
+    background-color: hsl(118 40 69);
 }

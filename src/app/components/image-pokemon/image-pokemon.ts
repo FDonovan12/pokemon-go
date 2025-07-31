@@ -13,7 +13,12 @@ import { PokemonInterface } from '@entities/pokemon';
             [style.aspect-ratio]="'1'"
         />
     `,
-    styles: ``,
+    styles: `
+        :host {
+            display: inline-block;
+            margin: 0.125em;
+        }
+    `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImagePokemon {
