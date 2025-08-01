@@ -10,21 +10,6 @@ export class TypeEffectivenessService {
 
     ngOnInit(): void {
         this.typeEffectiveness = this.getDamageRelations();
-        this.isInitialized = true;
-    }
-    private isInitialized = false;
-    private initPromise?: Promise<void>;
-
-    async initIfNeeded(): Promise<void> {
-        if (this.isInitialized) return;
-
-        if (!this.initPromise) {
-            const map = this.getDamageRelations();
-            this.typeEffectiveness = map;
-            this.isInitialized = true;
-        }
-
-        return this.initPromise;
     }
 
     calculEffectivness(attacker: TypePokemon, type1: TypePokemon, type2: TypePokemon): number {
@@ -74,7 +59,7 @@ export class TypeEffectivenessService {
             .map(([defender]) => defender);
     }
 
-    async fetchDamageRelations() {
+    private async fetchDamageRelations() {
         const typesCount = new Map<TypePokemon, Map<TypePokemon, number>>();
 
         for (const [frType, enType] of Object.entries(this.typeMapFrToEn)) {

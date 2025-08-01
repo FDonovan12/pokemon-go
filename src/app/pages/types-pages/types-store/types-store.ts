@@ -1,7 +1,8 @@
-import { computed, inject } from '@angular/core';
+import { computed, effect, inject } from '@angular/core';
 import { allTypes, TypePokemon } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { TypeEffectivenessService } from '@services/type-effectiveness-service/type-effectiveness-service';
 
 const initialState = {
@@ -14,6 +15,7 @@ export const TypesStore = signalStore(
     withProps(() => ({
         _typeEffectivenessService: inject(TypeEffectivenessService),
         _pokemonRepository: inject(PokemonRepository),
+        _localStorageService: inject(LocalStorageService),
     })),
     withState(initialState),
     withComputed((store) => ({
@@ -36,7 +38,6 @@ export const TypesStore = signalStore(
             } else {
                 currentTeamBuilded.add(team);
             }
-            localStorage.setItem('currentTeamBuilded', JSON.stringify(Array.from(currentTeamBuilded)));
             patchState(store, { currentTeamBuilded: currentTeamBuilded });
         },
         toggleTeamAll() {
@@ -46,13 +47,11 @@ export const TypesStore = signalStore(
             } else {
                 currentTeamBuilded = new Set(allTypes);
             }
-            localStorage.setItem('currentTeamBuilded', JSON.stringify(Array.from(currentTeamBuilded)));
             patchState(store, { currentTeamBuilded: currentTeamBuilded });
         },
     })),
     withHooks((store) => ({
-        async onInit() {
-            await store._typeEffectivenessService.initIfNeeded();
+        onInit() {
             const legendaryPokemon = Object.entries(store._pokemonRepository.pokemonIndex.byName)
                 .map(([key, pokemon]) => pokemon)
                 .filter((pokemon) => pokemon.isLegendary);
@@ -64,9 +63,10 @@ export const TypesStore = signalStore(
             megaAndLegendaryPokemon.forEach((pokemon) =>
                 incrementTable(pokemonTypeCount, pokemon.type[0], pokemon.type[1]),
             );
-
-            const saved = localStorage.getItem('currentTeamBuilded');
-            const currentTeamBuilded = saved ? new Set<string>(JSON.parse(saved)) : new Set<string>();
+            effect(() => {
+                store._localStorageService.set('currentTeamBuilded', Array.from(store.currentTeamBuilded()));
+            });
+            const currentTeamBuilded = store._localStorageService.get<string[]>('currentTeamBuilded', []).toSet();
             patchState(store, {
                 pokemonTypeCount: pokemonTypeCount,
                 currentTeamBuilded: currentTeamBuilded,

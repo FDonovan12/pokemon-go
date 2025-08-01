@@ -24,8 +24,4 @@ export class RelationTypeComponent {
     resistanceToCurrentType = computed(() => this.typeEffectivenessService.getTypesResistantTo(this.currentType()));
     weaknessesOfCurrentType = computed(() => this.typeEffectivenessService.getWeaknessesOf(this.currentType()));
     weaknessesToCurrentType = computed(() => this.typeEffectivenessService.getTypesWeakTo(this.currentType()));
-
-    ngOnInit(): void {
-        this.typeEffectivenessService.initIfNeeded();
-    }
 }

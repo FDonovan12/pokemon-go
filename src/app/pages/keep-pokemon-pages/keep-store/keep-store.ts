@@ -2,6 +2,7 @@ import { computed, effect, inject } from '@angular/core';
 import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 
 const LOCAL_STORAGE_KEEP = 'pokemon-want-keep';
 const LOCAL_STORAGE_KEEP_KEYS = 'pokemon-want-keep-keys';
@@ -19,6 +20,7 @@ export const KeepStore = signalStore(
     { providedIn: 'root' },
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
+        _localStorageService: inject(LocalStorageService),
     })),
     withState(initialState),
     withComputed((store) => ({
@@ -125,9 +127,9 @@ export const KeepStore = signalStore(
     })),
     withHooks((store) => ({
         onInit() {
-            const raw = localStorage.getItem(LOCAL_STORAGE_KEEP_KEYS);
-            console.log(raw);
-            const storageListName: string[] = raw ? JSON.parse(raw) : [LOCAL_STORAGE_KEEP];
+            const storageListName: string[] = store._localStorageService.get(LOCAL_STORAGE_KEEP_KEYS, [
+                LOCAL_STORAGE_KEEP,
+            ]);
             const selectedKey = storageListName.first()?.slugify() ?? LOCAL_STORAGE_KEEP;
             effect(() => {
                 const newSet = getSetPokemon(store.selectedListKey(), pokemonsByName);
@@ -137,19 +139,17 @@ export const KeepStore = signalStore(
             });
             effect(() => {
                 const list = [...store.selectedPokemonWantKeep()].map((p) => p.slug);
-                localStorage.setItem(store.selectedListKey(), JSON.stringify(list));
+                store._localStorageService.set(store.selectedListKey(), list);
             });
             effect(() => {
                 const list = store.listName();
-                console.log(list);
-                localStorage.setItem(LOCAL_STORAGE_KEEP_KEYS, JSON.stringify(list));
+                store._localStorageService.set(LOCAL_STORAGE_KEEP_KEYS, list);
             });
             const pokemonsByName = store._pokemonRepository.pokemonIndex.byName;
             const allFamilyPokemons = store._pokemonRepository.pokemonFamilyName
                 .map((pokemonName) => pokemonsByName[pokemonName])
                 .filter((pokemon) => !pokemon.isLegendary && !pokemon.isMythical);
             const newSet = getSetPokemon(selectedKey, pokemonsByName);
-            console.log(storageListName);
             patchState(store, {
                 allFamilyPokemon: allFamilyPokemons,
                 selectedPokemonWantKeep: newSet,
@@ -163,7 +163,6 @@ export const KeepStore = signalStore(
 function getSetPokemon(keyStorage: string, pokemonsByName: Record<PokemonInterface['slug'], PokemonInterface>) {
     const storageKeep = localStorage.getItem(keyStorage);
     const storageSlugs: PokemonSlug[] = storageKeep ? JSON.parse(storageKeep) : [];
-    console.log(storageSlugs, keyStorage);
     const newSet = new Set<PokemonInterface>(storageSlugs.compact().map((slug) => pokemonsByName[slug]));
     return newSet;
 }
