@@ -27,6 +27,50 @@ export class BddEvent {
                 ])
                 .build(),
             new EventBuilder()
+                .withName('Semaine Aventure')
+                .withStartAt(new Date(2025, 6, 29, 14))
+                .withEndAt(new Date(2025, 7, 3, 17))
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Snubbull),
+                        new PokemonWithRarity(pokemons.Miamiasme),
+                        new PokemonWithRarity(pokemons.Lewsor),
+                        new PokemonWithRarity(pokemons.Grillepattes),
+                        new PokemonWithRarity(pokemons.Psystigri, true),
+                    ],
+                    'Villes',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Rongourmand),
+                        new PokemonWithRarity(pokemons.Patachiot),
+                        new PokemonWithRarity(pokemons.Olivini),
+                        new PokemonWithRarity(pokemons.Tetampoule),
+                        new PokemonWithRarity(pokemons.Terracool, true),
+                    ],
+                    'Forêts et plaines',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Hippopotas),
+                        new PokemonWithRarity(pokemons.Rototaupe),
+                        new PokemonWithRarity(pokemons.Furaiglon),
+                        new PokemonWithRarity(pokemons.Scorplane, true),
+                    ],
+                    'Montagnes',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Sepiatop),
+                        new PokemonWithRarity(pokemons.Vorasterie),
+                        new PokemonWithRarity(pokemons.Araqua),
+                        new PokemonWithRarity(pokemons.Bacabouh),
+                        new PokemonWithRarity(pokemons.Taupikeau),
+                    ],
+                    'Plages et étendues d’eau',
+                )
+                .build(),
+            new EventBuilder()
                 .withName('Ultra Bonus : D’acier et d’écailles')
                 .withStartAt(new Date(2025, 6, 22, 10))
                 .withEndAt(new Date(2025, 6, 27, 20))
