@@ -31,7 +31,10 @@
     (change)="store.selectList($event)"
 >
     @for (item of store.listName(); track $index) {
-        <option [value]="item">
+        <option
+            [value]="item"
+            [selected]="store.selectedListName() === item"
+        >
             {{ item }}
         </option>
     }
