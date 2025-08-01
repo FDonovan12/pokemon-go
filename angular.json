@@ -6,12 +6,30 @@
     "pokemon-go": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:*": {
+        "@schematics/angular:component": {
+          "flat": false,
+          "path": "src/app",
+          "changeDetection": "OnPush"
+        },
+        "@schematics/angular:service": {
           "flat": false,
           "path": "src/app"
         },
-        "@schematics/angular:component": {
-          "changeDetection": "OnPush"
+        "@schematics/angular:directive": {
+          "flat": false,
+          "path": "src/app"
+        },
+        "@schematics/angular:pipe": {
+          "flat": false,
+          "path": "src/app"
+        },
+        "@schematics/angular:guard": {
+          "flat": false,
+          "path": "src/app"
+        },
+        "@schematics/angular:interceptor": {
+          "flat": false,
+          "path": "src/app"
         }
       },
       "root": "",
