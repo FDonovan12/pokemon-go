@@ -62,17 +62,17 @@ export class SortPokemonService {
     }
 
     public getFinalOrderedList(pokemons: PokemonWithRarity[], megaPokemons: PokemonInterface[]) {
-        const start = performance.now();
+        const startTime = performance.now();
         pokemons.shuffle();
         let bestPath = this.getOrderedList(pokemons, megaPokemons);
         let bestValue = this.getWeightPathValue(bestPath, megaPokemons);
 
         let sinceLastUpdate = 0;
+        const timeLimitIsNotReached = () => performance.now() - startTime < 200;
         let iteration = 0;
-        const timeLimitIsReached = () => performance.now() - start < 200;
         const lastUpdateLimitIsNotExceeded = () => sinceLastUpdate < 500;
 
-        while (timeLimitIsReached() && lastUpdateLimitIsNotExceeded()) {
+        while (timeLimitIsNotReached() && lastUpdateLimitIsNotExceeded()) {
             const candidate = this.getOrderedList(pokemons.shuffle(), megaPokemons);
             const candidateValue = this.getWeightPathValue(candidate, megaPokemons);
 
@@ -202,7 +202,6 @@ export class SortPokemonService {
                 if (a.id >= b.id) continue;
 
                 const weight = this.getWeightEdge(a, b, megaPokemons);
-                if (weight <= 0) continue;
 
                 if (!graph.has(a.id)) graph.set(a.id, []);
                 if (!graph.has(b.id)) graph.set(b.id, []);
