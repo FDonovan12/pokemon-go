@@ -30,7 +30,9 @@ export const StoreSavageGroup = signalStore(
         }),
     })),
     withComputed((store) => ({
-        sortedGroup: computed(() => store._sortPokemonService.getOrderedList(store.pokemons(), store.megaPokemon())),
+        sortedGroup: computed(() =>
+            store._sortPokemonService.getFinalOrderedList(store.pokemons(), store.megaPokemon()),
+        ),
         getMegaGroups: computed(() => {
             return store.megaPokemon().map((mega) => ({
                 mega: mega,

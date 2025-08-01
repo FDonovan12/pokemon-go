@@ -36,14 +36,57 @@ class DisjointSet {
 export class SortPokemonService {
     private idMap = new Map<number, PokemonWithRarity>();
 
-    public getOrderedList2(pokemons: PokemonWithRarity[], megaPokemons: PokemonInterface[]) {
-        const graph = this.buildWeightedGraph(pokemons, megaPokemons);
-        const edges: Edge[] = [];
-        graph.forEach((value, key) => {
-            edges.push(...value.filter((edge) => edge.target < key));
-        });
-        console.log(edges);
-        console.log(graph);
+    private getWeightPathValue(pokemons: PokemonWithRarity[], megaPokemons: PokemonInterface[]) {
+        let total = 0;
+
+        for (let i = 0; i < pokemons.length - 1; i++) {
+            const p1 = pokemons[i];
+            const p2 = pokemons[i + 1];
+
+            const weight = this.getWeightEdge(p1, p2, megaPokemons);
+            total += weight;
+        }
+
+        return total;
+    }
+
+    private getWeightEdge(
+        pokemon1: PokemonInterface,
+        pokemon2: PokemonInterface,
+        megaPokemons: PokemonInterface[],
+    ): number {
+        return (
+            this.commonTypeCount(pokemon1, pokemon2) * 100 +
+            this.megaCommonBridgeCount(pokemon1, pokemon2, megaPokemons) * 0.1
+        );
+    }
+
+    public getFinalOrderedList(pokemons: PokemonWithRarity[], megaPokemons: PokemonInterface[]) {
+        const start = performance.now();
+        pokemons.shuffle();
+        let bestPath = this.getOrderedList(pokemons, megaPokemons);
+        let bestValue = this.getWeightPathValue(bestPath, megaPokemons);
+
+        let sinceLastUpdate = 0;
+        let iteration = 0;
+        const timeLimitIsReached = () => performance.now() - start < 200;
+        const lastUpdateLimitIsNotExceeded = () => sinceLastUpdate < 500;
+
+        while (timeLimitIsReached() && lastUpdateLimitIsNotExceeded()) {
+            const candidate = this.getOrderedList(pokemons.shuffle(), megaPokemons);
+            const candidateValue = this.getWeightPathValue(candidate, megaPokemons);
+
+            if (candidateValue > bestValue) {
+                bestPath = candidate;
+                bestValue = candidateValue;
+                sinceLastUpdate = 0;
+            } else {
+                sinceLastUpdate++;
+            }
+            iteration++;
+        }
+        console.log(iteration);
+        return bestPath;
     }
 
     public getOrderedList(pokemons: PokemonWithRarity[], megaPokemons: PokemonInterface[]): PokemonWithRarity[] {
@@ -56,7 +99,6 @@ export class SortPokemonService {
             edges.push(...value.filter((edge) => edge.target < key));
         });
         const edgesSortedWeightDesc = edges.sortDesc((edge) => edge.weight);
-        console.log(edgesSortedWeightDesc);
         const degrees = new Map<number, number>();
         const nodes = Array.from(graph.keys());
         const ds = new DisjointSet(nodes);
@@ -107,57 +149,9 @@ export class SortPokemonService {
             current = nextEdge.next;
         }
 
-        console.log(finalEdges);
         const orderedFinalId = this.reconstructPath(finalEdges);
-        console.log(this.reconstructPath(finalEdges));
-        const test = this.findBestPathDFS(orderedFinalId, edges);
-        console.log(orderedFinalId);
-        console.log(test);
-        const orderedResult: PokemonWithRarity[] = test.map((id) => this.idMap.get(id)!);
+        const orderedResult: PokemonWithRarity[] = orderedFinalId.map((id) => this.idMap.get(id)!);
         return orderedResult;
-    }
-    private findBestPathDFS(nodes: number[], edges: Edge[]): number[] {
-        const graph = new Map<number, { to: number; weight: number }[]>();
-
-        // Construire le graphe pondéré
-        for (const { node, target, weight } of edges) {
-            if (!graph.has(node)) graph.set(node, []);
-            if (!graph.has(target)) graph.set(target, []);
-            graph.get(node)!.push({ to: target, weight });
-            graph.get(target)!.push({ to: node, weight });
-        }
-
-        let bestPath: number[] = [];
-        let bestScore = -Infinity;
-
-        function dfs(path: number[], visited: Set<number>, score: number) {
-            const last = path[path.length - 1];
-
-            if (path.length === nodes.length) {
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestPath = [...path];
-                }
-                return;
-            }
-
-            for (const { to, weight } of graph.get(last) ?? []) {
-                if (!visited.has(to)) {
-                    visited.add(to);
-                    path.push(to);
-                    dfs(path, visited, score + weight);
-                    path.pop();
-                    visited.delete(to);
-                }
-            }
-        }
-
-        // Lancer la recherche depuis chaque nœud
-        for (const node of nodes) {
-            dfs([node], new Set([node]), 0);
-        }
-
-        return bestPath;
     }
 
     private reconstructPath(finalEdges: Edge[]): number[] {
@@ -207,7 +201,7 @@ export class SortPokemonService {
             for (const b of pokemons) {
                 if (a.id >= b.id) continue;
 
-                const weight = this.commonTypeCount(a, b) * 100 + this.megaCommonBridgeCount(a, b, megaPokemons) * 0.1;
+                const weight = this.getWeightEdge(a, b, megaPokemons);
                 if (weight <= 0) continue;
 
                 if (!graph.has(a.id)) graph.set(a.id, []);
@@ -227,78 +221,5 @@ export class SortPokemonService {
     private megaCommonBridgeCount(a: PokemonInterface, b: PokemonInterface, megas: PokemonInterface[]): number {
         return megas.filter((m) => m.type.some((t) => a.type.includes(t)) && m.type.some((t) => b.type.includes(t)))
             .length;
-    }
-
-    private getConnectedComponent(startId: number, graph: Map<number, Edge[]>, visitedGlobal: Set<number>): number[] {
-        const visited = new Set<number>();
-        const stack = [startId];
-
-        while (stack.length > 0) {
-            const current = stack.pop()!;
-            if (visited.has(current)) continue;
-            visited.add(current);
-            visitedGlobal.add(current);
-
-            for (const neighbor of graph.get(current) || []) {
-                if (!visited.has(neighbor.target)) {
-                    stack.push(neighbor.target);
-                }
-            }
-        }
-
-        return [...visited];
-    }
-
-    private buildMaxSpanningTree(component: number[], graph: Map<number, Edge[]>): Map<number, number[]> {
-        const edges: { a: number; b: number; weight: number }[] = [];
-
-        for (const a of component) {
-            for (const edge of graph.get(a) || []) {
-                if (component.includes(edge.target) && a < edge.target) {
-                    edges.push({ a, b: edge.target, weight: edge.weight });
-                }
-            }
-        }
-
-        // Tri décroissant (poids max en premier)
-        edges.sort((e1, e2) => e2.weight - e1.weight);
-
-        const parent = new Map<number, number>();
-        const find = (x: number): number => {
-            if (!parent.has(x)) parent.set(x, x);
-            if (parent.get(x)! !== x) parent.set(x, find(parent.get(x)!));
-            return parent.get(x)!;
-        };
-        const union = (x: number, y: number) => parent.set(find(x), find(y));
-
-        const mst = new Map<number, number[]>();
-
-        for (const { a, b } of edges) {
-            if (find(a) !== find(b)) {
-                union(a, b);
-                if (!mst.has(a)) mst.set(a, []);
-                if (!mst.has(b)) mst.set(b, []);
-                mst.get(a)!.push(b);
-                mst.get(b)!.push(a);
-            }
-        }
-
-        return mst;
-    }
-
-    private linearizeTree(start: number, tree: Map<number, number[]>): number[] {
-        const visited = new Set<number>();
-        const result: number[] = [];
-
-        const dfs = (node: number) => {
-            visited.add(node);
-            result.push(node);
-            for (const neighbor of tree.get(node) || []) {
-                if (!visited.has(neighbor)) dfs(neighbor);
-            }
-        };
-
-        dfs(start);
-        return result;
     }
 }
