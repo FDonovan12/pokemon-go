@@ -1,7 +1,4 @@
 <div>
-    @for (generation of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track $index) {
-        <button (click)="store.selectGeneration(generation)">Generation {{ generation }}</button>
-    }
     <button (click)="store.exportKeepPokemon()">Télécharger liste</button>
     <br />
     <input
@@ -45,6 +42,11 @@
 <p>
     <button (click)="clipboardService.copyToClipboard(filterNeither())">Copie filtre tout les Pokémon non sélectionné</button>
 </p>
+<div style="display: flex; gap: 0.375em; flex-wrap: wrap">
+    @for (generation of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track $index) {
+        <button (click)="store.selectGeneration(generation)">Generation {{ generation }}</button>
+    }
+</div>
 <br />
 <label for="searchInput">Recherche :</label>
 <input
@@ -72,9 +74,9 @@
 <h2>Pokemon sélectionné</h2>
 <button (click)="store.unselectAll()">Reset</button>
 @for (generation of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track $index) {
-    @if (store.pokemonWantKeepMap()[generation] && store.pokemonWantKeepMap()[generation].length !== 0) {
+    @if (store.pokemonWantKeepMap().has(generation) && store.pokemonWantKeepMap().get(generation)?.length !== 0) {
         <h3>Generation {{ generation }}</h3>
-        @for (pokemon of store.pokemonWantKeepMap()[generation]; track $index) {
+        @for (pokemon of store.pokemonWantKeepMap().get(generation); track $index) {
             <app-image-pokemon
                 [pokemon]="pokemon"
                 [height]="75"
