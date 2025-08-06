@@ -21,8 +21,8 @@ export class PercentColor {
 
     @HostBinding('style.--bg-gradient')
     get gradient(): string {
-        const percent =
-            this.maximumValue() === 0 ? 100 : Math.min(100, Math.max(0, (this.value() / this.maximumValue()) * 100));
+        const rawPercent = this.maximumValue() === 0 ? 100 : (this.value() / this.maximumValue()) * 100;
+        const percent = Math.min(100, Math.max(0, rawPercent));
         return `linear-gradient(to right, ${this.color()} ${percent}%, transparent ${percent}%)`;
     }
 }
