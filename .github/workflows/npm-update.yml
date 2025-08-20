@@ -20,9 +20,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install deps
-        run: npm install
-
       - name: Upgrade all dependencies to latest
         run: |
           # Met à jour toutes les deps vers la dernière version (stable)
