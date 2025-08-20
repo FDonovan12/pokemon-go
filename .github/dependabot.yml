@@ -1,17 +1,18 @@
-# # .github/dependabot.yml
-# version: 2
-# updates:
-#   - package-ecosystem: 'npm'
-#     directory: '/' # racine du projet
-#     schedule:
-#       interval: 'weekly' # "daily", "weekly", ou "monthly"
-#     open-pull-requests-limit: 5
-#     groups:
-#       angular:
-#         patterns:
-#           - '@angular/*'
-#           - '@angular-devkit/*'
-#           - 'typescript'
-#     commit-message:
-#       prefix: 'chore(deps)'
-#     rebase-strategy: 'auto'
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 5
+    groups:
+      angular:
+        patterns:
+          - '@angular/*'
+          - '@angular-devkit/*'
+      typescript:
+        patterns:
+          - 'typescript'
+    commit-message:
+      prefix: 'chore(deps)'
+    rebase-strategy: 'auto'
