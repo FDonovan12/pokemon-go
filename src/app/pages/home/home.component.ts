@@ -110,6 +110,10 @@ export class HomeComponent {
             label: 'Starter',
             query: this.filterService.buildAllPokemon(this.getAllService.starterPokemon),
         },
+        {
+            label: 'Filtre transfert',
+            query: ' & !dynamax & !gigamax & !légendaire & !favoris & !costume & !chromatique & ',
+        },
     ];
 
     filters = [...this.baseFilters];
