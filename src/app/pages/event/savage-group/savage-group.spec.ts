@@ -1,23 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SavageGroup } from './savage-group';
+import { inputBinding, signal } from '@angular/core';
+import { SavageGroup } from '@entities/event';
+import { SavageGroupComponent } from './savage-group';
 
-describe('SavageGroup', () => {
-  let component: SavageGroup;
-  let fixture: ComponentFixture<SavageGroup>;
+describe('SavageGroupComponent', () => {
+    let component: SavageGroupComponent;
+    let fixture: ComponentFixture<SavageGroupComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SavageGroup]
-    })
-    .compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [SavageGroupComponent],
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(SavageGroup);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture = TestBed.createComponent(SavageGroupComponent, {
+            bindings: [inputBinding('viewTable', signal(true)), inputBinding('group', signal(new SavageGroup([])))],
+        });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
