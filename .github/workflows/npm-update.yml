@@ -1,54 +1,51 @@
-name: Auto NPM Update (Latest)
+name: NPM Weekly Batch Update
 
 on:
   schedule:
-    - cron: '0 3 * * 1' # chaque lundi à 3h
-  workflow_dispatch:
+    - cron: '0 2 * * 1' # Tous les lundis à 2h UTC
+  workflow_dispatch: # Permet de lancer manuellement si besoin
 
 jobs:
-  npm-update:
+  update-deps:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
-      - name: Upgrade all dependencies to latest
+      - name: Install current dependencies
+        run: npm ci
+
+      - name: Batch update all dependencies
         run: |
-          # Met à jour toutes les deps vers la dernière version (stable)
-          deps=$(jq -r '.dependencies // {} | keys[]' package.json)
-          devDeps=$(jq -r '.devDependencies // {} | keys[]' package.json)
+          # Récupère toutes les dépendances et devDependencies
+          deps=$(jq -r '.dependencies // {} | keys | join(" ")' package.json)
+          devDeps=$(jq -r '.devDependencies // {} | keys | join(" ")' package.json)
 
-          for dep in $deps; do
-            npm install "$dep@latest" --legacy-peer-deps
-          done
-
-          for dep in $devDeps; do
-            npm install --save-dev "$dep@latest" --legacy-peer-deps
-          done
+          # Installe toutes les deps en une seule commande
+          npm install $deps $devDeps --legacy-peer-deps
 
       - name: Commit updated dependencies
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add package.json package-lock.json
-          git commit -m "chore(deps): update all dependencies to latest" || echo "Nothing to commit"
+          git commit -m "chore(deps): weekly batch update" || echo "No changes"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'chore(deps): update all dependencies to latest'
-          title: 'chore(deps): update all dependencies to latest'
+          commit-message: 'chore(deps): weekly batch update'
+          title: 'chore(deps): weekly batch update'
           body: |
-            This PR was automatically generated to update all dependencies (including Angular) to their latest available versions.
-            Please test and review before merging.
-          branch: chore/npm-update-${{ github.run_id }}
+            This PR updates all dependencies in batch to their latest versions.
+            PeerDependencies conflicts should be resolved automatically by npm.
+          branch: chore/npm-batch-update-${{ github.run_id }}
           delete-branch: true
