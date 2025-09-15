@@ -27,10 +27,10 @@ export class KeepPokemonPages {
     readonly filterService = inject(FilterService);
 
     filterAll: Signal<string> = computed(() =>
-        this.filterService.buildAllPokemon([...this.store.selectedPokemonWantKeep()]),
+        this.filterService.buildAllPokemon([...this.store.selectedPokemonWantKeep()], true),
     );
     filterNeither: Signal<string> = computed(() =>
-        this.filterService.buildNeitherPokemon([...this.store.selectedPokemonWantKeep()]),
+        this.filterService.buildNeitherPokemon([...this.store.selectedPokemonWantKeep()], true),
     );
 
     @ViewChild('searchInput') inputRef!: ElementRef<HTMLInputElement>;

@@ -15,13 +15,19 @@ export class FilterService {
         return String(elem); // enum
     }
 
-    buildAllPokemon(pokemons: PokemonInterface[]): string {
-        const filter = { or: pokemons };
+    buildAllPokemon(pokemons: PokemonInterface[], withFamily: boolean = false): string {
+        const filter: Filter = { or: pokemons };
+        if (withFamily) {
+            filter.or = pokemons.map((pokemon) => '+' + pokemon.name);
+        }
         return this.buildFilter(filter);
     }
 
-    buildNeitherPokemon(pokemons: PokemonInterface[]): string {
-        const filter = { not: { and: pokemons } };
+    buildNeitherPokemon(pokemons: PokemonInterface[], withFamily: boolean = false): string {
+        const filter: Filter = { not: { and: pokemons } };
+        if (withFamily) {
+            filter.not = { and: pokemons.map((pokemon) => '+' + pokemon.name) };
+        }
         return this.buildFilter(filter);
     }
 
