@@ -112,7 +112,7 @@ export class HomeComponent {
         },
         {
             label: 'Filtre transfert',
-            query: ' & !dynamax & !gigamax & !légendaire & !favoris & !costume & !chromatique & ',
+            query: ' & !dynamax & !gigamax & !légendaire & !favoris & !costume & !chromatique & !oeufseulement',
         },
     ];
 
