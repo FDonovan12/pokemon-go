@@ -12,6 +12,27 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName("Ligne d'horizon d'acier")
+                .withStartAt(new Date(2025, 8, 23, 10))
+                .withEndAt(new Date(2025, 8, 17, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Taupiqueur.alternatives?.Alola!),
+                    new PokemonWithRarity(pokemons.Magneti),
+                    new PokemonWithRarity(pokemons.Tadmorv),
+                    new PokemonWithRarity(pokemons.Tadmorv.alternatives?.Alola!),
+                    new PokemonWithRarity(pokemons.Porygon),
+                    new PokemonWithRarity(pokemons.Galekid),
+                    new PokemonWithRarity(pokemons.Archeomire),
+                    new PokemonWithRarity(pokemons.Miamiasme),
+                    new PokemonWithRarity(pokemons.Clic),
+                    new PokemonWithRarity(pokemons.Coupenotte),
+                    new PokemonWithRarity(pokemons.Togedemaru),
+                    new PokemonWithRarity(pokemons.Miaouss.alternatives?.Galar!, true),
+                    new PokemonWithRarity(pokemons.Airmure, true),
+                    new PokemonWithRarity(pokemons.Mysdibule, true),
+                ])
+                .build(),
+            new EventBuilder()
                 .withName('Totalement Normal')
                 .withStartAt(new Date(2025, 8, 23, 10))
                 .withEndAt(new Date(2025, 8, 17, 20))
