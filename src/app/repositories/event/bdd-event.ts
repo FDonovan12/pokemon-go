@@ -12,6 +12,21 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Totalement Normal')
+                .withStartAt(new Date(2025, 8, 23, 10))
+                .withEndAt(new Date(2025, 8, 17, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Fouinette),
+                    new PokemonWithRarity(pokemons.Insolourdo),
+                    new PokemonWithRarity(pokemons.Laporeille),
+                    new PokemonWithRarity(pokemons.Chuchmur),
+                    new PokemonWithRarity(pokemons.Roucool),
+                    new PokemonWithRarity(pokemons.Parecool),
+                    new PokemonWithRarity(pokemons.Teddiursa),
+                    new PokemonWithRarity(pokemons.Nanmeouie, true),
+                ])
+                .build(),
+            new EventBuilder()
                 .withName('Journée Étude Fossiles')
                 .withStartAt(new Date(2025, 7, 2, 14))
                 .withEndAt(new Date(2025, 7, 2, 17))
