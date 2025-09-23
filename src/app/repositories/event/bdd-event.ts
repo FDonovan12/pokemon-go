@@ -13,8 +13,8 @@ export class BddEvent {
         const result: EventPokemon[] = [
             new EventBuilder()
                 .withName("Ligne d'horizon d'acier")
-                .withStartAt(new Date(2025, 8, 23, 10))
-                .withEndAt(new Date(2025, 8, 17, 20))
+                .withStartAt(new Date(2025, 8, 30, 10))
+                .withEndAt(new Date(2025, 9, 7, 20))
                 .addSavageGroup([
                     new PokemonWithRarity(pokemons.Taupiqueur.alternatives?.Alola!),
                     new PokemonWithRarity(pokemons.Magneti),
