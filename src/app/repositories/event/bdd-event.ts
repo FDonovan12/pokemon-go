@@ -12,6 +12,48 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Festival des récoltes')
+                .withStartAt(new Date(2025, 9, 10, 10))
+                .withEndAt(new Date(2025, 9, 16, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Ecremeuh),
+                    new PokemonWithRarity(pokemons.Apitrini),
+                    new PokemonWithRarity(pokemons.Olivini),
+                    new PokemonWithRarity(pokemons.Grainipiot),
+                    new PokemonWithRarity(pokemons.Verpom, true),
+                ])
+                .build(),
+            new EventBuilder()
+                .withName('Halloween 2025 part 2')
+                .withStartAt(new Date(2025, 9, 27, 10))
+                .withEndAt(new Date(2025, 10, 2, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Teddiursa),
+                    new PokemonWithRarity(pokemons.Sonistrelle),
+                ])
+                .build(),
+            new EventBuilder()
+                .withName('Halloween 2025 part 1')
+                .withStartAt(new Date(2025, 9, 21, 10))
+                .withEndAt(new Date(2025, 9, 27, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Toutombe),
+                    new PokemonWithRarity(pokemons.Zorua),
+                    new PokemonWithRarity(pokemons.Zorua.alternatives?.Hisui!),
+                    new PokemonWithRarity(pokemons.Theffroi, true),
+                ])
+                .build(),
+            new EventBuilder()
+                .withName('Pokemon Legends ZA : Celebration')
+                .withStartAt(new Date(2025, 9, 16, 10))
+                .withEndAt(new Date(2025, 9, 20, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Kaiminus!),
+                    new PokemonWithRarity(pokemons.Gruikui),
+                    new PokemonWithRarity(pokemons.Germignon),
+                ])
+                .build(),
+            new EventBuilder()
                 .withName("Ligne d'horizon d'acier")
                 .withStartAt(new Date(2025, 8, 30, 10))
                 .withEndAt(new Date(2025, 9, 7, 20))
@@ -35,7 +77,7 @@ export class BddEvent {
             new EventBuilder()
                 .withName('Totalement Normal')
                 .withStartAt(new Date(2025, 8, 23, 10))
-                .withEndAt(new Date(2025, 8, 17, 20))
+                .withEndAt(new Date(2025, 8, 27, 20))
                 .addSavageGroup([
                     new PokemonWithRarity(pokemons.Fouinette),
                     new PokemonWithRarity(pokemons.Insolourdo),
