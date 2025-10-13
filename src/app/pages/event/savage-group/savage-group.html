@@ -13,7 +13,6 @@
     @for (savage of store.sortedGroup(); track $index) {
         <tr>
             <td [style.background]="savage.isRare ? 'hsl(0 80 60 / 0.5)' : 'transparent'">
-                {{ savage.id }}
                 <app-image-pokemon [pokemon]="savage"></app-image-pokemon>
             </td>
             <td class="type">
