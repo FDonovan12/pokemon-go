@@ -4,7 +4,6 @@ import { EventPokemon } from '@entities/event';
 import { EventRepository } from '@repositories/event/event.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { FilterService } from '@services/filter-service/filter-service';
-import { Logger } from '@services/logger/logger';
 import { SavageGroupComponent } from './savage-group/savage-group';
 
 @Component({
@@ -21,8 +20,6 @@ export class EventComponent {
 
     private readonly router: Router = inject(Router);
 
-    private readonly logger = inject(Logger);
-
     readonly clipboardService = inject(ClipboardService);
 
     readonly filterService = inject(FilterService);
@@ -32,7 +29,6 @@ export class EventComponent {
     viewTable = true;
 
     ngOnInit(): void {
-        this.logger.log('Hello');
         const eventTemp = this.bddEvent.getEventBySlug(this.slug());
         if (eventTemp) {
             this.event = eventTemp;
