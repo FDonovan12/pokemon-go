@@ -37,6 +37,16 @@ export class BddEvent {
                 .withStartAt(new Date(2025, 9, 21, 10))
                 .withEndAt(new Date(2025, 9, 27, 20))
                 .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Nosferapti),
+                    new PokemonWithRarity(pokemons.Fantominus),
+                    new PokemonWithRarity(pokemons.Mimigal),
+                    new PokemonWithRarity(pokemons.Tenefix),
+                    new PokemonWithRarity(pokemons.Polichombr),
+                    new PokemonWithRarity(pokemons.Skelenox),
+                    new PokemonWithRarity(pokemons.Baudrive),
+                    new PokemonWithRarity(pokemons.Chacripan),
+                    new PokemonWithRarity(pokemons.Venipatte),
+                    new PokemonWithRarity(pokemons.Vostourno),
                     new PokemonWithRarity(pokemons.Toutombe),
                     new PokemonWithRarity(pokemons.Zorua),
                     new PokemonWithRarity(pokemons.Zorua.alternatives?.Hisui!),
