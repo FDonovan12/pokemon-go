@@ -30,6 +30,12 @@ export class BddEvent {
                 .addSavageGroup([
                     new PokemonWithRarity(pokemons.Teddiursa),
                     new PokemonWithRarity(pokemons.Sonistrelle),
+                    new PokemonWithRarity(pokemons.Pikachu),
+                    new PokemonWithRarity(pokemons.Goupix),
+                    new PokemonWithRarity(pokemons.Grenousse),
+                    new PokemonWithRarity(pokemons.Pitrouille),
+                    new PokemonWithRarity(pokemons.Brindibou),
+                    new PokemonWithRarity(pokemons.Theffroi),
                 ])
                 .build(),
             new EventBuilder()
