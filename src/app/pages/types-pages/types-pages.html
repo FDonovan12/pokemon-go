@@ -58,7 +58,6 @@
                         <input
                             type="checkbox"
                             [name]="type1"
-                            [id]="type1"
                             [checked]="store.currentTeamBuilded().has(type1)"
                         />
                     </div>
@@ -81,6 +80,7 @@
 <div style="display: grid; grid-template-columns: repeat(3, max-content)">
     @for (type of typesList; track $index) {
         <app-relation-type-component
+            [id]="type"
             [currentType]="type"
             style="margin-block: 1em; display: grid; grid-template-columns: subgrid; grid-column: span 3"
         ></app-relation-type-component>
