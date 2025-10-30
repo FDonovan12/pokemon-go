@@ -1,9 +1,21 @@
 @for (type of typesList; track $index) {
-    {{ type }}
-    <app-type [type]="type"></app-type>
-    <div style="display: flex">
+    <div
+        [class]="type"
+        style="
+            display: flex;
+            align-items: center;
+            margin: 5px;
+            border: rgb(136, 136, 136) solid 1px;
+            border-radius: 10px;
+            width: fit-content;
+        "
+    >
+        <app-type [type]="type"></app-type>
         @for (damage of result.get(type); track $index) {
-            <div [style.margin.px]="5">
+            <div
+                [style.margin.px]="5"
+                [style.backgroundColor]="damage.dynamax.isRelease ? 'transparent' : 'pink'"
+            >
                 <div>
                     <app-image-pokemon [pokemon]="damage.dynamax.pokemon"></app-image-pokemon>
                 </div>

@@ -23,7 +23,10 @@ export interface PokemonInterface {
     family: PokemonFamily;
 }
 
-export type AlternativePokemon = Record<'Gmax' | 'Galar' | 'Alola' | 'Hisui', PokemonInterface>;
+export type AlternativePokemon = Record<
+    'Gmax' | 'Galar' | 'Alola' | 'Hisui' | 'Single-strike-gmax' | 'Rapid-strike-gmax',
+    PokemonInterface
+>;
 // export class Pokemon implements PokemonInterface {
 //     id: number;
 //     name: string;
@@ -97,7 +100,10 @@ export class Dynamax {
 
 export class Gigamax extends Dynamax {
     constructor(pokemon: PokemonInterface, attack: number, attackType: TypePokemon[], isRelease: boolean = true) {
-        super(pokemon.alternatives!.Gmax, attack, attackType, isRelease);
+        if (pokemon.alternatives?.Gmax) {
+            pokemon = pokemon.alternatives.Gmax;
+        }
+        super(pokemon, attack, attackType, isRelease);
     }
     override get damageAttack() {
         return 450;

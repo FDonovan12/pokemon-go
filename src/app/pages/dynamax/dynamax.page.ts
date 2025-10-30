@@ -49,7 +49,8 @@ export class DynamaxPage {
 
     getDamage(dynamax: Dynamax, typeAttck: TypePokemon, typeOpponent: TypePokemon): number {
         const typeAffinity = this.typeEffectivenessService.calculEffectivness(typeAttck, typeOpponent, typeOpponent);
-        const damage = dynamax.attack * typeAffinity * dynamax.damageAttack;
+        const stabMultiplier = dynamax.pokemon.type.includes(typeAttck) ? 1.2 : 1;
+        const damage = dynamax.attack * typeAffinity * dynamax.damageAttack * stabMultiplier;
         this.maxDamage = Math.max(this.maxDamage, damage);
         return damage;
     }

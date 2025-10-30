@@ -1,1 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
+
+.Acier {
+    background-color: #f5f5f8;
+}
+
+.Combat {
+    background-color: aliceblue;
+}
+.Dragon {
+    background-color: #f7f5fe;
+}
+.Eau {
+    background-color: #edf2fd;
+}
+.Électrik {
+    background-color: #fffbeb;
+}
+.Fée {
+    background-color: aliceblue;
+}
+.Feu {
+    background-color: #fdf2ea;
+}
+.Glace {
+    background-color: aliceblue;
+}
+.Insecte {
+    background-color: #f5f6e5;
+}
+.Normal {
+    background-color: #f6f6f1;
+}
+.Plante {
+    background-color: #ecf7e7;
+}
+.Poison {
+    background-color: aliceblue;
+}
+.Psy {
+    background-color: aliceblue;
+}
+.Roche {
+    background-color: aliceblue;
+}
+.Sol {
+    background-color: aliceblue;
+}
+.Spectre {
+    background-color: #efedf3;
+}
+.Ténèbres {
+    background-color: aliceblue;
+}
+.Vol {
+    background-color: aliceblue;
+}
