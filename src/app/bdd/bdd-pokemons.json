@@ -12425,6 +12425,16 @@
         "isLegendary": false,
         "isMythical": false
       },
+      "Gmax": {
+        "id": 10219,
+        "name": "Salarsen",
+        "slug": "Amped-gmax",
+        "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10219.png",
+        "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10219.png",
+        "type": ["Électrik", "Poison"],
+        "isLegendary": false,
+        "isMythical": false
+      },
       "Amped-gmax": {
         "id": 10219,
         "name": "Salarsen",

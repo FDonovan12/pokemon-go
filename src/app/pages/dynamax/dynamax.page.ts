@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ImagePokemon } from '@components/image-pokemon/image-pokemon';
+import { PercentColor } from '@components/percent-color/percent-color';
 import { TypeComponent } from '@components/type/type.component';
 import { Dynamax, TypePokemon } from '@entities/pokemon';
 import { PokemonDynamaxRepository } from '@repositories/pokemon/pokemon-dynamax';
 import { TypeEffectivenessService } from '@services/type-effectiveness-service/type-effectiveness-service';
 import { allTypes } from './../../entities/pokemon';
-import { PercentColor } from '@components/percent-color/percent-color';
 
 type resultDamage = { dynamax: Dynamax; damage: number; typeAttack: TypePokemon };
 
@@ -43,6 +43,8 @@ export class DynamaxPage {
                 .forEach((dynamax) => this.addResultDamage(dynamax, type)),
                 this.result.set(type, this.result.get(type)?.sortDesc('damage')!));
         });
+
+        console.log(this.result);
     }
 
     getDamage(dynamax: Dynamax, typeAttck: TypePokemon, typeOpponent: TypePokemon): number {

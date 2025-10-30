@@ -1,4 +1,5 @@
 @for (type of typesList; track $index) {
+    {{ type }}
     <app-type [type]="type"></app-type>
     <div style="display: flex">
         @for (damage of result.get(type); track $index) {
