@@ -1,0 +1,23 @@
+@for (type of typesList; track $index) {
+    <app-type [type]="type"></app-type>
+    <div style="display: flex">
+        @for (damage of result.get(type); track $index) {
+            <div [style.margin.px]="5">
+                <div>
+                    <app-image-pokemon [pokemon]="damage.dynamax.pokemon"></app-image-pokemon>
+                </div>
+                <div>
+                    <app-type [type]="damage.typeAttack"></app-type>
+                </div>
+                <div
+                    app-percent-color
+                    [value]="damage.damage"
+                    [maximumValue]="maxDamage"
+                    [viewPercent]="true"
+                    [style.width.px]="60"
+                    [style.display]="'inline-block'"
+                ></div>
+            </div>
+        }
+    </div>
+}

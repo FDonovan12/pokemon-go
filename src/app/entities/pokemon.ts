@@ -74,3 +74,32 @@ export const allTypes = [
 ];
 
 export type TypePokemon = (typeof allTypes)[number];
+
+export class Dynamax {
+    pokemon: PokemonInterface;
+    attack: number;
+    attackType: TypePokemon[];
+    isRelease: boolean;
+
+    constructor(pokemon: PokemonInterface, attack: number, attackType: TypePokemon[], isRelease: boolean = true) {
+        this.pokemon = pokemon;
+        this.attack = attack;
+        this.attackType = attackType;
+        this.isRelease = isRelease;
+    }
+
+    get damageAttack() {
+        return 350;
+    }
+
+    damageAgainst(opponent: TypePokemon) {}
+}
+
+export class Gigamax extends Dynamax {
+    constructor(pokemon: PokemonInterface, attack: number, attackType: TypePokemon[], isRelease: boolean = true) {
+        super(pokemon.alternatives!.Gmax, attack, attackType, isRelease);
+    }
+    override get damageAttack() {
+        return 450;
+    }
+}

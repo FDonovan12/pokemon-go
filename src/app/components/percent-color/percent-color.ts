@@ -4,8 +4,12 @@ import { ChangeDetectionStrategy, Component, HostBinding, input } from '@angular
     selector: '[app-percent-color]',
     imports: [],
     template: `
-        {{ value() }} /
-        {{ maximumValue() }}
+        @if (viewPercent()) {
+            {{ ((value() / maximumValue()) * 100).toFixed(2) }}%
+        } @else {
+            {{ value() }} /
+            {{ maximumValue() }}
+        }
     `,
     styles: `
         :host {
@@ -17,6 +21,7 @@ import { ChangeDetectionStrategy, Component, HostBinding, input } from '@angular
 export class PercentColor {
     value = input.required<number>();
     maximumValue = input.required<number>();
+    viewPercent = input<boolean>(false);
     color = input<string>('lightblue');
 
     @HostBinding('style.--bg-gradient')

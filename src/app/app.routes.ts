@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { DynamaxPage } from './pages/dynamax/dynamax.page';
 import { EventComponent } from './pages/event/event.component';
 import { HomeComponent } from './pages/home/home.component';
 import { KeepPokemonPages } from './pages/keep-pokemon-pages/keep-pokemon-pages';
@@ -25,5 +26,9 @@ export const routes: Routes = [
     {
         path: 'keep',
         component: KeepPokemonPages,
+    },
+    {
+        path: 'dynamax',
+        component: DynamaxPage,
     },
 ];
