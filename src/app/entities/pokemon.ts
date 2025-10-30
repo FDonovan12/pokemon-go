@@ -24,7 +24,7 @@ export interface PokemonInterface {
 }
 
 export type AlternativePokemon = Record<
-    'Gmax' | 'Galar' | 'Alola' | 'Hisui' | 'Single-strike-gmax' | 'Rapid-strike-gmax',
+    'Gmax' | 'Galar' | 'Alola' | 'Hisui' | 'Single-strike-gmax' | 'Rapid-strike-gmax' | 'Crowned',
     PokemonInterface
 >;
 // export class Pokemon implements PokemonInterface {
