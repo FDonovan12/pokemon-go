@@ -9,11 +9,6 @@ export class PokemonDynamaxRepository {
     getDynamaxPokemon() {
         const pokemons = this.pokemonRepository.pokemonIndex.byName;
         const result: Dynamax[] = [
-            // new Dynamax(pokemons.Florizarre, 198, ['Plante']),
-            // new Dynamax(pokemons.Dracaufeu, 223, ['Feu', 'Dragon', 'Vol']),
-            // new Gigamax(pokemons.Florizarre, 198, ['Plante']),
-            // new Gigamax(pokemons.Dracaufeu, 223, ['Feu']),
-
             new Gigamax(pokemons.Florizarre, 198, ['Plante']),
             new Dynamax(pokemons.Florizarre, 198, ['Plante']),
             new Gigamax(pokemons.Dracaufeu, 223, ['Feu']),
@@ -134,10 +129,9 @@ export class PokemonDynamaxRepository {
             new Dynamax(pokemons.Hexadron, 193, ['Combat']),
             new Dynamax(pokemons.Duralugon, 239, ['Dragon']),
             new Dynamax(pokemons.Duralugon, 239, ['Acier']),
-            new Dynamax(pokemons.Zacian.alternatives!.Crowned, 332, ['Vol']),
             new Dynamax(pokemons.Zacian.alternatives!.Crowned, 332, ['Acier']),
             new Dynamax(pokemons.Zamazenta.alternatives!.Crowned, 250, ['Glace']),
-            new Dynamax(pokemons.Zamazenta.alternatives!.Crowned, 250, ['Acier']),
+            new Dynamax(pokemons.Ethernatos, 278, ['Dragon']),
             new Dynamax(pokemons.Wushours, 170, ['Combat']),
 
             new Gigamax(pokemons.Pikachu, 112, ['Électrik'], false),
@@ -162,11 +156,5 @@ export class PokemonDynamaxRepository {
         ];
 
         return result;
-    }
-    ngOnInit(): void {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
-        console.log('test 1');
-        console.log('test 2');
     }
 }
