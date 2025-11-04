@@ -28,7 +28,7 @@ export class BddEvent {
                     new PokemonWithRarity(pokemons.Spododo),
                     new PokemonWithRarity(pokemons.Rongourmand),
                     new PokemonWithRarity(pokemons.Goupilou),
-                    new PokemonWithRarity(pokemons.Tarenbulle, true),
+                    new PokemonWithRarity(pokemons.Tissenboule, true),
                 ])
                 .build(),
             new EventBuilder()
