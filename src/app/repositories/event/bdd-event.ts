@@ -12,6 +12,26 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Clairière enchantée')
+                .withStartAt(new Date(2025, 10, 4, 10))
+                .withEndAt(new Date(2025, 10, 9, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Paras),
+                    new PokemonWithRarity(pokemons.Hoothoot),
+                    new PokemonWithRarity(pokemons.Cerfrousse),
+                    new PokemonWithRarity(pokemons.Chenipotte),
+                    new PokemonWithRarity(pokemons.Doudouvet),
+                    new PokemonWithRarity(pokemons.Chlorobule),
+                    new PokemonWithRarity(pokemons.Carabing),
+                    new PokemonWithRarity(pokemons.Escargaume),
+                    new PokemonWithRarity(pokemons.Brocelome),
+                    new PokemonWithRarity(pokemons.Spododo),
+                    new PokemonWithRarity(pokemons.Rongourmand),
+                    new PokemonWithRarity(pokemons.Goupilou),
+                    new PokemonWithRarity(pokemons.Tarenbulle, true),
+                ])
+                .build(),
+            new EventBuilder()
                 .withName('Festival des récoltes')
                 .withStartAt(new Date(2025, 9, 10, 10))
                 .withEndAt(new Date(2025, 9, 16, 20))
