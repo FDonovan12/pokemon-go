@@ -12,6 +12,24 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Ame sauvage')
+                .withStartAt(new Date(2025, 10, 10, 10))
+                .withEndAt(new Date(2025, 10, 16, 18))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Rattata.alternatives?.Alola!),
+                    new PokemonWithRarity(pokemons.Tenefix),
+                    new PokemonWithRarity(pokemons.Carvanha),
+                    new PokemonWithRarity(pokemons.Chacripan),
+                    new PokemonWithRarity(pokemons.Doudouvet),
+                    new PokemonWithRarity(pokemons.Baggiguane),
+                    new PokemonWithRarity(pokemons.Sucroquin),
+                    new PokemonWithRarity(pokemons.Strassie),
+                    new PokemonWithRarity(pokemons.Goupelin),
+                    new PokemonWithRarity(pokemons.Patachiot),
+                    new PokemonWithRarity(pokemons.Fluvetin),
+                ])
+                .build(),
+            new EventBuilder()
                 .withName('Clairière enchantée')
                 .withStartAt(new Date(2025, 10, 4, 10))
                 .withEndAt(new Date(2025, 10, 9, 20))
