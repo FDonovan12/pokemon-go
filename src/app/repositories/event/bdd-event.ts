@@ -24,7 +24,7 @@ export class BddEvent {
                     new PokemonWithRarity(pokemons.Baggiguane),
                     new PokemonWithRarity(pokemons.Sucroquin),
                     new PokemonWithRarity(pokemons.Strassie),
-                    new PokemonWithRarity(pokemons.Goupelin),
+                    new PokemonWithRarity(pokemons.Goupilou),
                     new PokemonWithRarity(pokemons.Patachiot),
                     new PokemonWithRarity(pokemons.Fluvetin),
                 ])
