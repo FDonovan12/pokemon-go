@@ -11,10 +11,13 @@
         "
     >
         <app-type [type]="type"></app-type>
-        @for (damage of result.get(type); track $index) {
+        @for (damage of test.get(type); track $index) {
             <div
                 [style.margin.px]="5"
-                [style.backgroundColor]="damage.dynamax.isRelease ? 'transparent' : 'pink'"
+                (click)="dynamaxStore.selectPokemon(damage)"
+                [class.selected]="damage.isSelected"
+                [class.badDynamax]="damage.isBadComparedToSelected"
+                [class.unreleased]="!damage.dynamax.isRelease"
             >
                 <div>
                     <app-image-pokemon [pokemon]="damage.dynamax.pokemon"></app-image-pokemon>
