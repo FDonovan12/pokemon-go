@@ -21,13 +21,18 @@ export const TypesStore = signalStore(
     withComputed((store) => ({
         coverageAllTypes: computed(() => makeCoverageStats(store.pokemonTypeCount(), store._typeEffectivenessService)),
         coverageAllTypesDouble: computed(() =>
-            makeCoverageStats(store.pokemonTypeCount(), store._typeEffectivenessService, allTypes, 4),
+            makeCoverageStats(store.pokemonTypeCount(), store._typeEffectivenessService, allTypes, 2.4),
         ),
         coverageTeam: computed(() =>
             makeCoverageStats(store.pokemonTypeCount(), store._typeEffectivenessService, store.currentTeamBuilded()),
         ),
         coverageTeamDouble: computed(() =>
-            makeCoverageStats(store.pokemonTypeCount(), store._typeEffectivenessService, store.currentTeamBuilded(), 4),
+            makeCoverageStats(
+                store.pokemonTypeCount(),
+                store._typeEffectivenessService,
+                store.currentTeamBuilded(),
+                2.4,
+            ),
         ),
     })),
     withMethods((store) => ({
@@ -79,7 +84,7 @@ function makeCoverageStats(
     pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>,
     typeEffectivenessService: TypeEffectivenessService,
     coverage: Set<TypePokemon> | TypePokemon[] = allTypes,
-    minEffectiveness = 2,
+    minEffectiveness = 1.2,
 ) {
     const generalMapCoverge = buildGridCountEffectiveness(
         pokemonTypeCount,
@@ -96,7 +101,7 @@ function makeCoverageStats(
 function buildMapEffectiveness(
     pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>,
     typeEffectivenessService: TypeEffectivenessService,
-    minEffectiveness = 2,
+    minEffectiveness = 1.2,
 ) {
     const result = new Map<TypePokemon, number>();
     for (const type2 of allTypes) {
