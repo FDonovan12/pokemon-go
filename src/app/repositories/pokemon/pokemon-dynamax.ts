@@ -136,6 +136,7 @@ export class PokemonDynamaxRepository {
             new Dynamax(pokemons.Shifours, 254, ['Ténèbres', 'Combat']),
             new Dynamax(pokemons.Shifours.alternatives!['Rapid-strike'], 254, ['Eau', 'Combat']),
             new Gigamax(pokemons.Angoliath, 227, ['Ténèbres']),
+            new Dynamax(pokemons.Lugia, 193, ['Psy', 'Dragon']),
 
             new Gigamax(pokemons.Pikachu, 112, ['Électrik'], false),
             new Gigamax(pokemons.Miaouss, 92, ['Normal'], false),
