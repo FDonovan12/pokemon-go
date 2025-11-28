@@ -72,8 +72,9 @@ export const DynamaxStore = signalStore(
                 typeOpponent,
                 typeOpponent,
             );
-            if (typeAffinity < 1) return null;
             const stabMultiplier = dynamax.pokemon.type.includes(typeAttck) ? 1.2 : 1;
+            const notBoostEnough = typeAffinity <= 1 && stabMultiplier === 1;
+            if (notBoostEnough) return null;
             const damage = dynamax.attack * typeAffinity * dynamax.damageAttack * stabMultiplier;
             const newMaxDamage = Math.max(store.maxDamageFind(), damage);
             patchState(store, { maxDamageFind: newMaxDamage });
@@ -95,26 +96,24 @@ export const DynamaxStore = signalStore(
     withHooks((store) => ({
         onInit() {
             allTypes.forEach((type) => {
-                (store._pokemonDynamaxRepository
+                store._pokemonDynamaxRepository
                     .getDynamaxPokemon()
-                    .forEach((dynamax) => store._addResultDamage(dynamax, type)),
+                    .forEach((dynamax) => store._addResultDamage(dynamax, type));
+            });
+            const breakPointPercent = 0.5;
+            allTypes.forEach((type) => {
+                store.allDynamaxPokemonResultDamageBase().set(
+                    type,
                     store
                         .allDynamaxPokemonResultDamageBase()
-                        .set(type, store.allDynamaxPokemonResultDamageBase().get(type)?.sortDesc('damage')!));
+                        .get(type)
+                        ?.filter((resultDamage) => resultDamage.damage >= store.maxDamageFind() * breakPointPercent)
+                        .sortDesc('damage')!,
+                );
             });
         },
     })),
 );
-
-function getBestPokemonSelected(selectedPokemon: Set<ResultDamage>): Map<TypePokemon, ResultDamage> {
-    const result = new Map<TypePokemon, ResultDamage>();
-    for (let pokemon of selectedPokemon) {
-        if (!result.has(pokemon.typeAttack) || pokemon.damage > result.get(pokemon.typeAttack)!.damage) {
-            result.set(pokemon.typeAttack, pokemon);
-        }
-    }
-    return result;
-}
 
 function isSameResultDamage(resultDamage1: ResultDamage, resultDamage2: ResultDamage): boolean {
     return (

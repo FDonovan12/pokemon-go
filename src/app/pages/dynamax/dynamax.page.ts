@@ -4,7 +4,9 @@ import { PercentColor } from '@components/percent-color/percent-color';
 import { TypeComponent } from '@components/type/type.component';
 import { allTypes } from './../../entities/pokemon';
 import { DynamaxStore } from './dynamax-store/dynamax-store';
+import { MeasurePerf } from '@decorator/measure-perf';
 
+@MeasurePerf()
 @Component({
     selector: 'app-dynamax.page',
     imports: [TypeComponent, ImagePokemon, PercentColor],
