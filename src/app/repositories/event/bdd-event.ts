@@ -23,10 +23,10 @@ export class BddEvent {
                         new PokemonWithRarity(pokemons.Poussacha),
                         new PokemonWithRarity(pokemons.Chochodile),
                         new PokemonWithRarity(pokemons.Pohm),
-                        new PokemonWithRarity(pokemons.Machoc),
-                        new PokemonWithRarity(pokemons.Evoli),
-                        new PokemonWithRarity(pokemons.Kaiminus),
-                        new PokemonWithRarity(pokemons.Tarsal),
+                        new PokemonWithRarity(pokemons.Machoc, true),
+                        new PokemonWithRarity(pokemons.Evoli, true),
+                        new PokemonWithRarity(pokemons.Kaiminus, true),
+                        new PokemonWithRarity(pokemons.Tarsal, true),
                     ],
                     'Samedi',
                 )
@@ -38,10 +38,10 @@ export class BddEvent {
                         new PokemonWithRarity(pokemons.Bebecaille),
                         new PokemonWithRarity(pokemons.Minisange),
                         new PokemonWithRarity(pokemons.Coiffeton),
-                        new PokemonWithRarity(pokemons.Machoc),
-                        new PokemonWithRarity(pokemons.Evoli),
-                        new PokemonWithRarity(pokemons.Kaiminus),
-                        new PokemonWithRarity(pokemons.Tarsal),
+                        new PokemonWithRarity(pokemons.Machoc, true),
+                        new PokemonWithRarity(pokemons.Evoli, true),
+                        new PokemonWithRarity(pokemons.Kaiminus, true),
+                        new PokemonWithRarity(pokemons.Tarsal, true),
                     ],
                     'Dimanche',
                 )
@@ -64,22 +64,36 @@ export class BddEvent {
                 .withName('Aventure à Paldea')
                 .withStartAt(new Date(2025, 11, 2, 10))
                 .withEndAt(new Date(2025, 11, 9, 20))
-                .addSavageGroup([
-                    new PokemonWithRarity(pokemons.Lilliterelle),
-                    new PokemonWithRarity(pokemons.Pohm),
-                    new PokemonWithRarity(pokemons.Olivini),
-                    new PokemonWithRarity(pokemons.Selutin, true),
-                    new PokemonWithRarity(pokemons.Embrylex),
-                    new PokemonWithRarity(pokemons.Baudrive),
-                    new PokemonWithRarity(pokemons.Moufouette),
-                    new PokemonWithRarity(pokemons.Venalgue),
-                    new PokemonWithRarity(pokemons.Gouroutan),
-                    new PokemonWithRarity(pokemons.Feuforeve),
-                    new PokemonWithRarity(pokemons.Gloupti),
-                    new PokemonWithRarity(pokemons.Draby),
-                    new PokemonWithRarity(pokemons.Flingouste),
-                    new PokemonWithRarity(pokemons.Quartermac),
-                ])
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Lilliterelle),
+                        new PokemonWithRarity(pokemons.Pohm),
+                        new PokemonWithRarity(pokemons.Olivini),
+                        new PokemonWithRarity(pokemons.Selutin, true),
+
+                        new PokemonWithRarity(pokemons.Embrylex),
+                        new PokemonWithRarity(pokemons.Baudrive),
+                        new PokemonWithRarity(pokemons.Moufouette),
+                        new PokemonWithRarity(pokemons.Venalgue),
+                        new PokemonWithRarity(pokemons.Gouroutan),
+                    ],
+                    'Jour Pair',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Lilliterelle),
+                        new PokemonWithRarity(pokemons.Pohm),
+                        new PokemonWithRarity(pokemons.Olivini),
+                        new PokemonWithRarity(pokemons.Selutin, true),
+
+                        new PokemonWithRarity(pokemons.Feuforeve),
+                        new PokemonWithRarity(pokemons.Gloupti),
+                        new PokemonWithRarity(pokemons.Draby),
+                        new PokemonWithRarity(pokemons.Flingouste),
+                        new PokemonWithRarity(pokemons.Quartermac),
+                    ],
+                    'Jour Impair',
+                )
                 .build(),
             new EventBuilder()
                 .withName('Justice final')
