@@ -12,6 +12,41 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Community Day All Stars')
+                .withStartAt(new Date(2025, 11, 6, 9))
+                .withEndAt(new Date(2025, 11, 7, 21))
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Sorbebe),
+                        new PokemonWithRarity(pokemons.Carabing),
+                        new PokemonWithRarity(pokemons.Escargaume),
+                        new PokemonWithRarity(pokemons.Poussacha),
+                        new PokemonWithRarity(pokemons.Chochodile),
+                        new PokemonWithRarity(pokemons.Pohm),
+                        new PokemonWithRarity(pokemons.Machoc),
+                        new PokemonWithRarity(pokemons.Evoli),
+                        new PokemonWithRarity(pokemons.Kaiminus),
+                        new PokemonWithRarity(pokemons.Tarsal),
+                    ],
+                    'Samedi',
+                )
+                .addSavageGroup(
+                    [
+                        new PokemonWithRarity(pokemons.Nucleos),
+                        new PokemonWithRarity(pokemons.Flabebe),
+                        new PokemonWithRarity(pokemons.Picassaut),
+                        new PokemonWithRarity(pokemons.Bebecaille),
+                        new PokemonWithRarity(pokemons.Minisange),
+                        new PokemonWithRarity(pokemons.Coiffeton),
+                        new PokemonWithRarity(pokemons.Machoc),
+                        new PokemonWithRarity(pokemons.Evoli),
+                        new PokemonWithRarity(pokemons.Kaiminus),
+                        new PokemonWithRarity(pokemons.Tarsal),
+                    ],
+                    'Dimanche',
+                )
+                .build(),
+            new EventBuilder()
                 .withName('Monter sur le ring')
                 .withStartAt(new Date(2025, 11, 11, 10))
                 .withEndAt(new Date(2025, 11, 16, 20))
