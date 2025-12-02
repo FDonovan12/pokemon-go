@@ -137,6 +137,11 @@ export class PokemonDynamaxRepository {
             new Dynamax(pokemons.Shifours.alternatives!['Rapid-strike'], 254, ['Eau', 'Combat']),
             new Gigamax(pokemons.Angoliath, 227, ['Ténèbres']),
             new Dynamax(pokemons.Lugia, 193, ['Psy', 'Dragon']),
+            new Dynamax(pokemons.Kicklee, 224, ['Combat']),
+            new Dynamax(pokemons.Tygnon, 193, ['Acier', 'Combat']),
+            new Dynamax(pokemons.Kaimorse, 182, ['Eau', 'Glace']),
+
+            new Dynamax(pokemons['Ho-oh'], 239, ['Acier', 'Feu', 'Psy'], false),
 
             new Gigamax(pokemons.Pikachu, 112, ['Électrik'], false),
             new Gigamax(pokemons.Miaouss, 92, ['Normal'], false),

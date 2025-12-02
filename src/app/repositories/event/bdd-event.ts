@@ -12,6 +12,41 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Monter sur le ring')
+                .withStartAt(new Date(2025, 11, 11, 10))
+                .withEndAt(new Date(2025, 11, 16, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Ptitard),
+                    new PokemonWithRarity(pokemons.Machoc),
+                    new PokemonWithRarity(pokemons.Makuhita),
+                    new PokemonWithRarity(pokemons.Octillery, true),
+                    new PokemonWithRarity(pokemons.Poulpaf),
+                    new PokemonWithRarity(pokemons.Bebecaille, true),
+                    new PokemonWithRarity(pokemons.Kungfouine, true),
+                ])
+                .build(),
+            new EventBuilder()
+                .withName('Aventure à Paldea')
+                .withStartAt(new Date(2025, 11, 2, 10))
+                .withEndAt(new Date(2025, 11, 9, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Lilliterelle),
+                    new PokemonWithRarity(pokemons.Pohm),
+                    new PokemonWithRarity(pokemons.Olivini),
+                    new PokemonWithRarity(pokemons.Selutin, true),
+                    new PokemonWithRarity(pokemons.Embrylex),
+                    new PokemonWithRarity(pokemons.Baudrive),
+                    new PokemonWithRarity(pokemons.Moufouette),
+                    new PokemonWithRarity(pokemons.Venalgue),
+                    new PokemonWithRarity(pokemons.Gouroutan),
+                    new PokemonWithRarity(pokemons.Feuforeve),
+                    new PokemonWithRarity(pokemons.Gloupti),
+                    new PokemonWithRarity(pokemons.Draby),
+                    new PokemonWithRarity(pokemons.Flingouste),
+                    new PokemonWithRarity(pokemons.Quartermac),
+                ])
+                .build(),
+            new EventBuilder()
                 .withName('Justice final')
                 .withStartAt(new Date(2025, 10, 25, 10))
                 .withEndAt(new Date(2025, 10, 30, 20))
