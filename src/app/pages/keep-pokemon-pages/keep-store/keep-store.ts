@@ -146,9 +146,9 @@ export const KeepStore = signalStore(
                 store._localStorageService.set(LOCAL_STORAGE_KEEP_KEYS, list);
             });
             const pokemonsByName = store._pokemonRepository.pokemonIndex.byName;
-            const allFamilyPokemons = store._pokemonRepository.pokemonFamilyName
-                .map((pokemonName) => pokemonsByName[pokemonName])
-                .filter((pokemon) => !pokemon.isLegendary && !pokemon.isMythical);
+            const allFamilyPokemons = store._pokemonRepository.pokemonFamilyName.map(
+                (pokemonName) => pokemonsByName[pokemonName],
+            );
             const newSet = getSetPokemon(selectedKey, pokemonsByName);
             patchState(store, {
                 allFamilyPokemon: allFamilyPokemons,
