@@ -140,6 +140,8 @@ export class PokemonDynamaxRepository {
             new Dynamax(pokemons.Kicklee, 224, ['Combat']),
             new Dynamax(pokemons.Tygnon, 193, ['Acier', 'Combat']),
             new Dynamax(pokemons.Kaimorse, 182, ['Eau', 'Glace']),
+            new Dynamax(pokemons.Draieul, 231, ['Dragon', 'Psy']),
+            new Dynamax(pokemons.Gigalithe, 226, ['Roche', 'Sol']),
 
             new Dynamax(pokemons['Ho-oh'], 239, ['Acier', 'Feu', 'Psy'], false),
 
