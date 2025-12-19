@@ -1,0 +1,12 @@
+<h1>Ressources</h1>
+<p>
+    Toutes les infographies on était faite par Margaux (
+    <a href="https://www.margxt.fr/pokemon-go/">margxt.fr</a>
+    )
+</p>
+@for (imageLink of images; track $index) {
+    <img
+        [src]="imageLink"
+        [alt]="imageLink"
+    />
+}

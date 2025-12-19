@@ -4,6 +4,7 @@ import { EventComponent } from './pages/event/event.component';
 import { HomeComponent } from './pages/home/home.component';
 import { KeepPokemonPages } from './pages/keep-pokemon-pages/keep-pokemon-pages';
 import { ProbaPages } from './pages/proba/proba-pages';
+import { RessourcesPages } from './pages/ressources-pages/ressources-pages';
 import { TypesPages } from './pages/types-pages/types-pages';
 
 export const routes: Routes = [
@@ -30,5 +31,9 @@ export const routes: Routes = [
     {
         path: 'dynamax',
         component: DynamaxPage,
+    },
+    {
+        path: 'ressources',
+        component: RessourcesPages,
     },
 ];

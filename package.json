@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "build-github": "npm run build -- --configuration production --output-path=dist/pokemon-go",
-    "watch": "ng build --watch --configuration development",
+    "assets:images": "node scripts/generate-images.mjs",
+    "start": "npm run assets:images && ng serve",
+    "build": "npm run assets:images && ng build",
+    "build-github": "npm run assets:images && ng build --configuration production --output-path=dist/pokemon-go",
+    "watch": "npm run assets:images && ng build --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
