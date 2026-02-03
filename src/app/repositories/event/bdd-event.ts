@@ -12,6 +12,24 @@ export class BddEvent {
         const pokemons = this.getAllService.pokemonIndex.byName;
         const result: EventPokemon[] = [
             new EventBuilder()
+                .withName('Carnaval de Flamenroule')
+                .withStartAt(new Date(2026, 1, 3, 10))
+                .withEndAt(new Date(2026, 1, 8, 20))
+                .addSavageGroup([
+                    new PokemonWithRarity(pokemons.Mimigal),
+                    new PokemonWithRarity(pokemons.Nenupiot),
+                    new PokemonWithRarity(pokemons.Arakdo),
+                    new PokemonWithRarity(pokemons.Laporeille),
+                    new PokemonWithRarity(pokemons.Lumineon),
+                    new PokemonWithRarity(pokemons.Chlorobule),
+                    new PokemonWithRarity(pokemons.Picassaut),
+                    new PokemonWithRarity(pokemons.Croquine),
+                    new PokemonWithRarity(pokemons.Fluvetin, true),
+                    new PokemonWithRarity(pokemons.Flamenroule, true),
+                    new PokemonWithRarity(pokemons.Viskuse, true),
+                ])
+                .build(),
+            new EventBuilder()
                 .withName('Community Day All Stars')
                 .withStartAt(new Date(2025, 11, 6, 9))
                 .withEndAt(new Date(2025, 11, 7, 21))
