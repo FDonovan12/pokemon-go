@@ -71,7 +71,9 @@ export const TypesStore = signalStore(
             effect(() => {
                 store._localStorageService.set('currentTeamBuilded', Array.from(store.currentTeamBuilded()));
             });
-            const currentTeamBuilded = store._localStorageService.get<string[]>('currentTeamBuilded', []).toSet();
+            const currentTeamBuilded: Set<string> = store._localStorageService
+                .get<string[]>('currentTeamBuilded', [])
+                .toSet();
             patchState(store, {
                 pokemonTypeCount: pokemonTypeCount,
                 currentTeamBuilded: currentTeamBuilded,

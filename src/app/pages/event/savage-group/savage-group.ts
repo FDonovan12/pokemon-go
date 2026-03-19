@@ -16,8 +16,8 @@ export class SavageGroupComponent {
     group = input.required<SavageGroup>();
     viewTable = input.required<boolean>();
 
-    readonly eventRepository: EventRepository = inject(EventRepository);
-    readonly store = inject(StoreSavageGroup);
+    protected readonly eventRepository: EventRepository = inject(EventRepository);
+    protected readonly store = inject(StoreSavageGroup);
 
     ngOnInit() {
         this.store.setGroup(this.group());

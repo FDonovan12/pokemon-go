@@ -6,6 +6,7 @@ import { KeepPokemonPages } from './pages/keep-pokemon-pages/keep-pokemon-pages'
 import { ProbaPages } from './pages/proba/proba-pages';
 import { RessourcesPages } from './pages/ressources-pages/ressources-pages';
 import { TypesPages } from './pages/types-pages/types-pages';
+import { PvpRankPages } from './pages/pvp-rank/pvp-rank';
 
 export const routes: Routes = [
     {
@@ -35,5 +36,9 @@ export const routes: Routes = [
     {
         path: 'ressources',
         component: RessourcesPages,
+    },
+    {
+        path: 'pvp-rank',
+        component: PvpRankPages,
     },
 ];

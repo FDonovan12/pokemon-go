@@ -21,10 +21,10 @@ import { KeepStore } from './../keep-pokemon-pages/keep-store/keep-store';
 export class HomeComponent {
     private readonly httpClient = inject(HttpClient);
     private readonly getAllService = inject(PokemonRepository);
-    readonly bddEvent = inject(EventRepository);
-    readonly filterService = inject(FilterService);
-    readonly keepStore = inject(KeepStore);
-    readonly clipboardService = inject(ClipboardService);
+    private readonly bddEvent = inject(EventRepository);
+    private readonly filterService = inject(FilterService);
+    protected readonly keepStore = inject(KeepStore);
+    protected readonly clipboardService = inject(ClipboardService);
 
     today = new Date();
 

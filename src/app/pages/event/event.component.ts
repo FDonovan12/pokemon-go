@@ -16,13 +16,13 @@ import { SavageGroupComponent } from './savage-group/savage-group';
 export class EventComponent {
     slug: InputSignal<string> = input.required();
 
-    readonly bddEvent: EventRepository = inject(EventRepository);
+    private readonly bddEvent: EventRepository = inject(EventRepository);
 
     private readonly router: Router = inject(Router);
 
-    readonly clipboardService = inject(ClipboardService);
+    protected readonly clipboardService = inject(ClipboardService);
 
-    readonly filterService = inject(FilterService);
+    protected readonly filterService = inject(FilterService);
 
     event!: EventPokemon;
 

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { TypeComponent } from '@components/type/type.component';
 import { allTypes, TypePokemon } from '@entities/pokemon';
 import { PercentColor } from '../../components/percent-color/percent-color';
 import { RelationTypeComponent } from './components/relation-type-component/relation-type-component';
 import { TypesStore } from './types-store/types-store';
-import { TypeComponent } from '@components/type/type.component';
 
 @Component({
     selector: 'app-types-pages',
@@ -14,7 +14,7 @@ import { TypeComponent } from '@components/type/type.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TypesPages {
-    readonly store = inject(TypesStore);
+    protected readonly store = inject(TypesStore);
 
     typesList = allTypes;
 

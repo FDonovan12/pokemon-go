@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ImagePokemon } from '@components/image-pokemon/image-pokemon';
 import { PercentColor } from '@components/percent-color/percent-color';
 import { TypeComponent } from '@components/type/type.component';
+import { MeasurePerf } from '@decorator/measure-perf';
 import { allTypes } from './../../entities/pokemon';
 import { DynamaxStore } from './dynamax-store/dynamax-store';
-import { MeasurePerf } from '@decorator/measure-perf';
 
 @MeasurePerf()
 @Component({
@@ -15,7 +15,7 @@ import { MeasurePerf } from '@decorator/measure-perf';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamaxPage {
-    dynamaxStore = inject(DynamaxStore);
+    protected readonly dynamaxStore = inject(DynamaxStore);
 
     typesList = allTypes;
 

@@ -1,0 +1,47 @@
+<p>pvp-rank works!</p>
+<div style="display: flex; gap: 0.375em; flex-wrap: wrap">
+    @for (generation of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track $index) {
+        <button (click)="store.selectGeneration(generation)">Generation {{ generation }}</button>
+    }
+</div>
+<br />
+<label for="searchInput">Recherche :</label>
+<input
+    id="searchInput"
+    #searchInput
+    type="text"
+    [value]="store.search()"
+    (input)="store.setSearch($any($event.target).value)"
+/>
+@if (store.search()) {
+    <h2>Pokemon recherché</h2>
+} @else {
+    <h2>Generation {{ store.generationSelected() }}</h2>
+}
+@for (pokemon of store.resultSelected(); track pokemon.id) {
+    <div class="test">
+        <app-image-pokemon
+            [pokemon]="pokemon"
+            [height]="150"
+            (click)="openModifyRankDialog(pokemon.slug)"
+        ></app-image-pokemon>
+        <div>
+            <span></span>
+            <span>super</span>
+            <span>hyper</span>
+            <span>normal</span>
+            <span>{{ store.allRank().get(pokemon.slug)?.super?.obscur ?? '' }}</span>
+            <span>{{ store.allRank().get(pokemon.slug)?.super?.normal ?? '' }}</span>
+            <span>obscur</span>
+            <span>{{ store.allRank().get(pokemon.slug)?.hyper?.obscur ?? '' }}</span>
+            <span>{{ store.allRank().get(pokemon.slug)?.hyper?.normal ?? '' }}</span>
+        </div>
+    </div>
+}
+
+@if (showDialog()) {
+    <app-modify-rank-dialog
+        (submitted)="onRankSubmitted($event)"
+        (cancelled)="onRankCancelled()"
+    ></app-modify-rank-dialog>
+}

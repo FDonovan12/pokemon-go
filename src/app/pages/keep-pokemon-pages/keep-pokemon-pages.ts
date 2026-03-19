@@ -22,9 +22,9 @@ import { KeepStore } from './keep-store/keep-store';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeepPokemonPages {
-    readonly store = inject(KeepStore);
-    readonly clipboardService = inject(ClipboardService);
-    readonly filterService = inject(FilterService);
+    protected readonly store = inject(KeepStore);
+    protected readonly clipboardService = inject(ClipboardService);
+    private readonly filterService = inject(FilterService);
 
     filterAll: Signal<string> = computed(() =>
         this.filterService.buildAllPokemon([...this.store.selectedPokemonWantKeep()], true),
