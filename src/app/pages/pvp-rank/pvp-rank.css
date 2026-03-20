@@ -6,17 +6,11 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(3, 1fr);
-        font-size: 1.2em;
-        --color-border: transparent;
         --hue-color: 0;
+        --contrast-color: 0;
         & span {
-            border: var(--color-border) 1px solid;
             align-content: center;
             text-align: center;
-        }
-
-        & span:nth-child(3n + 1) {
-            --contrast-color: 0;
         }
 
         & span:nth-child(3n + 2) {
@@ -27,7 +21,6 @@
         & span:nth-child(3n + 3) {
             --hue-color: 100;
             --contrast-color: 10;
-            background-color: red;
         }
 
         & span:nth-child(-n + 3) {
