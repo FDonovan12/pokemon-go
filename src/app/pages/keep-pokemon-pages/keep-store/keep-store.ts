@@ -90,9 +90,7 @@ export const KeepStore = signalStore(
                 const allSlugs: PokemonSlug[] = arraysOfSlugs.flat();
                 const set = new Set<PokemonInterface>([...store.selectedPokemonWantKeep()]);
                 allSlugs.forEach((pokemonName) => set.add(store._pokemonRepository.pokemonIndex.byName[pokemonName]));
-                console.log(set);
                 patchState(store, { selectedPokemonWantKeep: set });
-                console.log(store.selectedPokemonWantKeep());
             });
         },
         addList: (nameList: string) => {

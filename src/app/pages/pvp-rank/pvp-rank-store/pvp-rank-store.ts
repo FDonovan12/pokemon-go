@@ -75,11 +75,10 @@ export const PVPRankStore = signalStore(
             });
 
             const object = store._localStorageService.get(LOCAL_STORAGE_PVP_RANK, {});
-            console.log(object);
             const map = new Map(Object.entries(object) as [PokemonSlug, PvpRank][]);
             const pokemonsByName = store._pokemonRepository.pokemonIndex.byName;
             const allPokemons = Object.values(pokemonsByName);
-            const test: PokemonInterface[] = allPokemons
+            const allPokemonsForms: PokemonInterface[] = allPokemons
                 .map((pokemon) => pokemon.alternatives)
                 .compact()
                 .map((pokemon) =>
@@ -99,10 +98,9 @@ export const PVPRankStore = signalStore(
                     generation: allPokemons.find((pok) => pok.name === pokemon?.name)?.generation,
                     id: allPokemons.find((pok) => pok.name === pokemon?.name)?.id,
                 })) as PokemonInterface[];
-            const conct = allPokemons.concat(test).sortAsc((pokemon) => pokemon.id);
-            console.log(test);
+            const allPokemonsWithForms = allPokemons.concat(allPokemonsForms).sortAsc((pokemon) => pokemon.id);
             patchState(store, {
-                allPokemon: conct,
+                allPokemon: allPokemonsWithForms,
                 allRank: map,
             });
         },
