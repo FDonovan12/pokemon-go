@@ -1,0 +1,23 @@
+.dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dialog {
+    background: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    min-width: 200px;
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+label {
+    display: block;
+    margin-top: 0.5rem;
+}

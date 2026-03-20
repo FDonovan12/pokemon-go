@@ -1,0 +1,55 @@
+<div
+    class="dialog-backdrop"
+    (click)="cancelled.emit()"
+>
+    <div
+        class="dialog"
+        (click)="$event.stopPropagation()"
+    >
+        <h3>Modifier le Rank</h3>
+
+        <label>
+            Rank (1-4096):
+            <input
+                #rankInput
+                type="number"
+                [value]="rank()"
+                (input)="rank.set(rankInput.valueAsNumber)"
+                min="1"
+                max="4096"
+            />
+        </label>
+
+        <label>
+            Ligue:
+            <select
+                [value]="league()"
+                (change)="league.set($any($event.target).value)"
+            >
+                <option value="super">Super</option>
+                <option value="hyper">Hyper</option>
+            </select>
+        </label>
+
+        <label>
+            Forme:
+            <select
+                [value]="form()"
+                (change)="form.set($any($event.target).value)"
+            >
+                <option value="normal">Normal</option>
+                <option value="obscur">Obscur</option>
+            </select>
+        </label>
+
+        <div class="buttons">
+            <button
+                (click)="confirm()"
+                [disabled]="rank() < 1 || rank() > 4096 || !rank()"
+            >
+                Confirmer
+            </button>
+            <button (click)="cancelled.emit()">Annuler</button>
+        </div>
+    </div>
+</div>

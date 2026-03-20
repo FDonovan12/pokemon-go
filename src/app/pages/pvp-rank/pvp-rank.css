@@ -1,9 +1,45 @@
 .test {
     display: inline-flex;
     flex-direction: column;
+    margin-inline: 0.2em;
     & div {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(3, 1fr);
+        font-size: 1.2em;
+        --color-border: transparent;
+        --hue-color: 0;
+        & span {
+            border: var(--color-border) 1px solid;
+            align-content: center;
+            text-align: center;
+        }
+
+        & span:nth-child(3n + 1) {
+            --contrast-color: 0;
+        }
+
+        & span:nth-child(3n + 2) {
+            --hue-color: 220;
+            --contrast-color: 10;
+        }
+
+        & span:nth-child(3n + 3) {
+            --hue-color: 100;
+            --contrast-color: 10;
+            background-color: red;
+        }
+
+        & span:nth-child(-n + 3) {
+            background-color: lch(90 var(--contrast-color) var(--hue-color));
+        }
+
+        & span:nth-child(n + 4):nth-child(-n + 6) {
+            background-color: lch(95 var(--contrast-color) var(--hue-color));
+        }
+
+        & span:nth-child(n + 7) {
+            background-color: lch(80 var(--contrast-color) var(--hue-color));
+        }
     }
 }

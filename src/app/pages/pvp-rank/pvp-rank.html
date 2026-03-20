@@ -18,7 +18,7 @@
 } @else {
     <h2>Generation {{ store.generationSelected() }}</h2>
 }
-@for (pokemon of store.resultSelected(); track pokemon.id) {
+@for (pokemon of store.resultSelected(); track pokemon.slug) {
     <div class="test">
         <app-image-pokemon
             [pokemon]="pokemon"
@@ -27,20 +27,30 @@
         ></app-image-pokemon>
         <div>
             <span></span>
-            <span>super</span>
-            <span>hyper</span>
-            <span>normal</span>
-            <span>{{ store.allRank().get(pokemon.slug)?.super?.obscur ?? '' }}</span>
-            <span>{{ store.allRank().get(pokemon.slug)?.super?.normal ?? '' }}</span>
-            <span>obscur</span>
-            <span>{{ store.allRank().get(pokemon.slug)?.hyper?.obscur ?? '' }}</span>
-            <span>{{ store.allRank().get(pokemon.slug)?.hyper?.normal ?? '' }}</span>
+            <span>Ⓖ</span>
+            <span>Ⓤ</span>
+            <span>⚪</span>
+            <span (click)="openModifyRankDialog(pokemon.slug, 'super', 'normal')">
+                {{ store.allRank().get(pokemon.slug)?.super?.normal ?? '' }}
+            </span>
+            <span (click)="openModifyRankDialog(pokemon.slug, 'hyper', 'normal')">
+                {{ store.allRank().get(pokemon.slug)?.hyper?.normal ?? '' }}
+            </span>
+            <span>⚫</span>
+            <span (click)="openModifyRankDialog(pokemon.slug, 'super', 'obscur')">
+                {{ store.allRank().get(pokemon.slug)?.super?.obscur ?? '' }}
+            </span>
+            <span (click)="openModifyRankDialog(pokemon.slug, 'hyper', 'obscur')">
+                {{ store.allRank().get(pokemon.slug)?.hyper?.obscur ?? '' }}
+            </span>
         </div>
     </div>
 }
 
 @if (showDialog()) {
     <app-modify-rank-dialog
+        [league]="selectedLeague"
+        [form]="selectedForm"
         (submitted)="onRankSubmitted($event)"
         (cancelled)="onRankCancelled()"
     ></app-modify-rank-dialog>

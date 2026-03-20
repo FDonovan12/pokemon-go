@@ -6,7 +6,7 @@ import { LocalStorageService } from '@services/local-storage-service/local-stora
 
 const LOCAL_STORAGE_PVP_RANK = 'pokemon-pvp_rank';
 
-interface PvpRank {
+export interface PvpRank {
     super: {
         obscur: number | null;
         normal: number | null;
@@ -79,8 +79,30 @@ export const PVPRankStore = signalStore(
             const map = new Map(Object.entries(object) as [PokemonSlug, PvpRank][]);
             const pokemonsByName = store._pokemonRepository.pokemonIndex.byName;
             const allPokemons = Object.values(pokemonsByName);
+            const test: PokemonInterface[] = allPokemons
+                .map((pokemon) => pokemon.alternatives)
+                .compact()
+                .map((pokemon) =>
+                    [
+                        pokemon?.Alola,
+                        pokemon?.Crowned,
+                        pokemon?.Galar,
+                        pokemon?.Hisui,
+                        pokemon?.['Rapid-strike'],
+                    ].compact(),
+                )
+                .flat()
+                .map((pokemon) => ({
+                    ...pokemon,
+                    slug: pokemon?.name + '-' + pokemon?.slug,
+                    family: allPokemons.find((pok) => pok.name === pokemon?.name)?.family,
+                    generation: allPokemons.find((pok) => pok.name === pokemon?.name)?.generation,
+                    id: allPokemons.find((pok) => pok.name === pokemon?.name)?.id,
+                })) as PokemonInterface[];
+            const conct = allPokemons.concat(test).sortAsc((pokemon) => pokemon.id);
+            console.log(test);
             patchState(store, {
-                allPokemon: allPokemons,
+                allPokemon: conct,
                 allRank: map,
             });
         },
