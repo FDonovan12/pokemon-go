@@ -142,8 +142,12 @@ export class PokemonDynamaxRepository {
             new Dynamax(pokemons.Kaimorse, 182, ['Eau', 'Glace']),
             new Dynamax(pokemons.Draieul, 231, ['Dragon', 'Psy']),
             new Dynamax(pokemons.Gigalithe, 226, ['Roche', 'Sol']),
+            new Dynamax(pokemons['Ho-oh'], 239, ['Acier', 'Feu', 'Psy']),
+            new Dynamax(pokemons.Raichu, 193, ['Fée', 'Électrik']),
+            new Dynamax(pokemons.Regice, 179, ['Combat', 'Glace', 'Normal']),
 
-            new Dynamax(pokemons['Ho-oh'], 239, ['Acier', 'Feu', 'Psy'], false),
+            new Dynamax(pokemons.Libegon, 205, ['Dragon', 'Sol'], false),
+            new Dynamax(pokemons.Regirock, 179, ['Combat', 'Roche', 'Normal'], false),
 
             new Gigamax(pokemons.Pikachu, 112, ['Électrik'], false),
             new Gigamax(pokemons.Miaouss, 92, ['Normal'], false),

@@ -636,16 +636,16 @@
     "family": "Sabelette"
   },
   {
-    "id": 32,
-    "name": "Nidoran♂",
-    "slug": "Nidoran",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/32.png",
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/32.png",
+    "id": 29,
+    "name": "Nidoran♀",
+    "slug": "Nidoran-female",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/29.png",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/29.png",
     "type": ["Poison"],
     "isLegendary": false,
     "isMythical": false,
     "generation": 1,
-    "family": "Nidoran"
+    "family": "Nidoran♀"
   },
   {
     "id": 30,
@@ -670,6 +670,18 @@
     "isMythical": false,
     "generation": 1,
     "family": "Nidoran"
+  },
+  {
+    "id": 32,
+    "name": "Nidoran♂",
+    "slug": "Nidoran-male",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/32.png",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/32.png",
+    "type": ["Poison"],
+    "isLegendary": false,
+    "isMythical": false,
+    "generation": 1,
+    "family": "Nidoran♂"
   },
   {
     "id": 33,
