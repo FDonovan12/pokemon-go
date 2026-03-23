@@ -30,7 +30,9 @@ export const KeepStore = signalStore(
         pokemonWantKeepMap: computed(() => {
             const list = [...store.selectedPokemonWantKeep()];
             const sorted = list.sortAsc((pokemon) => pokemon.id);
-            const map = sorted.groupBy((pokemon) => pokemon.generation);
+            const map = sorted.groupBy((pokemon) => {
+                return pokemon.generation;
+            });
             return map;
         }),
         resultSelected: computed(() => {
@@ -161,7 +163,12 @@ export const KeepStore = signalStore(
 function getSetPokemon(keyStorage: string, pokemonsByName: Record<PokemonInterface['slug'], PokemonInterface>) {
     const storageKeep = localStorage.getItem(keyStorage);
     const storageSlugs: PokemonSlug[] = storageKeep ? JSON.parse(storageKeep) : [];
-    const newSet = new Set<PokemonInterface>(storageSlugs.compact().map((slug) => pokemonsByName[slug]));
+    const newSet = new Set<PokemonInterface>(
+        storageSlugs
+            .compact()
+            .map((slug) => pokemonsByName[slug])
+            .compact(),
+    );
     return newSet;
 }
 
