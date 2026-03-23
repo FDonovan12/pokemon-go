@@ -20,7 +20,7 @@ export interface PvpRank {
 const initialState = {
     allPokemon: [] as PokemonInterface[],
     allRank: new Map<PokemonSlug, PvpRank>(),
-    generationSelected: 2,
+    generationSelected: 1,
     search: '',
 };
 
