@@ -2,9 +2,10 @@
     class="dialog-backdrop"
     (click)="cancelled.emit()"
 >
-    <div
+    <form
         class="dialog"
         (click)="$event.stopPropagation()"
+        (ngSubmit)="confirm()"
     >
         <h3>Modifier le Rank</h3>
 
@@ -44,12 +45,17 @@
 
         <div class="buttons">
             <button
-                (click)="confirm()"
+                type="submit"
                 [disabled]="rank() < 1 || rank() > 4096 || !rank()"
             >
                 Confirmer
             </button>
-            <button (click)="cancelled.emit()">Annuler</button>
+            <button
+                type="button"
+                (click)="cancelled.emit()"
+            >
+                Annuler
+            </button>
         </div>
-    </div>
+    </form>
 </div>
