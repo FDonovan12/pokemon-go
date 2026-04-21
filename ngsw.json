@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1776810292611,
+  "timestamp": 1776810425241,
   "index": "/pokemon-go/index.html",
   "assetGroups": [
     {
@@ -56,7 +56,7 @@
     "/pokemon-go/assets/ressources/Pokemon-GO-Metamorph.jpg": "528cf50cb3bf6d087713a45393cacd0f806511c2",
     "/pokemon-go/assets/ressources/Pokemon-GO-Taux-shiny.jpg": "1990398c610505ad7be4201ca5fd4c2e19b21f41",
     "/pokemon-go/favicon.ico": "386f1949eab8cc64c2a356b2016f65131cb0aec8",
-    "/pokemon-go/index.html": "ef6d5e5e4716a390e543bcfd46beaf40dfd3f50e",
+    "/pokemon-go/index.html": "b46c4e819e6e70dd515569d39793211f8c773124",
     "/pokemon-go/main-JZ2EMPPH.js": "f9c72a5f3d9cc4b6d885769e0dd00d53a9c400dc",
     "/pokemon-go/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
     "/pokemon-go/public/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
