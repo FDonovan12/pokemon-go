@@ -5,9 +5,7 @@
     <a routerLink="/dynamax">Dynamax</a>
     <a routerLink="/ressources">Ressources</a>
     <a routerLink="/pvp-rank">PVP rank</a>
-    @if (canInstall()) {
-        <button (click)="installApp()">Installer l'application</button>
-    }
+    <button (click)="installApp()">Installer l'application</button>
 </header>
 <app-toast-component></app-toast-component>
 <router-outlet></router-outlet>
