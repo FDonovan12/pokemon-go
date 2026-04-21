@@ -1,5 +1,8 @@
 export const IMAGES = {
   ".gitkeep": "assets/.gitkeep",
+  "favicon_io": {
+    "image": "assets/favicon_io\\image.png"
+  },
   "ressources": {
     "Pokemon-GO-Bonus-amities-couts-echanges": "assets/ressources\\Pokemon-GO-Bonus-amities-couts-echanges.jpg",
     "Pokemon-GO-Bonus-PE": "assets/ressources\\Pokemon-GO-Bonus-PE.jpg",
