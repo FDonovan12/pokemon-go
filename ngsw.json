@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1776809259015,
+  "timestamp": 1776810292611,
   "index": "/pokemon-go/index.html",
   "assetGroups": [
     {
@@ -33,7 +33,15 @@
         "/pokemon-go/assets/ressources/Pokemon-GO-Boost-Meteo.jpg",
         "/pokemon-go/assets/ressources/Pokemon-GO-IV-Minimum-Chances-100.jpg",
         "/pokemon-go/assets/ressources/Pokemon-GO-Metamorph.jpg",
-        "/pokemon-go/assets/ressources/Pokemon-GO-Taux-shiny.jpg"
+        "/pokemon-go/assets/ressources/Pokemon-GO-Taux-shiny.jpg",
+        "/pokemon-go/public/icons/icon-128x128.png",
+        "/pokemon-go/public/icons/icon-144x144.png",
+        "/pokemon-go/public/icons/icon-152x152.png",
+        "/pokemon-go/public/icons/icon-192x192.png",
+        "/pokemon-go/public/icons/icon-384x384.png",
+        "/pokemon-go/public/icons/icon-512x512.png",
+        "/pokemon-go/public/icons/icon-72x72.png",
+        "/pokemon-go/public/icons/icon-96x96.png"
       ],
       "patterns": []
     }
@@ -51,6 +59,14 @@
     "/pokemon-go/index.html": "ef6d5e5e4716a390e543bcfd46beaf40dfd3f50e",
     "/pokemon-go/main-JZ2EMPPH.js": "f9c72a5f3d9cc4b6d885769e0dd00d53a9c400dc",
     "/pokemon-go/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
+    "/pokemon-go/public/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
+    "/pokemon-go/public/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
+    "/pokemon-go/public/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
+    "/pokemon-go/public/icons/icon-192x192.png": "15c4180454633880d98674aa7394656196c91584",
+    "/pokemon-go/public/icons/icon-384x384.png": "94a915751ef6c9282df9aea405ad679230631814",
+    "/pokemon-go/public/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
+    "/pokemon-go/public/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
+    "/pokemon-go/public/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
     "/pokemon-go/styles-2TKRC5GH.css": "20c1b33715a4e8f0bcfcef4c59b5204e205691c3"
   },
   "navigationUrls": [
