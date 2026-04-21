@@ -10,7 +10,29 @@ import { ToastComponent } from '@components/toast-component/toast-component';
     styleUrl: './app.component.css',
 })
 export class AppComponent {
-    ngOnInit(): void {}
+    deferredPrompt: any = null;
+    ngOnInit(): void {
+        window.addEventListener('beforeinstallprompt', (event: any) => {
+            event.preventDefault();
+            this.deferredPrompt = event;
+        });
+    }
+
+    isStandalone(): boolean {
+        return window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true; // iOS
+    }
+    canInstall(): boolean {
+        return !this.isStandalone() && !!this.deferredPrompt;
+    }
+    installApp() {
+        if (!this.deferredPrompt) return;
+
+        this.deferredPrompt.prompt();
+
+        this.deferredPrompt.userChoice.then(() => {
+            this.deferredPrompt = null;
+        });
+    }
 
     fetchDynamax() {
         fetch('assets/dynamax.html')
