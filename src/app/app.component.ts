@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ToastComponent } from '@components/toast-component/toast-component';
 
@@ -10,27 +10,41 @@ import { ToastComponent } from '@components/toast-component/toast-component';
     styleUrl: './app.component.css',
 })
 export class AppComponent {
-    deferredPrompt: any = null;
-    ngOnInit(): void {
+    deferredPrompt = signal<any>(null);
+    isInstalled = signal(false);
+
+    isStandalone = computed(
+        () => window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true,
+    );
+
+    canInstall = computed(() => !this.isStandalone() && !this.isInstalled() && this.deferredPrompt() !== null);
+
+    ngOnInit() {
+        if (this.isStandalone()) {
+            this.isInstalled.set(true);
+        }
+
         window.addEventListener('beforeinstallprompt', (event: any) => {
             event.preventDefault();
-            this.deferredPrompt = event;
+            this.deferredPrompt.set(event);
+        });
+
+        window.addEventListener('appinstalled', () => {
+            this.deferredPrompt.set(null);
+            this.isInstalled.set(true);
         });
     }
 
-    isStandalone(): boolean {
-        return window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true; // iOS
-    }
-    canInstall(): boolean {
-        return !this.isStandalone() && !!this.deferredPrompt;
-    }
     installApp() {
-        if (!this.deferredPrompt) return;
+        const prompt = this.deferredPrompt();
+        if (!prompt) return;
 
-        this.deferredPrompt.prompt();
-
-        this.deferredPrompt.userChoice.then(() => {
-            this.deferredPrompt = null;
+        prompt.prompt();
+        prompt.userChoice.then((result: any) => {
+            if (result.outcome === 'accepted') {
+                this.isInstalled.set(true);
+            }
+            this.deferredPrompt.set(null);
         });
     }
 
