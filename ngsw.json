@@ -1,0 +1,75 @@
+{
+  "configVersion": 1,
+  "timestamp": 1776808488745,
+  "index": "/pokemon-go/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/pokemon-go/favicon.ico",
+        "/pokemon-go/index.html",
+        "/pokemon-go/main-JZ2EMPPH.js",
+        "/pokemon-go/polyfills-5CFQRCPP.js",
+        "/pokemon-go/styles-2TKRC5GH.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/pokemon-go/assets/favicon_io/image.png",
+        "/pokemon-go/assets/ressources/Pokemon-GO-Bonus-PE.jpg",
+        "/pokemon-go/assets/ressources/Pokemon-GO-Bonus-amities-couts-echanges.jpg",
+        "/pokemon-go/assets/ressources/Pokemon-GO-Boost-Meteo.jpg",
+        "/pokemon-go/assets/ressources/Pokemon-GO-IV-Minimum-Chances-100.jpg",
+        "/pokemon-go/assets/ressources/Pokemon-GO-Metamorph.jpg",
+        "/pokemon-go/assets/ressources/Pokemon-GO-Taux-shiny.jpg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/pokemon-go/assets/favicon_io/image.png": "386f1949eab8cc64c2a356b2016f65131cb0aec8",
+    "/pokemon-go/assets/ressources/Pokemon-GO-Bonus-PE.jpg": "d5d159275909c4be810b74c696bc6e8b2a5f3de3",
+    "/pokemon-go/assets/ressources/Pokemon-GO-Bonus-amities-couts-echanges.jpg": "015dbc7a747d26d2d670aa03db43ddcab4b2d995",
+    "/pokemon-go/assets/ressources/Pokemon-GO-Boost-Meteo.jpg": "3214bc23dc81b535989d591b4371a79df4eeb6bf",
+    "/pokemon-go/assets/ressources/Pokemon-GO-IV-Minimum-Chances-100.jpg": "bf7b5b345f699725990b89c8e043ad3362f037b9",
+    "/pokemon-go/assets/ressources/Pokemon-GO-Metamorph.jpg": "528cf50cb3bf6d087713a45393cacd0f806511c2",
+    "/pokemon-go/assets/ressources/Pokemon-GO-Taux-shiny.jpg": "1990398c610505ad7be4201ca5fd4c2e19b21f41",
+    "/pokemon-go/favicon.ico": "386f1949eab8cc64c2a356b2016f65131cb0aec8",
+    "/pokemon-go/index.html": "608614cdb5ad522ed176aa4c25c190b8e61cd8cf",
+    "/pokemon-go/main-JZ2EMPPH.js": "f9c72a5f3d9cc4b6d885769e0dd00d53a9c400dc",
+    "/pokemon-go/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
+    "/pokemon-go/styles-2TKRC5GH.css": "20c1b33715a4e8f0bcfcef4c59b5204e205691c3"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
