@@ -5,7 +5,7 @@ import { ToastService } from 'app/shared/features/toast/toast.service';
     providedIn: 'root',
 })
 export class ClipboardService {
-    toastService = inject(ToastService);
+    private readonly toastService: ToastService = inject(ToastService);
 
     copyToClipboard(string: string) {
         navigator.clipboard

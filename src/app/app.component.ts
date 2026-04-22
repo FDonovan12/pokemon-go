@@ -1,6 +1,8 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { SwUpdate } from '@angular/service-worker';
 import { ToastContainerComponent } from './shared/features/toast/toast-container.component';
+import { ToastService } from './shared/features/toast/toast.service';
 
 @Component({
     selector: 'app-root',
@@ -10,6 +12,9 @@ import { ToastContainerComponent } from './shared/features/toast/toast-container
     styleUrl: './app.component.css',
 })
 export class AppComponent {
+    private readonly toastService: ToastService = inject(ToastService);
+    private readonly swUpdate: SwUpdate = inject(SwUpdate);
+
     deferredPrompt = signal<any>(null);
     isInstalled = signal(false);
 
@@ -33,6 +38,30 @@ export class AppComponent {
             this.deferredPrompt.set(null);
             this.isInstalled.set(true);
         });
+
+        if (this.canInstall()) {
+            this.toastService
+                .prepare('Ce site a une version installable.', "Voulez vous installer l'application ?")
+                .showConfirmation(
+                    () => this.installApp(),
+                    () => {},
+                );
+        }
+
+        if (this.swUpdate.isEnabled) {
+            this.swUpdate.versionUpdates.subscribe((event) => {
+                if (event.type === 'VERSION_READY') {
+                    this.onNewVersion();
+                }
+            });
+        }
+    }
+
+    onNewVersion() {
+        this.toastService.prepare('Nouvelle version disponible.', 'Mettre à jour ?').showConfirmation(
+            () => window.location.reload(),
+            () => {},
+        );
     }
 
     installApp() {
