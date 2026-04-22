@@ -1,13 +1,10 @@
 <header style="display: flex; gap: 0.5em">
     <a routerLink="/">Accueil</a>
     <a routerLink="/types">Types</a>
-    <a routerLink="/keep">A garder</a>
+    <a routerLink="/keep">Liste</a>
     <a routerLink="/dynamax">Dynamax</a>
     <a routerLink="/ressources">Ressources</a>
     <a routerLink="/pvp-rank">PVP rank</a>
-    @if (canInstall()) {
-        <button (click)="installApp()">Installer l'application</button>
-    }
 </header>
 <app-toast-container></app-toast-container>
 <router-outlet></router-outlet>
