@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { ToastContainerComponent } from './shared/features/toast/toast-container.component';
@@ -39,14 +39,16 @@ export class AppComponent {
             this.isInstalled.set(true);
         });
 
-        if (this.canInstall()) {
-            this.toastService
-                .prepare('Ce site a une version installable.', "Voulez vous installer l'application ?")
-                .showConfirmation(
-                    () => this.installApp(),
-                    () => {},
-                );
-        }
+        effect(() => {
+            if (this.canInstall()) {
+                this.toastService
+                    .prepare('Ce site a une version installable.', "Voulez vous installer l'application ?")
+                    .showConfirmation(
+                        () => this.installApp(),
+                        () => {},
+                    );
+            }
+        });
 
         if (this.swUpdate.isEnabled) {
             this.swUpdate.versionUpdates.subscribe((event) => {
