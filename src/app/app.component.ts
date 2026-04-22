@@ -63,6 +63,8 @@ export class AppComponent {
     }
 
     onNewVersion() {
+        if (!this.isInstalled()) return;
+
         this.toastService.prepare('Nouvelle version disponible.', 'Mettre à jour ?').showConfirmation(
             () => window.location.reload(),
             () => {},
