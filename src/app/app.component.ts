@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { ToastContainerComponent } from './shared/features/toast/toast-container.component';
@@ -24,6 +24,20 @@ export class AppComponent {
 
     canInstall = computed(() => !this.isStandalone() && !this.isInstalled() && this.deferredPrompt() !== null);
 
+    constructor() {
+        // Affiche le toast quand canInstall devient true
+        effect(() => {
+            if (this.canInstall()) {
+                this.toastService
+                    .prepare('Ce site a une version installable.', "Voulez vous installer l'application ?")
+                    .showConfirmation(
+                        () => this.installApp(),
+                        () => {},
+                    );
+            }
+        });
+    }
+
     ngOnInit() {
         if (this.isStandalone()) {
             this.isInstalled.set(true);
@@ -38,15 +52,6 @@ export class AppComponent {
             this.deferredPrompt.set(null);
             this.isInstalled.set(true);
         });
-
-        if (this.canInstall()) {
-            this.toastService
-                .prepare('Ce site a une version installable.', "Voulez vous installer l'application ?")
-                .showConfirmation(
-                    () => this.installApp(),
-                    () => {},
-                );
-        }
 
         if (this.swUpdate.isEnabled) {
             this.swUpdate.versionUpdates.subscribe((event) => {
