@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ImagePokemon } from '@components/image-pokemon/image-pokemon';
 import { PokemonSlug } from '@entities/pokemon';
+import { ImagePokemon } from 'app/shared/components/image-pokemon/image-pokemon';
 import { ModifyRankDialogComponent } from './modify-rank-dialog/modify-rank-dialog';
 import { PVPRankStore } from './pvp-rank-store/pvp-rank-store';
 

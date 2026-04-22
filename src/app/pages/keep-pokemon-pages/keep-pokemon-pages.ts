@@ -9,9 +9,9 @@ import {
     ViewChild,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ImagePokemon } from '@components/image-pokemon/image-pokemon';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { FilterService } from '@services/filter-service/filter-service';
+import { ImagePokemon } from 'app/shared/components/image-pokemon/image-pokemon';
 import { KeepStore } from './keep-store/keep-store';
 
 @Component({

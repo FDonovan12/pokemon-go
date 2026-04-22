@@ -1,8 +1,8 @@
 import { Component, inject, input } from '@angular/core';
-import { ImagePokemon } from '@components/image-pokemon/image-pokemon';
-import { TypeComponent } from '@components/type/type.component';
 import { SavageGroup } from '@entities/event';
 import { EventRepository } from '@repositories/event/event.repository';
+import { ImagePokemon } from 'app/shared/components/image-pokemon/image-pokemon';
+import { TypeComponent } from 'app/shared/components/type/type.component';
 import { StoreSavageGroup } from './store-savage-group/store-savage-group';
 
 @Component({

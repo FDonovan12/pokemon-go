@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { TypePokemon } from '@entities/pokemon';
 import { TypeEffectivenessService } from '@services/type-effectiveness-service/type-effectiveness-service';
-import { TypeComponent } from '../../../../components/type/type.component';
+import { TypeComponent } from '../../../../shared/components/type/type.component';
 
 @Component({
     selector: 'app-relation-type-component',
