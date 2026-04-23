@@ -1,0 +1,33 @@
+<div [ngClass]="'toast ' + toast().type">
+    <div class="toast__content">
+        <span class="toast__icon">{{ toast().icon }}</span>
+        <div class="toast__text">
+            <div class="toast__title">{{ toast().title }}</div>
+            <div class="toast__message">{{ toast().message }}</div>
+        </div>
+    </div>
+
+    @if (isConfirmation()) {
+        <div class="toast__actions">
+            <button
+                class="toast__button confirm"
+                (click)="onConfirm()"
+            >
+                Confirm
+            </button>
+            <button
+                class="toast__button cancel"
+                (click)="onCancel()"
+            >
+                Cancel
+            </button>
+        </div>
+    } @else if (toast().canClose) {
+        <button
+            class="toast__close"
+            (click)="onDismiss()"
+        >
+            ×
+        </button>
+    }
+</div>

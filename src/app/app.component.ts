@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
-import { ToastContainerComponent } from './shared/features/toast/toast-container.component';
+import { ToastContainerComponent } from './shared/features/toast/components/toast-container.component';
 import { ToastService } from './shared/features/toast/toast.service';
 
 @Component({

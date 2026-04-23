@@ -26,4 +26,15 @@ export class ToastService {
     dismiss(id: string): void {
         this._toasts.update((current) => current.filter((t) => t.id !== id));
     }
+
+    testVisualToast() {
+        this.prepare('Success', 'message').showSuccess();
+        this.prepare('Info', 'message').showInfo();
+        this.prepare('Error', 'message').showError();
+        this.prepare('Warning', 'message').showWarning();
+        this.prepare('Confirmation', 'message').showConfirmation(
+            () => {},
+            () => {},
+        );
+    }
 }
