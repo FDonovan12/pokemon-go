@@ -15,7 +15,7 @@ export class FilterService {
         return String(elem); // enum
     }
 
-    buildAllPokemon(pokemons: PokemonInterface[], withFamily: boolean = false): string {
+    buildAllPokemonFamily(pokemons: PokemonInterface[], withFamily: boolean = false): string {
         const filter: Filter = { or: pokemons };
         if (withFamily) {
             filter.or = pokemons.map((pokemon) => '+' + pokemon.name);
@@ -23,10 +23,26 @@ export class FilterService {
         return this.buildFilter(filter);
     }
 
-    buildNeitherPokemon(pokemons: PokemonInterface[], withFamily: boolean = false): string {
+    buildNeitherPokemonFamily(pokemons: PokemonInterface[], withFamily: boolean = false): string {
         const filter: Filter = { not: { and: pokemons } };
         if (withFamily) {
             filter.not = { and: pokemons.map((pokemon) => '+' + pokemon.name) };
+        }
+        return this.buildFilter(filter);
+    }
+
+    buildAllPokemon(pokemons: PokemonInterface[], withFamily: boolean = false): string {
+        const filter: Filter = { or: pokemons };
+        if (withFamily) {
+            filter.or = pokemons.map((pokemon) => '' + pokemon.id);
+        }
+        return this.buildFilter(filter);
+    }
+
+    buildNeitherPokemon(pokemons: PokemonInterface[], withFamily: boolean = false): string {
+        const filter: Filter = { not: { and: pokemons } };
+        if (withFamily) {
+            filter.not = { and: pokemons.map((pokemon) => '' + pokemon.id) };
         }
         return this.buildFilter(filter);
     }

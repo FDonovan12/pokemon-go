@@ -30,9 +30,7 @@ export const KeepStore = signalStore(
         pokemonWantKeepMap: computed(() => {
             const list = [...store.selectedPokemonWantKeep()];
             const sorted = list.sortAsc((pokemon) => pokemon.id);
-            const map = sorted.groupBy((pokemon) => {
-                return pokemon.generation;
-            });
+            const map = sorted.groupBy((pokemon) => pokemon.generation);
             return map;
         }),
         resultSelected: computed(() => {
@@ -146,9 +144,12 @@ export const KeepStore = signalStore(
                 store._localStorageService.set(LOCAL_STORAGE_KEEP_KEYS, list);
             });
             const pokemonsByName = store._pokemonRepository.pokemonIndex.byName;
-            const allFamilyPokemons = store._pokemonRepository.pokemonFamilyName.map(
-                (pokemonName) => pokemonsByName[pokemonName],
+            const allFamilyPokemons = Object.entries(store._pokemonRepository.pokemonIndex.byName).map(
+                (couple) => couple[1],
             );
+            // const allFamilyPokemons = store._pokemonRepository.pokemonFamilyName.map(
+            //     (pokemonName) => pokemonsByName[pokemonName],
+            // );
             const newSet = getSetPokemon(selectedKey, pokemonsByName);
             patchState(store, {
                 allFamilyPokemon: allFamilyPokemons,

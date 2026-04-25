@@ -108,7 +108,7 @@ export class HomeComponent {
         { label: 'Filtre level 4', query: this.onlySavagePokemons + ' & 0*, 1*, 2* & !# & âge0 & pc-100 & ' },
         {
             label: 'Starter',
-            query: this.filterService.buildAllPokemon(this.getAllService.starterPokemon),
+            query: this.filterService.buildAllPokemonFamily(this.getAllService.starterPokemon),
         },
         {
             label: 'Filtre transfert',

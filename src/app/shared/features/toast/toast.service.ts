@@ -11,10 +11,6 @@ export class ToastService {
         return ToastBuilder._internal(title, message, this);
     }
 
-    prepareConfirm(title: string, message: string): ToastBuilder {
-        return ToastBuilder._internal(title, message, this);
-    }
-
     dispatch(toast: AnyToast): void {
         this._toasts.update((current) => [...current, toast]);
         console.log(this._toasts());

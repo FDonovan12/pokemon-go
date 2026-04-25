@@ -29,6 +29,10 @@ export class ToastBuilder {
         return new ToastBuilder(this.title, message, this.service, this.customIcon);
     }
 
+    withTitle(title: string): ToastBuilder {
+        return new ToastBuilder(title, this.message, this.service, this.customIcon);
+    }
+
     showSuccess(): void {
         this.service.dispatch(this.build('success'));
     }
@@ -43,10 +47,6 @@ export class ToastBuilder {
 
     showInfo(): void {
         this.service.dispatch(this.build('info'));
-    }
-
-    show(): void {
-        this.service.dispatch(this.build('success'));
     }
 
     showConfirmation(onConfirm: () => void, onCancel: () => void): void {
