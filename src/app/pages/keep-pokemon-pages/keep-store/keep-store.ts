@@ -1,5 +1,5 @@
 import { computed, effect, inject } from '@angular/core';
-import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { PokemonFamily, PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
@@ -34,16 +34,39 @@ export const KeepStore = signalStore(
             return map;
         }),
         resultSelected: computed(() => {
+            let result: PokemonInterface[] = [];
             if (store.search()) {
-                return store
+                const allFamilySelected: PokemonFamily[] = store
                     .allFamilyPokemon()
-                    .filter((pokemon) => pokemon.slug.slugify().includes(store.search().slugify()));
+                    .filter(
+                        (pokemon) =>
+                            pokemon.slug.slugify().includes(store.search().slugify()) ||
+                            pokemon.type.some((type) => type.slugify() === store.search().slugify()),
+                    )
+                    .map((pokemon) => pokemon.family);
+
+                result = store
+                    .allFamilyPokemon()
+                    .filter((pokemon) => allFamilySelected.includes(pokemon.family))
+                    .groupBy('family')
+                    .toList('values')
+                    .flat();
+            } else {
+                const onlyThisGeneration: PokemonInterface[] = store
+                    .allFamilyPokemon()
+                    .filter((pokemon) => pokemon.generation === store.generationSelected());
+
+                const allFamilySelected: PokemonFamily[] = onlyThisGeneration.map((pokemon) => pokemon.family);
+
+                result = store
+                    .allFamilyPokemon()
+                    .filter((pokemon) => allFamilySelected.includes(pokemon.family))
+                    .groupBy('family')
+                    .toList('values')
+                    .flat();
             }
-            return store.allFamilyPokemon().filter((pokemon) => pokemon.generation === store.generationSelected());
+            return result;
         }),
-        resultSearch: computed(() =>
-            store.allFamilyPokemon().filter((pokemon) => pokemon.name.includes(store.search())),
-        ),
     })),
     withMethods((store) => ({
         unselectAll() {

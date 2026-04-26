@@ -33,11 +33,15 @@ export const PVPRankStore = signalStore(
     withState(initialState),
     withComputed((store) => ({
         resultSelected: computed(() => {
-            let result = [];
+            let result: PokemonInterface[] = [];
             if (store.search()) {
                 const allFamily = store
                     .allPokemon()
-                    .filter((pokemon) => pokemon.slug.slugify().includes(store.search().slugify()))
+                    .filter(
+                        (pokemon) =>
+                            pokemon.slug.slugify().includes(store.search().slugify()) ||
+                            pokemon.type.some((type) => type.slugify() === store.search().slugify()),
+                    )
                     .map((pokemon) => pokemon.family);
                 result = store
                     .allPokemon()
@@ -50,7 +54,7 @@ export const PVPRankStore = signalStore(
                     .allPokemon()
                     .filter((pokemon) => pokemon.generation === store.generationSelected());
 
-                const HasMemberInThisGeneration = store
+                const hasMemberInThisGeneration = store
                     .allPokemon()
                     .groupBy('family')
                     .toList('values')
@@ -58,7 +62,7 @@ export const PVPRankStore = signalStore(
                     .flat()
                     .filter((pokemon) => pokemon.generation !== store.generationSelected());
                 const map = onlyThisGeneration.groupBy('family');
-                HasMemberInThisGeneration.map((pokemon) => map.ensureArray(pokemon.family).push(pokemon));
+                hasMemberInThisGeneration.map((pokemon) => map.ensureArray(pokemon.family).push(pokemon));
                 result = map.toList('values').flat();
             }
             return result;
