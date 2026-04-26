@@ -34,9 +34,9 @@ export const KeepStore = signalStore(
             return map;
         }),
         resultSelected: computed(() => {
-            let result: PokemonInterface[] = [];
+            let allFamilySelected: PokemonFamily[] = [];
             if (store.search()) {
-                const allFamilySelected: PokemonFamily[] = store
+                allFamilySelected = store
                     .allFamilyPokemon()
                     .filter(
                         (pokemon) =>
@@ -44,27 +44,20 @@ export const KeepStore = signalStore(
                             pokemon.type.some((type) => type.slugify() === store.search().slugify()),
                     )
                     .map((pokemon) => pokemon.family);
-
-                result = store
-                    .allFamilyPokemon()
-                    .filter((pokemon) => allFamilySelected.includes(pokemon.family))
-                    .groupBy('family')
-                    .toList('values')
-                    .flat();
             } else {
                 const onlyThisGeneration: PokemonInterface[] = store
                     .allFamilyPokemon()
                     .filter((pokemon) => pokemon.generation === store.generationSelected());
 
-                const allFamilySelected: PokemonFamily[] = onlyThisGeneration.map((pokemon) => pokemon.family);
-
-                result = store
-                    .allFamilyPokemon()
-                    .filter((pokemon) => allFamilySelected.includes(pokemon.family))
-                    .groupBy('family')
-                    .toList('values')
-                    .flat();
+                allFamilySelected = onlyThisGeneration.map((pokemon) => pokemon.family);
             }
+
+            const result: PokemonInterface[] = store
+                .allFamilyPokemon()
+                .filter((pokemon) => allFamilySelected.includes(pokemon.family))
+                .groupBy('family')
+                .toList('values')
+                .flat();
             return result;
         }),
     })),
