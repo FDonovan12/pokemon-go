@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { PokemonInterface } from '@entities/pokemon';
+import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import pokemonsData from 'app/bdd/bdd-pokemons.json';
+import { familyPokemon } from 'app/bdd/family-pokemon';
 import { pokemonFamilyName } from 'app/bdd/family-pokemon-name';
 import { megaPokemon } from 'app/bdd/mega-pokemon';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
-import { familyPokemon } from 'app/bdd/family-pokemon';
 
 const pokemonsList = pokemonsData as PokemonInterface[];
 
@@ -34,6 +34,18 @@ export class PokemonRepository {
         };
     };
     pokemonIndex = this.buildPokemonIndex(pokemonsList, pokemonsListHomeMade);
+
+    getPokemonBySLug(slug: PokemonSlug): PokemonInterface {
+        return this.pokemonIndex.byName[slug];
+    }
+
+    getAllPokemon(): PokemonInterface[] {
+        return Object.entries(this.pokemonIndex.byId).map((couple) => couple[1]);
+    }
+
+    getAllPokemonSlugs(): PokemonSlug[] {
+        return Object.entries(this.pokemonIndex.byName).map((couple) => couple[0] as PokemonSlug);
+    }
 
     pokemonFamilyName = pokemonFamilyName;
     pokemonFamily = familyPokemon;

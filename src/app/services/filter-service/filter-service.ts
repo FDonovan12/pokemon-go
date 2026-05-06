@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { PokemonInterface } from '@entities/pokemon';
+import { inject, Injectable } from '@angular/core';
+import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 
 const OR_JOIN = ', ';
 const AND_JOIN = ' & ';
@@ -9,6 +10,8 @@ const NOT_JOIN = '!';
     providedIn: 'root',
 })
 export class FilterService {
+    private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
+
     private stringify(elem: FilterElement): string {
         if (typeof elem === 'string') return elem;
         if (typeof elem === 'object' && 'name' in elem) return elem.name;
@@ -31,19 +34,19 @@ export class FilterService {
         return this.buildFilter(filter);
     }
 
-    buildAllPokemon(pokemons: PokemonInterface[], withFamily: boolean = false): string {
-        const filter: Filter = { or: pokemons };
-        if (withFamily) {
-            filter.or = pokemons.map((pokemon) => '' + pokemon.id);
-        }
+    buildAllPokemon(pokemons: PokemonInterface[]): string {
+        const filter: Filter = { or: pokemons.map((pokemon) => '' + pokemon.id) };
         return this.buildFilter(filter);
     }
 
-    buildNeitherPokemon(pokemons: PokemonInterface[], withFamily: boolean = false): string {
-        const filter: Filter = { not: { and: pokemons } };
-        if (withFamily) {
-            filter.not = { and: pokemons.map((pokemon) => '' + pokemon.id) };
-        }
+    buildNeitherPokemon(pokemons: PokemonInterface[]): string {
+        const basePokemonsSlugs: Set<PokemonSlug> = pokemons.map((p) => p.slug).toSet();
+
+        const allOtherPokemons = this._pokemonRepository
+            .getAllPokemon()
+            .filter((pokemon) => !basePokemonsSlugs.has(pokemon.slug));
+
+        const filter: Filter = { or: allOtherPokemons.map((pokemon) => '' + pokemon.id) };
         return this.buildFilter(filter);
     }
 

@@ -1,14 +1,13 @@
 import { computed, effect, inject } from '@angular/core';
 import { PokemonFamily, PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
+import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
-import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 
 const LOCAL_STORAGE_KEEP = 'pokemon-want-keep';
 const LOCAL_STORAGE_KEEP_KEYS = 'pokemon-want-keep-keys';
-
 const initialState = {
-    allFamilyPokemon: [] as PokemonInterface[],
+    _allFamilyPokemon: [] as PokemonInterface[],
     generationSelected: 1,
     listName: [''],
     selectedListName: '',
@@ -16,18 +15,18 @@ const initialState = {
     search: '',
 };
 
-export const KeepStore = signalStore(
+export const ListPokemonPageStore = signalStore(
     { providedIn: 'root' },
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
-        _localStorageService: inject(LocalStorageService),
+        _listPokemonRepository: inject(ListPokemonRepository),
     })),
     withState(initialState),
     withComputed((store) => ({
         selectedListKey: computed(() => store.selectedListName().slugify()),
     })),
     withComputed((store) => ({
-        pokemonWantKeepMap: computed(() => {
+        actualListPokemonMap: computed(() => {
             const list = [...store.selectedPokemonWantKeep()];
             const sorted = list.sortAsc((pokemon) => pokemon.id);
             const map = sorted.groupBy((pokemon) => pokemon.generation);
@@ -37,23 +36,23 @@ export const KeepStore = signalStore(
             let allFamilySelected: PokemonFamily[] = [];
             if (store.search()) {
                 allFamilySelected = store
-                    .allFamilyPokemon()
+                    ._allFamilyPokemon()
                     .filter(
                         (pokemon) =>
                             pokemon.slug.slugify().includes(store.search().slugify()) ||
-                            pokemon.type.some((type) => type.slugify() === store.search().slugify()),
+                            pokemon.type.some((type) => type.slugifyEquals(store.search())),
                     )
                     .map((pokemon) => pokemon.family);
             } else {
                 const onlyThisGeneration: PokemonInterface[] = store
-                    .allFamilyPokemon()
+                    ._allFamilyPokemon()
                     .filter((pokemon) => pokemon.generation === store.generationSelected());
 
                 allFamilySelected = onlyThisGeneration.map((pokemon) => pokemon.family);
             }
 
             const result: PokemonInterface[] = store
-                .allFamilyPokemon()
+                ._allFamilyPokemon()
                 .filter((pokemon) => allFamilySelected.includes(pokemon.family))
                 .groupBy('family')
                 .toList('values')
@@ -80,17 +79,17 @@ export const KeepStore = signalStore(
             } else {
                 set.add(pokemon);
             }
-            patchState(store, { selectedPokemonWantKeep: set, search: '' });
+            patchState(store, { selectedPokemonWantKeep: set });
         },
         exportKeepPokemon() {
-            const slugs = Array.from(store.selectedPokemonWantKeep()).map((p) => p.slug); // Ou plus si tu veux
+            const slugs = Array.from(store.selectedPokemonWantKeep()).map((p) => p.slug);
             const blob = new Blob([JSON.stringify(slugs, null, 2)], {
                 type: 'application/json',
             });
 
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'keep-pokemon.json';
+            a.download = store.selectedListKey() + '.json';
             a.click();
 
             URL.revokeObjectURL(a.href);
@@ -104,7 +103,7 @@ export const KeepStore = signalStore(
 
             Promise.all(promises).then((arraysOfSlugs) => {
                 const allSlugs: PokemonSlug[] = arraysOfSlugs.flat();
-                const set = new Set<PokemonInterface>([...store.selectedPokemonWantKeep()]);
+                const set = new Set<PokemonInterface>(store.selectedPokemonWantKeep().toList());
                 allSlugs.forEach((pokemonName) => set.add(store._pokemonRepository.pokemonIndex.byName[pokemonName]));
                 patchState(store, { selectedPokemonWantKeep: set });
             });
@@ -117,7 +116,7 @@ export const KeepStore = signalStore(
                 return;
             }
             const newList = [...oldList, nameList];
-            patchState(store, { listName: newList });
+            patchState(store, { listName: newList, selectedListName: nameList });
         },
         setSearch: (value: string) => patchState(store, { search: value }),
     })),
@@ -141,34 +140,33 @@ export const KeepStore = signalStore(
     })),
     withHooks((store) => ({
         onInit() {
-            const storageListName: string[] = store._localStorageService.get(LOCAL_STORAGE_KEEP_KEYS, [
-                LOCAL_STORAGE_KEEP,
-            ]);
-            const selectedKey = storageListName.first()?.slugify() ?? LOCAL_STORAGE_KEEP;
+            const storageListName: string[] = store._listPokemonRepository.getListKeys();
             effect(() => {
-                const newSet = getSetPokemon(store.selectedListKey(), pokemonsByName);
+                const newSet: Set<PokemonInterface> = store._listPokemonRepository
+                    .getPokemonsForList(store.selectedListKey())
+                    .toSet();
                 patchState(store, {
                     selectedPokemonWantKeep: newSet,
                 });
             });
             effect(() => {
-                const list = [...store.selectedPokemonWantKeep()].map((p) => p.slug);
-                store._localStorageService.set(store.selectedListKey(), list);
+                const listSlugs = store
+                    .selectedPokemonWantKeep()
+                    .toList()
+                    .map((pokemon: PokemonInterface) => pokemon.slug);
+                store._listPokemonRepository.saveSlugsForList(store.selectedListKey(), listSlugs);
             });
             effect(() => {
                 const list = store.listName();
-                store._localStorageService.set(LOCAL_STORAGE_KEEP_KEYS, list);
+                store._listPokemonRepository.saveListKeys(list);
             });
-            const pokemonsByName = store._pokemonRepository.pokemonIndex.byName;
             const allFamilyPokemons = Object.entries(store._pokemonRepository.pokemonIndex.byName).map(
                 (couple) => couple[1],
             );
-            // const allFamilyPokemons = store._pokemonRepository.pokemonFamilyName.map(
-            //     (pokemonName) => pokemonsByName[pokemonName],
-            // );
-            const newSet = getSetPokemon(selectedKey, pokemonsByName);
+            const selectedKey = storageListName.first()?.slugify() ?? LOCAL_STORAGE_KEEP;
+            const newSet: Set<PokemonInterface> = store._listPokemonRepository.getPokemonsForList(selectedKey).toSet();
             patchState(store, {
-                allFamilyPokemon: allFamilyPokemons,
+                _allFamilyPokemon: allFamilyPokemons,
                 selectedPokemonWantKeep: newSet,
                 listName: storageListName,
                 selectedListName: selectedKey,
@@ -176,18 +174,6 @@ export const KeepStore = signalStore(
         },
     })),
 );
-
-function getSetPokemon(keyStorage: string, pokemonsByName: Record<PokemonInterface['slug'], PokemonInterface>) {
-    const storageKeep = localStorage.getItem(keyStorage);
-    const storageSlugs: PokemonSlug[] = storageKeep ? JSON.parse(storageKeep) : [];
-    const newSet = new Set<PokemonInterface>(
-        storageSlugs
-            .compact()
-            .map((slug) => pokemonsByName[slug])
-            .compact(),
-    );
-    return newSet;
-}
 
 function readFile(file: File): Promise<PokemonSlug[]> {
     return new Promise((resolve, reject) => {

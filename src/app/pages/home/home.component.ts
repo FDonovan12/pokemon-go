@@ -9,7 +9,7 @@ import { ClipboardService } from '@services/clipboard-service/clipboard-service'
 import { FilterService } from '@services/filter-service/filter-service';
 import { EventPokemon } from '../../entities/event';
 import { EventRepository } from '../../repositories/event/event.repository';
-import { KeepStore } from './../keep-pokemon-pages/keep-store/keep-store';
+import { ListPokemonPageStore } from '../list-pokemon-pages/list-store/list-pokemon-page.store';
 
 @Component({
     selector: 'app-home',
@@ -23,7 +23,7 @@ export class HomeComponent {
     private readonly getAllService = inject(PokemonRepository);
     private readonly bddEvent = inject(EventRepository);
     private readonly filterService = inject(FilterService);
-    protected readonly keepStore = inject(KeepStore);
+    protected readonly keepStore = inject(ListPokemonPageStore);
     protected readonly clipboardService = inject(ClipboardService);
 
     today = new Date();
@@ -70,27 +70,6 @@ export class HomeComponent {
     baseFilters = [
         { label: 'IV PVP 1 ', query: this.filterService.buildFilter({ and: ['2-pv', '2-défense', '-1attaque'] }) },
         { label: 'IV PVP 2 ', query: this.filterService.buildFilter({ and: ['3-pv', '3-défense', '-2attaque'] }) },
-        // {
-        //     label: 'IV PVP 3 ',
-        //     query: this.filterService.buildFilter({
-        //         or: [{ and: ['2-pv', '2-défense', '-1attaque'] }, { and: ['3-pv', '3-défense', '-2attaque'] }],
-        //     }),
-        // },
-        // {
-        //     label: 'IV PVP 3 ',
-        //     query: this.filterService.buildFilterString({
-        //         or: [{ and: ['2-pv', '2-défense', '-1attaque'] }, { and: ['3-pv', '3-défense', '-2attaque'] }],
-        //     }),
-        // },
-
-        // {
-        //     label: 'Filtre level and',
-        //     query: this.filterService.test({ not: { and: ['bleu', 'rond'] } }).toString(),
-        // },
-        // {
-        //     label: 'Filtre level or',
-        //     query: this.filterService.test({ not: { or: ['bleu', 'rond'] } }).toString(),
-        // },
         {
             label: 'Filtre level 1',
             query:
