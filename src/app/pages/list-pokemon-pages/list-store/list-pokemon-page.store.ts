@@ -160,14 +160,10 @@ export const ListPokemonPageStore = signalStore(
                 const list = store.listName();
                 store._listPokemonRepository.saveListKeys(list);
             });
-            const allFamilyPokemons = Object.entries(store._pokemonRepository.pokemonIndex.byName).map(
-                (couple) => couple[1],
-            );
+            const allPokemons = store._pokemonRepository.getAllPokemon();
             const selectedKey = storageListName.first()?.slugify() ?? LOCAL_STORAGE_KEEP;
-            const newSet: Set<PokemonInterface> = store._listPokemonRepository.getPokemonsForList(selectedKey).toSet();
             patchState(store, {
-                _allFamilyPokemon: allFamilyPokemons,
-                selectedPokemonWantKeep: newSet,
+                _allFamilyPokemon: allPokemons,
                 listName: storageListName,
                 selectedListName: selectedKey,
             });

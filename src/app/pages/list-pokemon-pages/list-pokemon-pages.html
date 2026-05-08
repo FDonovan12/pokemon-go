@@ -9,11 +9,11 @@
     />
 </div>
 <br />
-<form (submit)="addList(newListName.value)">
+<form (submit)="addList()">
     <div>
         <input
             type="text"
-            #newListName
+            [formField]="addListForm.listName"
         />
         <button type="submit">Ajouter liste</button>
     </div>
@@ -56,10 +56,9 @@
     id="searchInput"
     #searchInput
     type="text"
-    [value]="store.search()"
-    (input)="store.setSearch($any($event.target).value)"
+    [(ngModel)]="search"
 />
-<button (click)="store.setSearch('')">Reset</button>
+<button (click)="search.set('')">Reset</button>
 
 @if (store.search()) {
     <h2>Pokemon recherché</h2>

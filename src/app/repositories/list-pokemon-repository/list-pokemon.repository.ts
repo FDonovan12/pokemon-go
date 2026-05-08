@@ -23,7 +23,7 @@ export class ListPokemonRepository {
 
     getPokemonsForList(keyStorage: string): PokemonInterface[] {
         const storageSlugs: PokemonSlug[] = this.getSlugsForList(keyStorage);
-        const storagePokemons = storageSlugs.map((slug) => this._pokemonRepository.getPokemonBySLug(slug));
+        const storagePokemons = this._pokemonRepository.getPokemonsBySLugs(storageSlugs);
         return storagePokemons;
     }
 

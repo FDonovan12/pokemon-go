@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import pokemonsData from 'app/bdd/bdd-pokemons.json';
 import { familyPokemon } from 'app/bdd/family-pokemon';
 import { pokemonFamilyName } from 'app/bdd/family-pokemon-name';
 import { megaPokemon } from 'app/bdd/mega-pokemon';
+import { ToastService } from 'app/shared/features/toast/toast.service';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 
 const pokemonsList = pokemonsData as PokemonInterface[];
@@ -18,6 +19,8 @@ type PokemonIndex = {
     providedIn: 'root',
 })
 export class PokemonRepository {
+    private readonly _toastService: ToastService = inject(ToastService);
+
     private buildPokemonIndex = (
         listFromAPI: PokemonInterface[],
         listHomemade: readonly PokemonHomeMade[] = [],
@@ -35,8 +38,26 @@ export class PokemonRepository {
     };
     pokemonIndex = this.buildPokemonIndex(pokemonsList, pokemonsListHomeMade);
 
-    getPokemonBySLug(slug: PokemonSlug): PokemonInterface {
+    getPokemonBySlug(slug: PokemonSlug): PokemonInterface | undefined {
         return this.pokemonIndex.byName[slug];
+    }
+
+    getPokemonsBySLugs(slugs: PokemonSlug[]): PokemonInterface[] {
+        const result: PokemonInterface[] = [];
+        const errors: string[] = [];
+        slugs.forEach((slug) => {
+            const raw = this.getPokemonBySlug(slug);
+            if (raw) result.push(raw);
+            else errors.push(slug);
+        });
+        if (errors.length) {
+            const toastMessage =
+                "Les pokemon suivant non pas eté retrouver a cause d'une erreur reselectionné les a la main : " +
+                errors.join(',');
+            this._toastService.prepare('Erreur lors du chargment des pokemons', toastMessage).showError();
+        }
+        return result;
+        // return this.pokemonIndex.byName[slug];
     }
 
     getAllPokemon(): PokemonInterface[] {
