@@ -13,5 +13,5 @@ export class TypeComponent {
     type = input.required<TypePokemon>();
     size = input<number>();
 
-    urlType = computed(() => `https://www.pokebip.com/pokedex/images/${this.type().slugify().capitalize()}.png`);
+    urlType = computed(() => `./assets/types/${this.type().slugify().capitalize()}.png`);
 }
