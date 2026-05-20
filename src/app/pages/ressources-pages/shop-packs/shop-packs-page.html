@@ -28,10 +28,10 @@
             <thead>
                 <tr>
                     <th class="col-name">Nom</th>
+                    <th class="col-price">Prix / unité</th>
                     <th class="col-price">Prix</th>
                     <th class="col-content">Contenu principal</th>
                     <th class="col-bonus">Bonus</th>
-                    <th class="col-price">Prix / unité</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +42,10 @@
                                 <span class="badge-best">Meilleur</span>
                             }
                             {{ row.pack.name }}
+                        </td>
+                        <td class="col-price">
+                            <span class="price-val">{{ formatPrice(row.unitPrice) }}</span>
+                            <span class="price-unit">{{ priceUnit }}</span>
                         </td>
                         <td class="col-price">
                             <span class="price-val">{{ row.pack.getRawPrice() }}</span>
@@ -61,11 +65,6 @@
                             @if (row.bonusItems.length === 0) {
                                 <span class="muted">—</span>
                             }
-                        </td>
-
-                        <td class="col-price">
-                            <span class="price-val">{{ formatPrice(row.unitPrice) }}</span>
-                            <span class="price-unit">{{ priceUnit }}</span>
                         </td>
                     </tr>
                 }
