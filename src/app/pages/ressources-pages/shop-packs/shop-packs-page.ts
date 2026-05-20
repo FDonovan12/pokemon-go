@@ -81,7 +81,7 @@ export class ShopPacksComponent implements OnInit {
         const mainTypes = new Set(category.mainItemTypes);
 
         const rows: PackRow[] = category.packs
-            .map((raw) => new Pack(raw, this.data.coinRates))
+            .map((raw) => new Pack(raw))
             .filter((pack) => pack.isVisibleIn(this.priceMode))
             .map((pack) => {
                 const mainItems = pack.items.filter((i) => mainTypes.has(i.type));
@@ -94,6 +94,7 @@ export class ShopPacksComponent implements OnInit {
 
         const sortRows = sortBy(rows, this.sortDir, (row) => {
             if (this.sortCol === 'name') return row.pack.name;
+            if (this.sortCol === 'price') return row.pack.getRawPrice();
             return row.unitPrice;
         });
 

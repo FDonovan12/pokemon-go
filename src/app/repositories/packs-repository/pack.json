@@ -1,9 +1,4 @@
 {
-  "coinRates": {
-    "22": 2650,
-    "44": 5500,
-    "110": 14500
-  },
   "itemTypes": {
     "pass_raid_normal": { "label": "Pass raid normal", "category": "pass_raid" },
     "pass_raid_distance": { "label": "Pass raid distance", "category": "pass_raid" },
@@ -28,7 +23,7 @@
             { "type": "pass_raid_normal", "quantity": 43 },
             { "type": "raid_distance", "quantity": 3 }
           ],
-          "priceEur": 22
+          "priceEuro": 22
         },
         {
           "id": "super-boite-stockage",
@@ -77,7 +72,7 @@
           "id": "ticket-journee-raid",
           "name": "Ticket journee de raid",
           "items": [{ "type": "pass_raid_normal", "quantity": 9 }],
-          "priceEur": 5.49
+          "priceEuro": 5.49
         },
         {
           "id": "pack-pass-x99",
@@ -116,25 +111,25 @@
             { "type": "pass_raid_normal", "quantity": 40 },
             { "type": "super_incubateur", "quantity": 5 }
           ],
-          "priceEur": 22
+          "priceEuro": 22
         },
         {
           "id": "packe-depart-module-5",
           "name": "Packe de depart module (x5)",
           "items": [{ "type": "pass_raid_normal", "quantity": 5 }],
-          "priceEur": 2.19
+          "priceEuro": 2.19
         },
         {
           "id": "boite-aventure-distance-10",
           "name": "Boite aventure distance (x10)",
           "items": [{ "type": "pass_raid_distance", "quantity": 10 }],
-          "priceEur": 5.49
+          "priceEuro": 5.49
         },
         {
           "id": "pack-pass-distance-x99",
           "name": "Pack pass distance (x99)",
           "items": [{ "type": "pass_raid_distance", "quantity": 99 }],
-          "priceEur": 44
+          "priceEuro": 44
         },
         {
           "id": "pack-pass-distance-x100",
@@ -168,7 +163,7 @@
           "id": "boite-aventure-ultime-60",
           "name": "Boite aventure ultime (x60)",
           "items": [{ "type": "super_incubateur", "quantity": 60 }],
-          "priceEur": 44
+          "priceEuro": 44
         },
         {
           "id": "boite-aventure-ultime-100",
@@ -177,7 +172,7 @@
             { "type": "super_incubateur", "quantity": 100 },
             { "type": "super_incubateur", "quantity": 50 }
           ],
-          "priceEur": 55
+          "priceEuro": 55
         },
         {
           "id": "pack-incubateur-x5",
@@ -192,7 +187,7 @@
             { "type": "super_incubateur", "quantity": 24 },
             { "type": "super_incubateur", "quantity": 12 }
           ],
-          "priceEur": 22
+          "priceEuro": 22
         },
         {
           "id": "pack-incubateur-x40",
@@ -252,7 +247,7 @@
             { "type": "super_incubateur", "quantity": 55 },
             { "type": "super_incubateur", "quantity": 30 }
           ],
-          "priceEur": 44
+          "priceEuro": 44
         }
       ]
     },
@@ -279,7 +274,7 @@
             { "type": "particule_dynamax", "quantity": 8 },
             { "type": "pass_raid_normal", "quantity": 1 }
           ],
-          "priceEur": 5.5
+          "priceEuro": 5.5
         }
       ]
     }

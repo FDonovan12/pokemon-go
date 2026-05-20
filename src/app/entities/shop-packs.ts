@@ -1,7 +1,11 @@
 export type PriceMode = 'coins' | '22' | '44' | '110';
-export type SortCol = 'unitPrice' | 'name';
+export type SortCol = 'unitPrice' | 'name' | 'price';
 export type SortDir = 'asc' | 'desc';
-export type CoinRates = Record<string, number>;
+const _coinRates = {
+    '22': 2700,
+    '44': 5600,
+    '110': 15500,
+};
 
 export interface ItemEntry {
     type: string;
@@ -23,7 +27,6 @@ export interface Category {
 }
 
 export interface PackData {
-    coinRates: CoinRates;
     itemTypes: Record<string, { label: string; category: string }>;
     categories: Record<string, Category>;
 }
@@ -44,15 +47,13 @@ export class Pack {
 
     private readonly _priceCoins?: number;
     private readonly _priceEur?: number;
-    private readonly _coinRates: CoinRates;
 
-    constructor(raw: RawPack, coinRates: CoinRates) {
+    constructor(raw: RawPack) {
         this.id = raw.name.slugify();
         this.name = raw.name;
         this.items = raw.items;
         this._priceCoins = raw.priceCoins;
         this._priceEur = raw.priceEuro;
-        this._coinRates = coinRates;
     }
 
     isPriceCoins(): boolean {
@@ -77,7 +78,7 @@ export class Pack {
     getPriceEur(tier: '22' | '44' | '110'): number | null {
         if (this._priceEur !== undefined) return this._priceEur;
         if (this._priceCoins !== undefined) {
-            const rate = this._coinRates[tier];
+            const rate = _coinRates[tier];
             return (this._priceCoins / rate) * parseInt(tier, 10);
         }
         return null;
