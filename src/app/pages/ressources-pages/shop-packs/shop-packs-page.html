@@ -30,8 +30,7 @@
                     <th class="col-name">Nom</th>
                     <th class="col-price">Prix / unité</th>
                     <th class="col-price">Prix</th>
-                    <th class="col-content">Contenu principal</th>
-                    <th class="col-bonus">Bonus</th>
+                    <th class="col-content">Contenu</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,25 +44,39 @@
                         </td>
                         <td class="col-price">
                             <span class="price-val">{{ formatPrice(row.unitPrice) }}</span>
-                            <span class="price-unit">{{ priceUnit }}</span>
+                            @if (priceUnit === '€') {
+                                <span class="price-unit">€</span>
+                            } @else {
+                                <span class="price-unit">
+                                    <img
+                                        src="/assets/1762328405_pSYFstKr3V.webp"
+                                        alt="coins"
+                                        style="border-radius: 50%; height: 1.5em; vertical-align: middle"
+                                    />
+                                </span>
+                            }
                         </td>
                         <td class="col-price">
                             <span class="price-val">{{ row.pack.getRawPrice() }}</span>
-                            <span class="price-unit">{{ row.pack.getRawPriceUnit() }}</span>
+                            @if (row.pack.getRawPriceUnit() === '€') {
+                                <span class="price-unit">€</span>
+                            } @else {
+                                <span class="price-unit">
+                                    <img
+                                        src="/assets/1762328405_pSYFstKr3V.webp"
+                                        alt="coins"
+                                        style="border-radius: 50%; height: 1.5em; vertical-align: middle"
+                                    />
+                                </span>
+                            }
                         </td>
 
                         <td class="col-content">
                             @for (item of row.mainItems; track item.type) {
                                 <span class="tag tag-main">{{ item.quantity }}× {{ getItemLabel(item.type) }}</span>
                             }
-                        </td>
-
-                        <td class="col-bonus">
                             @for (item of row.bonusItems; track item.type) {
                                 <span class="tag tag-bonus">{{ item.quantity }}× {{ getItemLabel(item.type) }}</span>
-                            }
-                            @if (row.bonusItems.length === 0) {
-                                <span class="muted">—</span>
                             }
                         </td>
                     </tr>
