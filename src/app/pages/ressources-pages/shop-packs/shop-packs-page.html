@@ -27,41 +27,11 @@
         <table>
             <thead>
                 <tr>
-                    <th
-                        class="col-name sortable"
-                        (click)="sort('name')"
-                    >
-                        Nom
-                        @if (sortCol === 'name') {
-                            <span class="sort-icon">
-                                {{ sortDir === 'asc' ? '↑' : '↓' }}
-                            </span>
-                        }
-                    </th>
-                    <th
-                        class="col-name sortable"
-                        (click)="sort('price')"
-                    >
-                        Prix
-                        @if (sortCol === 'price') {
-                            <span class="sort-icon">
-                                {{ sortDir === 'asc' ? '↑' : '↓' }}
-                            </span>
-                        }
-                    </th>
+                    <th class="col-name">Nom</th>
+                    <th class="col-price">Prix</th>
                     <th class="col-content">Contenu principal</th>
                     <th class="col-bonus">Bonus</th>
-                    <th
-                        class="col-price sortable"
-                        (click)="sort('unitPrice')"
-                    >
-                        Prix / unité
-                        @if (sortCol === 'unitPrice') {
-                            <span class="sort-icon">
-                                {{ sortDir === 'asc' ? '↑' : '↓' }}
-                            </span>
-                        }
-                    </th>
+                    <th class="col-price">Prix / unité</th>
                 </tr>
             </thead>
             <tbody>

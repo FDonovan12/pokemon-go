@@ -1,11 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { Pack, PackData, PackRow, PriceMode, SortCol, SortDir } from '@entities/shop-packs';
+import { Pack, PackData, PackRow, PriceMode } from '@entities/shop-packs';
 import { PacksRepository } from '@repositories/packs-repository/packs.repository';
-
-export function sortBy<T>(arr: T[], direction: SortDir, selector: (r: T) => number | string) {
-    return direction === 'asc' ? arr.sortAsc(selector) : arr.sortDesc(selector);
-}
 
 @Component({
     selector: 'app-shop-packs',
@@ -23,8 +19,6 @@ export class ShopPacksComponent implements OnInit {
     activeCategory: string = '';
 
     priceMode: PriceMode = 'coins';
-    sortCol: SortCol = 'unitPrice';
-    sortDir: SortDir = 'asc';
 
     rows: PackRow[] = [];
 
@@ -56,23 +50,11 @@ export class ShopPacksComponent implements OnInit {
 
     selectCategory(key: string): void {
         this.activeCategory = key;
-        this.sortCol = 'unitPrice';
-        this.sortDir = 'asc';
         this.buildRows();
     }
 
     selectPriceMode(mode: PriceMode): void {
         this.priceMode = mode;
-        this.buildRows();
-    }
-
-    sort(col: SortCol): void {
-        if (this.sortCol === col) {
-            this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
-        } else {
-            this.sortCol = col;
-            this.sortDir = 'asc';
-        }
         this.buildRows();
     }
 
@@ -90,14 +72,9 @@ export class ShopPacksComponent implements OnInit {
                 const unitPrice = pack.getUnitPrice(this.priceMode, totalMainQty) ?? Infinity;
 
                 return { pack, mainItems, bonusItems, unitPrice };
-            });
+            })
+            .sortAsc((row) => row.unitPrice);
 
-        const sortRows = sortBy(rows, this.sortDir, (row) => {
-            if (this.sortCol === 'name') return row.pack.name;
-            if (this.sortCol === 'price') return row.pack.getRawPrice();
-            return row.unitPrice;
-        });
-
-        this.rows = sortRows;
+        this.rows = rows;
     }
 }

@@ -1,6 +1,4 @@
 export type PriceMode = 'coins' | '22' | '44' | '110';
-export type SortCol = 'unitPrice' | 'name' | 'price';
-export type SortDir = 'asc' | 'desc';
 const _coinRates = {
     '22': 2700,
     '44': 5600,
