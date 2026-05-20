@@ -89,6 +89,10 @@ export class Pack {
         return this._priceCoins ?? this._priceEur ?? 0;
     }
 
+    getRawPriceUnit(): string {
+        return this.isPriceEur() ? '€' : 'coins';
+    }
+
     /**
      * Prix unitaire selon le mode actif.
      * Retourne null si le pack n'est pas applicable dans ce mode.

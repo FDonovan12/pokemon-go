@@ -44,7 +44,8 @@
                             {{ row.pack.name }}
                         </td>
                         <td class="col-name">
-                            {{ row.pack.getRawPrice() }}
+                            <span class="price-val">{{ row.pack.getRawPrice() }}</span>
+                            <span class="price-unit">{{ row.pack.getRawPriceUnit() }}</span>
                         </td>
 
                         <td class="col-content">
