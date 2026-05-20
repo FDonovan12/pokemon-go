@@ -1,15 +1,14 @@
 {
   "itemTypes": {
-    "pass_raid_normal": { "label": "Pass raid normal", "category": "pass_raid" },
-    "pass_raid_distance": { "label": "Pass raid distance", "category": "pass_raid" },
+    "pass_raid_normal": { "label": "Pass", "category": "pass_raid" },
+    "pass_raid_distance": { "label": "Pass distance", "category": "pass_raid" },
     "super_incubateur": { "label": "Super incubateur", "category": "incubateur" },
-    "incubateur_normal": { "label": "Incubateur normal", "category": "incubateur" },
+    "incubateur_normal": { "label": "Incubateur", "category": "incubateur" },
     "particule_dynamax": { "label": "Particule Dynamax", "category": "particule" },
     "oeuf_chance": { "label": "Oeuf chance", "category": "oeuf" },
-    "poussiere_etoile": { "label": "Morceau poussiere d'etoile", "category": "poussiere" },
-    "ticket_elite": { "label": "Ticket CT elite", "category": "autre" },
-    "raid_distance": { "label": "Raid distance", "category": "pass_raid" },
-    "argente": { "label": "Argenté", "category": "autre" }
+    "poussiere_etoile": { "label": "Morceau d'etoile", "category": "poussiere" },
+    "ticket_elite": { "label": "CT elite", "category": "autre" },
+    "nanana_argente": { "label": "Nanana argenté", "category": "autre" }
   },
   "categories": {
     "pass_raid": {
