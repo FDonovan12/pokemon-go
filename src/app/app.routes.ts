@@ -2,12 +2,12 @@ import { Routes } from '@angular/router';
 import { DynamaxPage } from './pages/dynamax/dynamax.page';
 import { EventComponent } from './pages/event/event.component';
 import { HomeComponent } from './pages/home/home.component';
-import { ListPokemonPages } from './pages/list-pokemon-pages/list-pokemon-pages';
+import { ListPokemonPages } from './pages/list-pokemon-page/list-pokemon-pages';
 import { ProbaPages } from './pages/proba/proba-pages';
 import { PvpRankPages } from './pages/pvp-rank/pvp-rank';
-import { InfographicPages } from './pages/ressources-pages/infographic/infographic-pages';
-import { ShopPacksComponent } from './pages/ressources-pages/shop-packs/shop-packs-page';
-import { TypesPages } from './pages/types-pages/types-pages';
+import { InfographicPages } from './pages/ressources-page/infographic/infographic-pages';
+import { ShopPacksComponent } from './pages/ressources-page/shop-packs/shop-packs-page';
+import { TypesPages } from './pages/types-page/types-pages';
 
 export const routes: Routes = [
     {

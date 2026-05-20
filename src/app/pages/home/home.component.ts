@@ -9,7 +9,7 @@ import { ClipboardService } from '@services/clipboard-service/clipboard-service'
 import { FilterService } from '@services/filter-service/filter-service';
 import { EventPokemon } from '../../entities/event';
 import { EventRepository } from '../../repositories/event/event.repository';
-import { ListPokemonPageStore } from '../list-pokemon-pages/list-store/list-pokemon-page.store';
+import { ListPokemonPageStore } from '../list-pokemon-page/list-store/list-pokemon-page.store';
 
 @Component({
     selector: 'app-home',

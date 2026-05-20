@@ -49,7 +49,7 @@
                             } @else {
                                 <span class="price-unit">
                                     <img
-                                        src="/assets/1762328405_pSYFstKr3V.webp"
+                                        src="assets/1762328405_pSYFstKr3V.webp"
                                         alt="coins"
                                         style="border-radius: 50%; height: 1.5em; vertical-align: middle"
                                     />
@@ -63,7 +63,7 @@
                             } @else {
                                 <span class="price-unit">
                                     <img
-                                        src="/assets/1762328405_pSYFstKr3V.webp"
+                                        src="assets/1762328405_pSYFstKr3V.webp"
                                         alt="coins"
                                         style="border-radius: 50%; height: 1.5em; vertical-align: middle"
                                     />
@@ -73,10 +73,18 @@
 
                         <td class="col-content">
                             @for (item of row.mainItems; track item.type) {
-                                <span class="tag tag-main">{{ item.quantity }}× {{ getItemLabel(item.type) }}</span>
+                                <span
+                                    class="tag tag-main"
+                                    app-item-tag
+                                    [item]="item"
+                                ></span>
                             }
                             @for (item of row.bonusItems; track item.type) {
-                                <span class="tag tag-bonus">{{ item.quantity }}× {{ getItemLabel(item.type) }}</span>
+                                <span
+                                    class="tag tag-bonus"
+                                    app-item-tag
+                                    [item]="item"
+                                ></span>
                             }
                         </td>
                     </tr>

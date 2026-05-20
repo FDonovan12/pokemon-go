@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Pack, PackData, PackRow, PriceMode } from '@entities/shop-packs';
 import { PacksRepository } from '@repositories/packs-repository/packs.repository';
+import { ItemTag } from './item-tag/item-tag';
 
 @Component({
     selector: 'app-shop-packs',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, ItemTag],
     templateUrl: './shop-packs-page.html',
     styleUrl: './shop-packs-page.css',
 })
