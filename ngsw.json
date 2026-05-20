@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1779266512188,
+  "timestamp": 1779311859747,
   "index": "/pokemon-go/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/pokemon-go/favicon.ico",
         "/pokemon-go/index.html",
-        "/pokemon-go/main-ZUPXZKYO.js",
+        "/pokemon-go/main-XEDQ7O5W.js",
         "/pokemon-go/polyfills-5CFQRCPP.js",
         "/pokemon-go/styles-2TKRC5GH.css"
       ],
@@ -96,8 +96,8 @@
     "/pokemon-go/assets/types/Tenebres.png": "bd034f825023941f8f2556535c5af3ff841ec47d",
     "/pokemon-go/assets/types/Vol.png": "e3c98c088fa317971b5cd9c4c605213818d81de1",
     "/pokemon-go/favicon.ico": "386f1949eab8cc64c2a356b2016f65131cb0aec8",
-    "/pokemon-go/index.html": "7d90dfedc624d4d49a44fd7591a6803d8e8edb88",
-    "/pokemon-go/main-ZUPXZKYO.js": "7e5733afdc30208f9af8b3720c1f478b8233300a",
+    "/pokemon-go/index.html": "3d69e08b4d23a813f4131a3ca0add50a93d533d7",
+    "/pokemon-go/main-XEDQ7O5W.js": "8379b036d384dc1eda81b8a4dd976ba5cb903d6a",
     "/pokemon-go/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
     "/pokemon-go/public/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
     "/pokemon-go/public/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
