@@ -70,6 +70,10 @@ export class ShopPacksComponent implements OnInit {
                 const bonusItems = pack.items.filter((i) => !mainTypes.has(i.type));
                 const totalMainQty = mainItems.reduce((sum, i) => sum + i.quantity, 0);
                 const unitPrice = pack.getUnitPrice(this.priceMode, totalMainQty) ?? Infinity;
+                if (pack.name.slugifyIncludes('fest')) {
+                    console.log(mainItems);
+                    console.log(bonusItems);
+                }
 
                 return { pack, mainItems, bonusItems, unitPrice };
             })

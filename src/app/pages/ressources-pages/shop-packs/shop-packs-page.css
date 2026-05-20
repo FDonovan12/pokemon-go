@@ -176,20 +176,17 @@ tbody tr.row-best {
 }
 
 .col-name {
-    min-width: 160px;
-}
-.col-content {
-    min-width: 180px;
-}
-.col-bonus {
-    min-width: 150px;
-}
-.col-price {
     min-width: 120px;
+}
+/* .col-content {
+    min-width: 120px;
+} */
+@media (max-width: 900px) {
+    .col-bonus {
+        display: none;
+        /* min-width: 150px; */
+    }
 }
 .col-total {
     min-width: 120px;
-}
-.col-name-sort {
-    width: 40px;
 }

@@ -20,8 +20,8 @@
           "id": "boite-raid-ultra-go-fest",
           "name": "Boite raid ultra go fest",
           "items": [
-            { "type": "pass_raid_normal", "quantity": 43 },
-            { "type": "raid_distance", "quantity": 3 }
+            { "type": "pass_raid_normal", "quantity": 40 },
+            { "type": "pass_raid_distance", "quantity": 3 }
           ],
           "priceEuro": 22
         },
@@ -29,8 +29,8 @@
           "id": "super-boite-stockage",
           "name": "Super boite stockage",
           "items": [
-            { "type": "pass_raid_distance", "quantity": 2 },
-            { "type": "raid_distance", "quantity": 1 }
+            { "type": "pass_raid_normal", "quantity": 1 },
+            { "type": "pass_raid_distance", "quantity": 1 }
           ],
           "priceCoins": 150
         },
@@ -45,7 +45,7 @@
           "name": "Boite ultra raid",
           "items": [
             { "type": "pass_raid_normal", "quantity": 50 },
-            { "type": "ticket_elite", "quantity": 1 }
+            { "type": "ct_elite_chargé", "quantity": 1 }
           ],
           "priceCoins": 3195
         },
@@ -60,18 +60,18 @@
           "priceCoins": 2825
         },
         {
-          "id": "buncide-ultra-raid",
-          "name": "Buncide ultra raid",
+          "id": "bundle-ultra-raid",
+          "name": "Bundle ultra raid",
           "items": [
             { "type": "pass_raid_normal", "quantity": 60 },
-            { "type": "argente", "quantity": 100 }
+            { "type": "nanana_argente", "quantity": 100 }
           ],
           "priceCoins": 5000
         },
         {
           "id": "ticket-journee-raid",
           "name": "Ticket journee de raid",
-          "items": [{ "type": "pass_raid_normal", "quantity": 9 }],
+          "items": [{ "type": "pass_raid_normal", "quantity": 8 }],
           "priceEuro": 5.49
         },
         {
@@ -105,8 +105,8 @@
           "priceCoins": 1000
         },
         {
-          "id": "packe-depart-module-40",
-          "name": "Packe de depart module (x40)",
+          "id": "pack-depart-module-40",
+          "name": "Pack de depart module (x40)",
           "items": [
             { "type": "pass_raid_normal", "quantity": 40 },
             { "type": "super_incubateur", "quantity": 5 }
@@ -114,27 +114,27 @@
           "priceEuro": 22
         },
         {
-          "id": "packe-depart-module-5",
-          "name": "Packe de depart module (x5)",
+          "id": "pack-pass-x5",
+          "name": "Pack pass (x5)",
           "items": [{ "type": "pass_raid_normal", "quantity": 5 }],
           "priceEuro": 2.19
         },
         {
           "id": "boite-aventure-distance-10",
           "name": "Boite aventure distance (x10)",
-          "items": [{ "type": "pass_raid_distance", "quantity": 10 }],
+          "items": [{ "type": "pass_raid_normal", "quantity": 10 }],
           "priceEuro": 5.49
         },
         {
           "id": "pack-pass-distance-x99",
           "name": "Pack pass distance (x99)",
-          "items": [{ "type": "pass_raid_distance", "quantity": 99 }],
+          "items": [{ "type": "pass_raid_normal", "quantity": 99 }],
           "priceEuro": 44
         },
         {
           "id": "pack-pass-distance-x100",
           "name": "Pack pass distance (x100)",
-          "items": [{ "type": "pass_raid_distance", "quantity": 100 }],
+          "items": [{ "type": "pass_raid_normal", "quantity": 100 }],
           "priceCoins": 9400
         }
       ]
@@ -146,14 +146,14 @@
         {
           "id": "boite-exploration",
           "name": "Boite exploration",
-          "items": [{ "type": "super_incubateur", "quantity": 25 }],
+          "items": [{ "type": "incubateur_normal", "quantity": 25 }],
           "priceCoins": 2850
         },
         {
           "id": "boite-eclosion",
           "name": "Boite eclosion",
           "items": [
-            { "type": "super_incubateur", "quantity": 40 },
+            { "type": "incubateur_normal", "quantity": 20 },
             { "type": "super_incubateur", "quantity": 20 },
             { "type": "pass_raid_normal", "quantity": 20 }
           ],
@@ -162,14 +162,17 @@
         {
           "id": "boite-aventure-ultime-60",
           "name": "Boite aventure ultime (x60)",
-          "items": [{ "type": "super_incubateur", "quantity": 60 }],
+          "items": [
+            { "type": "incubateur_normal", "quantity": 30 },
+            { "type": "super_incubateur", "quantity": 30 }
+          ],
           "priceEuro": 44
         },
         {
           "id": "boite-aventure-ultime-100",
           "name": "Boite aventure ultime (x100)",
           "items": [
-            { "type": "super_incubateur", "quantity": 100 },
+            { "type": "incubateur_normal", "quantity": 50 },
             { "type": "super_incubateur", "quantity": 50 }
           ],
           "priceEuro": 55
@@ -177,14 +180,14 @@
         {
           "id": "pack-incubateur-x5",
           "name": "Pack incubateur (x5)",
-          "items": [{ "type": "super_incubateur", "quantity": 5 }],
+          "items": [{ "type": "incubateur_normal", "quantity": 5 }],
           "priceCoins": 575
         },
         {
           "id": "pack-incubateur-x24",
           "name": "Pack incubateur (x24)",
           "items": [
-            { "type": "super_incubateur", "quantity": 24 },
+            { "type": "incubateur_normal", "quantity": 12 },
             { "type": "super_incubateur", "quantity": 12 }
           ],
           "priceEuro": 22
@@ -193,8 +196,8 @@
           "id": "pack-incubateur-x40",
           "name": "Pack incubateur (x40)",
           "items": [
-            { "type": "super_incubateur", "quantity": 40 },
-            { "type": "super_incubateur", "quantity": 12 }
+            { "type": "incubateur_normal", "quantity": 20 },
+            { "type": "super_incubateur", "quantity": 20 }
           ],
           "priceCoins": 3500
         },
@@ -202,7 +205,7 @@
           "id": "pack-incubateur-x22",
           "name": "Pack incubateur (x22)",
           "items": [
-            { "type": "super_incubateur", "quantity": 22 },
+            { "type": "incubateur_normal", "quantity": 12 },
             { "type": "super_incubateur", "quantity": 10 }
           ],
           "priceCoins": 1990
@@ -211,7 +214,7 @@
           "id": "boite-raid-incubateur-1",
           "name": "Boite raid (x1)",
           "items": [
-            { "type": "super_incubateur", "quantity": 1 },
+            { "type": "incubateur_normal", "quantity": 1 },
             { "type": "pass_raid_normal", "quantity": 2 }
           ],
           "priceCoins": 195
@@ -219,14 +222,14 @@
         {
           "id": "boite-raid-incubateur-7",
           "name": "Boite raid (x7)",
-          "items": [{ "type": "super_incubateur", "quantity": 7 }],
+          "items": [{ "type": "incubateur_normal", "quantity": 7 }],
           "priceCoins": 745
         },
         {
           "id": "boite-raid-incubateur-100",
           "name": "Boite raid (x100)",
           "items": [
-            { "type": "super_incubateur", "quantity": 100 },
+            { "type": "incubateur_normal", "quantity": 50 },
             { "type": "super_incubateur", "quantity": 50 }
           ],
           "priceCoins": 7000
@@ -235,7 +238,7 @@
           "id": "boite-raid-incubateur-60",
           "name": "Boite raid (x60)",
           "items": [
-            { "type": "super_incubateur", "quantity": 60 },
+            { "type": "incubateur_normal", "quantity": 30 },
             { "type": "super_incubateur", "quantity": 30 }
           ],
           "priceCoins": 5250
@@ -244,7 +247,7 @@
           "id": "kit-apex",
           "name": "Kit apex",
           "items": [
-            { "type": "super_incubateur", "quantity": 55 },
+            { "type": "incubateur_normal", "quantity": 25 },
             { "type": "super_incubateur", "quantity": 30 }
           ],
           "priceEuro": 44
