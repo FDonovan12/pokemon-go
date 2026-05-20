@@ -1,5 +1,5 @@
 .page {
-    padding: 1.5rem;
+    padding: clamp(0.1rem, 1vw, 1.5rem);
     font-family: var(--font-sans, sans-serif);
     color: var(--color-text-primary);
 }
@@ -71,7 +71,7 @@ thead tr {
 }
 
 th {
-    padding: 10px 14px;
+    padding: clamp(5px, 1vh, 10px) clamp(7px, 1vw, 14px);
     text-align: left;
     font-size: 12px;
     font-weight: 500;
@@ -97,7 +97,7 @@ th.sortable:hover {
 /* ── Rows ── */
 
 td {
-    padding: 10px 14px;
+    padding: clamp(5px, 1vh, 10px) clamp(7px, 1vw, 14px);
     border-bottom: 0.5px solid var(--color-border-tertiary, #e0e0e0);
     vertical-align: middle;
 }
