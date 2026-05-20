@@ -4,11 +4,34 @@ export const IMAGES = {
     "image": "assets/favicon_io\\image.png"
   },
   "ressources": {
-    "Pokemon-GO-Bonus-amities-couts-echanges": "assets/ressources\\Pokemon-GO-Bonus-amities-couts-echanges.jpg",
-    "Pokemon-GO-Bonus-PE": "assets/ressources\\Pokemon-GO-Bonus-PE.jpg",
-    "Pokemon-GO-Boost-Meteo": "assets/ressources\\Pokemon-GO-Boost-Meteo.jpg",
-    "Pokemon-GO-IV-Minimum-Chances-100": "assets/ressources\\Pokemon-GO-IV-Minimum-Chances-100.jpg",
-    "Pokemon-GO-Metamorph": "assets/ressources\\Pokemon-GO-Metamorph.jpg",
-    "Pokemon-GO-Taux-shiny": "assets/ressources\\Pokemon-GO-Taux-shiny.jpg"
+    "infographie": {
+      "Pokemon-GO-Bonus-amities-couts-echanges": "assets/ressources\\infographie\\Pokemon-GO-Bonus-amities-couts-echanges.jpg",
+      "Pokemon-GO-Bonus-PE": "assets/ressources\\infographie\\Pokemon-GO-Bonus-PE.jpg",
+      "Pokemon-GO-Boost-Meteo": "assets/ressources\\infographie\\Pokemon-GO-Boost-Meteo.jpg",
+      "Pokemon-GO-IV-Minimum-Chances-100": "assets/ressources\\infographie\\Pokemon-GO-IV-Minimum-Chances-100.jpg",
+      "Pokemon-GO-Metamorph": "assets/ressources\\infographie\\Pokemon-GO-Metamorph.jpg",
+      "pokemon-GO-regional-map": "assets/ressources\\infographie\\pokemon-GO-regional-map.png",
+      "Pokemon-GO-Taux-shiny": "assets/ressources\\infographie\\Pokemon-GO-Taux-shiny.jpg"
+    }
+  },
+  "types": {
+    "Acier": "assets/types\\Acier.png",
+    "Combat": "assets/types\\Combat.png",
+    "Dragon": "assets/types\\Dragon.png",
+    "Eau": "assets/types\\Eau.png",
+    "Electrik": "assets/types\\Electrik.png",
+    "Fee": "assets/types\\Fee.png",
+    "Feu": "assets/types\\Feu.png",
+    "Glace": "assets/types\\Glace.png",
+    "Insecte": "assets/types\\Insecte.png",
+    "Normal": "assets/types\\Normal.png",
+    "Plante": "assets/types\\Plante.png",
+    "Poison": "assets/types\\Poison.png",
+    "Psy": "assets/types\\Psy.png",
+    "Roche": "assets/types\\Roche.png",
+    "Sol": "assets/types\\Sol.png",
+    "Spectre": "assets/types\\Spectre.png",
+    "Tenebres": "assets/types\\Tenebres.png",
+    "Vol": "assets/types\\Vol.png"
   }
 } as const;

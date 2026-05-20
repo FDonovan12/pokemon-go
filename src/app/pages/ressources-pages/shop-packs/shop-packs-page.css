@@ -1,0 +1,195 @@
+.page {
+    padding: 1.5rem;
+    font-family: var(--font-sans, sans-serif);
+    color: var(--color-text-primary);
+}
+
+/* ── Toolbar ── */
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    background: var(--color-background-secondary, #f5f5f5);
+    border: 0.5px solid var(--color-border-tertiary, #e0e0e0);
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.btn-group button {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition:
+        background 0.12s,
+        color 0.12s;
+    white-space: nowrap;
+}
+
+.btn-group button:hover {
+    background: var(--color-background-primary, #fff);
+    color: var(--color-text-primary);
+}
+
+.btn-group button.active {
+    background: var(--color-background-primary, #fff);
+    color: var(--color-text-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Table wrapper ── */
+
+.table-wrapper {
+    overflow-x: auto;
+    border: 0.5px solid var(--color-border-tertiary, #e0e0e0);
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* ── Header ── */
+
+thead tr {
+    background: var(--color-background-secondary, #f9f9f9);
+}
+
+th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    border-bottom: 0.5px solid var(--color-border-tertiary, #e0e0e0);
+    white-space: nowrap;
+}
+
+th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+th.sortable:hover {
+    color: var(--color-text-primary);
+}
+
+.sort-icon {
+    margin-left: 4px;
+    font-size: 11px;
+}
+
+/* ── Rows ── */
+
+td {
+    padding: 10px 14px;
+    border-bottom: 0.5px solid var(--color-border-tertiary, #e0e0e0);
+    vertical-align: middle;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background: var(--color-background-secondary, #fafafa);
+}
+
+tbody tr.row-best {
+    background: #eaf3de;
+}
+
+/* ── Best badge ── */
+
+.badge-best {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    background: #639922;
+    color: #fff;
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* ── Item tags ── */
+
+.tag {
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin: 2px 3px 2px 0;
+    white-space: nowrap;
+}
+
+.tag-main {
+    background: #b5d4f4;
+    color: #0c447c;
+}
+
+.tag-bonus {
+    background: var(--color-background-secondary, #f0f0f0);
+    color: var(--color-text-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+}
+
+/* ── Price cells ── */
+
+.col-price,
+.col-total {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.price-val {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+}
+
+.price-unit {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    margin-left: 3px;
+}
+
+/* ── Misc ── */
+
+.muted {
+    color: var(--color-text-tertiary, #aaa);
+}
+
+.col-name {
+    min-width: 160px;
+}
+.col-content {
+    min-width: 180px;
+}
+.col-bonus {
+    min-width: 150px;
+}
+.col-price {
+    min-width: 120px;
+}
+.col-total {
+    min-width: 120px;
+}
+.col-name-sort {
+    width: 40px;
+}

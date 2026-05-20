@@ -1,0 +1,103 @@
+<div class="page">
+    <div class="toolbar">
+        <div class="btn-group">
+            <button
+                *ngFor="let key of categoryKeys"
+                [class.active]="activeCategory === key"
+                (click)="selectCategory(key)"
+            >
+                {{ data.categories[key].label }}
+            </button>
+        </div>
+
+        <div class="btn-group">
+            <button
+                *ngFor="let m of priceModes"
+                [class.active]="priceMode === m.value"
+                (click)="selectPriceMode(m.value)"
+            >
+                {{ m.label }}
+            </button>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th
+                        class="col-name sortable"
+                        (click)="sort('name')"
+                    >
+                        Nom
+                        <span
+                            class="sort-icon"
+                            *ngIf="sortCol === 'name'"
+                        >
+                            {{ sortDir === 'asc' ? '↑' : '↓' }}
+                        </span>
+                    </th>
+                    <th class="col-content">Contenu principal</th>
+                    <th class="col-bonus">Bonus</th>
+                    <th
+                        class="col-price sortable"
+                        (click)="sort('unitPrice')"
+                    >
+                        Prix / unité
+                        <span
+                            class="sort-icon"
+                            *ngIf="sortCol === 'unitPrice'"
+                        >
+                            {{ sortDir === 'asc' ? '↑' : '↓' }}
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let row of rows; let i = index"
+                    [class.row-best]="i === 0"
+                >
+                    <td class="col-name">
+                        <span
+                            class="badge-best"
+                            *ngIf="i === 0"
+                        >
+                            Meilleur
+                        </span>
+                        {{ row.pack.name }}
+                    </td>
+
+                    <td class="col-content">
+                        <span
+                            class="tag tag-main"
+                            *ngFor="let item of row.mainItems"
+                        >
+                            {{ item.quantity }}× {{ getItemLabel(item.type) }}
+                        </span>
+                    </td>
+
+                    <td class="col-bonus">
+                        <span
+                            class="tag tag-bonus"
+                            *ngFor="let item of row.bonusItems"
+                        >
+                            {{ item.quantity }}× {{ getItemLabel(item.type) }}
+                        </span>
+                        <span
+                            class="muted"
+                            *ngIf="row.bonusItems.length === 0"
+                        >
+                            —
+                        </span>
+                    </td>
+
+                    <td class="col-price">
+                        <span class="price-val">{{ formatPrice(row.unitPrice) }}</span>
+                        <span class="price-unit">{{ priceUnit }}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

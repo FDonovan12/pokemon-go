@@ -1,6 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TypePokemon } from '@entities/pokemon';
+import { IMAGES } from 'app/shared/assets/images.generated';
 
 @Component({
     selector: 'app-type',
@@ -12,6 +13,6 @@ import { TypePokemon } from '@entities/pokemon';
 export class TypeComponent {
     type = input.required<TypePokemon>();
     size = input<number>();
-
-    urlType = computed(() => `./assets/types/${this.type().slugify().capitalize()}.png`);
+    key = computed(() => this.type().slugify().capitalize() as keyof typeof IMAGES.types);
+    urlType = computed(() => IMAGES.types[this.key()]);
 }

@@ -5,7 +5,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { ListPokemonPages } from './pages/list-pokemon-pages/list-pokemon-pages';
 import { ProbaPages } from './pages/proba/proba-pages';
 import { PvpRankPages } from './pages/pvp-rank/pvp-rank';
-import { RessourcesPages } from './pages/ressources-pages/ressources-pages';
+import { InfographicPages } from './pages/ressources-pages/infographic/infographic-pages';
+import { ShopPacksComponent } from './pages/ressources-pages/shop-packs/shop-packs-page';
 import { TypesPages } from './pages/types-pages/types-pages';
 
 export const routes: Routes = [
@@ -34,8 +35,12 @@ export const routes: Routes = [
         component: DynamaxPage,
     },
     {
-        path: 'ressources',
-        component: RessourcesPages,
+        path: 'infographic',
+        component: InfographicPages,
+    },
+    {
+        path: 'shop-packs',
+        component: ShopPacksComponent,
     },
     {
         path: 'pvp-rank',
