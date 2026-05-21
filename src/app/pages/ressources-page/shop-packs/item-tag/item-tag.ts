@@ -7,15 +7,15 @@ interface ItemTypeConfig {
 }
 
 const ITEM_TYPES: Record<string, ItemTypeConfig> = {
-    pass_raid_normal: { label: 'Pass', icon: 'Sprite_Passe_de_combat_premium_GO.png' },
+    pass_raid_normal: { label: 'Pass premium', icon: 'Sprite_Passe_de_combat_premium_GO.png' },
     pass_raid_distance: { label: 'Pass distance', icon: 'Sprite_Passe_de_Raid_à_Distance_GO.png' },
     super_incubateur: { label: 'Super incubateur', icon: 'Sprite_Super-Incubateur_GO.png' },
     incubateur_normal: { label: 'Incubateur', icon: 'Sprite_Incubateur_GO.png' },
-    particule_dynamax: { label: 'Particule Dynamax' },
+    particule_dynamax: { label: 'Particule Dynamax', icon: 'Pack_de_Particules_Max_GO.png' },
     oeuf_chance: { label: 'Oeuf chance', icon: 'Sprite_Œuf_Chance_GO.png' },
     poussiere_etoile: { label: "Morceau d'etoile", icon: "Sprite_Morceau_d'étoile_GO.png" },
-    ticket_elite: { label: 'CT elite' },
-    nanana_argente: { label: 'Nanana argenté' },
+    ct_elite_chargé: { label: 'CT elite chargé', icon: "Sprite_CT_Attaque_Chargée_d'élite_GO.png" },
+    nanana_argente: { label: 'Nanana argenté', icon: 'Sprite_Baie_Nanana_argentée_GO.png' },
 };
 
 @Component({
@@ -28,6 +28,7 @@ const ITEM_TYPES: Record<string, ItemTypeConfig> = {
                 [src]="'assets/items/' + icon()"
                 [alt]="label()"
                 style="height: 1.5em; vertical-align: middle"
+                [title]="label()"
             />
         } @else {
             {{ label() }}

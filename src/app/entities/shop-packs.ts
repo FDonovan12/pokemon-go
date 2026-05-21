@@ -25,7 +25,6 @@ export interface Category {
 }
 
 export interface PackData {
-    itemTypes: Record<string, { label: string; category: string }>;
     categories: Record<string, Category>;
 }
 

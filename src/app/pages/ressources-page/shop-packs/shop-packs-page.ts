@@ -40,10 +40,6 @@ export class ShopPacksComponent implements OnInit {
         return this.priceMode === 'coins' ? 'coins' : '€';
     }
 
-    getItemLabel(type: string): string {
-        return this.data.itemTypes[type]?.label ?? type;
-    }
-
     formatPrice(val: number | null): string {
         if (val === null || !isFinite(val)) return '—';
         return this.priceMode === 'coins' ? val.toFixed(1) : val.toFixed(3);
