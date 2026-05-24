@@ -13,10 +13,13 @@ const ITEM_TYPES: Record<string, ItemTypeConfig> = {
     incubateur_normal: { label: 'Incubateur', icon: 'Sprite_Incubateur_GO.png' },
     particule_dynamax: { label: 'Particule Dynamax', icon: 'Pack_de_Particules_Max_GO.png' },
     oeuf_chance: { label: 'Oeuf chance', icon: 'Sprite_Œuf_Chance_GO.png' },
-    poussiere_etoile: { label: "Morceau d'etoile", icon: "Sprite_Morceau_d'étoile_GO.png" },
+    morceau_d_etoile: { label: "Morceau d'etoile", icon: "Sprite_Morceau_d'étoile_GO.png" },
+    encens: { label: 'Encens', icon: 'Sprite_Encens_GO.png' },
     ct_elite_chargé: { label: 'CT elite chargé', icon: "Sprite_CT_Attaque_Chargée_d'élite_GO.png" },
     nanana_argente: { label: 'Nanana argenté', icon: 'Sprite_Baie_Nanana_argentée_GO.png' },
 };
+
+// { "type": "encens", "quantity": 2 },
 
 @Component({
     selector: '[app-item-tag]',
