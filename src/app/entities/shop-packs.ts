@@ -18,22 +18,27 @@ export interface RawPack {
     priceEuro?: number;
 }
 
-export interface Category {
-    label: string;
-    mainItemTypes: string[];
-    packs: RawPack[];
-}
-
-export interface PackData {
-    categories: Record<string, Category>;
-}
-
 export interface PackRow {
     pack: Pack;
     mainItems: ItemEntry[];
     bonusItems: ItemEntry[];
     unitPrice: number;
 }
+
+export type SubCategory = {
+    key: string;
+    label: string;
+    mainItemTypes: string[];
+    packs: RawPack[];
+};
+export interface PackData {
+    categories: Record<string, Category>;
+}
+export type Category = {
+    label: string;
+    subCatgeory: SubCategory[];
+    defaultSub: string;
+};
 
 // ── Pack class ────────────────────────────────────────────────────────────────
 

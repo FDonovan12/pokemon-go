@@ -121,7 +121,6 @@
       "items": [{ "type": "pass_raid_normal", "quantity": 100 }],
       "priceCoins": 9400
     },
-
     {
       "id": "boite-exploration",
       "name": "Boite exploration",

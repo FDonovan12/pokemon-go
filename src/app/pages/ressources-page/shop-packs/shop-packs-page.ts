@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { Pack, PackData, PackRow, PriceMode } from '@entities/shop-packs';
+import { Component, computed, inject, linkedSignal, Signal, signal, WritableSignal } from '@angular/core';
+import { Category, Pack, PackData, PackRow, PriceMode } from '@entities/shop-packs';
 import { PacksRepository } from '@repositories/packs-repository/packs.repository';
+import { SubCategory } from './../../../entities/shop-packs';
 import { ItemTag } from './item-tag/item-tag';
 
 @Component({
@@ -11,17 +12,44 @@ import { ItemTag } from './item-tag/item-tag';
     templateUrl: './shop-packs-page.html',
     styleUrl: './shop-packs-page.css',
 })
-export class ShopPacksComponent implements OnInit {
+export class ShopPacksComponent {
     private readonly _packsRepository = inject(PacksRepository);
 
     data: PackData = this._packsRepository.getShopPacks();
 
-    categoryKeys: string[] = [];
-    activeCategory: string = '';
+    categoryKeys: string[] = Object.keys(this.data.categories);
 
-    priceMode: PriceMode = 'coins';
+    activeCategoryKey: WritableSignal<string> = signal(this.categoryKeys[0]);
+    activeCategory: Signal<Category> = computed(() => this.data.categories[this.activeCategoryKey()]);
 
-    rows: PackRow[] = [];
+    currentSubsKey: Signal<string[]> = computed(() => this.activeCategory().subCatgeory.map((sub) => sub.key));
+    activeSubsKey: WritableSignal<string> = linkedSignal(() => this.activeCategory().defaultSub);
+    activeSubs: Signal<SubCategory> = computed(
+        () =>
+            this.activeCategory().subCatgeory.find((sub) => sub.key === this.activeSubsKey()) ??
+            this.activeCategory().subCatgeory[0],
+    );
+
+    priceMode: WritableSignal<PriceMode> = signal('coins');
+
+    rows: Signal<PackRow[]> = computed(() => {
+        const category = this.activeSubs();
+        const mainTypes = new Set(category.mainItemTypes);
+
+        const rows: PackRow[] = category.packs
+            .map((raw) => new Pack(raw))
+            .filter((pack) => pack.isVisibleIn(this.priceMode()))
+            .map((pack) => {
+                const mainItems = pack.items.filter((i) => mainTypes.has(i.type));
+                const bonusItems = pack.items.filter((i) => !mainTypes.has(i.type));
+                const totalMainQty = mainItems.sum('quantity');
+                const unitPrice = pack.getUnitPrice(this.priceMode(), totalMainQty) ?? Infinity;
+
+                return { pack, mainItems, bonusItems, unitPrice };
+            })
+            .sortAsc('unitPrice');
+        return rows;
+    });
 
     readonly priceModes: { label: string; value: PriceMode }[] = [
         { label: 'Pièces', value: 'coins' },
@@ -30,48 +58,28 @@ export class ShopPacksComponent implements OnInit {
         { label: '110€', value: '110' },
     ];
 
-    ngOnInit(): void {
-        this.categoryKeys = Object.keys(this.data.categories);
-        this.activeCategory = this.categoryKeys[0];
-        this.buildRows();
-    }
-
     get priceUnit(): string {
-        return this.priceMode === 'coins' ? 'coins' : '€';
+        return this.priceMode() === 'coins' ? 'coins' : '€';
     }
 
     formatPrice(val: number | null): string {
         if (val === null || !isFinite(val)) return '—';
-        return this.priceMode === 'coins' ? val.toFixed(1) : val.toFixed(3);
+        return this.priceMode() === 'coins' ? val.toFixed(1) : val.toFixed(3);
     }
 
     selectCategory(key: string): void {
-        this.activeCategory = key;
-        this.buildRows();
+        this.activeCategoryKey.set(key);
+    }
+
+    selectSubCategory(key: string): void {
+        this.activeSubsKey.set(key);
+    }
+
+    getSubCategoryLabel(key: string): string {
+        return this.activeCategory().subCatgeory.find((sub) => sub.key === key)?.label ?? '';
     }
 
     selectPriceMode(mode: PriceMode): void {
-        this.priceMode = mode;
-        this.buildRows();
-    }
-
-    buildRows(): void {
-        const category = this.data.categories[this.activeCategory];
-        const mainTypes = new Set(category.mainItemTypes);
-
-        const rows: PackRow[] = category.packs
-            .map((raw) => new Pack(raw))
-            .filter((pack) => pack.isVisibleIn(this.priceMode))
-            .map((pack) => {
-                const mainItems = pack.items.filter((i) => mainTypes.has(i.type));
-                const bonusItems = pack.items.filter((i) => !mainTypes.has(i.type));
-                const totalMainQty = mainItems.reduce((sum, i) => sum + i.quantity, 0);
-                const unitPrice = pack.getUnitPrice(this.priceMode, totalMainQty) ?? Infinity;
-
-                return { pack, mainItems, bonusItems, unitPrice };
-            })
-            .sortAsc((row) => row.unitPrice);
-
-        this.rows = rows;
+        this.priceMode.set(mode);
     }
 }
