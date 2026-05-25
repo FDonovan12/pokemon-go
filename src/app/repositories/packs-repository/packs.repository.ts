@@ -6,7 +6,7 @@ const CATEGORIES = [
     {
         label: 'Pass Premium',
         defaultSub: 'premium',
-        subCatgeory: [
+        subCategory: [
             {
                 key: 'premium',
                 label: 'Premium',
@@ -22,7 +22,7 @@ const CATEGORIES = [
     {
         label: 'Incubateur',
         defaultSub: 'incubateur',
-        subCatgeory: [
+        subCategory: [
             {
                 key: 'incubateur',
                 label: 'Incubateur',
@@ -38,7 +38,7 @@ const CATEGORIES = [
     {
         label: 'Particule Dynamax',
         defaultSub: 'particule',
-        subCatgeory: [
+        subCategory: [
             {
                 key: 'particule',
                 label: 'Particule',
@@ -58,7 +58,7 @@ export class PacksRepository {
                 (category) => ({
                     label: category.label,
                     defaultSub: category.defaultSub,
-                    subCatgeory: category.subCatgeory.map((sub) => {
+                    subCategory: category.subCategory.map((sub) => {
                         return {
                             key: sub.key,
                             label: sub.label,

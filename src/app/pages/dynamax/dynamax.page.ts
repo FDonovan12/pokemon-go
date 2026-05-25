@@ -19,7 +19,7 @@ export class DynamaxPage {
 
     typesList = allTypes;
 
-    test = this.dynamaxStore.allDynamaxPokemonResultDamageBase();
+    test = this.dynamaxStore.finalAllDynamaxPokemonResultDamageBase();
 
     maxDamage = this.dynamaxStore.maxDamageFind();
 }

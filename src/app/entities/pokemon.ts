@@ -75,7 +75,7 @@ export const allTypes = [
     'Spectre',
     'Ténèbres',
     'Vol',
-];
+] as const;
 
 export type TypePokemon = (typeof allTypes)[number];
 

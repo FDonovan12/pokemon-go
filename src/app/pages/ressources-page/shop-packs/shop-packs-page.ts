@@ -22,12 +22,12 @@ export class ShopPacksComponent {
     activeCategoryKey: WritableSignal<string> = signal(this.categoryKeys[0]);
     activeCategory: Signal<Category> = computed(() => this.data.categories[this.activeCategoryKey()]);
 
-    currentSubsKey: Signal<string[]> = computed(() => this.activeCategory().subCatgeory.map((sub) => sub.key));
+    currentSubsKey: Signal<string[]> = computed(() => this.activeCategory().subCategory.map((sub) => sub.key));
     activeSubsKey: WritableSignal<string> = linkedSignal(() => this.activeCategory().defaultSub);
     activeSubs: Signal<SubCategory> = computed(
         () =>
-            this.activeCategory().subCatgeory.find((sub) => sub.key === this.activeSubsKey()) ??
-            this.activeCategory().subCatgeory[0],
+            this.activeCategory().subCategory.find((sub) => sub.key === this.activeSubsKey()) ??
+            this.activeCategory().subCategory[0],
     );
 
     priceMode: WritableSignal<PriceMode> = signal('coins');
@@ -44,6 +44,7 @@ export class ShopPacksComponent {
                 const bonusItems = pack.items.filter((i) => !mainTypes.has(i.type));
                 const totalMainQty = mainItems.sum('quantity');
                 const unitPrice = pack.getUnitPrice(this.priceMode(), totalMainQty) ?? Infinity;
+                // const unitPrice = pack.getRawPrice() / pack.getBasePriceValue();
 
                 return { pack, mainItems, bonusItems, unitPrice };
             })
@@ -76,7 +77,7 @@ export class ShopPacksComponent {
     }
 
     getSubCategoryLabel(key: string): string {
-        return this.activeCategory().subCatgeory.find((sub) => sub.key === key)?.label ?? '';
+        return this.activeCategory().subCategory.find((sub) => sub.key === key)?.label ?? '';
     }
 
     selectPriceMode(mode: PriceMode): void {

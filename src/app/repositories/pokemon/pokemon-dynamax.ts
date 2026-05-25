@@ -146,11 +146,18 @@ export class PokemonDynamaxRepository {
             new Dynamax(pokemons.Raichu, 193, ['Fée', 'Électrik']),
             new Dynamax(pokemons.Regice, 179, ['Combat', 'Glace', 'Normal']),
 
-            new Dynamax(pokemons.Libegon, 205, ['Dragon', 'Sol'], false),
-            new Dynamax(pokemons.Regirock, 179, ['Combat', 'Roche', 'Normal'], false),
+            new Dynamax(pokemons.Libegon, 205, ['Dragon', 'Sol']),
+            new Dynamax(pokemons.Regirock, 179, ['Combat', 'Roche', 'Normal']),
 
-            new Gigamax(pokemons.Pikachu, 112, ['Électrik'], false),
-            new Gigamax(pokemons.Miaouss, 92, ['Normal'], false),
+            new Dynamax(pokemons.Registeel, 143, ['Combat', 'Acier', 'Normal']),
+            new Dynamax(pokemons.Arcanin, 227, ['Ténèbres', 'Électrik', 'Feu']),
+            new Dynamax(pokemons.Farfaduvet, 164, ['Fée', 'Plante']),
+            new Dynamax(pokemons.Apireine, 149, ['Poison', 'Vol', 'Insecte']),
+            new Dynamax(pokemons.Rhinolove, 161, ['Psy', 'Vol']),
+
+            new Gigamax(pokemons.Pikachu, 112, ['Électrik'], true),
+            new Gigamax(pokemons.Miaouss, 92, ['Normal'], true),
+
             new Gigamax(pokemons.Evoli, 104, ['Normal'], false),
             new Gigamax(pokemons.Melmetal, 226, ['Acier'], false),
             new Gigamax(pokemons.Corvaillus, 163, ['Vol'], false),

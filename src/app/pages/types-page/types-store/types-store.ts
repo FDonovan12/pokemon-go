@@ -71,8 +71,8 @@ export const TypesStore = signalStore(
             effect(() => {
                 store._localStorageService.set('currentTeamBuilded', Array.from(store.currentTeamBuilded()));
             });
-            const currentTeamBuilded: Set<string> = store._localStorageService
-                .get<string[]>('currentTeamBuilded', [])
+            const currentTeamBuilded: Set<TypePokemon> = store._localStorageService
+                .get<TypePokemon[]>('currentTeamBuilded', [])
                 .toSet();
             patchState(store, {
                 pokemonTypeCount: pokemonTypeCount,
@@ -85,7 +85,7 @@ export const TypesStore = signalStore(
 function makeCoverageStats(
     pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>,
     typeEffectivenessService: TypeEffectivenessService,
-    coverage: Set<TypePokemon> | TypePokemon[] = allTypes,
+    coverage: Set<TypePokemon> | readonly TypePokemon[] = allTypes,
     minEffectiveness = 1.2,
 ) {
     const generalMapCoverge = buildGridCountEffectiveness(
@@ -124,7 +124,7 @@ function buildMapEffectiveness(
 function buildGridCountEffectiveness(
     pokemonTypeCount: Map<TypePokemon, Map<TypePokemon, number>>,
     typeEffectivenessService: TypeEffectivenessService,
-    coverage: Set<TypePokemon> | TypePokemon[],
+    coverage: Set<TypePokemon> | readonly TypePokemon[],
     minEffectiveness: number = 2,
 ): Map<TypePokemon, Map<TypePokemon, number>> {
     const result = initTypeTable();

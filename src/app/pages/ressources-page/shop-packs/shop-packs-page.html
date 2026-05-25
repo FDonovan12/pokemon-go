@@ -1,29 +1,25 @@
 <div class="page">
     <div class="toolbar">
-        <div>
-            <div class="btn-group">
-                @for (key of categoryKeys; track key) {
-                    <button
-                        [class.active]="activeCategoryKey() === key"
-                        (click)="selectCategory(key)"
-                    >
-                        {{ data.categories[key].label }}
-                    </button>
-                }
-            </div>
-
-            <div class="btn-group">
-                @for (key of currentSubsKey(); track key) {
-                    <button
-                        [class.active]="activeSubsKey() === key"
-                        (click)="selectSubCategory(key)"
-                    >
-                        {{ getSubCategoryLabel(key) }}
-                    </button>
-                }
-            </div>
+        <div class="btn-group">
+            @for (key of categoryKeys; track key) {
+                <button
+                    [class.active]="activeCategoryKey() === key"
+                    (click)="selectCategory(key)"
+                >
+                    {{ data.categories[key].label }}
+                </button>
+            }
         </div>
-
+        <div class="btn-group">
+            @for (key of currentSubsKey(); track key) {
+                <button
+                    [class.active]="activeSubsKey() === key"
+                    (click)="selectSubCategory(key)"
+                >
+                    {{ getSubCategoryLabel(key) }}
+                </button>
+            }
+        </div>
         <div class="btn-group">
             @for (m of priceModes; track m.value) {
                 <button

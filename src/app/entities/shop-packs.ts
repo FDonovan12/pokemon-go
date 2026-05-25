@@ -9,14 +9,21 @@ export interface ItemEntry {
     type: string;
     quantity: number;
 }
+type PriceCoins = {
+    priceCoins: number;
+    priceEuro?: never;
+};
 
-export interface RawPack {
+type PriceEuro = {
+    priceEuro: number;
+    priceCoins?: never;
+};
+
+export type RawPack = {
     id: string;
     name: string;
     items: ItemEntry[];
-    priceCoins?: number;
-    priceEuro?: number;
-}
+} & (PriceCoins | PriceEuro);
 
 export interface PackRow {
     pack: Pack;
@@ -36,8 +43,29 @@ export interface PackData {
 }
 export type Category = {
     label: string;
-    subCatgeory: SubCategory[];
+    subCategory: SubCategory[];
     defaultSub: string;
+};
+
+export interface ItemTypeConfig {
+    label: string;
+    icon?: string;
+    basePrice?: number;
+}
+
+export const ITEM_TYPES: Record<string, ItemTypeConfig> = {
+    pass_raid_normal: { label: 'Pass premium', icon: 'Sprite_Passe_de_combat_premium_GO.png', basePrice: 100 },
+    pass_raid_distance: { label: 'Pass distance', icon: 'Sprite_Passe_de_Raid_à_Distance_GO.png', basePrice: 195 },
+    super_incubateur: { label: 'Super incubateur', icon: 'Sprite_Super-Incubateur_GO.png', basePrice: 200 },
+    incubateur_normal: { label: 'Incubateur', icon: 'Sprite_Incubateur_GO.png', basePrice: 150 },
+    particule_dynamax: { label: 'Particule Dynamax', icon: 'Pack_de_Particules_Max_GO.png', basePrice: 150 },
+    stockage_pokemon: { label: 'Stockage Pokemon', icon: 'Sprite_Stockage_de_Pokémon_GO.png', basePrice: 200 },
+    stockage_item: { label: 'Stockage Objet', icon: 'Sprite_Sac_GO.png', basePrice: 200 },
+    oeuf_chance: { label: 'Oeuf chance', icon: 'Sprite_Œuf_Chance_GO.png' },
+    morceau_d_etoile: { label: "Morceau d'etoile", icon: "Sprite_Morceau_d'étoile_GO.png" },
+    encens: { label: 'Encens', icon: 'Sprite_Encens_GO.png' },
+    ct_elite_chargé: { label: 'CT elite chargé', icon: "Sprite_CT_Attaque_Chargée_d'élite_GO.png" },
+    nanana_argente: { label: 'Nanana argenté', icon: 'Sprite_Baie_Nanana_argentée_GO.png' },
 };
 
 // ── Pack class ────────────────────────────────────────────────────────────────
@@ -95,6 +123,10 @@ export class Pack {
 
     getRawPriceUnit(): string {
         return this.isPriceEur() ? '€' : 'coins';
+    }
+
+    getBasePriceValue(): number {
+        return this.items.sum((item) => item.quantity * (ITEM_TYPES[item.type].basePrice ?? 0));
     }
 
     /**

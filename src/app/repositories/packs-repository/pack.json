@@ -14,9 +14,11 @@
       "name": "Super boite stockage",
       "items": [
         { "type": "pass_raid_normal", "quantity": 1 },
-        { "type": "pass_raid_distance", "quantity": 1 }
+        { "type": "pass_raid_distance", "quantity": 1 },
+        { "type": "stockage_pokemon", "quantity": 1 },
+        { "type": "stockage_item", "quantity": 1 }
       ],
-      "priceCoins": 150
+      "priceCoins": 550
     },
     {
       "id": "boite-super-raid-5",
