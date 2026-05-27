@@ -1,7 +1,13 @@
-<input
-    type="text"
-    (input)="dynamaxStore.setSearch($event.target.value)"
-/>
+<label for="">
+    <!-- prettier-ignore -->
+    <span>Recherche : </span>
+    <input
+        id="searchInput"
+        #searchInput
+        type="text"
+        [(ngModel)]="search"
+    />
+</label>
 <button (click)="dynamaxStore.setSearch('')">Reset</button>
 @for (type of typesList; track $index) {
     <div
