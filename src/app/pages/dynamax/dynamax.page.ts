@@ -25,10 +25,4 @@ export class DynamaxPage {
     maxDamage = this.dynamaxStore.maxDamageFind();
 
     search = this.dynamaxStore.search;
-
-    // constructor() {
-    //     effect(() => {
-    //         this.dynamaxStore.setSearch(this.search() ?? '');
-    //     });
-    // }
 }
