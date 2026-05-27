@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PackData } from '@entities/shop-packs';
+import { ITEM_TYPES, PackData, RawPack } from '@entities/shop-packs';
 import rawData from './pack.json';
 
 const CATEGORIES = [
@@ -52,7 +52,8 @@ const CATEGORIES = [
 })
 export class PacksRepository {
     getShopPacks(): PackData {
-        return {
+        const typedPacks = rawData.packs as RawPack[];
+        const result = {
             categories: CATEGORIES.toObject(
                 (category) => category.label.slugify(),
                 (category) => ({
@@ -63,7 +64,7 @@ export class PacksRepository {
                             key: sub.key,
                             label: sub.label,
                             mainItemTypes: sub.mainItemTypes,
-                            packs: rawData.packs.filter((pack) =>
+                            packs: typedPacks.filter((pack) =>
                                 pack.items.some((item) => item.type.slugifyIn(sub.mainItemTypes)),
                             ),
                         };
@@ -71,5 +72,18 @@ export class PacksRepository {
                 }),
             ),
         };
+        const itemUseKey = CATEGORIES.flatMap((cate) => cate.subCategory.flatMap((sub) => sub.mainItemTypes)).unique();
+        const itemsNotUse = Object.keys(ITEM_TYPES).filter((item) => !itemUseKey.includes(item));
+        result.categories['autre'] = {
+            label: 'Autre',
+            defaultSub: '',
+            subCategory: itemsNotUse.map((item) => ({
+                key: item,
+                label: item.titleCase(),
+                mainItemTypes: [item],
+                packs: typedPacks.filter((pack) => pack.items.map((i) => i.type).includes(item)),
+            })),
+        };
+        return result;
     }
 }

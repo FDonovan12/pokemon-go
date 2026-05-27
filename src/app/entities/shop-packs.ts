@@ -5,10 +5,28 @@ const _coinRates = {
     '110': 15500,
 };
 
-export interface ItemEntry {
-    type: string;
-    quantity: number;
+export interface PackData {
+    categories: Record<string, Category>;
 }
+export type Category = {
+    label: string;
+    subCategory: SubCategory[];
+    defaultSub: string;
+};
+
+export type SubCategory = {
+    key: string;
+    label: string;
+    mainItemTypes: string[];
+    packs: RawPack[];
+};
+
+export type RawPack = {
+    id: string;
+    name: string;
+    items: ItemEntry[];
+} & (PriceCoins | PriceEuro);
+
 type PriceCoins = {
     priceCoins: number;
     priceEuro?: never;
@@ -19,11 +37,10 @@ type PriceEuro = {
     priceCoins?: never;
 };
 
-export type RawPack = {
-    id: string;
-    name: string;
-    items: ItemEntry[];
-} & (PriceCoins | PriceEuro);
+export interface ItemEntry {
+    type: keyof typeof ITEM_TYPES;
+    quantity: number;
+}
 
 export interface PackRow {
     pack: Pack;
@@ -31,21 +48,6 @@ export interface PackRow {
     bonusItems: ItemEntry[];
     unitPrice: number;
 }
-
-export type SubCategory = {
-    key: string;
-    label: string;
-    mainItemTypes: string[];
-    packs: RawPack[];
-};
-export interface PackData {
-    categories: Record<string, Category>;
-}
-export type Category = {
-    label: string;
-    subCategory: SubCategory[];
-    defaultSub: string;
-};
 
 export interface ItemTypeConfig {
     label: string;
@@ -65,7 +67,19 @@ export const ITEM_TYPES: Record<string, ItemTypeConfig> = {
     morceau_d_etoile: { label: "Morceau d'etoile", icon: "Sprite_Morceau_d'étoile_GO.png" },
     encens: { label: 'Encens', icon: 'Sprite_Encens_GO.png' },
     ct_elite_chargé: { label: 'CT elite chargé', icon: "Sprite_CT_Attaque_Chargée_d'élite_GO.png" },
+    ct_chargé: { label: 'CT chargé', icon: 'Sprite_CT_Attaque_Chargée_GO.png' },
+    ct_elite_immediate: { label: 'CT elite immédiate', icon: "Sprite_CT_Attaque_Immédiate_d'élite_GO.png" },
+    ct_immediate: { label: 'CT immédiate', icon: 'Sprite_CT_Attaque_Immédiate_GO.png' },
     nanana_argente: { label: 'Nanana argenté', icon: 'Sprite_Baie_Nanana_argentée_GO.png' },
+    module_leurre: { label: 'Leurre', icon: 'Sprite_Module_Leurre_GO.png' },
+    module_leurre_glacial: { label: 'Leurre Glacial', icon: 'Sprite_Leurre_Glacial_GO.png' },
+    module_leurre_magnetique: { label: 'Leurre Magnétique', icon: 'Sprite_Leurre_Magnétique_GO.png' },
+    module_leurre_moussu: { label: 'Leurre Moussu', icon: 'Sprite_Leurre_Moussu_GO.png' },
+    module_leurre_pluvieux: { label: 'Leurre Pluvieux', icon: 'Sprite_Module_Leurre_Pluvieux_GO.png' },
+    poffin: { label: 'Poffin', icon: 'Sprite_Poffin_GO.png' },
+    radar_rocket: { label: 'Radar', icon: 'Sprite_Radar_Rocket_GO.png' },
+    super_bonbon: { label: 'Super Bonbon', icon: 'Sprite_Super_Bonbon_GO.png' },
+    framby_doree: { label: 'Framby dorée', icon: 'Sprite_Baie_Framby_dorée_GO.png' },
 };
 
 // ── Pack class ────────────────────────────────────────────────────────────────

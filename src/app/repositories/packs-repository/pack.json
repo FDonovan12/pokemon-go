@@ -36,23 +36,22 @@
       "priceCoins": 3195
     },
     {
-      "id": "boite-exploration-eclosion",
-      "name": "Boite exploration / eclosion",
-      "items": [
-        { "type": "pass_raid_normal", "quantity": 40 },
-        { "type": "super_incubateur", "quantity": 5 },
-        { "type": "morceau_d_etoile", "quantity": 5 }
-      ],
-      "priceCoins": 2825
-    },
-    {
-      "id": "bundle-ultra-raid",
-      "name": "Bundle ultra raid",
+      "id": "bundle-raid_x60",
+      "name": "Bundle raid (x60)",
       "items": [
         { "type": "pass_raid_normal", "quantity": 60 },
         { "type": "nanana_argente", "quantity": 100 }
       ],
       "priceCoins": 5000
+    },
+    {
+      "id": "bundle-raid_x60",
+      "name": "Bundle raid (x60)",
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 60 },
+        { "type": "nanana_argente", "quantity": 100 }
+      ],
+      "priceEuro": 44
     },
     {
       "id": "ticket-journee-raid",
@@ -87,8 +86,32 @@
     {
       "id": "boite-raid-super-15",
       "name": "Boite raid super (x15)",
-      "items": [{ "type": "pass_raid_normal", "quantity": 15 }],
-      "priceCoins": 1000
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 15 },
+        { "type": "nanana_argente", "quantity": 3 },
+        { "type": "module_leurre", "quantity": 1 }
+      ],
+      "priceCoins": 999
+    },
+    {
+      "id": "boite-raid-super-15",
+      "name": "Boite raid super (x15)",
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 15 },
+        { "type": "nanana_argente", "quantity": 3 },
+        { "type": "module_leurre", "quantity": 1 }
+      ],
+      "priceEuro": 10
+    },
+    {
+      "id": "kit_recuperation_raid_x15",
+      "name": "Kit récupération pour Raid (x15)",
+      "items": [
+        { "type": "framby_doree", "quantity": 50 },
+        { "type": "poffin", "quantity": 5 },
+        { "type": "morceau_d_etoile", "quantity": 5 }
+      ],
+      "priceEuro": 5.5
     },
     {
       "id": "pack-depart-module-40",
@@ -255,8 +278,18 @@
     },
 
     {
-      "id": "journee-dynamax",
-      "name": "Boite Raid Ultra",
+      "id": "boite-raid-ultra-x40",
+      "name": "Boite Raid Ultra (x40)",
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 40 },
+        { "type": "incubateur_normal", "quantity": 5 },
+        { "type": "morceau_d_etoile", "quantity": 5 }
+      ],
+      "priceCoins": 2825
+    },
+    {
+      "id": "boite-raid-ultra-x15",
+      "name": "Boite Raid Ultra (x15)",
       "items": [
         { "type": "encens", "quantity": 2 },
         { "type": "pass_raid_normal", "quantity": 15 },
@@ -264,6 +297,45 @@
         { "type": "morceau_d_etoile", "quantity": 2 }
       ],
       "priceCoins": 1025
+    },
+    {
+      "id": "boite-raid-ultra-x15",
+      "name": "Boite Raid Ultra (x15)",
+      "items": [
+        { "type": "encens", "quantity": 2 },
+        { "type": "pass_raid_normal", "quantity": 15 },
+        { "type": "oeuf_chance", "quantity": 2 },
+        { "type": "morceau_d_etoile", "quantity": 2 }
+      ],
+      "priceEuro": 10
+    },
+    {
+      "id": "lot_star_eclosion_x20",
+      "name": "Lot star de l'eclosion (x20)",
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 20 },
+        { "type": "incubateur_normal", "quantity": 30 }
+      ],
+      "priceEuro": 28
+    },
+    {
+      "id": "boite_exploration_x20",
+      "name": "Boite eclosion (x20)",
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 20 },
+        { "type": "incubateur_normal", "quantity": 30 }
+      ],
+      "priceCoins": 3100
+    },
+    {
+      "id": "boite_voyage",
+      "name": "Boite voyage",
+      "items": [
+        { "type": "encens", "quantity": 10 },
+        { "type": "oeuf_chance", "quantity": 50 },
+        { "type": "morceau_d_etoile", "quantity": 50 }
+      ],
+      "priceCoins": 3750
     },
     {
       "id": "boite_eclosion",
@@ -283,6 +355,78 @@
         { "type": "incubateur_normal", "quantity": 1 }
       ],
       "priceCoins": 675
+    },
+    {
+      "id": "boite_go_rocket",
+      "name": "boite GO Rocket",
+      "items": [
+        { "type": "ct_chargé", "quantity": 1 },
+        { "type": "radar_rocket", "quantity": 7 },
+        { "type": "morceau_d_etoile", "quantity": 2 }
+      ],
+      "priceCoins": 1150
+    },
+    {
+      "id": "boite_go_rocket",
+      "name": "boite de départ",
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 3 },
+        { "type": "super_incubateur", "quantity": 3 },
+        { "type": "oeuf_chance", "quantity": 3 }
+      ],
+      "priceEuro": 3.29
+    },
+    {
+      "id": "pass_a_distance",
+      "name": "Passe a Distance",
+      "items": [{ "type": "pass_raid_distance", "quantity": 1 }],
+      "priceCoins": 195
+    },
+    {
+      "id": "pass_a_distance_x3",
+      "name": "Passe a Distance (x3)",
+      "items": [{ "type": "pass_raid_distance", "quantity": 3 }],
+      "priceCoins": 525
+    },
+    {
+      "id": "pass_premium",
+      "name": "Passe premium",
+      "items": [{ "type": "pass_raid_normal", "quantity": 1 }],
+      "priceCoins": 100
+    },
+    {
+      "id": "pass_premium_x3",
+      "name": "Passe premium (x3)",
+      "items": [{ "type": "pass_raid_normal", "quantity": 3 }],
+      "priceCoins": 250
+    },
+    {
+      "id": "incubateur",
+      "name": "incubateur",
+      "items": [{ "type": "incubateur_normal", "quantity": 1 }],
+      "priceCoins": 150
+    },
+    {
+      "id": "super_incubateur",
+      "name": "super incubateur",
+      "items": [{ "type": "super_incubateur", "quantity": 1 }],
+      "priceCoins": 200
+    },
+    {
+      "id": "radar_rocket",
+      "name": "Radar Rocket",
+      "items": [{ "type": "radar_rocket", "quantity": 1 }],
+      "priceCoins": 200
+    },
+    {
+      "id": "pack_soins",
+      "name": "Pack soins",
+      "items": [
+        { "type": "oeuf_chance", "quantity": 10 },
+        { "type": "poffin", "quantity": 10 },
+        { "type": "morceau_d_etoile", "quantity": 10 }
+      ],
+      "priceCoins": 200
     }
   ]
 }
