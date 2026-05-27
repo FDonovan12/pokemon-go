@@ -77,12 +77,14 @@ export class PacksRepository {
         result.categories['autre'] = {
             label: 'Autre',
             defaultSub: '',
-            subCategory: itemsNotUse.map((item) => ({
-                key: item,
-                label: item.titleCase(),
-                mainItemTypes: [item],
-                packs: typedPacks.filter((pack) => pack.items.map((i) => i.type).includes(item)),
-            })),
+            subCategory: itemsNotUse
+                .filter((item) => typedPacks.filter((pack) => pack.items.map((i) => i.type).includes(item)).length > 0)
+                .map((item) => ({
+                    key: item,
+                    label: ITEM_TYPES[item].label,
+                    mainItemTypes: [item],
+                    packs: typedPacks.filter((pack) => pack.items.map((i) => i.type).includes(item)),
+                })),
         };
         return result;
     }
