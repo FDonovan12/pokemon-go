@@ -3,6 +3,7 @@ import { PokemonFamily, PokemonInterface, PokemonSlug } from '@entities/pokemon'
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { ToastService } from 'app/shared/features/toast/toast.service';
 
 const LOCAL_STORAGE_KEEP = 'pokemon-want-keep';
 const LOCAL_STORAGE_KEEP_KEYS = 'pokemon-want-keep-keys';
@@ -20,6 +21,7 @@ export const ListPokemonPageStore = signalStore(
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
         _listPokemonRepository: inject(ListPokemonRepository),
+        _toastService: inject(ToastService),
     })),
     withState(initialState),
     withComputed((store) => ({
@@ -123,19 +125,24 @@ export const ListPokemonPageStore = signalStore(
     withMethods((store) => ({
         deleteSelectedList: () => {
             if (store.listName().length === 1) {
-                window.alert('Vous ne pouvez pas supprimer la dérnière liste');
+                window.alert('Vous ne pouvez pas supprimer la dernière liste');
                 return;
             }
-            if (
-                window.confirm(
-                    `Etes vous sur de supprimer la liste ${store.selectedListName()} avec les ${store.selectedPokemonWantKeep().size} Pokemon`,
-                )
-            ) {
-                const oldList = store.listName();
-                const newList = oldList.filter((name) => name !== store.selectedListName());
-                const selectedListName = newList.first();
-                patchState(store, { listName: newList, selectedListName });
-            }
+            const message = `Êtes-vous sûr de supprimer la liste "${store.selectedListName()}" avec ${store.selectedPokemonWantKeep().size} Pokémon ?`;
+            store._toastService.prepare('Confirmation', message).showConfirmation(
+                () => {
+                    // Confirmation
+                    const listNameToDelete = store.selectedListName();
+                    const oldList = store.listName();
+                    const newList = oldList.filter((name) => name !== store.selectedListName());
+                    const selectedListName = newList.first();
+                    patchState(store, { listName: newList, selectedListName });
+                    store._toastService.prepare('✓ Supprimée', `Liste "${listNameToDelete}" supprimée`).showSuccess();
+                },
+                () => {
+                    // Annulation, ne rien faire
+                },
+            );
         },
     })),
     withHooks((store) => ({

@@ -53,7 +53,7 @@ const CATEGORIES = [
 export class PacksRepository {
     getShopPacks(): PackData {
         const typedPacks = rawData.packs as RawPack[];
-        const result = {
+        const result: PackData = {
             categories: CATEGORIES.toObject(
                 (category) => category.label.slugify(),
                 (category) => ({
@@ -76,7 +76,6 @@ export class PacksRepository {
         const itemsNotUse = Object.keys(ITEM_TYPES).filter((item) => !itemUseKey.includes(item));
         result.categories['autre'] = {
             label: 'Autre',
-            defaultSub: '',
             subCategory: itemsNotUse
                 .filter((item) => typedPacks.filter((pack) => pack.items.map((i) => i.type).includes(item)).length > 0)
                 .map((item) => ({

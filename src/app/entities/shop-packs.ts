@@ -11,7 +11,7 @@ export interface PackData {
 export type Category = {
     label: string;
     subCategory: SubCategory[];
-    defaultSub: string;
+    defaultSub?: string;
 };
 
 export type SubCategory = {
@@ -80,6 +80,7 @@ export const ITEM_TYPES: Record<string, ItemTypeConfig> = {
     radar_rocket: { label: 'Radar', icon: 'Sprite_Radar_Rocket_GO.png' },
     super_bonbon: { label: 'Super Bonbon', icon: 'Sprite_Super_Bonbon_GO.png' },
     framby_doree: { label: 'Framby dorée', icon: 'Sprite_Baie_Framby_dorée_GO.png' },
+    piece: { label: 'Piece', icon: 'Miniature_PokéPièce_GO.png' },
 };
 
 // ── Pack class ────────────────────────────────────────────────────────────────

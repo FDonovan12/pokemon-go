@@ -23,7 +23,9 @@ export class ShopPacksComponent {
     activeCategory: Signal<Category> = computed(() => this.data.categories[this.activeCategoryKey()]);
 
     currentSubsKey: Signal<string[]> = computed(() => this.activeCategory().subCategory.map((sub) => sub.key));
-    activeSubsKey: WritableSignal<string> = linkedSignal(() => this.activeCategory().defaultSub);
+    activeSubsKey: WritableSignal<string> = linkedSignal(
+        () => this.activeCategory().defaultSub ?? this.activeCategory().subCategory[0].key,
+    );
     activeSubs: Signal<SubCategory> = computed(
         () =>
             this.activeCategory().subCategory.find((sub) => sub.key === this.activeSubsKey()) ??

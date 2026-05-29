@@ -6,10 +6,11 @@ import { RouterLink } from '@angular/router';
 import { PokemonInterface } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
-import { FilterService } from '@services/filter-service/filter-service';
 import { EventPokemon } from '../../entities/event';
 import { EventRepository } from '../../repositories/event/event.repository';
 import { ListPokemonPageStore } from '../list-pokemon-page/list-store/list-pokemon-page.store';
+import { FiltersRepository, FilterItem } from '@repositories/filters-repository/filters.repository';
+import { ToastService } from 'app/shared/features/toast/toast.service';
 
 @Component({
     selector: 'app-home',
@@ -22,9 +23,10 @@ export class HomeComponent {
     private readonly httpClient = inject(HttpClient);
     private readonly getAllService = inject(PokemonRepository);
     private readonly bddEvent = inject(EventRepository);
-    private readonly filterService = inject(FilterService);
+    private readonly filtersRepository = inject(FiltersRepository);
     protected readonly keepStore = inject(ListPokemonPageStore);
     protected readonly clipboardService = inject(ClipboardService);
+    private readonly toastService = inject(ToastService);
 
     today = new Date();
 
@@ -65,36 +67,51 @@ export class HomeComponent {
             .sort((a, b) => (a.startAt <= b.startAt ? -1 : 1)),
     );
 
-    private readonly onlySavagePokemons = ' & !raid & !éclos & !étude & !dynamax & !gigamax & ';
+    filters = this.filtersRepository.getFilters();
 
-    baseFilters = [
-        { label: 'IV PVP 1 ', query: this.filterService.buildFilter({ and: ['2-pv', '2-défense', '-1attaque'] }) },
-        { label: 'IV PVP 2 ', query: this.filterService.buildFilter({ and: ['3-pv', '3-défense', '-2attaque'] }) },
-        {
-            label: 'Filtre level 1',
-            query:
-                this.onlySavagePokemons +
-                ' & 2-attaque, -1défense & 2-attaque, -1pv & -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
-        },
-        {
-            label: 'Filtre level 2',
-            query: this.onlySavagePokemons + ' & 2-attaque, -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
-        },
-        {
-            label: 'Filtre level 3',
-            query: this.onlySavagePokemons + ' & 2-attaque, -2défense, -2pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
-        },
-        { label: 'Filtre level 4', query: this.onlySavagePokemons + ' & 0*, 1*, 2* & !# & âge0 & pc-100 & ' },
-        {
-            label: 'Starter',
-            query: this.filterService.buildAllPokemonFamily(this.getAllService.starterPokemon),
-        },
-    ];
-
-    filters = [...this.baseFilters];
+    // Popup state
+    showAddFilterPopup = signal(false);
+    newFilterLabel = signal('');
+    newFilterQuery = signal('');
 
     ngOnInit(): void {
         // this.getData();
+    }
+
+    openAddFilterPopup(): void {
+        this.newFilterLabel.set('');
+        this.newFilterQuery.set('');
+        this.showAddFilterPopup.set(true);
+    }
+
+    closeAddFilterPopup(): void {
+        this.showAddFilterPopup.set(false);
+    }
+
+    addNewFilter(): void {
+        const label = this.newFilterLabel().trim();
+        const query = this.newFilterQuery().trim();
+
+        if (label && query) {
+            this.filtersRepository.addFilter({ label, query } as FilterItem);
+            this.toastService.prepare('✓ Succès', `Filtre "${label}" ajouté`).showSuccess();
+            this.closeAddFilterPopup();
+        }
+    }
+
+    removeFilter(index: number): void {
+        const filter = this.filters()[index];
+        this.toastService
+            .prepare('Confirmation', `Êtes-vous sûr de vouloir supprimer le filtre "${filter.label}" ?`)
+            .showConfirmation(
+                () => {
+                    this.filtersRepository.removeFilter(index);
+                    this.toastService.prepare('✓ Supprimé', 'Filtre supprimé avec succès').showSuccess();
+                },
+                () => {
+                    // Annulation, ne rien faire
+                }
+            );
     }
 
     public getData() {

@@ -426,7 +426,22 @@
         { "type": "poffin", "quantity": 10 },
         { "type": "morceau_d_etoile", "quantity": 10 }
       ],
-      "priceCoins": 200
+      "priceCoins": 20000
+    },
+
+    {
+      "id": "pass_go_piece",
+      "name": "Pass GO Pieces",
+      "items": [
+        { "type": "framby_doree", "quantity": 3 },
+        { "type": "nanana_argente", "quantity": 6 },
+        { "type": "poffin", "quantity": 1 },
+        { "type": "super_incubateur", "quantity": 1 },
+        { "type": "pass_raid_normal", "quantity": 1 },
+        { "type": "particule_dynamax", "quantity": 2.5 },
+        { "type": "piece", "quantity": 1000 }
+      ],
+      "priceEuro": 11
     }
   ]
 }
