@@ -46,12 +46,13 @@ export class FiltersFacade {
                 // if (listsQuery) {
                 //     parts.push(listsQuery);
                 // }
-                console.log(query.lists);
+                console.log('query', query.lists);
                 const test = query.lists.items.map((item) =>
                     this._filterService.buildAllPokemon(this._listPokemonRepository.getPokemonsForList(item)),
                 );
-                console.log(test);
+                console.log('test', test);
                 const result = test.join(query.lists.operator === 'AND' ? ' & ' : ', ');
+                console.log('result', result);
                 parts.push(result);
             }
 

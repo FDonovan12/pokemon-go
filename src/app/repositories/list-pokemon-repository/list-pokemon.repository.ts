@@ -20,6 +20,7 @@ export class ListPokemonRepository {
 
     getSlugsForList(keyStorage: string): PokemonSlug[] {
         const storageSlugs: PokemonSlug[] = this._localStorageService.get(keyStorage, []);
+        console.log('storageSlugs', storageSlugs);
         return storageSlugs;
     }
 
