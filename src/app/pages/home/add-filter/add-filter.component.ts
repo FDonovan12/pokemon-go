@@ -48,11 +48,7 @@ export class AddFilterComponent {
             return;
         }
 
-        const lists = this.selectedLists();
-        if (lists.length === 0) {
-            this.toastService.prepare('❌ Erreur', 'Sélectionnez au moins une liste').showError();
-            return;
-        }
+        const lists = this.selectedLists().map((list) => list.slugify());
 
         const filterQuery: FilterItem['query'] = {
             prefix: query,
