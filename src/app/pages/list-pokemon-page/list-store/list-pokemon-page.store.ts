@@ -133,6 +133,7 @@ export const ListPokemonPageStore = signalStore(
                 () => {
                     // Confirmation
                     const listNameToDelete = store.selectedListName();
+                    store._listPokemonRepository.deleteList(listNameToDelete);
                     const oldList = store.listName();
                     const newList = oldList.filter((name) => name !== store.selectedListName());
                     const selectedListName = newList.first();

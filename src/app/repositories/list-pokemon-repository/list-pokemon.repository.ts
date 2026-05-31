@@ -3,6 +3,8 @@ import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 
+export type ListKey = string;
+
 const LOCAL_STORAGE_KEEP = 'pokemon-want-keep';
 const LOCAL_STORAGE_KEEP_KEYS = 'pokemon-want-keep-keys';
 @Injectable({
@@ -12,7 +14,7 @@ export class ListPokemonRepository {
     private readonly _localStorageService: LocalStorageService = inject(LocalStorageService);
     private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
 
-    getListKeys(): string[] {
+    getListKeys(): ListKey[] {
         return this._localStorageService.get(LOCAL_STORAGE_KEEP_KEYS, [LOCAL_STORAGE_KEEP]);
     }
 
@@ -34,5 +36,14 @@ export class ListPokemonRepository {
         this._localStorageService.set(LOCAL_STORAGE_KEEP_KEYS, keys);
     }
 
-    deleteList(): void {}
+    deleteList(key: ListKey): void {
+        // Récupérer les clés actuelles
+        const keys = this.getListKeys();
+        // Filtrer pour enlever la clé à supprimer
+        const updatedKeys = keys.filter((k) => k !== key);
+        // Sauvegarder les nouvelles clés
+        this.saveListKeys(updatedKeys);
+        // Supprimer les slugs du localStorage
+        this._localStorageService.remove(key);
+    }
 }

@@ -4,18 +4,19 @@ import { Component, computed, inject, signal, Signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { PokemonInterface } from '@entities/pokemon';
+import { FiltersFacade } from '@repositories/filters-repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
+import { ToastService } from 'app/shared/features/toast/toast.service';
 import { EventPokemon } from '../../entities/event';
 import { EventRepository } from '../../repositories/event/event.repository';
 import { ListPokemonPageStore } from '../list-pokemon-page/list-store/list-pokemon-page.store';
-import { FiltersRepository, FilterItem } from '@repositories/filters-repository/filters.repository';
-import { ToastService } from 'app/shared/features/toast/toast.service';
+import { AddFilterComponent } from './add-filter/add-filter.component';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [RouterLink, DatePipe, FormsModule],
+    imports: [RouterLink, DatePipe, AddFilterComponent, FormsModule],
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
 })
@@ -23,7 +24,7 @@ export class HomeComponent {
     private readonly httpClient = inject(HttpClient);
     private readonly getAllService = inject(PokemonRepository);
     private readonly bddEvent = inject(EventRepository);
-    private readonly filtersRepository = inject(FiltersRepository);
+    private readonly filtersFacade = inject(FiltersFacade);
     protected readonly keepStore = inject(ListPokemonPageStore);
     protected readonly clipboardService = inject(ClipboardService);
     private readonly toastService = inject(ToastService);
@@ -67,36 +68,10 @@ export class HomeComponent {
             .sort((a, b) => (a.startAt <= b.startAt ? -1 : 1)),
     );
 
-    filters = this.filtersRepository.getFilters();
-
-    // Popup state
-    showAddFilterPopup = signal(false);
-    newFilterLabel = signal('');
-    newFilterQuery = signal('');
+    filters = this.filtersFacade.getFiltersResolved();
 
     ngOnInit(): void {
         // this.getData();
-    }
-
-    openAddFilterPopup(): void {
-        this.newFilterLabel.set('');
-        this.newFilterQuery.set('');
-        this.showAddFilterPopup.set(true);
-    }
-
-    closeAddFilterPopup(): void {
-        this.showAddFilterPopup.set(false);
-    }
-
-    addNewFilter(): void {
-        const label = this.newFilterLabel().trim();
-        const query = this.newFilterQuery().trim();
-
-        if (label && query) {
-            this.filtersRepository.addFilter({ label, query } as FilterItem);
-            this.toastService.prepare('✓ Succès', `Filtre "${label}" ajouté`).showSuccess();
-            this.closeAddFilterPopup();
-        }
     }
 
     removeFilter(index: number): void {
@@ -105,12 +80,12 @@ export class HomeComponent {
             .prepare('Confirmation', `Êtes-vous sûr de vouloir supprimer le filtre "${filter.label}" ?`)
             .showConfirmation(
                 () => {
-                    this.filtersRepository.removeFilter(index);
+                    this.filtersFacade.removeFilter(index);
                     this.toastService.prepare('✓ Supprimé', 'Filtre supprimé avec succès').showSuccess();
                 },
                 () => {
                     // Annulation, ne rien faire
-                }
+                },
             );
     }
 

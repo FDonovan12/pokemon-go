@@ -2,11 +2,7 @@ import { inject, Injectable, signal, Signal } from '@angular/core';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
-
-export interface FilterItem {
-    label: string;
-    query: string;
-}
+import { FilterItem } from './filter.model';
 
 const FILTERS_STORAGE_KEY = 'user_filters';
 
@@ -20,7 +16,7 @@ export class FiltersRepository {
 
     private readonly onlySavagePokemons = ' & !raid & !éclos & !étude & !dynamax & !gigamax & ';
 
-    private readonly baseFilters: FilterItem[] = [
+    private readonly defaultFilters: FilterItem[] = [
         {
             label: 'IV PVP 1 ',
             query: this.filterService.buildFilter({ and: ['2-pv', '2-défense', '-1attaque'] }),
@@ -55,13 +51,12 @@ export class FiltersRepository {
 
     private userFiltersSignal = signal<FilterItem[]>([]);
 
-    filters: Signal<FilterItem[]> = this.userFiltersSignal.asReadonly();
-
     constructor() {
         this.loadFilters();
     }
+
     getFilters(): Signal<FilterItem[]> {
-        return this.filters;
+        return this.userFiltersSignal.asReadonly();
     }
 
     addFilter(filter: FilterItem): void {
@@ -85,7 +80,7 @@ export class FiltersRepository {
     }
 
     private loadFilters(): void {
-        const savedFilters = this.localStorageService.get<FilterItem[]>(FILTERS_STORAGE_KEY, this.baseFilters);
+        const savedFilters = this.localStorageService.get<FilterItem[]>(FILTERS_STORAGE_KEY, this.defaultFilters);
         this.userFiltersSignal.set(savedFilters);
     }
 

@@ -1,0 +1,82 @@
+import { Injectable, Signal, computed, inject } from '@angular/core';
+import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
+import { FilterService } from '@services/filter-service/filter-service';
+import { FilterItem, FilterItemResolved, FilterQuery, ListCondition } from './filter.model';
+import { FiltersRepository } from './filters.repository';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class FiltersFacade {
+    private readonly _filterService = inject(FilterService);
+    private readonly _filtersRepository = inject(FiltersRepository);
+    private readonly _listPokemonRepository = inject(ListPokemonRepository);
+
+    getFiltersResolved(): Signal<FilterItemResolved[]> {
+        return computed(() => {
+            const filters = this._filtersRepository.getFilters();
+
+            return this.resolveFilters(filters());
+        });
+    }
+
+    resolveFilters(filters: FilterItem[]): FilterItemResolved[] {
+        return filters.map((filter) => ({
+            label: filter.label,
+            query: this.resolveQuery(filter.query),
+        }));
+    }
+
+    /**
+     * Convertit une requête (string ou structure) en string
+     * Pour l'instant, on ignore la partie lists/pokemons
+     */
+    private resolveQuery(query: FilterQuery | string): string {
+        if (typeof query === 'string') {
+            return query;
+        }
+
+        // Si c'est un objet avec {prefix, lists}
+        if (query.prefix) {
+            const parts: string[] = [query.prefix];
+
+            // TODO: Plus tard, résoudre la partie lists avec FilterService
+            if (query.lists) {
+                // const listsQuery = this.resolveListCondition(query.lists);
+                // if (listsQuery) {
+                //     parts.push(listsQuery);
+                // }
+                const test = query.lists.items.map((item) =>
+                    this._filterService.buildAllPokemon(this._listPokemonRepository.getPokemonsForList(item)),
+                );
+                const result = test.join(query.lists.operator === 'AND' ? ' & ' : ', ');
+                parts.push(result);
+            }
+
+            return parts.join(' ');
+        }
+
+        return '';
+    }
+
+    /**
+     * Convertit une structure ListCondition récursive en string
+     * (À implémente plus tard)
+     */
+    private resolveListCondition(condition: ListCondition): string {
+        // TODO: Implémenter la résolution récursive
+        return '';
+    }
+
+    addFilter(filter: FilterItem): void {
+        this._filtersRepository.addFilter(filter);
+    }
+
+    removeFilter(index: number): void {
+        this._filtersRepository.removeFilter(index);
+    }
+
+    removeFilterByLabel(label: string): void {
+        this._filtersRepository.removeFilterByLabel(label);
+    }
+}
