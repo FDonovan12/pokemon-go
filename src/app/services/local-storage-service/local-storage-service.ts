@@ -19,7 +19,7 @@ export class LocalStorageService {
 
     get<T>(key: string, defaultValue: T): T {
         const item = this.storage.getItem(key);
-        console.log('key : ', key, 'item : ', item);
+        console.log('key : |' + key + '| item : ', item);
         if (!item) {
             this._toastService.prepare('not found', 'Le contenu pour la cle ' + key + " n'a pas ete trouvé");
             return defaultValue;
