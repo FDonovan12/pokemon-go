@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { ToastService } from 'app/shared/features/toast/toast.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class LocalStorageService {
+    private readonly _toastService: ToastService = inject(ToastService);
     private storage = localStorage;
 
     set<T>(key: string, value: T): void {
@@ -17,7 +19,10 @@ export class LocalStorageService {
 
     get<T>(key: string, defaultValue: T): T {
         const item = this.storage.getItem(key);
-        if (!item) return defaultValue;
+        if (!item) {
+            this._toastService.prepare('not found', 'Le contenu pour la cle ' + key + " n'a pas ete trouvé");
+            return defaultValue;
+        }
         try {
             return JSON.parse(item);
         } catch (e) {

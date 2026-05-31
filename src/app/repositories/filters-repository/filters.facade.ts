@@ -46,9 +46,11 @@ export class FiltersFacade {
                 // if (listsQuery) {
                 //     parts.push(listsQuery);
                 // }
+                console.log(query.lists);
                 const test = query.lists.items.map((item) =>
                     this._filterService.buildAllPokemon(this._listPokemonRepository.getPokemonsForList(item)),
                 );
+                console.log(test);
                 const result = test.join(query.lists.operator === 'AND' ? ' & ' : ', ');
                 parts.push(result);
             }
