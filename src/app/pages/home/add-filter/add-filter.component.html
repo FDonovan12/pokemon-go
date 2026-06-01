@@ -53,31 +53,51 @@
             <div style="margin-bottom: 15px; padding: 10px; background-color: #f5f5f5; border-radius: 4px">
                 <div style="margin-bottom: 10px">
                     <label>Listes à inclure:</label>
-                    <div style="
-                        border: 1px solid #ccc;
-                        border-radius: 4px;
-                        padding: 8px;
-                        max-height: 150px;
-                        overflow-y: auto;
-                        background-color: white;
-                    ">
+
+                    <div
+                        style="
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                            padding: 8px;
+                            max-height: 150px;
+                            overflow-y: auto;
+                            background-color: white;
+                            margin-bottom: 15px;
+                        "
+                    >
                         @if (availableLists().length === 0) {
                             <p style="color: #999; margin: 0">Aucune liste disponible</p>
                         } @else {
                             @for (listKey of availableLists(); track listKey) {
-                                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; cursor: pointer">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px">
                                     <input
                                         type="checkbox"
-                                        [checked]="selectedLists().includes(listKey)"
-                                        (change)="
-                                            $event.target.checked
-                                                ? selectedLists.set([...selectedLists(), listKey])
-                                                : selectedLists.set(selectedLists().filter((l) => l !== listKey))
-                                        "
+                                        [checked]="isListSelected(listKey)"
+                                        (change)="toggleListSelection(listKey)"
                                         style="cursor: pointer"
                                     />
-                                    {{ listKey }}
-                                </label>
+                                    <span style="flex: 1">{{ listKey }}</span>
+                                    @if (isListSelected(listKey)) {
+                                        <button
+                                            (click)="toggleListInversion(listKey)"
+                                            [style.background-color]="
+                                                selectedLists().find((item) => item.key === listKey)?.inverted ? '#ff6b6b' : '#fff'
+                                            "
+                                            [style.color]="selectedLists().find((item) => item.key === listKey)?.inverted ? '#fff' : '#333'"
+                                            style="
+                                                padding: 2px 4px;
+                                                border: 1px solid #ccc;
+                                                border-radius: 4px;
+                                                cursor: pointer;
+                                                font-weight: bold;
+                                                font-size: 11px;
+                                                white-space: nowrap;
+                                            "
+                                        >
+                                            {{ selectedLists().find((item) => item.key === listKey)?.inverted ? 'Inversé' : 'Base' }}
+                                        </button>
+                                    }
+                                </div>
                             }
                         }
                     </div>

@@ -33,7 +33,7 @@ export class ListPokemonPages {
         this.filterService.buildAllPokemon(this.store.selectedPokemonWantKeep().toList()),
     );
     filterNeither: Signal<string> = computed(() =>
-        this.filterService.buildNeitherPokemon([...this.store.selectedPokemonWantKeep()]),
+        this.filterService.buildNeitherPokemon(this.store.selectedPokemonWantKeep().toList()),
     );
 
     @ViewChild('searchInput') searchInputRef!: ElementRef<HTMLInputElement>;

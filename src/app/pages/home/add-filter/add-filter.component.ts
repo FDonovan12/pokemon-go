@@ -1,7 +1,7 @@
 import { Component, computed, EventEmitter, inject, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FilterItem, FiltersFacade } from '@repositories/filters-repository';
-import { ListKey, ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
+import { FilterItem, FiltersFacade, ListItem, ListKey } from '@repositories/filters-repository';
+import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { ToastService } from 'app/shared/features/toast/toast.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class AddFilterComponent {
     showAddFilterPopup = signal(false);
     newFilterLabel = signal('');
     newFilterQuery = signal('');
-    selectedLists = signal<ListKey[]>([]);
+    selectedLists = signal<ListItem[]>([]);
     listOperator = signal<'AND' | 'OR'>('AND');
 
     // Listes disponibles du repository
@@ -43,12 +43,12 @@ export class AddFilterComponent {
         const label = this.newFilterLabel().trim();
         const query = this.newFilterQuery();
 
-        if (!label || !query) {
-            this.toastService.prepare('❌ Erreur', 'Le label et la requête sont obligatoires').showError();
+        if (!label) {
+            this.toastService.prepare('❌ Erreur', 'Le label est obligatoires').showError();
             return;
         }
 
-        const lists = this.selectedLists().map((list) => list.slugify());
+        const lists = this.selectedLists();
 
         const filterQuery: FilterItem['query'] = {
             prefix: query,
@@ -62,5 +62,26 @@ export class AddFilterComponent {
         this.toastService.prepare('✓ Succès', `Filtre "${label}" ajouté`).showSuccess();
         this.closeAddFilterPopup();
         this.filterAdded.emit();
+    }
+
+    // Helpers pour gérer les listes
+    isListSelected(listKey: ListKey): boolean {
+        return this.selectedLists().some((item) => item.key === listKey);
+    }
+
+    toggleListSelection(listKey: ListKey): void {
+        const lists = this.selectedLists();
+        const index = lists.findIndex((item) => item.key === listKey);
+        if (index === -1) {
+            this.selectedLists.set([...lists, { key: listKey, inverted: false }]);
+        } else {
+            this.selectedLists.set(lists.filter((_, i) => i !== index));
+        }
+    }
+
+    toggleListInversion(listKey: ListKey): void {
+        const lists = this.selectedLists();
+        const updated = lists.map((item) => (item.key === listKey ? { ...item, inverted: !item.inverted } : item));
+        this.selectedLists.set(updated);
     }
 }

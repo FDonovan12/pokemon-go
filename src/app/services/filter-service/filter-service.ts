@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { PokemonInterface } from '@entities/pokemon';
+import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { ListCondition } from './../../repositories/filters-repository/filter.model';
 
 const OR_JOIN = ', ';
 const AND_JOIN = ' & ';
@@ -11,6 +13,7 @@ const NOT_JOIN = '!';
 })
 export class FilterService {
     private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
+    private readonly _listPokemonRepository: ListPokemonRepository = inject(ListPokemonRepository);
 
     private stringify(elem: FilterElement): string {
         if (typeof elem === 'string') return elem;
@@ -34,17 +37,32 @@ export class FilterService {
         return this.buildFilter(filter);
     }
 
+    simplifyPokemon(lists: ListCondition): PokemonInterface[] {
+        const pokemonsLists = lists.items.map((item) => {
+            const pokemons = this._listPokemonRepository.getPokemonsForList(item.key);
+            if (item.inverted) {
+                return this._pokemonRepository.getAllOtherPokemons(pokemons);
+            } else {
+                return pokemons;
+            }
+        });
+        if (lists.operator === 'AND') {
+            if (pokemonsLists.length === 0) return [];
+            return pokemonsLists.reduce((acc, pokemons) =>
+                acc.filter((pokemon) => pokemon.slug.slugifyIn(pokemons.map((pokemon) => pokemon.slug))),
+            );
+        } else {
+            return pokemonsLists.flat().unique();
+        }
+    }
+
     buildAllPokemon(pokemons: PokemonInterface[]): string {
         const filter: Filter = { or: pokemons.map((pokemon) => '' + pokemon.id) };
         return this.buildFilter(filter);
     }
 
     buildNeitherPokemon(pokemons: PokemonInterface[]): string {
-        const basePokemonsSlugs: Set<PokemonSlug> = pokemons.map((p) => p.slug).toSet();
-
-        const allOtherPokemons = this._pokemonRepository
-            .getAllPokemon()
-            .filter((pokemon) => !basePokemonsSlugs.has(pokemon.slug));
+        const allOtherPokemons = this._pokemonRepository.getAllOtherPokemons(pokemons);
 
         const filter: Filter = { or: allOtherPokemons.map((pokemon) => '' + pokemon.id) };
         return this.buildFilter(filter);
@@ -93,7 +111,6 @@ export class FilterService {
 
     test(filter: Filter): Filter {
         const res = this.simplifyFilter(filter);
-        console.log(res);
         return res;
     }
 

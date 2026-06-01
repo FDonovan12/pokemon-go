@@ -1,8 +1,13 @@
-import { ListKey } from '@repositories/list-pokemon-repository/list-pokemon.repository';
+export type ListKey = string;
+
+export interface ListItem {
+    key: ListKey;
+    inverted: boolean;
+}
 
 export interface ListCondition {
     operator: 'AND' | 'OR';
-    items: ListKey[];
+    items: ListItem[];
 }
 
 export interface FilterQuery {

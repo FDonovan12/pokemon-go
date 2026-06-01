@@ -64,6 +64,15 @@ export class PokemonRepository {
         return Object.entries(this.pokemonIndex.byId).map((couple) => couple[1]);
     }
 
+    getAllOtherPokemons(pokemons: PokemonInterface[]): PokemonInterface[] {
+        return this.getAllOtherPokemonsFromSLugs(pokemons.map((p) => p.slug));
+    }
+
+    getAllOtherPokemonsFromSLugs(pokemonsSlugs: PokemonSlug[]): PokemonInterface[] {
+        const set: Set<PokemonSlug> = pokemonsSlugs.toSet();
+        return this.getAllPokemon().filter((pokemon) => !set.has(pokemon.slug));
+    }
+
     getAllPokemonSlugs(): PokemonSlug[] {
         return Object.entries(this.pokemonIndex.byName).map((couple) => couple[0] as PokemonSlug);
     }
@@ -111,7 +120,6 @@ export class PokemonRepository {
         const base = 'https://pokeapi.co/api/v2';
 
         for (const p of pokemons) {
-            console.log('pokemon : ', p.id, p.slug);
             try {
                 const speciesRes = await fetch(`${base}/pokemon-species/${p.id}`);
                 if (!speciesRes.ok) continue;

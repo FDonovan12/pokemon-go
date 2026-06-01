@@ -1,5 +1,6 @@
 import { Injectable, Signal, computed, inject } from '@angular/core';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
+import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { FilterItem, FilterItemResolved, FilterQuery, ListCondition } from './filter.model';
 import { FiltersRepository } from './filters.repository';
@@ -11,6 +12,7 @@ export class FiltersFacade {
     private readonly _filterService = inject(FilterService);
     private readonly _filtersRepository = inject(FiltersRepository);
     private readonly _listPokemonRepository = inject(ListPokemonRepository);
+    private readonly _pokemonRepository = inject(PokemonRepository);
 
     getFiltersResolved(): Signal<FilterItemResolved[]> {
         return computed(() => {
@@ -36,23 +38,13 @@ export class FiltersFacade {
             return query;
         }
 
-        // Si c'est un objet avec {prefix, lists}
         if (query.prefix) {
             const parts: string[] = [query.prefix];
 
             // TODO: Plus tard, résoudre la partie lists avec FilterService
             if (query.lists) {
-                // const listsQuery = this.resolveListCondition(query.lists);
-                // if (listsQuery) {
-                //     parts.push(listsQuery);
-                // }
-                console.log('query', query.lists);
-                const test = query.lists.items.map((item) =>
-                    this._filterService.buildAllPokemon(this._listPokemonRepository.getPokemonsForList(item.slugify())),
-                );
-                console.log('test', test);
-                const result = test.join(query.lists.operator === 'AND' ? ' & ' : ', ');
-                console.log('result', result);
+                const pokemons = this._filterService.simplifyPokemon(query.lists).sortAsc('id');
+                const result = this._filterService.buildAllPokemon(pokemons);
                 parts.push(result);
             }
 

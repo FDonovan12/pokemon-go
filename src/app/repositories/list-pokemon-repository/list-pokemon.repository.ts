@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { ListKey } from '@repositories/filters-repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
-
-export type ListKey = string;
 
 const LOCAL_STORAGE_KEEP = 'pokemon-want-keep';
 const LOCAL_STORAGE_KEEP_KEYS = 'pokemon-want-keep-keys';
@@ -20,7 +19,6 @@ export class ListPokemonRepository {
 
     getSlugsForList(keyStorage: string): PokemonSlug[] {
         const storageSlugs: PokemonSlug[] = this._localStorageService.get(keyStorage, []);
-        console.log('storageSlugs', storageSlugs);
         return storageSlugs;
     }
 

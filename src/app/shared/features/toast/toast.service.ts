@@ -13,7 +13,6 @@ export class ToastService {
 
     dispatch(toast: AnyToast): void {
         this._toasts.update((current) => [...current, toast]);
-        console.log(this._toasts());
         if (toast.duration > 0) {
             setTimeout(() => this.dismiss(toast.id), toast.duration);
         }
