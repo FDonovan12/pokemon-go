@@ -38,20 +38,17 @@ export class FiltersFacade {
             return query;
         }
 
-        if (query.prefix) {
-            const parts: string[] = [query.prefix];
+        query.prefix;
+        const parts: string[] = [query.prefix];
 
-            // TODO: Plus tard, résoudre la partie lists avec FilterService
-            if (query.lists) {
-                const pokemons = this._filterService.simplifyPokemon(query.lists).sortAsc('id');
-                const result = this._filterService.buildAllPokemon(pokemons);
-                parts.push(result);
-            }
-
-            return parts.join(' ');
+        // TODO: Plus tard, résoudre la partie lists avec FilterService
+        if (query.lists) {
+            const pokemons = this._filterService.simplifyPokemon(query.lists).sortAsc('id');
+            const result = this._filterService.buildAllPokemon(pokemons);
+            parts.push(result);
         }
 
-        return '';
+        return parts.join(' ');
     }
 
     /**
