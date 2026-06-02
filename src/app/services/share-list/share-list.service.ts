@@ -9,33 +9,53 @@ export interface ShareDataIds {
     providedIn: 'root',
 })
 export class ShareListService {
-    /**
-     * Compresse un tableau de slugs en une chaîne compacte
-     */
-    compressShareData(slugs: number[]): string {
-        const contentToComprss = slugs.join(',');
-        console.log('contentToComprss : ', contentToComprss.length);
-        const compress = LZ.compressToBase64(contentToComprss);
-        console.log('compress : ', compress.length);
+    generateShareUrl(ids: number[]): string {
+        const compressed = this.compressShareData(ids);
+        const baseUrl = window.location.origin;
+        return `${baseUrl}/#/keep/share/${compressed}`;
+    }
+
+    private compressShareData(ids: number[]): string {
+        const encoded = this.encodeIds(ids);
+        const compress = LZ.compressToEncodedURIComponent(encoded);
         return compress;
     }
 
     decompressShareData(compressed: string): ShareDataIds | null {
         try {
-            const json = LZ.decompressFromBase64(compressed);
-            if (!json) return null;
-            return { ids: json.split(',').map((string) => +string) };
+            const deconpressed = LZ.decompressFromEncodedURIComponent(compressed);
+            if (!deconpressed) return null;
+            const decoded = this.decodeIds(deconpressed);
+            return { ids: decoded };
         } catch {
             return null;
         }
     }
 
-    /**
-     * Génère l'URL de partage
-     */
-    generateShareUrl(slugs: number[]): string {
-        const compressed = this.compressShareData(slugs);
-        const baseUrl = window.location.origin;
-        return `${baseUrl}/#/keep/share/${compressed}`;
+    private encodeIds(ids: number[]): string {
+        const sorted = [...ids].sort((a, b) => a - b);
+        const ranges: string[] = [];
+        let start = sorted[0];
+        let end = sorted[0];
+
+        for (let i = 1; i < sorted.length; i++) {
+            if (sorted[i] === end + 1) {
+                end = sorted[i];
+            } else {
+                ranges.push(start === end ? `${start}` : `${start}-${end}`);
+                start = end = sorted[i];
+            }
+        }
+        ranges.push(start === end ? `${start}` : `${start}-${end}`);
+
+        return ranges.join(',');
+    }
+
+    private decodeIds(encoded: string): number[] {
+        return encoded.split(',').flatMap((part) => {
+            const [start, end] = part.split('-').map(Number);
+            if (end === undefined) return [start];
+            return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+        });
     }
 }
