@@ -1,6 +1,6 @@
 import { Component, computed, EventEmitter, inject, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FilterItem, FiltersFacade, ListItem, ListKey } from '@repositories/filters-repository';
+import { FilterItem, FiltersFacade, ListItem } from '@repositories/filters-repository';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { ToastService } from 'app/shared/features/toast/toast.service';
 
