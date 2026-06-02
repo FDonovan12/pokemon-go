@@ -68,6 +68,7 @@
 .toast__message {
     font-size: 0.9rem;
     opacity: 0.9;
+    word-break: break-all;
 }
 
 .toast__actions {

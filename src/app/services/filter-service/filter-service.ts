@@ -4,8 +4,8 @@ import { ListPokemonRepository } from '@repositories/list-pokemon-repository/lis
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ListCondition } from './../../repositories/filters-repository/filter.model';
 
-const OR_JOIN = ', ';
-const AND_JOIN = ' & ';
+const OR_JOIN = ',';
+const AND_JOIN = '&';
 const NOT_JOIN = '!';
 
 @Injectable({
