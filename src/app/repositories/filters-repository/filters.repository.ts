@@ -19,33 +19,39 @@ export class FiltersRepository {
     private readonly defaultFilters: FilterItem[] = [
         {
             label: 'IV PVP 1 ',
-            query: this.filterService.buildFilter({ and: ['2-pv', '2-défense', '-1attaque'] }),
+            query: { prefix: this.filterService.buildFilter({ and: ['2-pv', '2-défense', '-1attaque'] }) },
         },
         {
             label: 'IV PVP 2 ',
-            query: this.filterService.buildFilter({ and: ['3-pv', '3-défense', '-2attaque'] }),
+            query: { prefix: this.filterService.buildFilter({ and: ['3-pv', '3-défense', '-2attaque'] }) },
         },
         {
             label: 'Filtre level 1',
-            query:
-                this.onlySavagePokemons +
-                ' & 2-attaque, -1défense & 2-attaque, -1pv & -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+            query: {
+                prefix:
+                    this.onlySavagePokemons +
+                    ' & 2-attaque, -1défense & 2-attaque, -1pv & -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+            },
         },
         {
             label: 'Filtre level 2',
-            query: this.onlySavagePokemons + ' & 2-attaque, -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+            query: {
+                prefix: this.onlySavagePokemons + ' & 2-attaque, -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+            },
         },
         {
             label: 'Filtre level 3',
-            query: this.onlySavagePokemons + ' & 2-attaque, -2défense, -2pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+            query: {
+                prefix: this.onlySavagePokemons + ' & 2-attaque, -2défense, -2pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+            },
         },
         {
             label: 'Filtre level 4',
-            query: this.onlySavagePokemons + ' & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+            query: { prefix: this.onlySavagePokemons + ' & 0*, 1*, 2* & !# & âge0 & pc-100 & ' },
         },
         {
             label: 'Starter',
-            query: this.filterService.buildAllPokemonFamily(this.pokemonRepository.starterPokemon),
+            query: { prefix: this.filterService.buildAllPokemonFamily(this.pokemonRepository.starterPokemon) },
         },
     ];
 

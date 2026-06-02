@@ -17,7 +17,7 @@ export interface FilterQuery {
 
 export interface FilterItem {
     label: string;
-    query: FilterQuery | string; // Support l'ancien format string et le nouveau
+    query: FilterQuery;
 }
 
 export interface FilterItemResolved {

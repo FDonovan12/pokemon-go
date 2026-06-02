@@ -55,23 +55,26 @@ export class ShareListReceiveComponent implements OnInit {
 
         this.isLoading = true;
         try {
-            const listKey = this.listName.trim();
+            const listLabel = this.listName.trim();
+            const listSlug = listLabel.slugify();
 
             // Sauvegarder les slugs pour cette liste
             const slugs = this.shareData.slugs as any;
-            this.listPokemonRepository.saveSlugsForList(listKey, slugs);
+            this.listPokemonRepository.saveSlugsForList({ label: listLabel, slug: listSlug }, slugs);
 
             // Ajouter la clé à la liste des clés si elle n'existe pas
-            const keys = this.listPokemonRepository.getListKeys();
-            if (!keys.includes(listKey)) {
-                this.listPokemonRepository.saveListKeys([...keys, listKey]);
-            }
+            // const entries = this.listPokemonRepository.getListKeys();
+            // const existingSlugs = entries.map((e) => e.slug);
+            // if (!existingSlugs.includes(listSlug)) {
+            //     const newEntry = { label: listLabel, slug: listSlug };
+            //     this.listPokemonRepository.saveListKeys([...entries, newEntry]);
+            // }
 
             // Mettre à jour le store pour afficher la nouvelle liste
-            this.store.addList(listKey);
+            this.store.addList(listLabel);
 
             this.toastService
-                .prepare('✓ Succès', `Liste "${listKey}" créée avec ${this.shareData.slugs.length} pokémons`)
+                .prepare('✓ Succès', `Liste "${listLabel}" créée avec ${this.shareData.slugs.length} pokémons`)
                 .showSuccess();
 
             // Rediriger vers la page keep après un délai

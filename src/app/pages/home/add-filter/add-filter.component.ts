@@ -65,23 +65,23 @@ export class AddFilterComponent {
     }
 
     // Helpers pour gérer les listes
-    isListSelected(listKey: ListKey): boolean {
-        return this.selectedLists().some((item) => item.key === listKey);
+    isListSelected(slug: string): boolean {
+        return this.selectedLists().some((item) => item.key === slug);
     }
 
-    toggleListSelection(listKey: ListKey): void {
+    toggleListSelection(slug: string): void {
         const lists = this.selectedLists();
-        const index = lists.findIndex((item) => item.key === listKey);
+        const index = lists.findIndex((item) => item.key === slug);
         if (index === -1) {
-            this.selectedLists.set([...lists, { key: listKey, inverted: false }]);
+            this.selectedLists.set([...lists, { key: slug, inverted: false }]);
         } else {
             this.selectedLists.set(lists.filter((_, i) => i !== index));
         }
     }
 
-    toggleListInversion(listKey: ListKey): void {
+    toggleListInversion(slug: string): void {
         const lists = this.selectedLists();
-        const updated = lists.map((item) => (item.key === listKey ? { ...item, inverted: !item.inverted } : item));
+        const updated = lists.map((item) => (item.key === slug ? { ...item, inverted: !item.inverted } : item));
         this.selectedLists.set(updated);
     }
 }

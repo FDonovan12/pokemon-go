@@ -39,14 +39,9 @@ export class FilterService {
 
     simplifyPokemon(lists: ListCondition): PokemonInterface[] {
         const pokemonsLists = lists.items.map((item) => {
-            let key;
-            if (typeof item === 'string') {
-                // old format of object
-                key = item;
-            } else {
-                key = item.key;
-            }
-            const pokemons = this._listPokemonRepository.getPokemonsForList(key.slugify());
+            let key = item.key;
+            // key is already the storage slug, do not slugify again
+            const pokemons = this._listPokemonRepository.getPokemonsForList({ slug: key });
             if (item.inverted) {
                 return this._pokemonRepository.getAllOtherPokemons(pokemons);
             } else {

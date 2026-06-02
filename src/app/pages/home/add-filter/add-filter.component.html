@@ -68,22 +68,22 @@
                         @if (availableLists().length === 0) {
                             <p style="color: #999; margin: 0">Aucune liste disponible</p>
                         } @else {
-                            @for (listKey of availableLists(); track listKey) {
+                            @for (listEntry of availableLists(); track listEntry.slug) {
                                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px">
                                     <input
                                         type="checkbox"
-                                        [checked]="isListSelected(listKey)"
-                                        (change)="toggleListSelection(listKey)"
+                                        [checked]="isListSelected(listEntry.slug)"
+                                        (change)="toggleListSelection(listEntry.slug)"
                                         style="cursor: pointer"
                                     />
-                                    <span style="flex: 1">{{ listKey }}</span>
-                                    @if (isListSelected(listKey)) {
+                                    <span style="flex: 1">{{ listEntry.label }}</span>
+                                    @if (isListSelected(listEntry.slug)) {
                                         <button
-                                            (click)="toggleListInversion(listKey)"
+                                            (click)="toggleListInversion(listEntry.slug)"
                                             [style.background-color]="
-                                                selectedLists().find((item) => item.key === listKey)?.inverted ? '#ff6b6b' : '#fff'
+                                                selectedLists().find((item) => item.key === listEntry.slug)?.inverted ? '#ff6b6b' : '#fff'
                                             "
-                                            [style.color]="selectedLists().find((item) => item.key === listKey)?.inverted ? '#fff' : '#333'"
+                                            [style.color]="selectedLists().find((item) => item.key === listEntry.slug)?.inverted ? '#fff' : '#333'"
                                             style="
                                                 padding: 2px 4px;
                                                 border: 1px solid #ccc;
@@ -94,7 +94,7 @@
                                                 white-space: nowrap;
                                             "
                                         >
-                                            {{ selectedLists().find((item) => item.key === listKey)?.inverted ? 'Inversé' : 'Base' }}
+                                            {{ selectedLists().find((item) => item.key === listEntry.slug)?.inverted ? 'Inversé' : 'Base' }}
                                         </button>
                                     }
                                 </div>
