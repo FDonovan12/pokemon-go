@@ -6,6 +6,7 @@ export const IMAGES = {
   "items": {
     "Miniature_PokéPièce_GO": "assets/items\\Miniature_PokéPièce_GO.png",
     "Pack_de_Particules_Max_GO": "assets/items\\Pack_de_Particules_Max_GO.png",
+    "Sprite_Baie_Framby_dorée_GO": "assets/items\\Sprite_Baie_Framby_dorée_GO.png",
     "Sprite_Baie_Nanana_argentée_GO": "assets/items\\Sprite_Baie_Nanana_argentée_GO.png",
     "Sprite_CT_Attaque_Chargée_d'élite_GO": "assets/items\\Sprite_CT_Attaque_Chargée_d'élite_GO.png",
     "Sprite_CT_Attaque_Chargée_GO": "assets/items\\Sprite_CT_Attaque_Chargée_GO.png",

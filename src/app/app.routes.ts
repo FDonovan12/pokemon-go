@@ -3,6 +3,7 @@ import { DynamaxPage } from './pages/dynamax/dynamax.page';
 import { EventComponent } from './pages/event/event.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ListPokemonPages } from './pages/list-pokemon-page/list-pokemon-pages';
+import { ShareListReceiveComponent } from './pages/list-pokemon-page/share-list-receive/share-list-receive.component';
 import { ProbaPages } from './pages/proba/proba-pages';
 import { PvpRankPages } from './pages/pvp-rank/pvp-rank';
 import { InfographicPages } from './pages/ressources-page/infographic/infographic-pages';
@@ -28,7 +29,10 @@ export const routes: Routes = [
     },
     {
         path: 'keep',
-        component: ListPokemonPages,
+        children: [
+            { path: '', component: ListPokemonPages },
+            { path: 'share/:data', component: ShareListReceiveComponent },
+        ],
     },
     {
         path: 'dynamax',

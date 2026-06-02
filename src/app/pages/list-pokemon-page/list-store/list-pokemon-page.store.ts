@@ -91,7 +91,7 @@ export const ListPokemonPageStore = signalStore(
 
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = store.selectedListKey() + '.json';
+            a.download = store.selectedListName() + '.json';
             a.click();
 
             URL.revokeObjectURL(a.href);
@@ -151,7 +151,7 @@ export const ListPokemonPageStore = signalStore(
             const storageListName: string[] = store._listPokemonRepository.getListKeys();
             effect(() => {
                 const newSet: Set<PokemonInterface> = store._listPokemonRepository
-                    .getPokemonsForList(store.selectedListKey())
+                    .getPokemonsForList(store.selectedListName())
                     .toSet();
                 patchState(store, {
                     selectedPokemonWantKeep: newSet,
@@ -162,14 +162,14 @@ export const ListPokemonPageStore = signalStore(
                     .selectedPokemonWantKeep()
                     .toList()
                     .map((pokemon: PokemonInterface) => pokemon.slug);
-                store._listPokemonRepository.saveSlugsForList(store.selectedListKey(), listSlugs);
+                store._listPokemonRepository.saveSlugsForList(store.selectedListName(), listSlugs);
             });
             effect(() => {
                 const list = store.listName();
                 store._listPokemonRepository.saveListKeys(list);
             });
             const allPokemons = store._pokemonRepository.getAllPokemon();
-            const selectedKey = storageListName.first()?.slugify() ?? LOCAL_STORAGE_KEEP;
+            const selectedKey = storageListName.first() ?? LOCAL_STORAGE_KEEP;
             patchState(store, {
                 _allFamilyPokemon: allPokemons,
                 listName: storageListName,

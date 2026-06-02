@@ -1,0 +1,77 @@
+<div style="max-width: 600px; margin: 40px auto; padding: 20px">
+    <h1>📥 Importer une liste partagée</h1>
+
+    @if (error) {
+        <div
+            style="
+                background-color: #ffebee;
+                border: 1px solid #ef5350;
+                border-radius: 4px;
+                padding: 16px;
+                margin-bottom: 20px;
+                color: #c62828;
+            "
+        >
+            <strong>❌ Erreur:</strong>
+            {{ error }}
+        </div>
+        <div style="display: flex; gap: 10px">
+            <button
+                (click)="cancel()"
+                style="padding: 10px 20px; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer"
+            >
+                Retour
+            </button>
+        </div>
+    } @else if (!shareData) {
+        <div style="background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 16px; text-align: center">
+            <p>Chargement des données...</p>
+        </div>
+    } @else {
+        <div style="background-color: #e3f2fd; border: 1px solid #2196f3; border-radius: 4px; padding: 16px; margin-bottom: 20px">
+            <p style="margin: 0">
+                📋
+                <strong>{{ shareData.slugs.length }} pokémons</strong>
+                prêts à être importés
+            </p>
+        </div>
+
+        <div style="margin-bottom: 20px">
+            <label style="display: block; margin-bottom: 8px">
+                <strong>Nom de la liste:</strong>
+            </label>
+            <input
+                type="text"
+                [(ngModel)]="listName"
+                placeholder="ex: Ma collection"
+                [disabled]="isLoading"
+                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px"
+            />
+        </div>
+
+        <div style="display: flex; gap: 10px">
+            <button
+                (click)="cancel()"
+                [disabled]="isLoading"
+                style="padding: 10px 20px; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer"
+            >
+                Annuler
+            </button>
+            <button
+                (click)="createList()"
+                [disabled]="isLoading || !listName.trim()"
+                style="
+                    padding: 10px 20px;
+                    background-color: #4caf50;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-weight: bold;
+                "
+            >
+                {{ isLoading ? '⏳ Création...' : '✓ Créer la liste' }}
+            </button>
+        </div>
+    }
+</div>
