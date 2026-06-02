@@ -22,7 +22,7 @@ export class FilterService {
     }
 
     buildAllPokemonFamily(pokemons: PokemonInterface[], withFamily: boolean = false): string {
-        const filter: Filter = { or: pokemons };
+        const filter: Filter = { or: pokemons.sortAsc('id') };
         if (withFamily) {
             filter.or = pokemons.map((pokemon) => '+' + pokemon.name);
         }
@@ -30,7 +30,7 @@ export class FilterService {
     }
 
     buildNeitherPokemonFamily(pokemons: PokemonInterface[], withFamily: boolean = false): string {
-        const filter: Filter = { not: { and: pokemons } };
+        const filter: Filter = { not: { and: pokemons.sortAsc('id') } };
         if (withFamily) {
             filter.not = { and: pokemons.map((pokemon) => '+' + pokemon.name) };
         }
@@ -59,14 +59,14 @@ export class FilterService {
     }
 
     buildAllPokemon(pokemons: PokemonInterface[]): string {
-        const filter: Filter = { or: pokemons.map((pokemon) => '' + pokemon.id) };
+        const filter: Filter = { or: pokemons.sortAsc('id').map((pokemon) => '' + pokemon.id) };
         return this.buildFilter(filter);
     }
 
     buildNeitherPokemon(pokemons: PokemonInterface[]): string {
         const allOtherPokemons = this._pokemonRepository.getAllOtherPokemons(pokemons);
 
-        const filter: Filter = { or: allOtherPokemons.map((pokemon) => '' + pokemon.id) };
+        const filter: Filter = { or: allOtherPokemons.sortAsc('id').map((pokemon) => '' + pokemon.id) };
         return this.buildFilter(filter);
     }
 
