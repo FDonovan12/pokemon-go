@@ -70,8 +70,8 @@ export class ListPokemonPages {
             return;
         }
 
-        const slugs = pokemons.map((p) => p.slug);
-        const shareUrl = this.shareListService.generateShareUrl(slugs);
+        const ids = pokemons.map((p) => p.id);
+        const shareUrl = this.shareListService.generateShareUrl(ids);
 
         this.clipboardService.copyToClipboard(shareUrl);
         this.toastService.prepare('✓ Succès', `Lien copié! ${pokemons.length} pokémons à partager`).showSuccess();

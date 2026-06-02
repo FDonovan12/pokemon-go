@@ -2,7 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
-import { ShareListService } from '@services/share-list/share-list.service';
+import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { ShareDataIds, ShareListService } from '@services/share-list/share-list.service';
 import { ToastService } from 'app/shared/features/toast/toast.service';
 import { ListPokemonPageStore } from '../list-store/list-pokemon-page.store';
 
@@ -18,12 +19,13 @@ export class ShareListReceiveComponent implements OnInit {
     private readonly router = inject(Router);
     private readonly shareListService = inject(ShareListService);
     private readonly listPokemonRepository = inject(ListPokemonRepository);
+    private readonly pokemonRepository = inject(PokemonRepository);
     private readonly store = inject(ListPokemonPageStore);
     private readonly toastService = inject(ToastService);
 
     listName = '';
     isLoading = false;
-    shareData: { slugs: string[] } | null = null;
+    shareData: ShareDataIds | null = null;
     error: string | null = null;
 
     ngOnInit(): void {
@@ -59,22 +61,15 @@ export class ShareListReceiveComponent implements OnInit {
             const listSlug = listLabel.slugify();
 
             // Sauvegarder les slugs pour cette liste
-            const slugs = this.shareData.slugs as any;
+            const ids = this.shareData.ids;
+            const slugs = ids.map((id) => this.pokemonRepository.getPokemonById(id)?.slug!).compact();
             this.listPokemonRepository.saveSlugsForList({ label: listLabel, slug: listSlug }, slugs);
-
-            // Ajouter la clé à la liste des clés si elle n'existe pas
-            // const entries = this.listPokemonRepository.getListKeys();
-            // const existingSlugs = entries.map((e) => e.slug);
-            // if (!existingSlugs.includes(listSlug)) {
-            //     const newEntry = { label: listLabel, slug: listSlug };
-            //     this.listPokemonRepository.saveListKeys([...entries, newEntry]);
-            // }
 
             // Mettre à jour le store pour afficher la nouvelle liste
             this.store.addList(listLabel);
 
             this.toastService
-                .prepare('✓ Succès', `Liste "${listLabel}" créée avec ${this.shareData.slugs.length} pokémons`)
+                .prepare('✓ Succès', `Liste "${listLabel}" créée avec ${this.shareData.ids.length} pokémons`)
                 .showSuccess();
 
             // Rediriger vers la page keep après un délai

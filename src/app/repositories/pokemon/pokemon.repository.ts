@@ -42,6 +42,10 @@ export class PokemonRepository {
         return this.pokemonIndex.byName[slug];
     }
 
+    getPokemonById(id: number): PokemonInterface | undefined {
+        return this.pokemonIndex.byId[id];
+    }
+
     getPokemonsBySLugs(slugs: PokemonSlug[]): PokemonInterface[] {
         const result: PokemonInterface[] = [];
         const errors: string[] = [];
