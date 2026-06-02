@@ -78,9 +78,7 @@ export class ShareListReceiveComponent implements OnInit {
                 .showSuccess();
 
             // Rediriger vers la page keep après un délai
-            setTimeout(() => {
-                this.router.navigate(['/keep']);
-            }, 1500);
+            this.router.navigate(['/keep']);
         } catch (err) {
             this.error = 'Erreur lors de la création de la liste';
             this.toastService.prepare('❌ Erreur', this.error).showError();

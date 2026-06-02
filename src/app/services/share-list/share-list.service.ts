@@ -13,19 +13,14 @@ export class ShareListService {
      * Compresse un tableau de slugs en une chaîne compacte
      */
     compressShareData(slugs: string[]): string {
-        const data: ShareData = { slugs };
-        const json = JSON.stringify(data);
-        return LZ.compressToBase64(json);
+        return LZ.compressToBase64(slugs.join(','));
     }
 
-    /**
-     * Décompresse une chaîne en tableau de slugs
-     */
     decompressShareData(compressed: string): ShareData | null {
         try {
             const json = LZ.decompressFromBase64(compressed);
             if (!json) return null;
-            return JSON.parse(json) as ShareData;
+            return { slugs: json.split(',') };
         } catch {
             return null;
         }
