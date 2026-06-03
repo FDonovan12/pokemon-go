@@ -1,6 +1,7 @@
 import { Component, computed, EventEmitter, inject, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FilterItem, FiltersFacade, ListItem } from '@repositories/filters-repository';
+import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { ToastService } from 'app/shared/features/toast/toast.service';
 
@@ -14,6 +15,7 @@ import { ToastService } from 'app/shared/features/toast/toast.service';
 export class AddFilterComponent {
     private readonly filtersFacade = inject(FiltersFacade);
     private readonly listPokemonRepository = inject(ListPokemonRepository);
+    private readonly internalListPokemonRepository = inject(InternalListPokemonRepository);
     private readonly toastService = inject(ToastService);
 
     @Output() filterAdded = new EventEmitter<void>();
@@ -25,7 +27,9 @@ export class AddFilterComponent {
     listOperator = signal<'AND' | 'OR'>('AND');
 
     // Listes disponibles du repository
-    availableLists = computed(() => this.listPokemonRepository.getListKeys());
+    availableLists = computed(() =>
+        [this.listPokemonRepository.getListKeys(), this.internalListPokemonRepository.getInternalLists()].flat(),
+    );
 
     openAddFilterPopup(): void {
         this.newFilterLabel.set('');

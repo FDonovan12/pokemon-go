@@ -2,6 +2,7 @@ import { computed, effect, inject } from '@angular/core';
 import { LabelEntry } from '@entities/label';
 import { PokemonFamily, PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
+import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ToastService } from 'app/shared/features/toast/toast.service';
@@ -23,6 +24,7 @@ export const ListPokemonPageStore = signalStore(
         _pokemonRepository: inject(PokemonRepository),
         _listPokemonRepository: inject(ListPokemonRepository),
         _toastService: inject(ToastService),
+        _internalListPokemonRepository: inject(InternalListPokemonRepository),
     })),
     withState(initialState),
     withComputed((store) => ({
@@ -38,6 +40,11 @@ export const ListPokemonPageStore = signalStore(
         resultSelected: computed(() => {
             let allFamilySelected: PokemonFamily[] = [];
             if (store.search()) {
+                const internal = store._internalListPokemonRepository.getPokemonsForInternalListBySearch(
+                    store.search(),
+                );
+                if (internal) return internal;
+
                 allFamilySelected = store
                     ._allFamilyPokemon()
                     .filter(

@@ -3,6 +3,7 @@ import { LabelEntry } from '@entities/label';
 import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
+import { InternalListPokemonRepository } from './internal-list-pokemon.repository';
 
 const LOCAL_STORAGE_KEEP = { label: 'veut garder', slug: 'pokemon-want-keep' };
 const LOCAL_STORAGE_KEEP_KEYS = 'pokemon-want-keep-keys';
@@ -12,6 +13,8 @@ const LOCAL_STORAGE_KEEP_KEYS = 'pokemon-want-keep-keys';
 export class ListPokemonRepository {
     private readonly _localStorageService: LocalStorageService = inject(LocalStorageService);
     private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
+    private readonly _internalListPokemonRepository: InternalListPokemonRepository =
+        inject(InternalListPokemonRepository);
 
     getListKeys(): LabelEntry[] {
         const stored = this._localStorageService.get(LOCAL_STORAGE_KEEP_KEYS, []);
@@ -27,6 +30,9 @@ export class ListPokemonRepository {
     }
 
     getPokemonsForList(entry: LabelEntry | { slug: string }): PokemonInterface[] {
+        const internal = this._internalListPokemonRepository.getPokemonsForInternalList(entry);
+        if (internal) return internal;
+
         const storageSlugs: PokemonSlug[] = this.getSlugsForList(entry);
         const storagePokemons = this._pokemonRepository.getPokemonsBySLugs(storageSlugs);
         return storagePokemons;

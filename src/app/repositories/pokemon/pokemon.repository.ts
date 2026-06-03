@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { PokemonFamily, PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import pokemonsData from 'app/bdd/bdd-pokemons.json';
 import { familyPokemon } from 'app/bdd/family-pokemon';
 import { pokemonFamilyName } from 'app/bdd/family-pokemon-name';
@@ -40,6 +40,10 @@ export class PokemonRepository {
 
     getPokemonBySlug(slug: PokemonSlug): PokemonInterface | undefined {
         return this.pokemonIndex.byName[slug];
+    }
+
+    getPokemonByFamily(family: PokemonFamily): PokemonInterface[] {
+        return this.getAllPokemon().filter((pokemon) => pokemon.family === family);
     }
 
     getPokemonById(id: number): PokemonInterface | undefined {
