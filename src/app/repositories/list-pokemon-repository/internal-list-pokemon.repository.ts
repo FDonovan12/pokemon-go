@@ -15,18 +15,6 @@ interface InternalList {
 export class InternalListPokemonRepository {
     private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
 
-    private readonly ultraChimere: PokemonInterface[] = [
-        this._pokemonRepository.getPokemonByFamily('Zeroid'),
-        this._pokemonRepository.getPokemonByFamily('Mouscoto'),
-        this._pokemonRepository.getPokemonByFamily('Cancrelove'),
-        this._pokemonRepository.getPokemonByFamily('Cablifere'),
-        this._pokemonRepository.getPokemonByFamily('Bamboiselle'),
-        this._pokemonRepository.getPokemonByFamily('Katagami'),
-        this._pokemonRepository.getPokemonByFamily('Engloutyran'),
-        this._pokemonRepository.getPokemonByFamily('Ama-ama'),
-        this._pokemonRepository.getPokemonByFamily('Pierroteknik'),
-    ].flat();
-
     private readonly internalLists: InternalList[] = [
         {
             label: 'Starter',
@@ -78,7 +66,17 @@ export class InternalListPokemonRepository {
             label: 'Ultra chimere',
             slug: hash('internal_Ultra chimere'),
             aliases: ['ultra-chimere', 'ultrachimere', 'chimere'],
-            pokemons: this.ultraChimere,
+            pokemons: [
+                this._pokemonRepository.getPokemonByFamily('Zeroid'),
+                this._pokemonRepository.getPokemonByFamily('Mouscoto'),
+                this._pokemonRepository.getPokemonByFamily('Cancrelove'),
+                this._pokemonRepository.getPokemonByFamily('Cablifere'),
+                this._pokemonRepository.getPokemonByFamily('Bamboiselle'),
+                this._pokemonRepository.getPokemonByFamily('Katagami'),
+                this._pokemonRepository.getPokemonByFamily('Engloutyran'),
+                this._pokemonRepository.getPokemonByFamily('Ama-ama'),
+                this._pokemonRepository.getPokemonByFamily('Pierroteknik'),
+            ].flat(),
         },
         {
             label: 'Regional',
@@ -117,7 +115,13 @@ export class InternalListPokemonRepository {
                 this._pokemonRepository.getPokemonByFamily('Flamajou'),
                 this._pokemonRepository.getPokemonByFamily('Flotajou'),
                 this._pokemonRepository.getPokemonByFamily('Feuillajou'),
-                this.ultraChimere,
+                this._pokemonRepository.getPokemonByFamily('Mouscoto'),
+                this._pokemonRepository.getPokemonByFamily('Cancrelove'),
+                this._pokemonRepository.getPokemonByFamily('Cablifere'),
+                this._pokemonRepository.getPokemonByFamily('Bamboiselle'),
+                this._pokemonRepository.getPokemonByFamily('Katagami'),
+                this._pokemonRepository.getPokemonByFamily('Ama-ama'),
+                this._pokemonRepository.getPokemonByFamily('Pierroteknik'),
             ].flat(),
         },
     ];
