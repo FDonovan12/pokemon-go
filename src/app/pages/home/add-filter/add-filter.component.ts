@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, Output, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FilterItem, FiltersFacade, ListItem } from '@repositories/filters-repository';
 import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
@@ -18,13 +18,14 @@ export class AddFilterComponent {
     private readonly internalListPokemonRepository = inject(InternalListPokemonRepository);
     private readonly toastService = inject(ToastService);
 
-    @Output() filterAdded = new EventEmitter<void>();
+    filterAdded = output<void>();
+    filterItem = input<FilterItem>();
 
     showAddFilterPopup = signal(false);
-    newFilterLabel = signal('');
-    newFilterQuery = signal('');
-    selectedLists = signal<ListItem[]>([]);
-    listOperator = signal<'AND' | 'OR'>('AND');
+    newFilterLabel = linkedSignal(() => this.filterItem()?.label ?? '');
+    newFilterPrefix = linkedSignal(() => this.filterItem()?.query.prefix ?? '');
+    selectedLists = linkedSignal<ListItem[]>(() => this.filterItem()?.query.lists?.items ?? []);
+    listOperator = linkedSignal<'AND' | 'OR'>(() => this.filterItem()?.query.lists?.operator ?? 'AND');
 
     // Listes disponibles du repository
     availableLists = computed(() =>
@@ -33,7 +34,7 @@ export class AddFilterComponent {
 
     openAddFilterPopup(): void {
         this.newFilterLabel.set('');
-        this.newFilterQuery.set('');
+        this.newFilterPrefix.set('');
         this.selectedLists.set([]);
         this.listOperator.set('AND');
         this.showAddFilterPopup.set(true);
@@ -45,7 +46,7 @@ export class AddFilterComponent {
 
     addNewFilter(): void {
         const label = this.newFilterLabel().trim();
-        const query = this.newFilterQuery();
+        const query = this.newFilterPrefix();
 
         if (!label) {
             this.toastService.prepare('❌ Erreur', 'Le label est obligatoires').showError();
@@ -61,9 +62,14 @@ export class AddFilterComponent {
                 items: lists,
             },
         };
-
-        this.filtersFacade.addFilter({ label, query: filterQuery });
-        this.toastService.prepare('✓ Succès', `Filtre "${label}" ajouté`).showSuccess();
+        if (this.filterItem()) {
+            const id = this.filterItem()!.id;
+            this.filtersFacade.updateFilter({ label, id, query: filterQuery });
+            this.toastService.prepare('✓ Succès', `Filtre "${label}" modifié`).showSuccess();
+        } else {
+            this.filtersFacade.addFilter({ label, query: filterQuery });
+            this.toastService.prepare('✓ Succès', `Filtre "${label}" ajouté`).showSuccess();
+        }
         this.closeAddFilterPopup();
         this.filterAdded.emit();
     }

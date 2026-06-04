@@ -57,13 +57,20 @@
     </div>
 }
 
-<app-add-filter></app-add-filter>
+<app-add-filter [filterItem]="filterToEdit()"></app-add-filter>
 
-@for (filter of filters(); track $index) {
+@for (filter of filters(); track filter.id) {
     <p>
         <button (click)="clipboardService.copyToClipboard(filter.query)">{{ filter.label }}</button>
         <button
-            (click)="removeFilter($index)"
+            style="margin-left: 10px"
+            type="button"
+            (click)="editFilter(filter)"
+        >
+            🖊️
+        </button>
+        <button
+            (click)="removeFilter(filter)"
             style="margin-left: 10px; color: red"
         >
             ✕

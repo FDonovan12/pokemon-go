@@ -16,11 +16,13 @@ export interface FilterQuery {
 }
 
 export interface FilterItem {
+    id: string;
     label: string;
     query: FilterQuery;
 }
 
 export interface FilterItemResolved {
+    id: string;
     label: string;
     query: string; // Toujours un string pour le composant
 }

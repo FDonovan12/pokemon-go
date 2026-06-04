@@ -2,7 +2,7 @@ import { inject, Injectable, signal, Signal } from '@angular/core';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
-import { FilterItem } from './filter.model';
+import { FilterItem, FilterItemResolved } from './filter.model';
 
 const FILTERS_STORAGE_KEY = 'user_filters';
 
@@ -18,14 +18,17 @@ export class FiltersRepository {
 
     private readonly defaultFilters: FilterItem[] = [
         {
+            id: crypto.randomUUID(),
             label: 'IV PVP 1 ',
             query: { prefix: this.filterService.buildFilter({ and: ['2-pv', '2-défense', '-1attaque'] }) },
         },
         {
+            id: crypto.randomUUID(),
             label: 'IV PVP 2 ',
             query: { prefix: this.filterService.buildFilter({ and: ['3-pv', '3-défense', '-2attaque'] }) },
         },
         {
+            id: crypto.randomUUID(),
             label: 'Filtre level 1',
             query: {
                 prefix:
@@ -34,24 +37,23 @@ export class FiltersRepository {
             },
         },
         {
+            id: crypto.randomUUID(),
             label: 'Filtre level 2',
             query: {
                 prefix: this.onlySavagePokemons + ' & 2-attaque, -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
             },
         },
         {
+            id: crypto.randomUUID(),
             label: 'Filtre level 3',
             query: {
                 prefix: this.onlySavagePokemons + ' & 2-attaque, -2défense, -2pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
             },
         },
         {
+            id: crypto.randomUUID(),
             label: 'Filtre level 4',
             query: { prefix: this.onlySavagePokemons + ' & 0*, 1*, 2* & !# & âge0 & pc-100 & ' },
-        },
-        {
-            label: 'Starter',
-            query: { prefix: this.filterService.buildAllPokemonFamily(this.pokemonRepository.starterPokemon) },
         },
     ];
 
@@ -65,15 +67,28 @@ export class FiltersRepository {
         return this.userFiltersSignal.asReadonly();
     }
 
-    addFilter(filter: FilterItem): void {
+    addFilter(filter: Omit<FilterItem, 'id'>): void {
         const currentFilters = this.userFiltersSignal();
-        this.userFiltersSignal.set([...currentFilters, filter]);
+        this.userFiltersSignal.set([...currentFilters, { ...filter, id: crypto.randomUUID() }]);
         this.saveFilters();
     }
 
-    removeFilter(index: number): void {
+    updateFilter(filter: FilterItem): void {
         const currentFilters = this.userFiltersSignal();
-        const updatedFilters = currentFilters.filter((_, i) => i !== index);
+        const afterUpdate = currentFilters.map((f) => {
+            if (f.id === filter.id) {
+                return filter;
+            } else {
+                return f;
+            }
+        });
+        this.userFiltersSignal.set(afterUpdate);
+        this.saveFilters();
+    }
+
+    removeFilter(filter: FilterItemResolved | FilterItem): void {
+        const currentFilters = this.userFiltersSignal();
+        const updatedFilters = currentFilters.filter((f) => f.id !== filter.id);
         this.userFiltersSignal.set(updatedFilters);
         this.saveFilters();
     }

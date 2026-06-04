@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, inject, signal, Signal } from '@angular/core';
+import { Component, computed, inject, signal, Signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { PokemonInterface } from '@entities/pokemon';
-import { FiltersFacade } from '@repositories/filters-repository';
+import { FilterItem, FilterItemResolved, FiltersFacade } from '@repositories/filters-repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { ToastService } from 'app/shared/features/toast/toast.service';
@@ -30,6 +30,9 @@ export class HomeComponent {
     private readonly toastService = inject(ToastService);
 
     today = new Date();
+
+    @ViewChild(AddFilterComponent) addFilterComponent!: AddFilterComponent;
+    filterToEdit = signal<FilterItem | undefined>(undefined);
 
     getName(pokemon: PokemonInterface | string): string {
         if (!pokemon) return '';
@@ -74,13 +77,18 @@ export class HomeComponent {
         // this.getData();
     }
 
-    removeFilter(index: number): void {
-        const filter = this.filters()[index];
+    editFilter(filter: FilterItemResolved) {
+        const original = this.filtersFacade.getFilterById(filter.id);
+        this.filterToEdit.set(original);
+        this.addFilterComponent.openAddFilterPopup();
+    }
+
+    removeFilter(filter: FilterItemResolved): void {
         this.toastService
             .prepare('Confirmation', `Êtes-vous sûr de vouloir supprimer le filtre "${filter.label}" ?`)
             .showConfirmation(
                 () => {
-                    this.filtersFacade.removeFilter(index);
+                    this.filtersFacade.removeFilter(filter);
                     this.toastService.prepare('✓ Supprimé', 'Filtre supprimé avec succès').showSuccess();
                 },
                 () => {

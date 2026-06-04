@@ -24,6 +24,7 @@ export class FiltersFacade {
 
     resolveFilters(filters: FilterItem[]): FilterItemResolved[] {
         return filters.map((filter) => ({
+            id: filter.id,
             label: filter.label,
             query: this.resolveQuery(filter.query),
         }));
@@ -60,12 +61,22 @@ export class FiltersFacade {
         return '';
     }
 
-    addFilter(filter: FilterItem): void {
+    getFilterById(id: string): FilterItem | undefined {
+        return this._filtersRepository
+            .getFilters()()
+            .find((f) => f.id === id);
+    }
+
+    addFilter(filter: Omit<FilterItem, 'id'>): void {
         this._filtersRepository.addFilter(filter);
     }
 
-    removeFilter(index: number): void {
-        this._filtersRepository.removeFilter(index);
+    updateFilter(filter: FilterItem): void {
+        this._filtersRepository.updateFilter(filter);
+    }
+
+    removeFilter(filter: FilterItemResolved | FilterItem): void {
+        this._filtersRepository.removeFilter(filter);
     }
 
     removeFilterByLabel(label: string): void {
