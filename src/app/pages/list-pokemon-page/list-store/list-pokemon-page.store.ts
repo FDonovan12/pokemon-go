@@ -1,16 +1,17 @@
 import { computed, effect, inject } from '@angular/core';
 import { LabelEntry } from '@entities/label';
-import { PokemonFamily, PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { withPokemonSearch } from 'app/shared/features/pokemon-search/with-pokemon-search.feature';
 import { ToastService } from 'app/shared/features/toast/toast.service';
 
 const LOCAL_STORAGE_KEEP = { label: 'veut garder', slug: 'pokemon-want-keep' };
 
 const initialState = {
-    _allFamilyPokemon: [] as PokemonInterface[],
+    _allPokemons: [] as PokemonInterface[],
     generationSelected: 1,
     listEntries: [] as LabelEntry[],
     selectedListEntry: { label: '', slug: '' } as LabelEntry,
@@ -20,6 +21,7 @@ const initialState = {
 
 export const ListPokemonPageStore = signalStore(
     { providedIn: 'root' },
+    withPokemonSearch(),
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
         _listPokemonRepository: inject(ListPokemonRepository),
@@ -37,37 +39,8 @@ export const ListPokemonPageStore = signalStore(
             const map = sorted.groupBy((pokemon) => pokemon.generation);
             return map;
         }),
-        resultSelected: computed(() => {
-            let allFamilySelected: PokemonFamily[] = [];
-            if (store.search()) {
-                const internal = store._internalListPokemonRepository.getPokemonsForInternalListBySearch(
-                    store.search(),
-                );
-                if (internal) return internal;
-
-                allFamilySelected = store
-                    ._allFamilyPokemon()
-                    .filter(
-                        (pokemon) =>
-                            pokemon.slug.slugify().includes(store.search().slugify()) ||
-                            pokemon.type.some((type) => type.slugifyEquals(store.search())),
-                    )
-                    .map((pokemon) => pokemon.family);
-            } else {
-                const onlyThisGeneration: PokemonInterface[] = store
-                    ._allFamilyPokemon()
-                    .filter((pokemon) => pokemon.generation === store.generationSelected());
-
-                allFamilySelected = onlyThisGeneration.map((pokemon) => pokemon.family);
-            }
-
-            const result: PokemonInterface[] = store
-                ._allFamilyPokemon()
-                .filter((pokemon) => allFamilySelected.includes(pokemon.family))
-                .groupBy('family')
-                .toList('values')
-                .flat();
-            return result;
+        resultSelected: computed((): PokemonInterface[] => {
+            return store.doSearch(store._allPokemons, store.search, store.generationSelected);
         }),
     })),
     withMethods((store) => ({
@@ -79,9 +52,6 @@ export const ListPokemonPageStore = signalStore(
             const selectedListSlug = selectElement.value;
             const entry = store.listEntries().find((entry) => entry.slug === selectedListSlug);
             patchState(store, { selectedListEntry: entry });
-        },
-        selectGeneration(generation: number) {
-            patchState(store, { generationSelected: generation });
         },
         selectPokemon(pokemon: PokemonInterface) {
             const set = new Set<PokemonInterface>(store.selectedPokemonWantKeep());
@@ -131,7 +101,6 @@ export const ListPokemonPageStore = signalStore(
             const newList = [...oldListNames, newEntry];
             patchState(store, { listEntries: newList, selectedListEntry: newEntry });
         },
-        setSearch: (value: string) => patchState(store, { search: value }),
     })),
     withMethods((store) => ({
         deleteSelectedList: () => {
@@ -186,8 +155,9 @@ export const ListPokemonPageStore = signalStore(
             effect(store._persistListKeys);
             const allPokemons = store._pokemonRepository.getAllPokemon();
             const selectedSlug = storageListEntries.first() ?? LOCAL_STORAGE_KEEP;
+            console.log('allPokemons : ', allPokemons);
             patchState(store, {
-                _allFamilyPokemon: allPokemons,
+                _allPokemons: allPokemons,
                 listEntries: storageListEntries,
                 selectedListEntry: selectedSlug,
             });

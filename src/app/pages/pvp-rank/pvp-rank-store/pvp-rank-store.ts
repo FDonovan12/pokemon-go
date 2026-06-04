@@ -3,6 +3,7 @@ import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
+import { withPokemonSearch } from 'app/shared/features/pokemon-search/with-pokemon-search.feature';
 
 const LOCAL_STORAGE_PVP_RANK = 'pokemon-pvp_rank';
 
@@ -18,7 +19,7 @@ export interface PvpRank {
 }
 
 const initialState = {
-    allPokemon: [] as PokemonInterface[],
+    _allPokemons: [] as PokemonInterface[],
     allRank: new Map<PokemonSlug, PvpRank>(),
     generationSelected: 1,
     search: '',
@@ -26,46 +27,15 @@ const initialState = {
 
 export const PVPRankStore = signalStore(
     { providedIn: 'root' },
+    withPokemonSearch(),
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
         _localStorageService: inject(LocalStorageService),
     })),
     withState(initialState),
     withComputed((store) => ({
-        resultSelected: computed(() => {
-            let result: PokemonInterface[] = [];
-            if (store.search()) {
-                const allFamily = store
-                    .allPokemon()
-                    .filter(
-                        (pokemon) =>
-                            pokemon.slug.slugify().includes(store.search().slugify()) ||
-                            pokemon.type.some((type) => type.slugify() === store.search().slugify()),
-                    )
-                    .map((pokemon) => pokemon.family);
-                result = store
-                    .allPokemon()
-                    .filter((pokemon) => allFamily.includes(pokemon.family))
-                    .groupBy('family')
-                    .toList('values')
-                    .flat();
-            } else {
-                const onlyThisGeneration = store
-                    .allPokemon()
-                    .filter((pokemon) => pokemon.generation === store.generationSelected());
-
-                const hasMemberInThisGeneration = store
-                    .allPokemon()
-                    .groupBy('family')
-                    .toList('values')
-                    .filter((family) => family.some((pokemon) => pokemon.generation === store.generationSelected()))
-                    .flat()
-                    .filter((pokemon) => pokemon.generation !== store.generationSelected());
-                const map = onlyThisGeneration.groupBy('family');
-                hasMemberInThisGeneration.map((pokemon) => map.ensureArray(pokemon.family).push(pokemon));
-                result = map.toList('values').flat();
-            }
-            return result;
+        resultSelected: computed((): PokemonInterface[] => {
+            return store.doSearch(store._allPokemons, store.search, store.generationSelected);
         }),
     })),
     withMethods((store) => ({
@@ -80,10 +50,6 @@ export const PVPRankStore = signalStore(
             }
             return ranks.get(pokemon)!;
         },
-        selectGeneration(generation: number) {
-            patchState(store, { generationSelected: generation, search: '' });
-        },
-        setSearch: (value: string) => patchState(store, { search: value }),
     })),
     withMethods((store) => ({
         modifyRank(pokemon: PokemonSlug, newRank: number, league: 'super' | 'hyper', form: 'normal' | 'obscur') {
@@ -126,7 +92,7 @@ export const PVPRankStore = signalStore(
             const allPokemonsWithForms = allPokemons.concat(allPokemonsForms).sortAsc((pokemon) => pokemon.id);
 
             patchState(store, {
-                allPokemon: allPokemonsWithForms,
+                _allPokemons: allPokemonsWithForms,
                 allRank: map,
             });
         },

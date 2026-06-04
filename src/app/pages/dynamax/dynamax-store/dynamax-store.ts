@@ -62,9 +62,9 @@ export const DynamaxStore = signalStore(
             });
             return map;
         }),
-        searchPokemon: computed(() => {
+        searchPokemon: computed((): Map<TypePokemon, ResultDamage[]> | undefined => {
             if (store.search().length < 3) return;
-            const map = new Map();
+            const map = new Map<TypePokemon, ResultDamage[]>();
             allTypes.forEach((type) => {
                 const re = store
                     ._allDynamaxPokemonResultDamageBase()
