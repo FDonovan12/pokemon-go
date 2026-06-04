@@ -1,4 +1,4 @@
-import { computed, effect, inject } from '@angular/core';
+import { effect, inject } from '@angular/core';
 import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
@@ -19,10 +19,7 @@ export interface PvpRank {
 }
 
 const initialState = {
-    _allPokemons: [] as PokemonInterface[],
     allRank: new Map<PokemonSlug, PvpRank>(),
-    generationSelected: 1,
-    search: '',
 };
 
 export const PVPRankStore = signalStore(
@@ -33,11 +30,7 @@ export const PVPRankStore = signalStore(
         _localStorageService: inject(LocalStorageService),
     })),
     withState(initialState),
-    withComputed((store) => ({
-        resultSelected: computed((): PokemonInterface[] => {
-            return store.doSearch(store._allPokemons, store.search, store.generationSelected);
-        }),
-    })),
+    withComputed((store) => ({})),
     withMethods((store) => ({
         _getOrInitRank(pokemon: PokemonSlug): PvpRank {
             const ranks = store.allRank();

@@ -80,7 +80,10 @@
     {
       "id": "boite-raid-super-5",
       "name": "Boite raid super (x5)",
-      "items": [{ "type": "pass_raid_normal", "quantity": 5 }],
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 5 },
+        { "type": "rappel_max", "quantity": 10 }
+      ],
       "priceCoins": 480
     },
     {
@@ -149,6 +152,16 @@
     {
       "id": "boite-exploration",
       "name": "Boite exploration",
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 30 },
+        { "type": "oeuf_chance", "quantity": 10 },
+        { "type": "morceau_d_etoile", "quantity": 10 }
+      ],
+      "priceCoins": 2880
+    },
+    {
+      "id": "boite-exploration",
+      "name": "Boite exploration",
       "items": [{ "type": "incubateur_normal", "quantity": 25 }],
       "priceCoins": 2850
     },
@@ -212,6 +225,37 @@
         { "type": "super_incubateur", "quantity": 10 }
       ],
       "priceCoins": 1990
+    },
+    {
+      "id": "pack-incubateur-x16",
+      "name": "Pack incubateur (x16)",
+      "items": [
+        { "type": "encens", "quantity": 2 },
+        { "type": "poffin", "quantity": 2 },
+        { "type": "incubateur_normal", "quantity": 6 },
+        { "type": "super_incubateur", "quantity": 10 }
+      ],
+      "priceEuro": 16.5
+    },
+    {
+      "id": "lot-raid-eclosion",
+      "name": "Lot Raid et Éclosion",
+      "items": [
+        { "type": "framby_doree", "quantity": 9 },
+        { "type": "pass_raid_distance", "quantity": 3 },
+        { "type": "super_incubateur", "quantity": 9 }
+      ],
+      "priceEuro": 11
+    },
+    {
+      "id": "pack-incubateur-x25",
+      "name": "Pack incubateur (x25)",
+      "items": [
+        { "type": "poffin", "quantity": 2 },
+        { "type": "incubateur_normal", "quantity": 10 },
+        { "type": "super_incubateur", "quantity": 15 }
+      ],
+      "priceCoins": 2350
     },
     {
       "id": "boite-raid-incubateur-1",
@@ -377,6 +421,15 @@
       "priceEuro": 3.29
     },
     {
+      "id": "boite_exploration",
+      "name": "boite Exploration",
+      "items": [
+        { "type": "incubateur_normal", "quantity": 4 },
+        { "type": "super_incubateur", "quantity": 3 }
+      ],
+      "priceCoins": 745
+    },
+    {
       "id": "pass_a_distance",
       "name": "Passe a Distance",
       "items": [{ "type": "pass_raid_distance", "quantity": 1 }],
@@ -387,6 +440,15 @@
       "name": "Passe a Distance (x3)",
       "items": [{ "type": "pass_raid_distance", "quantity": 3 }],
       "priceCoins": 525
+    },
+    {
+      "id": "pass_a_distance_x2",
+      "name": "Passe a Distance (x2)",
+      "items": [
+        { "type": "pass_raid_distance", "quantity": 2 },
+        { "type": "hyper_potion", "quantity": 5 }
+      ],
+      "priceCoins": 315
     },
     {
       "id": "pass_premium",
@@ -427,6 +489,17 @@
         { "type": "morceau_d_etoile", "quantity": 10 }
       ],
       "priceCoins": 20000
+    },
+    {
+      "id": "pack_expert",
+      "name": "Pack expert",
+      "items": [
+        { "type": "encens", "quantity": 10 },
+        { "type": "oeuf_chance", "quantity": 2 },
+        { "type": "morceau_d_etoile", "quantity": 2 },
+        { "type": "poffin", "quantity": 5 }
+      ],
+      "priceCoins": 650
     },
 
     {

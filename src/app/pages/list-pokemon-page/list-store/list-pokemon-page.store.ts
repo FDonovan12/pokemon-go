@@ -2,7 +2,6 @@ import { computed, effect, inject } from '@angular/core';
 import { LabelEntry } from '@entities/label';
 import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
-import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { withPokemonSearch } from 'app/shared/features/pokemon-search/with-pokemon-search.feature';
@@ -11,12 +10,9 @@ import { ToastService } from 'app/shared/features/toast/toast.service';
 const LOCAL_STORAGE_KEEP = { label: 'veut garder', slug: 'pokemon-want-keep' };
 
 const initialState = {
-    _allPokemons: [] as PokemonInterface[],
-    generationSelected: 1,
     listEntries: [] as LabelEntry[],
     selectedListEntry: { label: '', slug: '' } as LabelEntry,
     selectedPokemonWantKeep: new Set<PokemonInterface>(),
-    search: '',
 };
 
 export const ListPokemonPageStore = signalStore(
@@ -26,7 +22,6 @@ export const ListPokemonPageStore = signalStore(
         _pokemonRepository: inject(PokemonRepository),
         _listPokemonRepository: inject(ListPokemonRepository),
         _toastService: inject(ToastService),
-        _internalListPokemonRepository: inject(InternalListPokemonRepository),
     })),
     withState(initialState),
     withComputed((store) => ({
@@ -38,9 +33,6 @@ export const ListPokemonPageStore = signalStore(
             const sorted = list.sortAsc((pokemon) => pokemon.id);
             const map = sorted.groupBy((pokemon) => pokemon.generation);
             return map;
-        }),
-        resultSelected: computed((): PokemonInterface[] => {
-            return store.doSearch(store._allPokemons, store.search, store.generationSelected);
         }),
     })),
     withMethods((store) => ({

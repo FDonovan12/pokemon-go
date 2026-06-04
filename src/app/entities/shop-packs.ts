@@ -81,6 +81,15 @@ export const ITEM_TYPES: Record<string, ItemTypeConfig> = {
     super_bonbon: { label: 'Super Bonbon', icon: 'Sprite_Super_Bonbon_GO.png' },
     framby_doree: { label: 'Framby dorée', icon: 'Sprite_Baie_Framby_dorée_GO.png' },
     piece: { label: 'Piece', icon: 'Miniature_PokéPièce_GO.png' },
+    potion: { label: 'Potion', icon: 'Sprite_Potion_GO.png' },
+    super_potion: { label: 'Super Potion', icon: 'Sprite_Super_Potion_GO.png' },
+    hyper_potion: { label: 'Hyper Potion', icon: 'Sprite_Hyper_Potion_GO.png' },
+    potion_max: { label: 'Potion MAX', icon: 'Sprite_Potion_Max_GO.png' },
+    rappel: { label: 'Rappel', icon: 'Sprite_Rappel_GO.png' },
+    rappel_max: { label: 'Rappel MAX', icon: 'Sprite_Rappel_Max_GO.png' },
+    pierre_sinnoh: { label: 'Pierre Sinnoh', icon: 'Sprite_Pierre_Sinnoh_GO.png' },
+    pierre_unys: { label: 'Pierre Unys', icon: 'Sprite_Pierre_Unys_GO.png' },
+    super_radar_rocket: { label: 'Super Radar Rocket', icon: 'Sprite_Super_Radar_Rocket_GO.png' },
 };
 
 // ── Pack class ────────────────────────────────────────────────────────────────
