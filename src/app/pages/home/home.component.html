@@ -57,7 +57,10 @@
     </div>
 }
 
-<app-add-filter [filterItem]="filterToEdit()"></app-add-filter>
+<app-add-filter
+    [filterItem]="filterToEdit()"
+    (filterAdded)="filterToEdit.set(undefined)"
+></app-add-filter>
 
 @for (filter of filters(); track filter.id) {
     <p>
