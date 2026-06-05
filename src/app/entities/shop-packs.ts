@@ -27,6 +27,14 @@ export type RawPack = {
     items: ItemEntry[];
 } & (PriceCoins | PriceEuro);
 
+export type PackJSON = {
+    id: string;
+    name: string;
+    items: ItemEntry[];
+    priceCoins?: number;
+    priceEuro?: number;
+} & ({ priceCoins: number } | { priceEuro: number });
+
 type PriceCoins = {
     priceCoins: number;
     priceEuro?: never;

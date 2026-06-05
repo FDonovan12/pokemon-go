@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ITEM_TYPES, PackData, RawPack } from '@entities/shop-packs';
+import { ITEM_TYPES, PackData, PackJSON, RawPack } from '@entities/shop-packs';
 import rawData from './pack.json';
 
 const CATEGORIES = [
@@ -52,7 +52,7 @@ const CATEGORIES = [
 })
 export class PacksRepository {
     getShopPacks(): PackData {
-        const typedPacks = rawData.packs as RawPack[];
+        const typedPacks = rawData.packs as PackJSON[];
         const result: PackData = {
             categories: CATEGORIES.toObject(
                 (category) => category.label.slugify(),
@@ -64,9 +64,9 @@ export class PacksRepository {
                             key: sub.key,
                             label: sub.label,
                             mainItemTypes: sub.mainItemTypes,
-                            packs: typedPacks.filter((pack) =>
-                                pack.items.some((item) => item.type.slugifyIn(sub.mainItemTypes)),
-                            ),
+                            packs: typedPacks
+                                .filter((pack) => pack.items.some((item) => item.type.slugifyIn(sub.mainItemTypes)))
+                                .flatMap(expandPack),
                         };
                     }),
                 }),
@@ -82,9 +82,22 @@ export class PacksRepository {
                     key: item,
                     label: ITEM_TYPES[item].label,
                     mainItemTypes: [item],
-                    packs: typedPacks.filter((pack) => pack.items.map((i) => i.type).includes(item)),
+                    packs: typedPacks
+                        .filter((pack) => pack.items.map((i) => i.type).includes(item))
+                        .flatMap(expandPack),
                 })),
         };
         return result;
     }
+}
+
+function expandPack(packJSON: PackJSON): RawPack[] {
+    const base = { id: packJSON.id, name: packJSON.name, items: packJSON.items };
+    if (packJSON.priceCoins && packJSON.priceEuro) {
+        return [
+            { ...base, priceCoins: packJSON.priceCoins },
+            { ...base, priceEuro: packJSON.priceEuro },
+        ];
+    }
+    return [packJSON as RawPack];
 }

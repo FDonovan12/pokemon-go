@@ -1,6 +1,54 @@
 {
   "packs": [
     {
+      "id": "boite-aventure-ultime-100",
+      "name": "Boite aventure ultime (x100)",
+      "items": [
+        { "type": "incubateur_normal", "quantity": 50 },
+        { "type": "super_incubateur", "quantity": 50 }
+      ],
+      "priceEuro": 55,
+      "priceCoins": 7000
+    },
+    {
+      "id": "bundle-raid_x60",
+      "name": "Bundle raid (x60)",
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 60 },
+        { "type": "nanana_argente", "quantity": 100 }
+      ],
+      "priceCoins": 5000,
+      "priceEuro": 44
+    },
+    {
+      "id": "pack-pass-x99",
+      "name": "Pack pass (x99)",
+      "items": [{ "type": "pass_raid_normal", "quantity": 99 }],
+      "priceCoins": 5425,
+      "priceEuro": 44
+    },
+    {
+      "id": "boite-raid-super-15",
+      "name": "Boite raid super (x15)",
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 15 },
+        { "type": "nanana_argente", "quantity": 3 },
+        { "type": "module_leurre", "quantity": 1 }
+      ],
+      "priceCoins": 999,
+      "priceEuro": 10
+    },
+    {
+      "id": "boite-incubateur-60",
+      "name": "Boite incubateur (x60)",
+      "items": [
+        { "type": "incubateur_normal", "quantity": 30 },
+        { "type": "super_incubateur", "quantity": 30 }
+      ],
+      "priceCoins": 5250,
+      "priceEuro": 44
+    },
+    {
       "id": "boite-raid-ultra-go-fest",
       "name": "Boite raid ultra go fest",
       "items": [
@@ -36,34 +84,10 @@
       "priceCoins": 3195
     },
     {
-      "id": "bundle-raid_x60",
-      "name": "Bundle raid (x60)",
-      "items": [
-        { "type": "pass_raid_normal", "quantity": 60 },
-        { "type": "nanana_argente", "quantity": 100 }
-      ],
-      "priceCoins": 5000
-    },
-    {
-      "id": "bundle-raid_x60",
-      "name": "Bundle raid (x60)",
-      "items": [
-        { "type": "pass_raid_normal", "quantity": 60 },
-        { "type": "nanana_argente", "quantity": 100 }
-      ],
-      "priceEuro": 44
-    },
-    {
       "id": "ticket-journee-raid",
       "name": "Ticket journee de raid",
       "items": [{ "type": "pass_raid_normal", "quantity": 8 }],
       "priceEuro": 5.49
-    },
-    {
-      "id": "pack-pass-x99",
-      "name": "Pack pass (x99)",
-      "items": [{ "type": "pass_raid_normal", "quantity": 99 }],
-      "priceCoins": 5425
     },
     {
       "id": "pack-pass-x6",
@@ -78,6 +102,16 @@
       "priceCoins": 625
     },
     {
+      "id": "boite-aventure-distance-10",
+      "name": "Boite aventure distance (x10)",
+      "items": [
+        { "type": "oeuf_chance", "quantity": 2 },
+        { "type": "pass_raid_normal", "quantity": 10 },
+        { "type": "morceau_d_etoile", "quantity": 2 }
+      ],
+      "priceEuro": 5.5
+    },
+    {
       "id": "boite-raid-super-5",
       "name": "Boite raid super (x5)",
       "items": [
@@ -85,26 +119,6 @@
         { "type": "rappel_max", "quantity": 10 }
       ],
       "priceCoins": 480
-    },
-    {
-      "id": "boite-raid-super-15",
-      "name": "Boite raid super (x15)",
-      "items": [
-        { "type": "pass_raid_normal", "quantity": 15 },
-        { "type": "nanana_argente", "quantity": 3 },
-        { "type": "module_leurre", "quantity": 1 }
-      ],
-      "priceCoins": 999
-    },
-    {
-      "id": "boite-raid-super-15",
-      "name": "Boite raid super (x15)",
-      "items": [
-        { "type": "pass_raid_normal", "quantity": 15 },
-        { "type": "nanana_argente", "quantity": 3 },
-        { "type": "module_leurre", "quantity": 1 }
-      ],
-      "priceEuro": 10
     },
     {
       "id": "kit_recuperation_raid_x15",
@@ -130,18 +144,6 @@
       "name": "Pack pass (x5)",
       "items": [{ "type": "pass_raid_normal", "quantity": 5 }],
       "priceEuro": 2.19
-    },
-    {
-      "id": "boite-aventure-distance-10",
-      "name": "Boite aventure distance (x10)",
-      "items": [{ "type": "pass_raid_normal", "quantity": 10 }],
-      "priceEuro": 5.49
-    },
-    {
-      "id": "pack-pass-distance-x99",
-      "name": "Pack pass distance (x99)",
-      "items": [{ "type": "pass_raid_normal", "quantity": 99 }],
-      "priceEuro": 44
     },
     {
       "id": "pack-pass-distance-x100",
@@ -174,24 +176,6 @@
         { "type": "pass_raid_normal", "quantity": 20 }
       ],
       "priceCoins": 4350
-    },
-    {
-      "id": "boite-aventure-ultime-60",
-      "name": "Boite aventure ultime (x60)",
-      "items": [
-        { "type": "incubateur_normal", "quantity": 30 },
-        { "type": "super_incubateur", "quantity": 30 }
-      ],
-      "priceEuro": 44
-    },
-    {
-      "id": "boite-aventure-ultime-100",
-      "name": "Boite aventure ultime (x100)",
-      "items": [
-        { "type": "incubateur_normal", "quantity": 50 },
-        { "type": "super_incubateur", "quantity": 50 }
-      ],
-      "priceEuro": 55
     },
     {
       "id": "pack-incubateur-x5",
@@ -267,28 +251,10 @@
       "priceCoins": 195
     },
     {
-      "id": "boite-raid-incubateur-7",
-      "name": "Boite raid (x7)",
+      "id": "boite-incubateur-7",
+      "name": "Boite incubateur (x7)",
       "items": [{ "type": "incubateur_normal", "quantity": 7 }],
       "priceCoins": 745
-    },
-    {
-      "id": "boite-raid-incubateur-100",
-      "name": "Boite raid (x100)",
-      "items": [
-        { "type": "incubateur_normal", "quantity": 50 },
-        { "type": "super_incubateur", "quantity": 50 }
-      ],
-      "priceCoins": 7000
-    },
-    {
-      "id": "boite-raid-incubateur-60",
-      "name": "Boite raid (x60)",
-      "items": [
-        { "type": "incubateur_normal", "quantity": 30 },
-        { "type": "super_incubateur", "quantity": 30 }
-      ],
-      "priceCoins": 5250
     },
     {
       "id": "kit-apex",
@@ -399,6 +365,16 @@
         { "type": "incubateur_normal", "quantity": 1 }
       ],
       "priceCoins": 675
+    },
+    {
+      "id": "boite_raid_distance",
+      "name": "boite raid à distance",
+      "items": [
+        { "type": "super_potion", "quantity": 10 },
+        { "type": "pass_raid_distance", "quantity": 3 },
+        { "type": "oeuf_chance", "quantity": 1 }
+      ],
+      "priceCoins": 500
     },
     {
       "id": "boite_go_rocket",
