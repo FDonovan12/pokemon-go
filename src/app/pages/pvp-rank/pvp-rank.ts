@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { PokemonSlug } from '@entities/pokemon';
 import { ImagePokemon } from 'app/shared/components/image-pokemon/image-pokemon';
+import { PokemonSearchComponent } from 'app/shared/features/pokemon-search/pokemon-search.component.ts/pokemon-search.component';
+import { SEARCH_STORE } from 'app/shared/features/pokemon-search/search.token';
 import { ModifyRankDialogComponent } from './modify-rank-dialog/modify-rank-dialog';
 import { PVPRankStore } from './pvp-rank-store/pvp-rank-store';
 
@@ -8,7 +10,8 @@ export type League = 'super' | 'hyper';
 export type Form = 'normal' | 'obscur';
 @Component({
     selector: 'app-pvp-rank',
-    imports: [ImagePokemon, ModifyRankDialogComponent],
+    imports: [ImagePokemon, ModifyRankDialogComponent, PokemonSearchComponent],
+    providers: [{ provide: SEARCH_STORE, useExisting: PVPRankStore }],
     templateUrl: './pvp-rank.html',
     styleUrl: './pvp-rank.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

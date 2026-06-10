@@ -168,8 +168,8 @@
       "priceCoins": 2850
     },
     {
-      "id": "boite-eclosion",
-      "name": "Boite eclosion",
+      "id": "boite-exploration",
+      "name": "Boite exploration",
       "items": [
         { "type": "incubateur_normal", "quantity": 20 },
         { "type": "super_incubateur", "quantity": 20 },
@@ -202,12 +202,15 @@
       "priceCoins": 3500
     },
     {
-      "id": "pack-incubateur-x22",
-      "name": "Pack incubateur (x22)",
+      "id": "boite-raid-pro-x22",
+      "name": "Boîte Raid Pro (x22)",
       "items": [
+        { "type": "oeuf_chance", "quantity": 1 },
+        { "type": "morceau_d_etoile", "quantity": 1 },
         { "type": "incubateur_normal", "quantity": 12 },
         { "type": "super_incubateur", "quantity": 10 }
       ],
+      "priceEuro": 16.5,
       "priceCoins": 1990
     },
     {
@@ -222,6 +225,17 @@
       "priceEuro": 16.5
     },
     {
+      "id": "eclosion-pratique-x15",
+      "name": "Éclosion Pratique (x15)",
+      "items": [
+        { "type": "encens", "quantity": 5 },
+        { "type": "hyper_ball", "quantity": 30 },
+        { "type": "incubateur_normal", "quantity": 2 },
+        { "type": "super_incubateur", "quantity": 13 }
+      ],
+      "priceEuro": 14
+    },
+    {
       "id": "lot-raid-eclosion",
       "name": "Lot Raid et Éclosion",
       "items": [
@@ -232,8 +246,19 @@
       "priceEuro": 11
     },
     {
-      "id": "pack-incubateur-x25",
-      "name": "Pack incubateur (x25)",
+      "id": "lot-de-raid-pro",
+      "name": "Lot de Raid Pro",
+      "items": [
+        { "type": "incubateur_normal", "quantity": 15 },
+        { "type": "super_incubateur", "quantity": 15 },
+        { "type": "rappel_max", "quantity": 10 },
+        { "type": "pass_raid_normal", "quantity": 15 }
+      ],
+      "priceEuro": 33
+    },
+    {
+      "id": "pack-eclosion-x25",
+      "name": "Pack eclosion (x25)",
       "items": [
         { "type": "poffin", "quantity": 2 },
         { "type": "incubateur_normal", "quantity": 10 },
@@ -298,6 +323,16 @@
       "priceCoins": 2825
     },
     {
+      "id": "lot-triple-boost",
+      "name": "Lot Triple Boost",
+      "items": [
+        { "type": "encens", "quantity": 6 },
+        { "type": "oeuf_chance", "quantity": 6 },
+        { "type": "morceau_d_etoile", "quantity": 6 }
+      ],
+      "priceEuro": 6.5
+    },
+    {
       "id": "boite-raid-ultra-x15",
       "name": "Boite Raid Ultra (x15)",
       "items": [
@@ -320,22 +355,14 @@
       "priceEuro": 10
     },
     {
-      "id": "lot_star_eclosion_x20",
-      "name": "Lot star de l'eclosion (x20)",
+      "id": "boite_exploration",
+      "name": "Boite exploration",
       "items": [
         { "type": "pass_raid_normal", "quantity": 20 },
         { "type": "incubateur_normal", "quantity": 30 }
       ],
+      "priceCoins": 3100,
       "priceEuro": 28
-    },
-    {
-      "id": "boite_exploration_x20",
-      "name": "Boite eclosion (x20)",
-      "items": [
-        { "type": "pass_raid_normal", "quantity": 20 },
-        { "type": "incubateur_normal", "quantity": 30 }
-      ],
-      "priceCoins": 3100
     },
     {
       "id": "boite_voyage",
@@ -348,8 +375,8 @@
       "priceCoins": 3750
     },
     {
-      "id": "boite_eclosion",
-      "name": "Boite eclosion",
+      "id": "boite_raid_ultra",
+      "name": "Boite Raid Ultra",
       "items": [
         { "type": "pass_raid_normal", "quantity": 20 },
         { "type": "incubateur_normal", "quantity": 10 }
@@ -416,6 +443,15 @@
       "name": "Passe a Distance (x3)",
       "items": [{ "type": "pass_raid_distance", "quantity": 3 }],
       "priceCoins": 525
+    },
+    {
+      "id": "pack-raid-et-poussieres-etoiles",
+      "name": "Pack Raid et Poussières Étoiles",
+      "items": [
+        { "type": "pass_raid_distance", "quantity": 2 },
+        { "type": "morceau_d_etoile", "quantity": 1 }
+      ],
+      "priceEuro": 3.3
     },
     {
       "id": "pass_a_distance_x2",

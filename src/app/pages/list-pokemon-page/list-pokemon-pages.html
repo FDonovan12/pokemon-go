@@ -40,26 +40,16 @@
         </option>
     }
 </select>
-<p>
-    <button (click)="clipboardService.copyToClipboard(filterAll())">Copie filtre tout les Pokémon sélectionné</button>
-</p>
-<p>
-    <button (click)="clipboardService.copyToClipboard(filterNeither())">Copie filtre tout les Pokémon non sélectionné</button>
-</p>
-<div style="display: flex; gap: 0.375em; flex-wrap: wrap">
-    @for (generation of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track $index) {
-        <button (click)="store.selectGeneration(generation)">Generation {{ generation }}</button>
-    }
+<div style="margin-block: 0.5em">
+    <span style="margin-right: 0.5em">
+        <button (click)="clipboardService.copyToClipboard(filterAll())">Copie base</button>
+    </span>
+    <span>
+        <button (click)="clipboardService.copyToClipboard(filterNeither())">Copie inversé</button>
+    </span>
 </div>
-<br />
-<label for="searchInput">Recherche :</label>
-<input
-    id="searchInput"
-    #searchInput
-    type="text"
-    [(ngModel)]="search"
-/>
-<button (click)="search.set('')">Reset</button>
+
+<app-pokemon-search></app-pokemon-search>
 
 @if (store.search()) {
     <h2>Pokemon recherché</h2>

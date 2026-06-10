@@ -1,28 +1,19 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    effect,
-    ElementRef,
-    inject,
-    model,
-    signal,
-    Signal,
-    ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal, Signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
-import { Router } from '@angular/router';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { FilterService } from '@services/filter-service/filter-service';
 import { ShareListService } from '@services/share-list/share-list.service';
 import { ImagePokemon } from 'app/shared/components/image-pokemon/image-pokemon';
+import { PokemonSearchComponent } from 'app/shared/features/pokemon-search/pokemon-search.component.ts/pokemon-search.component';
+import { SEARCH_STORE } from 'app/shared/features/pokemon-search/search.token';
 import { ToastService } from 'app/shared/features/toast/toast.service';
 import { ListPokemonPageStore } from './list-store/list-pokemon-page.store';
 
 @Component({
     selector: 'app-keep-pokemon-pages',
-    imports: [FormsModule, ReactiveFormsModule, ImagePokemon, FormField],
+    imports: [FormsModule, ReactiveFormsModule, ImagePokemon, FormField, PokemonSearchComponent],
+    providers: [{ provide: SEARCH_STORE, useExisting: ListPokemonPageStore }],
     templateUrl: './list-pokemon-pages.html',
     styleUrl: './list-pokemon-pages.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,7 +24,6 @@ export class ListPokemonPages {
     private readonly filterService = inject(FilterService);
     private readonly shareListService = inject(ShareListService);
     private readonly toastService = inject(ToastService);
-    private readonly router = inject(Router);
 
     filterAll: Signal<string> = computed(() =>
         this.filterService.buildAllPokemon(this.store.selectedPokemonWantKeep().toList()),
@@ -42,20 +32,7 @@ export class ListPokemonPages {
         this.filterService.buildNeitherPokemon(this.store.selectedPokemonWantKeep().toList()),
     );
 
-    @ViewChild('searchInput') searchInputRef!: ElementRef<HTMLInputElement>;
-
-    search = model('');
     addListForm = form(signal({ listName: '' }));
-
-    constructor() {
-        effect(() => {
-            this.store.setSearch(this.search());
-
-            queueMicrotask(() => {
-                this.searchInputRef.nativeElement.focus();
-            });
-        });
-    }
 
     addList() {
         const text = this.addListForm.listName().value();

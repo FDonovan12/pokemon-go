@@ -98,6 +98,9 @@ export const ITEM_TYPES: Record<string, ItemTypeConfig> = {
     pierre_sinnoh: { label: 'Pierre Sinnoh', icon: 'Sprite_Pierre_Sinnoh_GO.png' },
     pierre_unys: { label: 'Pierre Unys', icon: 'Sprite_Pierre_Unys_GO.png' },
     super_radar_rocket: { label: 'Super Radar Rocket', icon: 'Sprite_Super_Radar_Rocket_GO.png' },
+    poke_ball: { label: 'Poke Ball', icon: 'Sprite_Poké_Ball_GO.png' },
+    super_ball: { label: 'Super Ball', icon: 'Sprite_Super_Ball_GO.png' },
+    hyper_ball: { label: 'Hyper Ball', icon: 'Sprite_Hyper_Ball_GO.png' },
 };
 
 // ── Pack class ────────────────────────────────────────────────────────────────
