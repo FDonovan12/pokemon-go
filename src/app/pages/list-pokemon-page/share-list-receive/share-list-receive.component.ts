@@ -58,21 +58,17 @@ export class ShareListReceiveComponent implements OnInit {
         this.isLoading = true;
         try {
             const listLabel = this.listName.trim();
-            const listSlug = listLabel.slugify();
 
-            // Sauvegarder les slugs pour cette liste
+            const newList = this.store.addList(listLabel);
+
             const ids = this.shareData.ids;
             const slugs = ids.map((id) => this.pokemonRepository.getPokemonById(id)?.slug!).compact();
-            this.listPokemonRepository.saveSlugsForList({ label: listLabel, slug: listSlug }, slugs);
-
-            // Mettre à jour le store pour afficher la nouvelle liste
-            this.store.addList(listLabel);
+            this.listPokemonRepository.saveSlugsForList(newList, slugs);
 
             this.toastService
-                .prepare('✓ Succès', `Liste "${listLabel}" créée avec ${this.shareData.ids.length} pokémons`)
+                .prepare('✓ Succès', `Liste "${newList}" créée avec ${slugs.length} pokémons`)
                 .showSuccess();
 
-            // Rediriger vers la page keep après un délai
             this.router.navigate(['/keep']);
         } catch (err) {
             this.error = 'Erreur lors de la création de la liste';

@@ -1,6 +1,6 @@
 import { computed, effect, inject } from '@angular/core';
 import { LabelEntry } from '@entities/label';
-import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { PokemonInterface } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
@@ -54,44 +54,14 @@ export const ListPokemonPageStore = signalStore(
             }
             patchState(store, { selectedPokemonWantKeep: set });
         },
-        exportKeepPokemon() {
-            const slugs = Array.from(store.selectedPokemonWantKeep()).map((p) => p.slug);
-            const blob = new Blob([JSON.stringify(slugs, null, 2)], {
-                type: 'application/json',
-            });
-
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = store.selectedListKey() + '.json';
-            a.click();
-
-            URL.revokeObjectURL(a.href);
-        },
-        onFilesSelected(event: Event) {
-            const input = event.target as HTMLInputElement;
-            if (!input.files) return;
-
-            const files = Array.from(input.files);
-            const promises = files.map((file) => readFile(file));
-
-            Promise.all(promises).then((arraysOfSlugs) => {
-                const allSlugs: PokemonSlug[] = arraysOfSlugs.flat();
-                const set = new Set<PokemonInterface>(store.selectedPokemonWantKeep().toList());
-                allSlugs.forEach((pokemonName) => set.add(store._pokemonRepository.pokemonIndex.byName[pokemonName]));
-                patchState(store, { selectedPokemonWantKeep: set });
-            });
-        },
-        addList: (nameList: string) => {
+        addList: (nameList: string): LabelEntry => {
             const oldListNames = store.listEntries();
-            const existingSlugs = oldListNames.map((entry) => entry.slug);
-            const newSlug = nameList.slugify();
-            if (existingSlugs.includes(newSlug)) {
-                window.alert('Vous ne pouvez pas ajouter une liste qui existe déjà');
-                return;
-            }
-            const newEntry: LabelEntry = { label: nameList, slug: newSlug };
+            const newId = crypto.randomUUID();
+
+            const newEntry: LabelEntry = { label: nameList, slug: newId };
             const newList = [...oldListNames, newEntry];
             patchState(store, { listEntries: newList, selectedListEntry: newEntry });
+            return newEntry;
         },
     })),
     withMethods((store) => ({
@@ -156,25 +126,3 @@ export const ListPokemonPageStore = signalStore(
         },
     })),
 );
-
-function readFile(file: File): Promise<PokemonSlug[]> {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            try {
-                const json = JSON.parse(reader.result as string);
-                if (Array.isArray(json)) {
-                    resolve(json);
-                } else {
-                    reject('JSON non valide : doit être un tableau de slug');
-                }
-            } catch (e) {
-                reject('Erreur parsing JSON');
-            }
-        };
-
-        reader.onerror = () => reject(reader.error);
-        reader.readAsText(file);
-    });
-}

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, model, ViewChild } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, ElementRef, inject, viewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SEARCH_STORE, WithSearch } from '../search.token';
 
@@ -12,17 +12,18 @@ import { SEARCH_STORE, WithSearch } from '../search.token';
 export class PokemonSearchComponent {
     protected readonly store: WithSearch = inject(SEARCH_STORE);
 
-    @ViewChild('searchInput') searchInputRef!: ElementRef<HTMLInputElement>;
+    searchInputRef = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
 
-    search = model('');
+    search = this.store.search;
 
     constructor() {
-        effect(() => {
-            this.store.setSearch(this.search());
-
-            queueMicrotask(() => {
-                this.searchInputRef.nativeElement.focus();
-            });
+        afterNextRender(() => {
+            this.searchInputRef().nativeElement.focus();
         });
+    }
+
+    reset() {
+        this.store.setSearch('');
+        this.searchInputRef().nativeElement.focus();
     }
 }
