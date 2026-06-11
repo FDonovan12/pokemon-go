@@ -4,10 +4,10 @@ import { form, FormField } from '@angular/forms/signals';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { FilterService } from '@services/filter-service/filter-service';
 import { ShareListService } from '@services/share-list/share-list.service';
-import { ImagePokemon } from 'app/shared/components/image-pokemon/image-pokemon';
-import { PokemonSearchComponent } from 'app/shared/features/pokemon-search/pokemon-search.component.ts/pokemon-search.component';
-import { SEARCH_STORE } from 'app/shared/features/pokemon-search/search.token';
-import { ToastService } from 'app/shared/features/toast/toast.service';
+import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
+import { PokemonSearchComponent } from '@shared/features/pokemon-search/pokemon-search.component.ts/pokemon-search.component';
+import { SEARCH_STORE } from '@shared/features/pokemon-search/search.token';
+import { ToastService } from '@shared/features/toast/toast.service';
 import { ListPokemonPageStore } from './list-store/list-pokemon-page.store';
 
 @Component({

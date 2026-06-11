@@ -10,6 +10,7 @@ import { ItemTag } from './item-tag/item-tag';
     standalone: true,
     imports: [CommonModule, ItemTag],
     templateUrl: './shop-packs-page.html',
+
     styleUrl: './shop-packs-page.css',
 })
 export class ShopPacksComponent {

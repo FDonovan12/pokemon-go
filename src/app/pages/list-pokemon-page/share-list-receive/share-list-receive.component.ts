@@ -4,14 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ShareDataIds, ShareListService } from '@services/share-list/share-list.service';
-import { ToastService } from 'app/shared/features/toast/toast.service';
 import { ListPokemonPageStore } from '../list-store/list-pokemon-page.store';
+import { ToastService } from '@shared/features/toast/toast.service';
 
 @Component({
     selector: 'app-share-list-receive',
     standalone: true,
     imports: [FormsModule],
     templateUrl: './share-list-receive.component.html',
+
     styleUrl: './share-list-receive.component.css',
 })
 export class ShareListReceiveComponent implements OnInit {

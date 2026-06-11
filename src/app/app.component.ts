@@ -9,6 +9,7 @@ import { ToastService } from './shared/features/toast/toast.service';
     standalone: true,
     imports: [RouterOutlet, RouterLink, ToastContainerComponent],
     templateUrl: './app.component.html',
+
     styleUrl: './app.component.css',
 })
 export class AppComponent {

@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { PokemonFamily, PokemonInterface, PokemonSlug } from '@entities/pokemon';
-import pokemonsData from 'app/bdd/bdd-pokemons.json';
-import { familyPokemon } from 'app/bdd/family-pokemon';
-import { pokemonFamilyName } from 'app/bdd/family-pokemon-name';
-import { megaPokemon } from 'app/bdd/mega-pokemon';
-import { ToastService } from 'app/shared/features/toast/toast.service';
+import { ToastService } from '@shared/features/toast/toast.service';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
+import pokemonsData from '../../bdd/bdd-pokemons.json';
+import { familyPokemon } from '../../bdd/family-pokemon';
+import { pokemonFamilyName } from '../../bdd/family-pokemon-name';
+import { megaPokemon } from '../../bdd/mega-pokemon';
 
 const pokemonsList = pokemonsData as PokemonInterface[];
 

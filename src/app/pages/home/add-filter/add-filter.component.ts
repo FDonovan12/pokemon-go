@@ -3,13 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { FilterItem, FiltersFacade, ListItem } from '@repositories/filters-repository';
 import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
-import { ToastService } from 'app/shared/features/toast/toast.service';
+import { ToastService } from '@shared/features/toast/toast.service';
 
 @Component({
     selector: 'app-add-filter',
     standalone: true,
     imports: [FormsModule],
     templateUrl: './add-filter.component.html',
+
     styleUrl: './add-filter.component.css',
 })
 export class AddFilterComponent {

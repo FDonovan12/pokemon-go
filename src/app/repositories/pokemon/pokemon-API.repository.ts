@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { PokemonInterface, TypePokemon } from '@entities/pokemon';
-import pokemonsData from 'app/bdd/bdd-pokemons.json';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
+import pokemonsData from '../../bdd/bdd-pokemons.json';
 
 const pokemonsList = pokemonsData as PokemonInterface[];
 

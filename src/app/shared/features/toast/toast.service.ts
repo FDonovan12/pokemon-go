@@ -1,9 +1,10 @@
 import { Injectable, signal } from '@angular/core';
-import { AnyToast } from 'app/shared/features/toast/toast.model';
 import { ToastBuilder } from './toast.builder';
+import { AnyToast } from './toast.model';
+import { ToastDispatcher } from './toast.dispatcher';
 
 @Injectable({ providedIn: 'root' })
-export class ToastService {
+export class ToastService implements ToastDispatcher {
     private readonly _toasts = signal<AnyToast[]>([]);
     readonly toasts = this._toasts.asReadonly();
 

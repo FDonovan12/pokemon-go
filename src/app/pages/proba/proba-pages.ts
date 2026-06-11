@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
     selector: 'app-proba-pages',
     imports: [],
     templateUrl: './proba-pages.html',
+
     styleUrl: './proba-pages.css',
 })
 export class ProbaPages {

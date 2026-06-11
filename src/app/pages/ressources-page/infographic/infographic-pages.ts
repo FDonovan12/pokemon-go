@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IMAGES } from 'app/shared/assets/images.generated';
+import { IMAGES } from '@shared/assets/images.generated';
 
 @Component({
     selector: 'app-infographic-pages',

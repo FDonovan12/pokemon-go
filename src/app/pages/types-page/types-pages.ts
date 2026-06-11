@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { allTypes, TypePokemon } from '@entities/pokemon';
-import { TypeComponent } from 'app/shared/components/type/type.component';
-import { PercentColor } from '../../shared/components/percent-color/percent-color';
+import { PercentColor } from '@shared/components/percent-color/percent-color';
+import { TypeComponent } from '@shared/components/type/type.component';
 import { RelationTypeComponent } from './components/relation-type-component/relation-type-component';
 import { TypesStore } from './types-store/types-store';
 

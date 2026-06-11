@@ -7,17 +7,18 @@ import { PokemonInterface } from '@entities/pokemon';
 import { FilterItem, FilterItemResolved, FiltersFacade } from '@repositories/filters-repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
-import { ToastService } from 'app/shared/features/toast/toast.service';
 import { EventPokemon } from '../../entities/event';
 import { EventRepository } from '../../repositories/event/event.repository';
 import { ListPokemonPageStore } from '../list-pokemon-page/list-store/list-pokemon-page.store';
 import { AddFilterComponent } from './add-filter/add-filter.component';
+import { ToastService } from '@shared/features/toast/toast.service';
 
 @Component({
     selector: 'app-home',
     standalone: true,
     imports: [RouterLink, DatePipe, AddFilterComponent, FormsModule],
     templateUrl: './home.component.html',
+
     styleUrl: './home.component.css',
 })
 export class HomeComponent {

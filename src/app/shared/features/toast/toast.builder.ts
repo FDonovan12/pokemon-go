@@ -1,5 +1,5 @@
-import { ConfirmationToast, Toast, ToastType } from 'app/shared/features/toast/toast.model';
-import { ToastService } from '../toast/toast.service';
+import { ToastDispatcher } from './toast.dispatcher';
+import { ConfirmationToast, Toast, ToastType } from './toast.model';
 
 export class ToastBuilder {
     private static readonly TOAST_RULES: Record<ToastType, { duration: number; canClose: boolean; icon: string }> = {
@@ -13,11 +13,11 @@ export class ToastBuilder {
     private constructor(
         private readonly title: string,
         private readonly message: string,
-        private readonly service: ToastService,
+        private readonly service: ToastDispatcher,
         private readonly customIcon: string | null = null,
     ) {}
 
-    static _internal(title: string, message: string, service: ToastService): ToastBuilder {
+    static _internal(title: string, message: string, service: ToastDispatcher): ToastBuilder {
         return new ToastBuilder(title, message, service);
     }
 

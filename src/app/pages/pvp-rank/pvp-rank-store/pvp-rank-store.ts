@@ -3,7 +3,7 @@ import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
-import { withPokemonSearch } from 'app/shared/features/pokemon-search/with-pokemon-search.feature';
+import { withPokemonSearch } from '@shared/features/pokemon-search/with-pokemon-search.feature';
 
 const LOCAL_STORAGE_PVP_RANK = 'pokemon-pvp_rank';
 

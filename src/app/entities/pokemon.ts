@@ -1,5 +1,5 @@
-import { pokemonFamilyName } from 'app/bdd/family-pokemon-name';
-import { pokemonSlugs } from 'app/bdd/name-pokemon';
+import { pokemonFamilyName } from '../bdd/family-pokemon-name';
+import { pokemonSlugs } from '../bdd/name-pokemon';
 
 type ExtractSlug<T extends readonly { slug: string }[]> = T[number]['slug'];
 

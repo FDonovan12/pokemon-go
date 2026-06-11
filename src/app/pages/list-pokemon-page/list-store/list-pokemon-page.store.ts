@@ -4,8 +4,8 @@ import { PokemonInterface } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
-import { withPokemonSearch } from 'app/shared/features/pokemon-search/with-pokemon-search.feature';
-import { ToastService } from 'app/shared/features/toast/toast.service';
+import { withPokemonSearch } from '@shared/features/pokemon-search/with-pokemon-search.feature';
+import { ToastService } from '@shared/features/toast/toast.service';
 
 const LOCAL_STORAGE_KEEP = { label: 'veut garder', slug: 'pokemon-want-keep' };
 

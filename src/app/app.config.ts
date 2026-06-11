@@ -2,18 +2,18 @@ import { ApplicationConfig, LOCALE_ID, isDevMode, provideAppInitializer } from '
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideServiceWorker } from '@angular/service-worker';
 import { Logger } from '@services/logger/logger';
 import { LoggerDev } from '@services/logger/logger.dev';
 import { LoggerProd } from '@services/logger/logger.prod';
-import { environment } from 'environments/environment';
-import { routes } from './app.routes';
 import { runMigrations } from '@services/migration-service/migration-service';
+import { routes } from './app.routes';
+import { environment } from '@environments/environment.development';
 
 export const appConfig: ApplicationConfig = {
     providers: [
-        provideHttpClient(),
+        provideHttpClient(withXhr()),
         provideRouter(
             routes,
             withComponentInputBinding(),

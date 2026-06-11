@@ -11,6 +11,7 @@ import { SavageGroupComponent } from './savage-group/savage-group';
     standalone: true,
     imports: [SavageGroupComponent],
     templateUrl: './event.component.html',
+
     styleUrl: './event.component.css',
 })
 export class EventComponent {

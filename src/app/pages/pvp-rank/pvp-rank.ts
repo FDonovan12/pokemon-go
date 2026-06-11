@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { PokemonSlug } from '@entities/pokemon';
-import { ImagePokemon } from 'app/shared/components/image-pokemon/image-pokemon';
-import { PokemonSearchComponent } from 'app/shared/features/pokemon-search/pokemon-search.component.ts/pokemon-search.component';
-import { SEARCH_STORE } from 'app/shared/features/pokemon-search/search.token';
+import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
+import { PokemonSearchComponent } from '@shared/features/pokemon-search/pokemon-search.component.ts/pokemon-search.component';
+import { SEARCH_STORE } from '@shared/features/pokemon-search/search.token';
 import { ModifyRankDialogComponent } from './modify-rank-dialog/modify-rank-dialog';
 import { PVPRankStore } from './pvp-rank-store/pvp-rank-store';
+import { Forme, League } from './pvp-rank.type';
 
-export type League = 'super' | 'hyper';
-export type Form = 'normal' | 'obscur';
 @Component({
     selector: 'app-pvp-rank',
     imports: [ImagePokemon, ModifyRankDialogComponent, PokemonSearchComponent],
@@ -21,22 +20,22 @@ export class PvpRankPages {
 
     selectedPokemon: PokemonSlug | null = null;
     selectedLeague: League = 'super';
-    selectedForm: Form = 'normal';
+    selectedForm: Forme = 'normal';
     showDialog = signal(false);
 
     onRankCancelled() {
         this.showDialog.set(false);
     }
 
-    onRankSubmitted(data: { rank: number; league: League; form: Form }) {
-        this.store.modifyRank(this.selectedPokemon!, data.rank, data.league, data.form);
+    onRankSubmitted(data: { rank: number; league: League; forme: Forme }) {
+        this.store.modifyRank(this.selectedPokemon!, data.rank, data.league, data.forme);
         this.showDialog.set(false);
     }
 
-    openModifyRankDialog(pokemon: PokemonSlug, league: League = 'super', form: Form = 'normal') {
+    openModifyRankDialog(pokemon: PokemonSlug, league: League = 'super', forme: Forme = 'normal') {
         this.selectedPokemon = pokemon;
         this.selectedLeague = league;
-        this.selectedForm = form;
+        this.selectedForm = forme;
         this.showDialog.set(true);
     }
 }
