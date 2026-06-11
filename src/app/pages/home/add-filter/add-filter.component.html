@@ -27,16 +27,21 @@
                 <label>Libellé du filtre:</label>
                 <input
                     type="text"
-                    [(ngModel)]="newFilterLabel"
+                    [formField]="filterForm.label"
                     placeholder="ex: Mon filtre perso"
                     style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box"
                 />
+                @if (filterForm.label().touched() && filterForm.label().invalid()) {
+                    @for (error of filterForm.label().errors(); track error) {
+                        <p style="color: red">{{ error.message }}</p>
+                    }
+                }
             </div>
 
             <div style="margin-bottom: 20px">
                 <label>Requête du filtre:</label>
                 <textarea
-                    [(ngModel)]="newFilterPrefix"
+                    [formField]="filterForm.query.prefix"
                     placeholder="ex: 2-attaque, -1défense"
                     style="
                         width: 100%;
@@ -81,10 +86,18 @@
                                         <button
                                             (click)="toggleListInversion(listEntry.slug)"
                                             [style.background-color]="
-                                                selectedLists().find((item) => item.key === listEntry.slug)?.inverted ? '#ff6b6b' : '#fff'
+                                                this.filterForm()
+                                                    .value()
+                                                    .query.lists!.items.find((item) => item.key === listEntry.slug)?.inverted
+                                                    ? '#ff6b6b'
+                                                    : '#fff'
                                             "
                                             [style.color]="
-                                                selectedLists().find((item) => item.key === listEntry.slug)?.inverted ? '#fff' : '#333'
+                                                this.filterForm()
+                                                    .value()
+                                                    .query.lists!.items.find((item) => item.key === listEntry.slug)?.inverted
+                                                    ? '#fff'
+                                                    : '#333'
                                             "
                                             style="
                                                 padding: 2px 4px;
@@ -96,7 +109,13 @@
                                                 white-space: nowrap;
                                             "
                                         >
-                                            {{ selectedLists().find((item) => item.key === listEntry.slug)?.inverted ? 'Inversé' : 'Base' }}
+                                            {{
+                                                this.filterForm()
+                                                    .value()
+                                                    .query.lists!.items.find((item) => item.key === listEntry.slug)?.inverted
+                                                    ? 'Inversé'
+                                                    : 'Base'
+                                            }}
                                         </button>
                                     }
                                 </div>
@@ -110,9 +129,8 @@
                     <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px; cursor: pointer">
                         <input
                             type="radio"
-                            name="operator"
                             value="AND"
-                            [(ngModel)]="listOperator"
+                            [formField]="filterForm.query.lists?.operator!"
                             style="cursor: pointer"
                         />
                         ET (AND) - toutes les listes doivent correspondre
@@ -120,9 +138,8 @@
                     <label style="display: flex; align-items: center; gap: 8px; cursor: pointer">
                         <input
                             type="radio"
-                            name="operator"
                             value="OR"
-                            [(ngModel)]="listOperator"
+                            [formField]="filterForm.query.lists?.operator!"
                             style="cursor: pointer"
                         />
                         OU (OR) - au moins une liste doit correspondre
@@ -133,13 +150,14 @@
             <div style="display: flex; gap: 10px; justify-content: flex-end">
                 <button
                     (click)="closeAddFilterPopup()"
-                    style="padding: 8px 16px; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer"
+                    class="abort"
                 >
                     Annuler
                 </button>
                 <button
                     (click)="addNewFilter()"
-                    style="padding: 8px 16px; background-color: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer"
+                    type="submit"
+                    [disabled]="filterForm().invalid()"
                 >
                     Ajouter
                 </button>

@@ -20,12 +20,18 @@ export class FiltersRepository {
         {
             id: crypto.randomUUID(),
             label: 'IV PVP 1 ',
-            query: { prefix: this.filterService.buildFilter({ and: ['2-pv', '2-défense', '-1attaque'] }) },
+            query: {
+                prefix: this.filterService.buildFilter({ and: ['2-pv', '2-défense', '-1attaque'] }),
+                lists: { items: [], operator: 'AND' },
+            },
         },
         {
             id: crypto.randomUUID(),
             label: 'IV PVP 2 ',
-            query: { prefix: this.filterService.buildFilter({ and: ['3-pv', '3-défense', '-2attaque'] }) },
+            query: {
+                prefix: this.filterService.buildFilter({ and: ['3-pv', '3-défense', '-2attaque'] }),
+                lists: { items: [], operator: 'AND' },
+            },
         },
         {
             id: crypto.randomUUID(),
@@ -34,6 +40,7 @@ export class FiltersRepository {
                 prefix:
                     this.onlySavagePokemons +
                     ' & 2-attaque, -1défense & 2-attaque, -1pv & -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+                lists: { items: [], operator: 'AND' },
             },
         },
         {
@@ -41,6 +48,7 @@ export class FiltersRepository {
             label: 'Filtre level 2',
             query: {
                 prefix: this.onlySavagePokemons + ' & 2-attaque, -1défense, -1pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+                lists: { items: [], operator: 'AND' },
             },
         },
         {
@@ -48,12 +56,16 @@ export class FiltersRepository {
             label: 'Filtre level 3',
             query: {
                 prefix: this.onlySavagePokemons + ' & 2-attaque, -2défense, -2pv & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+                lists: { items: [], operator: 'AND' },
             },
         },
         {
             id: crypto.randomUUID(),
             label: 'Filtre level 4',
-            query: { prefix: this.onlySavagePokemons + ' & 0*, 1*, 2* & !# & âge0 & pc-100 & ' },
+            query: {
+                prefix: this.onlySavagePokemons + ' & 0*, 1*, 2* & !# & âge0 & pc-100 & ',
+                lists: { items: [], operator: 'AND' },
+            },
         },
     ];
 
@@ -69,7 +81,8 @@ export class FiltersRepository {
 
     addFilter(filter: Omit<FilterItem, 'id'>): void {
         const currentFilters = this.userFiltersSignal();
-        this.userFiltersSignal.set([...currentFilters, { ...filter, id: crypto.randomUUID() }]);
+        const newFilter = { ...filter, id: crypto.randomUUID() };
+        this.userFiltersSignal.set([...currentFilters, newFilter]);
         this.saveFilters();
     }
 

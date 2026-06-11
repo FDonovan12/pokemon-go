@@ -1,11 +1,12 @@
 import { FilterItem, FilterQuery, ListItem } from '@repositories/filters-repository';
 
-const CURRENT_VERSION = 3;
+const CURRENT_VERSION = 4;
 
 const migrations: Record<number, () => void> = {
     1: migrateV0toV1, // listPokemon key change from string[] to LabelEntry[]
     2: migrateV1toV2, // filterPokemon add inverted boolean
     3: migrateV2toV3, // filterPokemon add id
+    4: migrateV3toV4, // filterPokemon lists becomes required
 };
 
 export function runMigrations(): void {
@@ -54,7 +55,7 @@ function migrateV1toV2() {
     const migrated = lists.map((filterItem: FilterItem) => {
         const query: FilterQuery =
             typeof filterItem.query === 'string'
-                ? { prefix: filterItem.query }
+                ? { prefix: filterItem.query, lists: { items: [], operator: 'AND' } }
                 : {
                       ...filterItem.query,
                       lists: filterItem.query.lists
@@ -65,7 +66,7 @@ function migrateV1toV2() {
                                     return { key: item, inverted: false };
                                 }),
                             }
-                          : undefined,
+                          : { items: [], operator: 'AND' },
                   };
 
         return { label: filterItem.label, query };
@@ -86,6 +87,26 @@ function migrateV2toV3() {
     const migrated = lists.map((filter) => ({
         ...filter,
         id: filter.id ?? crypto.randomUUID(),
+    }));
+
+    localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(migrated));
+}
+
+function migrateV3toV4() {
+    const FILTERS_STORAGE_KEY = 'user_filters';
+    const raw = localStorage.getItem(FILTERS_STORAGE_KEY);
+    if (!raw) return;
+
+    const lists: FilterItem[] = JSON.parse(raw);
+    const needsMigration = lists.some((filter) => !filter.query.lists);
+    if (!needsMigration) return;
+
+    const migrated = lists.map((filter) => ({
+        ...filter,
+        query: {
+            ...filter.query,
+            lists: filter.query.lists ?? { items: [], operator: 'AND' },
+        },
     }));
 
     localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(migrated));

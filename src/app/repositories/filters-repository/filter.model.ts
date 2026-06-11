@@ -12,7 +12,7 @@ export interface ListCondition {
 
 export interface FilterQuery {
     prefix: string;
-    lists?: ListCondition;
+    lists: ListCondition;
 }
 
 export interface FilterItem {
