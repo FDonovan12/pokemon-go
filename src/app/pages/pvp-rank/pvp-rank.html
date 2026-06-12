@@ -37,6 +37,7 @@
     <app-modify-rank-dialog
         [league]="selectedLeague"
         [forme]="selectedForm"
+        [pokemon]="selectedPokemon()"
         (submitted)="onRankSubmitted($event)"
         (cancelled)="onRankCancelled()"
     ></app-modify-rank-dialog>

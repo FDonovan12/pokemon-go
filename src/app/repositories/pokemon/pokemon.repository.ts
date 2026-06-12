@@ -38,7 +38,7 @@ export class PokemonRepository {
     };
     pokemonIndex = this.buildPokemonIndex(pokemonsList, pokemonsListHomeMade);
 
-    getPokemonBySlug(slug: PokemonSlug): PokemonInterface | undefined {
+    getPokemonBySlug(slug: PokemonSlug): PokemonInterface {
         return this.pokemonIndex.byName[slug];
     }
 

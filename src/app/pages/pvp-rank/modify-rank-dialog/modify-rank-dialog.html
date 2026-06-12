@@ -8,25 +8,22 @@
         (ngSubmit)="confirm()"
     >
         <h3>Modifier le Rank</h3>
-
+        <app-image-pokemon
+            [pokemon]="pokemon()"
+            [height]="100"
+        ></app-image-pokemon>
         <label>
             Rank (1-4096):
             <input
                 #rankInput
                 type="number"
-                [value]="rank()"
-                (input)="rank.set(rankInput.valueAsNumber)"
-                min="1"
-                max="4096"
+                [formField]="rankForm.rank"
             />
         </label>
 
         <label>
             Ligue:
-            <select
-                [value]="league()"
-                (change)="league.set($any($event.target).value)"
-            >
+            <select [formField]="rankForm.league">
                 <option value="super">Super</option>
                 <option value="hyper">Hyper</option>
             </select>
@@ -34,10 +31,7 @@
 
         <label>
             Forme:
-            <select
-                [value]="forme()"
-                (change)="forme.set($any($event.target).value)"
-            >
+            <select [formField]="rankForm.forme">
                 <option value="normal">Normal</option>
                 <option value="obscur">Obscur</option>
             </select>
@@ -46,7 +40,7 @@
         <div class="buttons">
             <button
                 type="submit"
-                [disabled]="rank() < 1 || rank() > 4096 || !rank()"
+                [disabled]="rankForm().invalid()"
             >
                 Confirmer
             </button>
