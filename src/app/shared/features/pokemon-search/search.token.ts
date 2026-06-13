@@ -1,4 +1,4 @@
-import { InjectionToken, Signal } from '@angular/core';
+import { InjectionToken, Provider, Signal, Type } from '@angular/core';
 import { PokemonInterface } from '@entities/pokemon';
 
 export interface WithSearch {
@@ -10,3 +10,7 @@ export interface WithSearch {
     resultSelected: () => PokemonInterface[];
 }
 export const SEARCH_STORE = new InjectionToken<WithSearch>('SearchStore');
+
+export function provideSearchStore(store: Type<WithSearch>): Provider {
+    return { provide: SEARCH_STORE, useExisting: store };
+}

@@ -38,7 +38,6 @@
         [league]="selectedLeague"
         [forme]="selectedForm"
         [pokemon]="selectedPokemon()"
-        (submitted)="onRankSubmitted($event)"
-        (cancelled)="onRankCancelled()"
+        (closed)="onRankClosed()"
     ></app-modify-rank-dialog>
 }

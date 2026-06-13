@@ -1,9 +1,20 @@
-import { afterNextRender, Component, ElementRef, linkedSignal, model, output, signal, viewChild } from '@angular/core';
+import {
+    afterNextRender,
+    Component,
+    computed,
+    ElementRef,
+    inject,
+    linkedSignal,
+    model,
+    output,
+    Signal,
+    viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { form, FormField, max, min, validate } from '@angular/forms/signals';
 import { PokemonInterface } from '@entities/pokemon';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
-import { oneOf } from '@shared/validator/one-of';
+import { PVPRankStore } from '../pvp-rank-store/pvp-rank-store';
 import { Forme, League } from '../pvp-rank.type';
 
 @Component({
@@ -14,10 +25,13 @@ import { Forme, League } from '../pvp-rank.type';
     imports: [FormsModule, ImagePokemon, FormField],
 })
 export class ModifyRankDialogComponent {
-    rank = signal<number>(0);
+    protected readonly store = inject(PVPRankStore);
     league = model.required<League>();
     forme = model.required<Forme>();
     pokemon = model.required<PokemonInterface>();
+    rank: Signal<number> = computed(
+        () => this.store.getRankPokemon(this.pokemon().slug, this.league(), this.forme()) ?? 0,
+    );
 
     formModel = linkedSignal(() => ({
         rank: this.rank(),
@@ -28,13 +42,19 @@ export class ModifyRankDialogComponent {
 
     rankForm = form(this.formModel, (scheme) => {
         min(scheme.rank, 1);
-        max(scheme.rank, 4096);
-        validate(scheme.league, oneOf(['super', 'hyper'], 'Ligue Invalide'));
-        validate(scheme.forme, oneOf(['normal', 'obscur'], 'Forme Invalide'));
+        max(scheme.rank, 4096, { message: 'Ligue Invalide' });
+        // oneOf(scheme.league, ['super', 'hyper']);
+        validate(scheme.league, ({ value }) => {
+            return ['super', 'hyper'].includes(value()) ? null : { kind: 'oneOf', message: 'Ligue Invalide' };
+        });
+        validate(scheme.forme, ({ value }) => {
+            return ['normal', 'obscur'].includes(value()) ? null : { kind: 'oneOf', message: 'Forme Invalide' };
+        });
+        // validate(scheme.league, oneOf(['super', 'hyper'], 'Ligue Invalide'));
+        // validate(scheme.forme, oneOf(['normal', 'obscur'], 'Forme Invalide'));
     });
 
-    submitted = output<{ rank: number; league: League; forme: Forme; pokemon: PokemonInterface }>();
-    cancelled = output<void>();
+    closed = output<void>();
 
     rankInput = viewChild<ElementRef<HTMLInputElement>>('rankInput');
 
@@ -52,10 +72,12 @@ export class ModifyRankDialogComponent {
     confirm() {
         this.rankForm().markAsTouched;
         if (this.rankForm().invalid()) return;
-        this.submitted.emit(this.formModel());
+        const { pokemon, rank, league, forme } = this.formModel();
+        this.store.modifyRank(pokemon.slug, rank, league, forme);
+        this.closed.emit();
     }
 
     cancel() {
-        this.cancelled.emit();
+        this.closed.emit();
     }
 }

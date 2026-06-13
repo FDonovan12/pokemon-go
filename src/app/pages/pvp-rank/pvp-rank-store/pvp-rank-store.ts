@@ -50,6 +50,10 @@ export const PVPRankStore = signalStore(
             rank[league][form] = newRank;
             patchState(store, { allRank: new Map(store.allRank()) });
         },
+        getRankPokemon(pokemon: PokemonSlug, league: 'super' | 'hyper', form: 'normal' | 'obscur'): number | null {
+            const rank = store._getOrInitRank(pokemon);
+            return rank[league][form];
+        },
     })),
     withHooks((store) => ({
         onInit() {

@@ -6,20 +6,22 @@ import { FilterService } from '@services/filter-service/filter-service';
 import { ShareListService } from '@services/share-list/share-list.service';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { PokemonSearchComponent } from '@shared/features/pokemon-search/pokemon-search.component.ts/pokemon-search.component';
-import { SEARCH_STORE } from '@shared/features/pokemon-search/search.token';
+import { provideSearchStore } from '@shared/features/pokemon-search/search.token';
 import { ToastService } from '@shared/features/toast/toast.service';
 import { ListPokemonPageStore } from './list-store/list-pokemon-page.store';
+
+const _store = ListPokemonPageStore;
 
 @Component({
     selector: 'app-keep-pokemon-pages',
     imports: [FormsModule, ReactiveFormsModule, ImagePokemon, FormField, PokemonSearchComponent],
-    providers: [{ provide: SEARCH_STORE, useExisting: ListPokemonPageStore }],
+    providers: [provideSearchStore(_store)],
     templateUrl: './list-pokemon-pages.html',
     styleUrl: './list-pokemon-pages.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListPokemonPages {
-    protected readonly store = inject(ListPokemonPageStore);
+    protected readonly store = inject(_store);
     protected readonly clipboardService = inject(ClipboardService);
     private readonly filterService = inject(FilterService);
     private readonly shareListService = inject(ShareListService);
