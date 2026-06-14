@@ -61,7 +61,6 @@ export class ModifyRankDialogComponent {
     constructor() {
         afterNextRender(() => {
             const input = this.rankInput()?.nativeElement;
-            console.log(input);
             if (input) {
                 input.focus();
                 input.select();

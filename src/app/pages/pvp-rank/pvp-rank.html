@@ -9,24 +9,24 @@
         <app-image-pokemon
             [pokemon]="pokemon"
             [height]="100"
-            (click)="openModifyRankDialog(pokemon.slug)"
+            (click)="openModifyRankDialog(pokemon)"
         ></app-image-pokemon>
         <div>
             <span></span>
             <span>Ⓖ</span>
             <span>Ⓤ</span>
             <span>⚪</span>
-            <span (click)="openModifyRankDialog(pokemon.slug, 'super', 'normal')">
+            <span (click)="openModifyRankDialog(pokemon, 'super', 'normal')">
                 {{ store.allRank().get(pokemon.slug)?.super?.normal ?? '' }}
             </span>
-            <span (click)="openModifyRankDialog(pokemon.slug, 'hyper', 'normal')">
+            <span (click)="openModifyRankDialog(pokemon, 'hyper', 'normal')">
                 {{ store.allRank().get(pokemon.slug)?.hyper?.normal ?? '' }}
             </span>
             <span>⚫</span>
-            <span (click)="openModifyRankDialog(pokemon.slug, 'super', 'obscur')">
+            <span (click)="openModifyRankDialog(pokemon, 'super', 'obscur')">
                 {{ store.allRank().get(pokemon.slug)?.super?.obscur ?? '' }}
             </span>
-            <span (click)="openModifyRankDialog(pokemon.slug, 'hyper', 'obscur')">
+            <span (click)="openModifyRankDialog(pokemon, 'hyper', 'obscur')">
                 {{ store.allRank().get(pokemon.slug)?.hyper?.obscur ?? '' }}
             </span>
         </div>

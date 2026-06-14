@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal, WritableSignal } from '@angular/core';
-import { PokemonSlug } from '@entities/pokemon';
+import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
+import { PokemonInterface } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { PokemonSearchComponent } from '@shared/features/pokemon-search/pokemon-search.component.ts/pokemon-search.component';
@@ -22,8 +22,7 @@ export class PvpRankPages {
     protected readonly store = inject(_store);
     private readonly _pokemonRepository = inject(PokemonRepository);
 
-    selectedPokemonSlug: WritableSignal<PokemonSlug> = signal('Bulbizarre');
-    selectedPokemon = computed(() => this._pokemonRepository.getPokemonBySlug(this.selectedPokemonSlug()));
+    selectedPokemon: WritableSignal<PokemonInterface> = signal(this._pokemonRepository.getPokemonById(1)!);
     selectedLeague: League = 'super';
     selectedForm: Forme = 'normal';
     showDialog = signal(false);
@@ -32,8 +31,8 @@ export class PvpRankPages {
         this.showDialog.set(false);
     }
 
-    openModifyRankDialog(pokemon: PokemonSlug, league: League = 'super', forme: Forme = 'normal') {
-        this.selectedPokemonSlug.set(pokemon);
+    openModifyRankDialog(pokemon: PokemonInterface, league: League = 'super', forme: Forme = 'normal') {
+        this.selectedPokemon.set(pokemon);
         this.selectedLeague = league;
         this.selectedForm = forme;
         this.showDialog.set(true);
