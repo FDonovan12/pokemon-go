@@ -1,53 +1,60 @@
 import { Routes } from '@angular/router';
-import { DynamaxPage } from './pages/dynamax/dynamax.page';
-import { EventComponent } from './pages/event/event.component';
-import { HomeComponent } from './pages/home/home.component';
-import { ListPokemonPages } from './pages/list-pokemon-page/list-pokemon-pages';
-import { ShareListReceiveComponent } from './pages/list-pokemon-page/share-list-receive/share-list-receive.component';
-import { ProbaPages } from './pages/proba/proba-pages';
-import { PvpRankPages } from './pages/pvp-rank/pvp-rank';
-import { InfographicPages } from './pages/ressources-page/infographic/infographic-pages';
-import { ShopPacksComponent } from './pages/ressources-page/shop-packs/shop-packs-page';
-import { TypesPages } from './pages/types-page/types-pages';
 
 export const routes: Routes = [
     {
         path: '',
-        component: HomeComponent,
+        loadComponent: () => import('./pages/home/home.component').then((m) => m.HomeComponent),
     },
     {
         path: 'event',
-        children: [{ path: ':slug', component: EventComponent }],
+        children: [
+            {
+                path: ':slug',
+                loadComponent: () => import('./pages/event/event.component').then((m) => m.EventComponent),
+            },
+        ],
     },
     {
         path: 'proba',
-        component: ProbaPages,
+        loadComponent: () => import('./pages/proba/proba-pages').then((m) => m.ProbaPages),
     },
     {
         path: 'types',
-        component: TypesPages,
+        loadComponent: () => import('./pages/types-page/types-pages').then((m) => m.TypesPages),
     },
     {
         path: 'keep',
         children: [
-            { path: '', component: ListPokemonPages },
-            { path: 'share/:data', component: ShareListReceiveComponent },
+            {
+                path: '',
+                loadComponent: () =>
+                    import('./pages/list-pokemon-page/list-pokemon-pages').then((m) => m.ListPokemonPages),
+            },
+            {
+                path: 'share/:data',
+                loadComponent: () =>
+                    import('./pages/list-pokemon-page/share-list-receive/share-list-receive.component').then(
+                        (m) => m.ShareListReceiveComponent,
+                    ),
+            },
         ],
     },
     {
         path: 'dynamax',
-        component: DynamaxPage,
+        loadComponent: () => import('./pages/dynamax/dynamax.page').then((m) => m.DynamaxPage),
     },
     {
         path: 'infographic',
-        component: InfographicPages,
+        loadComponent: () =>
+            import('./pages/ressources-page/infographic/infographic-pages').then((m) => m.InfographicPages),
     },
     {
         path: 'shop-packs',
-        component: ShopPacksComponent,
+        loadComponent: () =>
+            import('./pages/ressources-page/shop-packs/shop-packs-page').then((m) => m.ShopPacksComponent),
     },
     {
         path: 'pvp-rank',
-        component: PvpRankPages,
+        loadComponent: () => import('./pages/pvp-rank/pvp-rank').then((m) => m.PvpRankPages),
     },
 ];
