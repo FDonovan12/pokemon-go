@@ -1,6 +1,6 @@
 <div
     class="dialog-backdrop"
-    (click)="cancelled.emit()"
+    (click)="closed.emit()"
 >
     <form
         class="dialog"
@@ -39,16 +39,22 @@
 
         <div class="buttons">
             <button
+                type="button"
+                (click)="closed.emit()"
+            >
+                Annuler
+            </button>
+            <button
+                type="button"
+                (click)="removeRank()"
+            >
+                Supprimer
+            </button>
+            <button
                 type="submit"
                 [disabled]="rankForm().invalid()"
             >
                 Confirmer
-            </button>
-            <button
-                type="button"
-                (click)="cancelled.emit()"
-            >
-                Annuler
             </button>
         </div>
     </form>

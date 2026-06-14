@@ -77,6 +77,12 @@ export class ModifyRankDialogComponent {
         this.closed.emit();
     }
 
+    removeRank() {
+        const { pokemon, rank, league, forme } = this.formModel();
+        this.store.removeRank(pokemon.slug, league, forme);
+        this.closed.emit();
+    }
+
     cancel() {
         this.closed.emit();
     }
