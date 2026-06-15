@@ -89,7 +89,6 @@ export const PVPRankStore = signalStore(
                     slug: pokemon?.name + '-' + pokemon?.slug,
                     family: allPokemons.find((pok) => pok.name === pokemon?.name)?.family,
                     generation: allPokemons.find((pok) => pok.name === pokemon?.name)?.generation,
-                    id: allPokemons.find((pok) => pok.name === pokemon?.name)?.id,
                 })) as PokemonInterface[];
             const allPokemonsWithForms = allPokemons.concat(allPokemonsForms).sortAsc((pokemon) => pokemon.id);
 

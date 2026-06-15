@@ -19,6 +19,11 @@
                 type="number"
                 [formField]="rankForm.rank"
             />
+            @for (error of rankForm.rank().errors(); track $index) {
+                <div style="color: var(--danger-color)">
+                    {{ error.message }}
+                </div>
+            }
         </label>
 
         <label>
@@ -27,6 +32,12 @@
                 <option value="super">Super</option>
                 <option value="hyper">Hyper</option>
             </select>
+
+            @for (error of rankForm.league().errors(); track $index) {
+                <div style="color: var(--danger-color)">
+                    {{ error.message }}
+                </div>
+            }
         </label>
 
         <label>
@@ -35,6 +46,12 @@
                 <option value="normal">Normal</option>
                 <option value="obscur">Obscur</option>
             </select>
+
+            @for (error of rankForm.forme().errors(); track $index) {
+                <div style="color: var(--danger-color)">
+                    {{ error.message }}
+                </div>
+            }
         </label>
 
         <div class="buttons">
