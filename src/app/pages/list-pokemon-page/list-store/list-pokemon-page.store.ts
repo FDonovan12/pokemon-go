@@ -1,5 +1,5 @@
 import { computed, effect, inject } from '@angular/core';
-import { LabelEntry } from '@entities/label';
+import { LabelEntry, ListLabel, ListSlug } from '@entities/label';
 import { PokemonInterface } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
@@ -7,7 +7,7 @@ import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { withPokemonSearch } from '@shared/features/pokemon-search/with-pokemon-search.feature';
 import { ToastService } from '@shared/features/toast/toast.service';
 
-const LOCAL_STORAGE_KEEP = { label: 'veut garder', slug: 'pokemon-want-keep' };
+const LOCAL_STORAGE_KEEP = { label: 'veut garder', slug: 'pokemon-want-keep' } as LabelEntry;
 
 const initialState = {
     listEntries: [] as LabelEntry[],
@@ -54,9 +54,9 @@ export const ListPokemonPageStore = signalStore(
             }
             patchState(store, { selectedPokemonWantKeep: set });
         },
-        addList: (nameList: string): LabelEntry => {
+        addList: (nameList: ListLabel): LabelEntry => {
             const oldListNames = store.listEntries();
-            const newId = crypto.randomUUID();
+            const newId = crypto.randomUUID() as ListSlug;
 
             const newEntry: LabelEntry = { label: nameList, slug: newId };
             const newList = [...oldListNames, newEntry];
@@ -94,30 +94,33 @@ export const ListPokemonPageStore = signalStore(
             const list = store.listEntries();
             store._listPokemonRepository.saveListKeys(list);
         },
+        _persistListOfPokemon: () => {
+            const listSlugs = store
+                .selectedPokemonWantKeep()
+                .toList()
+                .map((pokemon: PokemonInterface) => pokemon.slug);
+            const entry = store.selectedListEntry();
+            store._listPokemonRepository.saveSlugsForList(entry, listSlugs);
+        },
+        _syncSelectedPokemonWantKeep: () => {
+            const newSet: Set<PokemonInterface> = store._listPokemonRepository
+                .getPokemonsForList(store.selectedListEntry())
+                .toSet();
+            patchState(store, {
+                selectedPokemonWantKeep: newSet,
+            });
+        },
     })),
     withHooks((store) => ({
         onInit() {
-            const storageListEntries: LabelEntry[] = store._listPokemonRepository.getListKeys();
-            effect(() => {
-                const newSet: Set<PokemonInterface> = store._listPokemonRepository
-                    .getPokemonsForList(store.selectedListEntry())
-                    .toSet();
-                patchState(store, {
-                    selectedPokemonWantKeep: newSet,
-                });
-            });
-            effect(() => {
-                const listSlugs = store
-                    .selectedPokemonWantKeep()
-                    .toList()
-                    .map((pokemon: PokemonInterface) => pokemon.slug);
-                const entry = store.selectedListEntry();
-                store._listPokemonRepository.saveSlugsForList(entry, listSlugs);
-            });
+            effect(store._syncSelectedPokemonWantKeep);
+            effect(store._persistListOfPokemon);
             effect(store._persistListKeys);
+
+            const storageListEntries: LabelEntry[] = store._listPokemonRepository.getListKeys();
             const allPokemons = store._pokemonRepository.getAllPokemon();
             const selectedSlug = storageListEntries.first() ?? LOCAL_STORAGE_KEEP;
-            console.log('allPokemons : ', allPokemons);
+
             patchState(store, {
                 _allPokemons: allPokemons,
                 listEntries: storageListEntries,

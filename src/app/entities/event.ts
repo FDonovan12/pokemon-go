@@ -1,4 +1,11 @@
-import { PokemonFamily, PokemonInterface, PokemonSlug, TypePokemon } from '@entities/pokemon';
+import {
+    GenerationPokemon,
+    NamePokemon,
+    PokemonFamily,
+    PokemonInterface,
+    PokemonSlug,
+    TypePokemon,
+} from '@entities/pokemon';
 
 export class EventPokemon {
     public slug: string;
@@ -67,7 +74,7 @@ export class PokemonWithRarity implements PokemonInterface {
         return this.pokemon.slug;
     }
 
-    get name(): string {
+    get name(): NamePokemon {
         return this.pokemon.name;
     }
 
@@ -95,7 +102,7 @@ export class PokemonWithRarity implements PokemonInterface {
         return this.pokemon.family;
     }
 
-    get generation(): number {
+    get generation(): GenerationPokemon {
         return this.pokemon.generation;
     }
 }

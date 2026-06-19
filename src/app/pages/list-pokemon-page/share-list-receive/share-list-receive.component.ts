@@ -1,11 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ListLabel } from '@entities/label';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ShareDataIds, ShareListService } from '@services/share-list/share-list.service';
-import { ListPokemonPageStore } from '../list-store/list-pokemon-page.store';
 import { ToastService } from '@shared/features/toast/toast.service';
+import { ListPokemonPageStore } from '../list-store/list-pokemon-page.store';
 
 @Component({
     selector: 'app-share-list-receive',
@@ -58,7 +59,7 @@ export class ShareListReceiveComponent implements OnInit {
 
         this.isLoading = true;
         try {
-            const listLabel = this.listName.trim();
+            const listLabel = this.listName.trim() as ListLabel;
 
             const newList = this.store.addList(listLabel);
 

@@ -5,7 +5,7 @@ import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { InternalListPokemonRepository } from './internal-list-pokemon.repository';
 
-const LOCAL_STORAGE_KEEP = { label: 'veut garder', slug: 'pokemon-want-keep' };
+const LOCAL_STORAGE_KEEP = { label: 'veut garder', slug: 'pokemon-want-keep' } as LabelEntry;
 const LOCAL_STORAGE_KEEP_KEYS = 'pokemon-want-keep-keys';
 @Injectable({
     providedIn: 'root',

@@ -86,12 +86,12 @@ export const PVPRankStore = signalStore(
                 .flat()
                 .map((pokemon) => ({
                     ...pokemon,
-                    slug: pokemon?.name + '-' + pokemon?.slug,
-                    family: allPokemons.find((pok) => pok.name === pokemon?.name)?.family,
-                    generation: allPokemons.find((pok) => pok.name === pokemon?.name)?.generation,
-                })) as PokemonInterface[];
+                    slug: (pokemon?.name + '-' + pokemon?.slug) as PokemonSlug,
+                    family: allPokemons.find((pok) => pok.name === pokemon?.name)!.family,
+                    generation: allPokemons.find((pok) => pok.name === pokemon?.name)!.generation,
+                }));
             const allPokemonsWithForms = allPokemons.concat(allPokemonsForms).sortAsc((pokemon) => pokemon.id);
-
+            console.log(store._pokemonRepository.getPokemonByName(allPokemonsWithForms[0].name));
             patchState(store, {
                 _allPokemons: allPokemonsWithForms,
                 allRank: map,

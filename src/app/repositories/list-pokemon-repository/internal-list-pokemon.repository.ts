@@ -127,7 +127,7 @@ export class InternalListPokemonRepository {
     ];
 
     getInternalLists(): LabelEntry[] {
-        return this.internalLists.map((list) => ({ label: list.label, slug: list.slug }));
+        return this.internalLists.map((list) => ({ label: list.label, slug: list.slug }) as LabelEntry);
     }
     getPokemonsForInternalList(entry: LabelEntry | { slug: string }): PokemonInterface[] | undefined {
         return this.internalLists.find((list) => list.slug === entry.slug)?.pokemons;

@@ -1,7 +1,10 @@
-import { computed, inject } from '@angular/core';
-import { PokemonInterface } from '@entities/pokemon';
+import { computed, debounced, inject } from '@angular/core';
+import { generationsPokemon, PokemonInterface } from '@entities/pokemon';
 import { patchState, signalStoreFeature, withComputed, withMethods, withProps, withState } from '@ngrx/signals';
 import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
+
+const MAX_GENERATION = Math.max(...generationsPokemon);
+const MIN_GENERATION = Math.min(...generationsPokemon);
 
 const initialState = {
     _allPokemons: [] as PokemonInterface[],
@@ -15,20 +18,22 @@ export function withPokemonSearch() {
             _internalListPokemonRepository: inject(InternalListPokemonRepository),
         })),
         withState(initialState),
+        withProps((store) => ({
+            _debouncedSearch: debounced(store.search, 300),
+        })),
         withComputed((store) => ({
             resultSelected: computed((): PokemonInterface[] => {
-                if (store.search()) {
-                    const internal = store._internalListPokemonRepository.getPokemonsForInternalListBySearch(
-                        store.search(),
-                    );
+                const search = store._debouncedSearch.value();
+                if (search) {
+                    const internal = store._internalListPokemonRepository.getPokemonsForInternalListBySearch(search);
                     if (internal) return internal;
 
                     const allFamily = store
                         ._allPokemons()
                         .filter(
                             (pokemon) =>
-                                pokemon.slug.slugify().includes(store.search().slugify()) ||
-                                pokemon.type.some((type) => type.slugifyEquals(store.search())),
+                                pokemon.slug.slugify().includes(search.slugify()) ||
+                                pokemon.type.some((type) => type.slugifyEquals(search)),
                         )
                         .map((pokemon) => pokemon.family);
 
@@ -58,6 +63,10 @@ export function withPokemonSearch() {
             }),
         })),
         withMethods((store) => ({
+            decrementGeneration: () =>
+                patchState(store, { generationSelected: Math.max(store.generationSelected() - 1, MIN_GENERATION) }),
+            incrementGeneration: () =>
+                patchState(store, { generationSelected: Math.min(store.generationSelected() + 1, MAX_GENERATION) }),
             setSearch: (value: string) => patchState(store, { search: value }),
             clearSearch: () => patchState(store, { search: '' }),
             selectGeneration: (generation: number) => patchState(store, { generationSelected: generation }),

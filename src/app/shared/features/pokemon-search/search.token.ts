@@ -2,6 +2,8 @@ import { InjectionToken, Provider, Signal, Type } from '@angular/core';
 import { PokemonInterface } from '@entities/pokemon';
 
 export interface WithSearch {
+    incrementGeneration(): void;
+    decrementGeneration(): void;
     search: Signal<string>;
     generationSelected: Signal<number>;
     setSearch: (v: string) => void;

@@ -5,12 +5,18 @@ type ExtractSlug<T extends readonly { slug: string }[]> = T[number]['slug'];
 
 // export type HomemadePokemonSlug = ExtractSlug<typeof pokemonsListHomeMade>;
 
+export const generationsPokemon = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
+
 export type PokemonSlug = (typeof pokemonSlugs)[number];
+export type GenerationPokemon = (typeof generationsPokemon)[number];
 export type PokemonFamily = (typeof pokemonFamilyName)[number];
+
+export type Brand<T, B extends string> = T & { readonly __brand: B };
+export type NamePokemon = Brand<string, 'NamePokemon'>;
 
 export interface PokemonInterface {
     id: number;
-    name: string;
+    name: NamePokemon;
     slug: PokemonSlug;
     image: string;
     sprite: string;
@@ -19,7 +25,7 @@ export interface PokemonInterface {
     isMythical: boolean;
     mega?: { id: number; type: string[] };
     alternatives?: AlternativePokemon;
-    generation: number;
+    generation: GenerationPokemon;
     family: PokemonFamily;
 }
 

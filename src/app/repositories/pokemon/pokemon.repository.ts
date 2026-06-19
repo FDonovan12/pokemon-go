@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { PokemonFamily, PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { GenerationPokemon, NamePokemon, PokemonFamily, PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { ToastService } from '@shared/features/toast/toast.service';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 import pokemonsData from '../../bdd/bdd-pokemons.json';
@@ -40,6 +40,11 @@ export class PokemonRepository {
 
     getPokemonBySlug(slug: PokemonSlug): PokemonInterface {
         return this.pokemonIndex.byName[slug];
+    }
+
+    getPokemonByName(name: NamePokemon): PokemonInterface {
+        console.log('name : ', name);
+        return this.pokemonIndex.byName['Bulbizarre'];
     }
 
     getPokemonByFamily(family: PokemonFamily): PokemonInterface[] {
@@ -136,7 +141,7 @@ export class PokemonRepository {
                 // Génération (extraction du numéro depuis l'URL)
                 const genUrl: string = species.generation.url;
                 const genMatch = genUrl.match(/generation\/(\d+)\//);
-                p.generation = genMatch ? parseInt(genMatch[1], 10) : 0;
+                p.generation = (genMatch ? parseInt(genMatch[1], 10) : 0) as GenerationPokemon;
 
                 // Récupère la chaîne d’évolution
                 const evoChainUrl: string = species.evolution_chain.url;

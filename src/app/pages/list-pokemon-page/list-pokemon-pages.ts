@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal, Signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
+import { generationsPokemon } from '@entities/pokemon';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { FilterService } from '@services/filter-service/filter-service';
 import { ShareListService } from '@services/share-list/share-list.service';
@@ -9,6 +10,7 @@ import { PokemonSearchComponent } from '@shared/features/pokemon-search/pokemon-
 import { provideSearchStore } from '@shared/features/pokemon-search/search.token';
 import { ToastService } from '@shared/features/toast/toast.service';
 import { ListPokemonPageStore } from './list-store/list-pokemon-page.store';
+import { ListLabel } from '@entities/label';
 
 const _store = ListPokemonPageStore;
 
@@ -35,9 +37,10 @@ export class ListPokemonPages {
     );
 
     addListForm = form(signal({ listName: '' }));
+    generations = generationsPokemon;
 
     addList() {
-        const text = this.addListForm.listName().value();
+        const text = this.addListForm.listName().value() as ListLabel;
         this.store.addList(text);
         this.addListForm.listName().value.set('');
     }
