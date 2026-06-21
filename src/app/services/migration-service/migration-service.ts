@@ -14,10 +14,10 @@ const migrations: Record<number, () => void> = {
 
 export function runMigrations(): void {
     const stored = localStorage.getItem('app_version');
-    const currentVersion = 0;
+    const currentVersion = stored ? parseInt(stored) : 0;
     console.log('currentVersion', currentVersion);
 
-    // if (currentVersion === CURRENT_VERSION) return;
+    if (currentVersion === CURRENT_VERSION) return;
 
     for (let v = currentVersion + 1; v <= CURRENT_VERSION; v++) {
         migrations[v]?.();
