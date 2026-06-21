@@ -14,6 +14,73 @@ export type PokemonFamily = (typeof pokemonFamilyName)[number];
 export type Brand<T, B extends string> = T & { readonly __brand: B };
 export type NamePokemon = Brand<string, 'NamePokemon'>;
 
+export interface PokemonSetting {
+    base: Base;
+    same: Base[];
+    different: Different[];
+}
+
+export interface Base {
+    id: string;
+    pokemonId: string;
+    dexNumber: number;
+    name: string;
+    generation: number;
+    slug: string;
+    imageId: number;
+    image: string;
+    type: Type[];
+    stats: Stats;
+    quickMoves: string[];
+    cinematicMoves: string[];
+    eliteQuickMove: string[];
+    eliteCinematicMove: string[];
+    nonTmCinematicMoves: string[];
+    evolutionIds?: string[];
+    family: string;
+    isLegendary: boolean;
+    isMythical: boolean;
+    isUltraBeast: boolean;
+    form: string;
+    encounter: Encounter;
+}
+
+export interface Encounter {
+    stardustCaptureReward: number;
+}
+
+export interface Stats {
+    baseStamina: number;
+    baseAttack: number;
+    baseDefense: number;
+}
+
+export enum Type {
+    PokemonTypeBug = 'POKEMON_TYPE_BUG',
+    PokemonTypeDark = 'POKEMON_TYPE_DARK',
+    PokemonTypeDragon = 'POKEMON_TYPE_DRAGON',
+    PokemonTypeElectric = 'POKEMON_TYPE_ELECTRIC',
+    PokemonTypeFairy = 'POKEMON_TYPE_FAIRY',
+    PokemonTypeFighting = 'POKEMON_TYPE_FIGHTING',
+    PokemonTypeFire = 'POKEMON_TYPE_FIRE',
+    PokemonTypeFlying = 'POKEMON_TYPE_FLYING',
+    PokemonTypeGhost = 'POKEMON_TYPE_GHOST',
+    PokemonTypeGrass = 'POKEMON_TYPE_GRASS',
+    PokemonTypeGround = 'POKEMON_TYPE_GROUND',
+    PokemonTypeIce = 'POKEMON_TYPE_ICE',
+    PokemonTypeNormal = 'POKEMON_TYPE_NORMAL',
+    PokemonTypePoison = 'POKEMON_TYPE_POISON',
+    PokemonTypePsychic = 'POKEMON_TYPE_PSYCHIC',
+    PokemonTypeRock = 'POKEMON_TYPE_ROCK',
+    PokemonTypeSteel = 'POKEMON_TYPE_STEEL',
+    PokemonTypeWater = 'POKEMON_TYPE_WATER',
+}
+
+export interface Different {
+    base: Base;
+    same: Base[];
+}
+
 export interface PokemonInterface {
     id: number;
     name: NamePokemon;

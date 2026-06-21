@@ -1,5 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { GenerationPokemon, NamePokemon, PokemonFamily, PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import {
+    GenerationPokemon,
+    NamePokemon,
+    PokemonFamily,
+    PokemonInterface,
+    PokemonSetting,
+    PokemonSlug,
+} from '@entities/pokemon';
 import { ToastService } from '@shared/features/toast/toast.service';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 import pokemonsData from '../../bdd/bdd-pokemons.json';
@@ -20,6 +27,16 @@ type PokemonIndex = {
 })
 export class PokemonRepository {
     private readonly _toastService: ToastService = inject(ToastService);
+
+    async getPokemonSetting(): Promise<PokemonSetting[]> {
+        console.log('getPokemonSetting');
+        const url = 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon-setting.json';
+        console.log(url);
+        const res = await fetch(url);
+        console.log('res');
+        const data = await res.json();
+        return data as PokemonSetting[];
+    }
 
     private buildPokemonIndex = (
         listFromAPI: PokemonInterface[],

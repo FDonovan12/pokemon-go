@@ -7,8 +7,8 @@ import { PokemonInterface } from '@entities/pokemon';
     template: `
         <img
             [src]="pokemon().image"
-            [alt]="pokemon().name"
-            [title]="pokemon().name"
+            [alt]="pokemon().slug"
+            [title]="pokemon().slug"
             [style.height.px]="height() ?? 50"
             [style.aspect-ratio]="'1'"
         />
