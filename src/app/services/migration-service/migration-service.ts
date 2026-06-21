@@ -1,20 +1,23 @@
+import { PokemonSlug } from '@entities/pokemon';
 import { FilterItem, FilterQuery, ListItem } from '@repositories/filters-repository';
+import { PvpRank } from '../../pages/pvp-rank/pvp-rank-store/pvp-rank-store';
 
-const CURRENT_VERSION = 4;
+const CURRENT_VERSION = 5;
 
 const migrations: Record<number, () => void> = {
     1: migrateV0toV1, // listPokemon key change from string[] to LabelEntry[]
     2: migrateV1toV2, // filterPokemon add inverted boolean
     3: migrateV2toV3, // filterPokemon add id
     4: migrateV3toV4, // filterPokemon lists becomes required
+    5: migrateV4toV5, // modify slug for alternative pokemon in pvpv pages
 };
 
 export function runMigrations(): void {
     const stored = localStorage.getItem('app_version');
-    const currentVersion = stored ? parseInt(stored) : 0;
+    const currentVersion = 0;
     console.log('currentVersion', currentVersion);
 
-    if (currentVersion === CURRENT_VERSION) return;
+    // if (currentVersion === CURRENT_VERSION) return;
 
     for (let v = currentVersion + 1; v <= CURRENT_VERSION; v++) {
         migrations[v]?.();
@@ -111,3 +114,38 @@ function migrateV3toV4() {
 
     localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(migrated));
 }
+
+function migrateV4toV5() {
+    const PVP_STORAGE_KEY = 'pokemon-pvp_rank';
+    const raw = localStorage.getItem(PVP_STORAGE_KEY);
+    if (!raw) return;
+
+    const FORM_PREFIXES = ['alola', 'crowned', 'galar', 'hisui', 'rapid-strike'];
+
+    const map = new Map(Object.entries(JSON.parse(raw)) as [PokemonSlug, PvpRank][]);
+
+    const migrated = new Map<PokemonSlug, PvpRank>();
+
+    for (const [slug, rank] of map) {
+        const newSlug = slug.toLowerCase();
+
+        migrated.set(newSlug as PokemonSlug, rank);
+    }
+
+    localStorage.setItem(PVP_STORAGE_KEY, JSON.stringify(Object.fromEntries(migrated)));
+}
+// function migrateV4toV5() {
+//     const PVP_STORAGE_KEY = 'pokemon-pvp_rank';
+//     const raw = localStorage.getItem(PVP_STORAGE_KEY);
+//     if (!raw) return;
+
+//     const map = new Map(Object.entries(JSON.parse(raw)) as [PokemonSlug, PvpRank][])
+
+//                         // 'Alola'
+//                         // 'Crowned'
+//                         // 'Galar'
+//                         // 'Hisui'
+//                         // 'Rapid-strike'
+
+//     // localStorage.setItem(PVP_STORAGE_KEY, JSON.stringify(migrated));
+// }
