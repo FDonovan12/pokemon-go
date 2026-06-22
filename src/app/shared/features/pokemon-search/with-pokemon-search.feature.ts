@@ -24,32 +24,33 @@ export function withPokemonSearch() {
         withComputed((store) => ({
             resultSelected: computed((): PokemonInterface[] => {
                 const search = store._debouncedSearch.value();
+                const allPokemons = store._allPokemons() ?? ([] as PokemonInterface[]);
                 if (search) {
                     const internal = store._internalListPokemonRepository.getPokemonsForInternalListBySearch(search);
                     if (internal) return internal;
-                    const allFamily = store
-                        ._allPokemons()
+                    const allFamily = allPokemons
                         .filter(
                             (pokemon) =>
-                                pokemon.slug.slugify().includes(search.slugify()) ||
+                                pokemon.slug.slugifyIncludes(search) ||
+                                pokemon.family.slugifyIncludes(search) ||
                                 pokemon.type.some((type) => type.slugifyEquals(search)),
                         )
-                        .map((pokemon) => pokemon.family);
+                        .map((pokemon) => pokemon.family)
+                        .toSet();
 
-                    return store
-                        ._allPokemons()
-                        .filter((pokemon) => allFamily.includes(pokemon.family))
+                    console.log(allFamily);
+                    return allPokemons
+                        .filter((pokemon) => allFamily.has(pokemon.family))
                         .groupBy('family')
                         .toList('values')
                         .flat();
                 }
 
-                const onlyThisGeneration = store
-                    ._allPokemons()
-                    .filter((pokemon) => pokemon.generation === store.generationSelected());
+                const onlyThisGeneration = allPokemons.filter(
+                    (pokemon) => pokemon.generation === store.generationSelected(),
+                );
 
-                const hasMemberInThisGeneration = store
-                    ._allPokemons()
+                const hasMemberInThisGeneration = allPokemons
                     .groupBy('family')
                     .toList('values')
                     .filter((family) => family.some((pokemon) => pokemon.generation === store.generationSelected()))

@@ -2,7 +2,7 @@ import { PokemonSlug } from '@entities/pokemon';
 import { FilterItem, FilterQuery, ListItem } from '@repositories/filters-repository';
 import { PvpRank } from '../../pages/pvp-rank/pvp-rank-store/pvp-rank-store';
 
-const CURRENT_VERSION = 5;
+const CURRENT_VERSION = 6;
 
 const migrations: Record<number, () => void> = {
     1: migrateV0toV1, // listPokemon key change from string[] to LabelEntry[]
@@ -10,6 +10,7 @@ const migrations: Record<number, () => void> = {
     3: migrateV2toV3, // filterPokemon add id
     4: migrateV3toV4, // filterPokemon lists becomes required
     5: migrateV4toV5, // modify slug for alternative pokemon in pvpv pages
+    6: migrateV5toV6, // duplicate pvp data
 };
 
 export function runMigrations(): void {
@@ -26,26 +27,72 @@ export function runMigrations(): void {
     localStorage.setItem('app_version', String(CURRENT_VERSION));
 }
 
-function migrateV0toV1() {
-    const STORAGE_KEY = 'pokemon-want-keep-keys';
-    const stored = localStorage.getItem(STORAGE_KEY);
+function migrateV5toV6() {
+    const PVP_STORAGE_KEY = 'pokemon-pvp_rank';
+    const raw = localStorage.getItem(PVP_STORAGE_KEY);
+    if (!raw) return;
 
-    if (!stored) return;
+    const migrated = raw;
 
-    try {
-        const parsed = JSON.parse(stored);
+    const PVP_STORAGE_KEY_BACKUP = 'pokemon-pvp_rank-backup';
+    localStorage.setItem(PVP_STORAGE_KEY_BACKUP, JSON.stringify(migrated));
+}
 
-        if (!Array.isArray(parsed)) return;
+function migrateV4toV5() {
+    const PVP_STORAGE_KEY = 'pokemon-pvp_rank';
+    const raw = localStorage.getItem(PVP_STORAGE_KEY);
+    if (!raw) return;
 
-        const migrated = parsed.map((item: any) => {
-            if (typeof item === 'object' && 'slug' in item) return item; // already migrated
-            return { label: item, slug: item.slugify() };
-        });
+    const FORM_PREFIXES = ['alola', 'crowned', 'galar', 'hisui', 'rapid-strike'];
 
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
-    } catch (e) {
-        console.error('Migration V1->V2 failed:', e);
+    const map = new Map(Object.entries(JSON.parse(raw)) as [PokemonSlug, PvpRank][]);
+
+    const migrated = new Map<PokemonSlug, PvpRank>();
+
+    for (const [slug, rank] of map) {
+        const newSlug = slug.toLowerCase();
+
+        migrated.set(newSlug as PokemonSlug, rank);
     }
+
+    localStorage.setItem(PVP_STORAGE_KEY, JSON.stringify(Object.fromEntries(migrated)));
+}
+
+function migrateV3toV4() {
+    const FILTERS_STORAGE_KEY = 'user_filters';
+    const raw = localStorage.getItem(FILTERS_STORAGE_KEY);
+    if (!raw) return;
+
+    const lists: FilterItem[] = JSON.parse(raw);
+    const needsMigration = lists.some((filter) => !filter.query.lists);
+    if (!needsMigration) return;
+
+    const migrated = lists.map((filter) => ({
+        ...filter,
+        query: {
+            ...filter.query,
+            lists: filter.query.lists ?? { items: [], operator: 'AND' },
+        },
+    }));
+
+    localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(migrated));
+}
+
+function migrateV2toV3() {
+    const FILTERS_STORAGE_KEY = 'user_filters';
+    const raw = localStorage.getItem(FILTERS_STORAGE_KEY);
+    if (!raw) return;
+
+    const lists: FilterItem[] = JSON.parse(raw);
+    const needsMigration = lists.some((filter) => !filter.id);
+    if (!needsMigration) return;
+
+    const migrated = lists.map((filter) => ({
+        ...filter,
+        id: filter.id ?? crypto.randomUUID(),
+    }));
+
+    localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(migrated));
 }
 
 function migrateV1toV2() {
@@ -78,74 +125,24 @@ function migrateV1toV2() {
     localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(migrated));
 }
 
-function migrateV2toV3() {
-    const FILTERS_STORAGE_KEY = 'user_filters';
-    const raw = localStorage.getItem(FILTERS_STORAGE_KEY);
-    if (!raw) return;
+function migrateV0toV1() {
+    const STORAGE_KEY = 'pokemon-want-keep-keys';
+    const stored = localStorage.getItem(STORAGE_KEY);
 
-    const lists: FilterItem[] = JSON.parse(raw);
-    const needsMigration = lists.some((filter) => !filter.id);
-    if (!needsMigration) return;
+    if (!stored) return;
 
-    const migrated = lists.map((filter) => ({
-        ...filter,
-        id: filter.id ?? crypto.randomUUID(),
-    }));
+    try {
+        const parsed = JSON.parse(stored);
 
-    localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(migrated));
-}
+        if (!Array.isArray(parsed)) return;
 
-function migrateV3toV4() {
-    const FILTERS_STORAGE_KEY = 'user_filters';
-    const raw = localStorage.getItem(FILTERS_STORAGE_KEY);
-    if (!raw) return;
+        const migrated = parsed.map((item: any) => {
+            if (typeof item === 'object' && 'slug' in item) return item; // already migrated
+            return { label: item, slug: item.slugify() };
+        });
 
-    const lists: FilterItem[] = JSON.parse(raw);
-    const needsMigration = lists.some((filter) => !filter.query.lists);
-    if (!needsMigration) return;
-
-    const migrated = lists.map((filter) => ({
-        ...filter,
-        query: {
-            ...filter.query,
-            lists: filter.query.lists ?? { items: [], operator: 'AND' },
-        },
-    }));
-
-    localStorage.setItem(FILTERS_STORAGE_KEY, JSON.stringify(migrated));
-}
-
-function migrateV4toV5() {
-    const PVP_STORAGE_KEY = 'pokemon-pvp_rank';
-    const raw = localStorage.getItem(PVP_STORAGE_KEY);
-    if (!raw) return;
-
-    const FORM_PREFIXES = ['alola', 'crowned', 'galar', 'hisui', 'rapid-strike'];
-
-    const map = new Map(Object.entries(JSON.parse(raw)) as [PokemonSlug, PvpRank][]);
-
-    const migrated = new Map<PokemonSlug, PvpRank>();
-
-    for (const [slug, rank] of map) {
-        const newSlug = slug.toLowerCase();
-
-        migrated.set(newSlug as PokemonSlug, rank);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+    } catch (e) {
+        console.error('Migration V1->V2 failed:', e);
     }
-
-    localStorage.setItem(PVP_STORAGE_KEY, JSON.stringify(Object.fromEntries(migrated)));
 }
-// function migrateV4toV5() {
-//     const PVP_STORAGE_KEY = 'pokemon-pvp_rank';
-//     const raw = localStorage.getItem(PVP_STORAGE_KEY);
-//     if (!raw) return;
-
-//     const map = new Map(Object.entries(JSON.parse(raw)) as [PokemonSlug, PvpRank][])
-
-//                         // 'Alola'
-//                         // 'Crowned'
-//                         // 'Galar'
-//                         // 'Hisui'
-//                         // 'Rapid-strike'
-
-//     // localStorage.setItem(PVP_STORAGE_KEY, JSON.stringify(migrated));
-// }

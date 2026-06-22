@@ -1,5 +1,7 @@
-import { inject, Injectable } from '@angular/core';
+import { httpResource, HttpResourceRef } from '@angular/common/http';
+import { inject, Injectable, resource } from '@angular/core';
 import {
+    Base,
     GenerationPokemon,
     NamePokemon,
     PokemonFamily,
@@ -16,6 +18,11 @@ import { megaPokemon } from '../../bdd/mega-pokemon';
 
 const pokemonsList = pokemonsData as PokemonInterface[];
 
+interface PokemonIv {
+    attack: number;
+    defense: number;
+    stamina: number;
+}
 type PokemonHomeMade = (typeof pokemonsListHomeMade)[number];
 
 type PokemonIndex = {
@@ -28,15 +35,96 @@ type PokemonIndex = {
 export class PokemonRepository {
     private readonly _toastService: ToastService = inject(ToastService);
 
-    async getPokemonSetting(): Promise<PokemonSetting[]> {
-        console.log('getPokemonSetting');
-        const url = 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon-setting.json';
-        console.log(url);
-        const res = await fetch(url);
-        console.log('res');
-        const data = await res.json();
-        return data as PokemonSetting[];
+    pokemonsSetting: HttpResourceRef<PokemonSetting[] | undefined> = httpResource(
+        () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon-setting.json',
+    );
+    cpMultiplier: HttpResourceRef<Record<string, number> | undefined> = httpResource(
+        () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon/cp-multiplier.json',
+    );
+
+    filteredPokemonsResource = resource({
+        params: () => {
+            const table = this.cpMultiplier.value();
+            const pokemons = this.pokemonsSetting.value();
+
+            if (!table || !pokemons) return undefined;
+            return { table, pokemons };
+        },
+        // 2. La fonction de calcul prend directement la valeur émise par le stream
+        // (Plus besoin de .request, l'argument reçu est directement ton objet)
+        loader: async ({ params }) => {
+            const { table, pokemons } = params;
+            const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
+
+            return pokemons
+                .map((form) => [form.base, ...form.different.map((different) => different.base)])
+                .flat()
+                .filter((pokemon) => {
+                    const maxCp = this.pureCalculateCp(pokemon, table, IV_MAX, 50);
+                    return maxCp > 1480;
+                });
+        },
+    });
+
+    pureCalculateCp(pokemon: Base, table: Record<string, number>, iv: PokemonIv, level: number): number {
+        const cpm = table[level + ''];
+        if (!cpm) return 10;
+
+        const attackTotal = pokemon.stats.baseAttack + iv.attack;
+        const defenseTotal = pokemon.stats.baseDefense + iv.defense;
+        const staminaTotal = pokemon.stats.baseStamina + iv.stamina;
+
+        const cp = Math.floor(
+            (attackTotal * Math.sqrt(defenseTotal) * Math.sqrt(staminaTotal) * Math.pow(cpm, 2)) / 10,
+        );
+
+        return Math.max(10, cp);
     }
+
+    // calculateCp(pokemon: Base, iv: PokemonIv, level: number): number {
+    //     console.log(pokemon.slug);
+    //     const table = this.getCPMultiplier();
+    //     const cpm: number = table[level + ''];
+
+    //     if (!cpm) {
+    //         throw new Error(`CPM non trouvé pour le niveau ${level}. Vérifie ta table CPM.`);
+    //     }
+
+    //     const attackTotal = pokemon.stats.baseAttack + iv.attack;
+    //     const defenseTotal = pokemon.stats.baseDefense + iv.defense;
+    //     const staminaTotal = pokemon.stats.baseStamina + iv.stamina;
+
+    //     const cp = Math.floor(
+    //         (attackTotal * Math.sqrt(defenseTotal) * Math.sqrt(staminaTotal) * Math.pow(cpm, 2)) / 10,
+    //     );
+
+    //     return Math.max(10, cp);
+    // }
+
+    // async getPokemonSetting(): Promise<PokemonSetting[]> {
+    //     console.log('getPokemonSetting');
+    //     if (this.pokemonsSetting) return this.pokemonsSetting;
+    //     const url = 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon-setting.json';
+    //     console.log(url);
+    //     const res = await fetch(url);
+    //     console.log('res');
+    //     const data = (await res.json()) as PokemonSetting[];
+    //     this.pokemonsSetting = data;
+    //     return data;
+    // }
+
+    // async getPokemonSettingBySlug(slug: PokemonSlug): Promise<Base> {
+    //     const pokemonSetting = this.getPokemonSetting();
+    //     const flatData: Base[] = (await pokemonSetting)
+    //         .map((pokemon) => {
+    //             const base = pokemon.base;
+    //             const diff = pokemon.different.map((d) => [d.base, ...d.same]).flat();
+    //             const same = pokemon.same;
+    //             return [base, ...diff, ...same].flat();
+    //         })
+    //         .flat();
+    //     return flatData.find((pokemon) => pokemon.slug === slug)!;
+    // }
 
     private buildPokemonIndex = (
         listFromAPI: PokemonInterface[],
