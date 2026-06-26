@@ -26,7 +26,7 @@ export interface Base {
     dexNumber: number;
     name: string;
     generation: number;
-    slug: string;
+    slug: PokemonSlug;
     imageId: number;
     image: string;
     type: Type[];

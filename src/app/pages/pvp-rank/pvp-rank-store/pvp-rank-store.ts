@@ -4,6 +4,7 @@ import { patchState, signalStore, withComputed, withHooks, withMethods, withProp
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { withPokemonSearch } from '@shared/features/pokemon-search/with-pokemon-search.feature';
+import { League } from './../pvp-rank.type';
 
 const LOCAL_STORAGE_PVP_RANK = 'pokemon-pvp_rank';
 
@@ -110,20 +111,25 @@ export const PVPRankStore = signalStore(
 
             const setGreat = new Set<number>();
             const setUltra = new Set<number>();
-            const toFilterList = (map: Map<string, Base[]>) =>
+            const toFilterList = (map: Map<string, Base[]>, league: League) =>
                 [...map.entries()]
                     .map(([key, pokemons]) => {
                         const stats = JSON.parse(key) as { atq: number; def: number; stamina: number };
                         const dexNumbers = new Set(
-                            pokemons.flatMap((mainPokmeon) =>
-                                store._pokemonsResource
-                                    .value()
-                                    .filter(
-                                        (otherPokemon: any) =>
-                                            otherPokemon.family === mainPokmeon.family &&
-                                            !mainPokmeon?.evolutionIds?.includes(otherPokemon.pokemonId),
-                                    ),
-                            ),
+                            pokemons
+                                .filter(
+                                    (mainPokmeon) =>
+                                        (store.allRank().get(mainPokmeon.slug)?.[league]?.normal ?? 0) !== 1,
+                                )
+                                .flatMap((mainPokmeon) =>
+                                    store._pokemonsResource
+                                        .value()
+                                        .filter(
+                                            (otherPokemon: any) =>
+                                                otherPokemon.family === mainPokmeon.family &&
+                                                !mainPokmeon?.evolutionIds?.includes(otherPokemon.pokemonId),
+                                        ),
+                                ),
                         ).toList();
                         return {
                             stats,
@@ -135,8 +141,8 @@ export const PVPRankStore = signalStore(
                     .sortDesc('count');
             const test = store._pokemonRepository.preEvolutionMap();
             return {
-                great: toFilterList(mapFilterGreat),
-                ultra: toFilterList(mapFilterUltra),
+                great: toFilterList(mapFilterGreat, 'super'),
+                ultra: toFilterList(mapFilterUltra, 'hyper'),
             };
         }),
     })),
