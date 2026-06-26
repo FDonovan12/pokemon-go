@@ -10,6 +10,7 @@ export interface WithSearch {
     clearSearch: () => void;
     selectGeneration: (v: number) => void;
     resultSelected: () => PokemonInterface[];
+    filteredPokemons: () => PokemonInterface[];
 }
 export const SEARCH_STORE = new InjectionToken<WithSearch>('SearchStore');
 

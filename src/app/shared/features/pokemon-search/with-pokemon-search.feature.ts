@@ -32,13 +32,11 @@ export function withPokemonSearch() {
                         .filter(
                             (pokemon) =>
                                 pokemon.slug.slugifyIncludes(search) ||
-                                pokemon.family.slugifyIncludes(search) ||
                                 pokemon.type.some((type) => type.slugifyEquals(search)),
                         )
                         .map((pokemon) => pokemon.family)
                         .toSet();
 
-                    console.log(allFamily);
                     return allPokemons
                         .filter((pokemon) => allFamily.has(pokemon.family))
                         .groupBy('family')

@@ -49,7 +49,7 @@
 } @else {
     <h2>Generation {{ store.generationSelected() }}</h2>
 }
-@for (pokemon of store.resultSelected(); track pokemon.id) {
+@for (pokemon of store.filteredPokemons(); track pokemon.id) {
     <app-image-pokemon
         [pokemon]="pokemon"
         [height]="75"

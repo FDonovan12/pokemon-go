@@ -26,6 +26,7 @@ export const ListPokemonPageStore = signalStore(
     withState(initialState),
     withComputed((store) => ({
         selectedListKey: computed(() => store.selectedListEntry().slug),
+        filteredPokemons: computed(() => store.resultSelected()),
     })),
     withComputed((store) => ({
         actualListPokemonMap: computed(() => {

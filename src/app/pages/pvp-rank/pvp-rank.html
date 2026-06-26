@@ -4,7 +4,7 @@
 } @else {
     <h2>Generation {{ store.generationSelected() }}</h2>
 }
-@for (pokemon of store.resultSelected(); track pokemon.slug) {
+@for (pokemon of store.filteredPokemons(); track pokemon.slug) {
     <div class="test">
         <app-image-pokemon
             [pokemon]="pokemon"

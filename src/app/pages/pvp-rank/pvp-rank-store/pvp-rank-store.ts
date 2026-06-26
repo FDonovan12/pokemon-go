@@ -1,5 +1,5 @@
-import { effect, inject, resource } from '@angular/core';
-import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { computed, effect, inject, resource } from '@angular/core';
+import { Base, PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
@@ -30,25 +30,44 @@ export const PVPRankStore = signalStore(
         _localStorageService: inject(LocalStorageService),
     })),
     withProps((store) => ({
+        _pokemonsResource: resource({
+            params: () => store._pokemonRepository.pokemonsSetting.value(),
+            loader: async ({ params: pokemons }) => {
+                console.log('resource');
+                return pokemons
+                    .map((form) => [form.base, ...form.different.map((d) => d.base)])
+                    .flat() as any as PokemonInterface[];
+            },
+            defaultValue: [],
+        }),
+    })),
+    withProps((store) => ({
         _filteredResource: resource({
             params: () => {
                 const table = store._pokemonRepository.cpMultiplier.value();
-                const pokemons = store._pokemonRepository.pokemonsSetting.value();
-                if (!table || !pokemons) return undefined;
+                const pokemons = store.resultSelected();
+                if (!table || !pokemons.length) return undefined;
                 return { table, pokemons };
             },
-            loader: async ({ params }) => {
-                const { table, pokemons } = params;
+            loader: async ({ params: { table, pokemons } }) => {
                 const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
-                return pokemons
-                    .map((form) => [form.base, ...form.different.map((d) => d.base)])
-                    .flat()
-                    .filter((pokemon) => store._pokemonRepository.pureCalculateCp(pokemon, table, IV_MAX, 50) > 1480);
+                return pokemons.filter(
+                    (pokemon) =>
+                        store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50) > 1480,
+                );
             },
+            defaultValue: [],
         }),
     })),
     withState(initialState),
-    withComputed((store) => ({})),
+    withComputed((store) => ({
+        isLoading: computed(() => store._pokemonsResource.isLoading() || store._filteredResource.isLoading()),
+        filteredPokemons: computed(() =>
+            store._filteredResource.isLoading()
+                ? store.resultSelected()
+                : (store._filteredResource.value() ?? store.resultSelected()),
+        ),
+    })),
     withMethods((store) => ({
         _getOrInitRank(pokemon: PokemonSlug): PvpRank {
             const ranks = store.allRank();
@@ -81,8 +100,8 @@ export const PVPRankStore = signalStore(
     withHooks((store) => ({
         async onInit() {
             effect(() => {
-                const pokemons = store._filteredResource.value();
-                if (pokemons) patchState(store, { _allPokemons: pokemons as any as PokemonInterface[] });
+                const pokemons = store._pokemonsResource.value();
+                if (pokemons) patchState(store, { _allPokemons: pokemons });
             });
 
             // Chargement localStorage
