@@ -93,11 +93,19 @@ export const PVPRankStore = signalStore(
             });
             store.filteredPokemons().forEach((pokemon) => {
                 const base = pokemon as any as Base;
-                const statGreat = statToFilterNumber(rank[pokemon.slug].great);
-                const statHyper = statToFilterNumber(rank[pokemon.slug].ultra);
 
+                const statGreat = statToFilterNumber(rank[pokemon.slug].great);
                 mapFilterGreat.ensureArray(statGreat.stableStringify()).push(base);
-                mapFilterUltra.ensureArray(statHyper.stableStringify()).push(base);
+
+                const table = store._pokemonRepository.cpMultiplier.value();
+                const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
+                if (
+                    table &&
+                    store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50) > 2480
+                ) {
+                    const statHyper = statToFilterNumber(rank[pokemon.slug].ultra);
+                    mapFilterUltra.ensureArray(statHyper.stableStringify()).push(base);
+                }
             });
 
             const setGreat = new Set<number>();
@@ -107,8 +115,14 @@ export const PVPRankStore = signalStore(
                     .map(([key, pokemons]) => {
                         const stats = JSON.parse(key) as { atq: number; def: number; stamina: number };
                         const dexNumbers = new Set(
-                            pokemons.flatMap((p) =>
-                                store._pokemonsResource.value().filter((pokemon) => pokemon.family === p.family),
+                            pokemons.flatMap((mainPokmeon) =>
+                                store._pokemonsResource
+                                    .value()
+                                    .filter(
+                                        (otherPokemon: any) =>
+                                            otherPokemon.family === mainPokmeon.family &&
+                                            !mainPokmeon?.evolutionIds?.includes(otherPokemon.pokemonId),
+                                    ),
                             ),
                         ).toList();
                         return {

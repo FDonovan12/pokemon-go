@@ -45,7 +45,7 @@ export class PvpRankPages {
     copyFilter(filter: { stats: any; pokemons: Base[] }, league: 'great' | 'ultra') {
         const ids = filter.pokemons.map((p) => p.dexNumber).join(',');
         const { atq, def, stamina } = filter.stats;
-        const str = `${ids}&${atq}attaque&${def}defense&${stamina}pv`;
+        const str = `!# & ${ids}&${atq}attaque&${def}défense&${stamina}pv`;
         this.clipboardService.copyToClipboard(str);
     }
 }
