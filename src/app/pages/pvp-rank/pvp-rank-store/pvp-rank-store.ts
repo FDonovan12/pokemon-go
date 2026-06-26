@@ -95,7 +95,7 @@ export const PVPRankStore = signalStore(
             store.filteredPokemons().forEach((pokemon) => {
                 const base = pokemon as any as Base;
 
-                const statGreat = statToFilterNumber(rank[pokemon.slug].great);
+                const statGreat = statToFilterNumber(rank[pokemon.slug]?.great);
                 mapFilterGreat.ensureArray(statGreat.stableStringify()).push(base);
 
                 const table = store._pokemonRepository.cpMultiplier.value();
@@ -156,6 +156,7 @@ export const PVPRankStore = signalStore(
                             pokemons: dexNumbers as any as Base[],
                             count: pokemons.length,
                             dexNumbers,
+                            isIncluded: true,
                         };
                     })
                     .sortDesc('count');
@@ -163,6 +164,9 @@ export const PVPRankStore = signalStore(
             return {
                 great: toFilterList(mapFilterGreat, 'super'),
                 ultra: toFilterList(mapFilterUltra, 'hyper'),
+                allPokemon: [...new Set(store.filteredPokemons().flatMap((p) => subEvolutions(p as any as Base)))]
+                    .map((p) => (p as any).dexNumber)
+                    .join(','),
             };
         }),
     })),

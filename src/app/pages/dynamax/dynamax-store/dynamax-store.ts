@@ -102,7 +102,6 @@ export const DynamaxStore = signalStore(
             });
         },
         setSearch: (value: string) => {
-            console.log(value);
             patchState(store, { search: value });
         },
         _getDamage(dynamax: Dynamax, typeAttck: TypePokemon, typeOpponent: TypePokemon): number | null {

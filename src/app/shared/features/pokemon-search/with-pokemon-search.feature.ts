@@ -26,6 +26,7 @@ export function withPokemonSearch() {
                 const search = store._debouncedSearch.value();
                 const allPokemons = store._allPokemons() ?? ([] as PokemonInterface[]);
                 if (search) {
+                    if (search.trim() === '') return allPokemons;
                     const internal = store._internalListPokemonRepository.getPokemonsForInternalListBySearch(search);
                     if (internal) return internal;
                     const allFamily = allPokemons

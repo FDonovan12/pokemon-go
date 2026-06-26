@@ -88,7 +88,6 @@ export class PokemonRepository {
                 }
             });
         });
-        console.log(map);
         return map;
     });
 
@@ -297,7 +296,6 @@ export class PokemonRepository {
                 continue;
             }
         }
-        console.log(pokemons);
         return pokemons;
     }
 }

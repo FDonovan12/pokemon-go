@@ -42,10 +42,29 @@ export class PvpRankPages {
         this.showDialog.set(true);
     }
 
-    copyFilter(filter: { stats: any; pokemons: Base[] }, league: 'great' | 'ultra') {
+    copyFilter(filter: { stats: any; pokemons: Base[]; isIncluded: boolean }, league: 'great' | 'ultra') {
         const ids = filter.pokemons.map((p) => p.dexNumber).join(',');
         const { atq, def, stamina } = filter.stats;
-        const str = `!# & ${ids}&${atq}attaque&${def}défense&${stamina}pv`;
+        let str = '';
+        if (filter.isIncluded) {
+            str = `${ids}&${atq}attaque&${def}défense&${stamina}pv & !# `;
+        } else {
+            const allStats = [0, 1, 2, 3, 4];
+            const allAtq = allStats
+                .filter((stat) => stat !== atq)
+                .map((atq) => atq + 'attaque')
+                .join(',');
+            const allDef = allStats
+                .filter((stat) => stat !== def)
+                .map((def) => def + 'défense')
+                .join(',');
+            const allStamina = allStats
+                .filter((stat) => stat !== stamina)
+                .map((stamina) => stamina + 'pv')
+                .join(',');
+            str = `${ids} & ${allAtq}, ${allDef}, ${allStamina} & !# `;
+        }
         this.clipboardService.copyToClipboard(str);
+        filter.isIncluded = !filter.isIncluded;
     }
 }

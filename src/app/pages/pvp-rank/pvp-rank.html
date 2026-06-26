@@ -8,10 +8,19 @@
     <summary>Filtres PvP Rank 1</summary>
 
     <div class="filters-container">
+        <button
+            style="grid-column: span 2; width: fit-content"
+            (click)="clipboardService.copyToClipboard(store.rank1Filter().allPokemon)"
+        >
+            Tout les pokemon
+        </button>
         <div class="league-column">
             <h3>Great League</h3>
             @for (filter of store.rank1Filter().great; track filter.stats) {
-                <button (click)="copyFilter(filter, 'great')">
+                <button
+                    (click)="copyFilter(filter, 'great')"
+                    [style]="filter.isIncluded ? '' : 'background-color: coral'"
+                >
                     {{ filter.stats.atq }}atq / {{ filter.stats.def }}def / {{ filter.stats.stamina }}pv
                     <span class="count">({{ filter.count }})</span>
                 </button>
