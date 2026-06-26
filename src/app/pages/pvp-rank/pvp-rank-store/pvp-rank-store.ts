@@ -1,5 +1,5 @@
 import { computed, effect, inject, resource } from '@angular/core';
-import { Base, PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { Base, LeagueStats, PokemonInterface, PokemonSlug, RankPVP } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
@@ -33,12 +33,18 @@ export const PVPRankStore = signalStore(
         _pokemonsResource: resource({
             params: () => store._pokemonRepository.pokemonsSetting.value(),
             loader: async ({ params: pokemons }) => {
-                console.log('resource');
                 return pokemons
                     .map((form) => [form.base, ...form.different.map((d) => d.base)])
                     .flat() as any as PokemonInterface[];
             },
             defaultValue: [],
+        }),
+        _rank1PVP: resource({
+            params: () => store._pokemonRepository.rank1PVP.value(),
+            loader: async ({ params: pokemons }) => {
+                return pokemons;
+            },
+            defaultValue: {} as Record<PokemonSlug, RankPVP>,
         }),
     })),
     withProps((store) => ({
@@ -67,6 +73,58 @@ export const PVPRankStore = signalStore(
                 ? store.resultSelected()
                 : (store._filteredResource.value() ?? store.resultSelected()),
         ),
+    })),
+    withComputed((store) => ({
+        rank1Filter: computed(() => {
+            const mapFilterGreat = new Map<string, Base[]>();
+            const mapFilterUltra = new Map<string, Base[]>();
+            const rank = store._rank1PVP.value();
+            function ivToFilterValue(iv: number): number {
+                if (iv === 0) return 0;
+                if (iv <= 5) return 1;
+                if (iv <= 10) return 2;
+                if (iv <= 14) return 3;
+                return 4;
+            }
+            const statToFilterNumber = (stats: LeagueStats) => ({
+                atq: ivToFilterValue(stats.atk),
+                def: ivToFilterValue(stats.def),
+                stamina: ivToFilterValue(stats.sta),
+            });
+            store.filteredPokemons().forEach((pokemon) => {
+                const base = pokemon as any as Base;
+                const statGreat = statToFilterNumber(rank[pokemon.slug].great);
+                const statHyper = statToFilterNumber(rank[pokemon.slug].ultra);
+
+                mapFilterGreat.ensureArray(statGreat.stableStringify()).push(base);
+                mapFilterUltra.ensureArray(statHyper.stableStringify()).push(base);
+            });
+
+            const setGreat = new Set<number>();
+            const setUltra = new Set<number>();
+            const toFilterList = (map: Map<string, Base[]>) =>
+                [...map.entries()]
+                    .map(([key, pokemons]) => {
+                        const stats = JSON.parse(key) as { atq: number; def: number; stamina: number };
+                        const dexNumbers = new Set(
+                            pokemons.flatMap((p) =>
+                                store._pokemonsResource.value().filter((pokemon) => pokemon.family === p.family),
+                            ),
+                        ).toList();
+                        return {
+                            stats,
+                            pokemons: dexNumbers as any as Base[],
+                            count: pokemons.length,
+                            dexNumbers,
+                        };
+                    })
+                    .sortDesc('count');
+            const test = store._pokemonRepository.preEvolutionMap();
+            return {
+                great: toFilterList(mapFilterGreat),
+                ultra: toFilterList(mapFilterUltra),
+            };
+        }),
     })),
     withMethods((store) => ({
         _getOrInitRank(pokemon: PokemonSlug): PvpRank {

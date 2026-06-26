@@ -17,6 +17,8 @@ export function runMigrations(): void {
     const stored = localStorage.getItem('app_version');
     const currentVersion = stored ? parseInt(stored) : 0;
     console.log('currentVersion', currentVersion);
+    const used = JSON.stringify(localStorage).length * 2; // octets approximatifs
+    console.log(`${(used / 1024 / 1024).toFixed(2)} Mo utilisés`);
 
     if (currentVersion === CURRENT_VERSION) return;
 

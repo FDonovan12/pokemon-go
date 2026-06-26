@@ -4,6 +4,31 @@
 } @else {
     <h2>Generation {{ store.generationSelected() }}</h2>
 }
+<details>
+    <summary>Filtres PvP Rank 1</summary>
+
+    <div class="filters-container">
+        <div class="league-column">
+            <h3>Great League</h3>
+            @for (filter of store.rank1Filter().great; track filter.stats) {
+                <button (click)="copyFilter(filter, 'great')">
+                    {{ filter.stats.atq }}atq / {{ filter.stats.def }}def / {{ filter.stats.stamina }}pv
+                    <span class="count">({{ filter.count }})</span>
+                </button>
+            }
+        </div>
+
+        <div class="league-column">
+            <h3>Hyper League</h3>
+            @for (filter of store.rank1Filter().ultra; track filter.stats) {
+                <button (click)="copyFilter(filter, 'ultra')">
+                    {{ filter.stats.atq }}atq / {{ filter.stats.def }}def / {{ filter.stats.stamina }}pv
+                    <span class="count">({{ filter.count }})</span>
+                </button>
+            }
+        </div>
+    </div>
+</details>
 @for (pokemon of store.filteredPokemons(); track pokemon.slug) {
     <div class="test">
         <app-image-pokemon
