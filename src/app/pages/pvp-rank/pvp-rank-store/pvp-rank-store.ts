@@ -111,6 +111,34 @@ export const PVPRankStore = signalStore(
 
             const setGreat = new Set<number>();
             const setUltra = new Set<number>();
+            const getAllEvolutionIds = (pokemon: Base): string[] => {
+                const directEvos = pokemon.evolutionIds ?? [];
+                return [
+                    ...directEvos,
+                    ...directEvos.flatMap((evoId) => {
+                        const evo = store._pokemonsResource.value().find((p: any) => p.pokemonId === evoId);
+                        return evo ? getAllEvolutionIds(evo as any as Base) : [];
+                    }),
+                ];
+            };
+
+            const subEvolutions = (mainPokemon: Base) => {
+                const allEvoIds = getAllEvolutionIds(mainPokemon);
+                return store._pokemonsResource
+                    .value()
+                    .filter(
+                        (otherPokemon: any) =>
+                            otherPokemon.family === mainPokemon.family && !allEvoIds.includes(otherPokemon.pokemonId),
+                    );
+            };
+            // const subEvolutions = (mainPokemon: Base) =>
+            //     store._pokemonsResource
+            //         .value()
+            //         .filter(
+            //             (otherPokemon: any) =>
+            //                 otherPokemon.family === mainPokemon.family &&
+            //                 !mainPokemon?.evolutionIds?.includes(otherPokemon.pokemonId),
+            //         );
             const toFilterList = (map: Map<string, Base[]>, league: League) =>
                 [...map.entries()]
                     .map(([key, pokemons]) => {
@@ -118,18 +146,10 @@ export const PVPRankStore = signalStore(
                         const dexNumbers = new Set(
                             pokemons
                                 .filter(
-                                    (mainPokmeon) =>
-                                        (store.allRank().get(mainPokmeon.slug)?.[league]?.normal ?? 0) !== 1,
+                                    (mainPokemon) =>
+                                        (store.allRank().get(mainPokemon.slug)?.[league]?.normal ?? 0) !== 1,
                                 )
-                                .flatMap((mainPokmeon) =>
-                                    store._pokemonsResource
-                                        .value()
-                                        .filter(
-                                            (otherPokemon: any) =>
-                                                otherPokemon.family === mainPokmeon.family &&
-                                                !mainPokmeon?.evolutionIds?.includes(otherPokemon.pokemonId),
-                                        ),
-                                ),
+                                .flatMap(subEvolutions),
                         ).toList();
                         return {
                             stats,

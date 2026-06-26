@@ -57,6 +57,12 @@ export class InternalListPokemonRepository {
             pokemons: [this._pokemonRepository.getAllPokemon().filter((pokemon) => pokemon.isLegendary)].flat(),
         },
         {
+            label: 'Tout',
+            slug: hash('tout'),
+            aliases: ['tout', 'all'],
+            pokemons: [this._pokemonRepository.getAllPokemon()].flat(),
+        },
+        {
             label: 'Fabuleux',
             slug: hash('internal_Fabuleux'),
             aliases: ['mythique', 'mythical', 'fabuleux'],
