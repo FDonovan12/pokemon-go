@@ -30,7 +30,10 @@
         <div class="league-column">
             <h3>Hyper League</h3>
             @for (filter of store.rank1Filter().ultra; track filter.stats) {
-                <button (click)="copyFilter(filter, 'ultra')">
+                <button
+                    (click)="copyFilter(filter, 'ultra')"
+                    [style]="filter.isIncluded ? '' : 'background-color: coral'"
+                >
                     {{ filter.stats.atq }}atq / {{ filter.stats.def }}def / {{ filter.stats.stamina }}pv
                     <span class="count">({{ filter.count }})</span>
                 </button>
