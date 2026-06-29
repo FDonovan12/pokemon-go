@@ -40,7 +40,7 @@ export class SupabaseService {
     signInWithGoogle() {
         return this.client.auth.signInWithOAuth({
             provider: 'google',
-            options: { redirectTo: 'http://localhost:4200/pokemon-go/' },
+            options: { redirectTo: window.location.origin + '/pokemon-go/' },
         });
     }
 
