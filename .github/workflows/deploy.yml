@@ -21,8 +21,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Set environment variables
+        run: |
+          sed -i "s|#{SUPABASE_URL}#|${{ secrets.SUPABASE_URL }}|g" src/environments/environment.prod.ts
+          sed -i "s|#{SUPABASE_ANON_KEY}#|${{ secrets.SUPABASE_ANON_KEY }}|g" src/environments/environment.prod.ts
+
       - name: Build Angular app
         run: npm run build-github
+
+      - name: Copy index.html to 404.html
+        run: cp dist/pokemon-go/browser/index.html dist/pokemon-go/browser/404.html
 
       - name: List build files
         run: ls -R ./dist/pokemon-go

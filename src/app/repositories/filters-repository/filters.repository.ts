@@ -2,9 +2,10 @@ import { inject, Injectable, signal, Signal } from '@angular/core';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
+import { SupabaseService } from '@services/supabase-service/supabase.service';
 import { FilterItem, FilterItemResolved } from './filter.model';
 
-const FILTERS_STORAGE_KEY = 'user_filters';
+export const FILTERS_STORAGE_KEY = 'user_filters';
 
 @Injectable({
     providedIn: 'root',
@@ -13,6 +14,7 @@ export class FiltersRepository {
     private readonly filterService = inject(FilterService);
     private readonly localStorageService = inject(LocalStorageService);
     private readonly pokemonRepository = inject(PokemonRepository);
+    private readonly supabaseService = inject(SupabaseService);
 
     private readonly onlySavagePokemons = ' & !raid & !éclos & !étude & !dynamax & !gigamax & ';
 
@@ -113,17 +115,30 @@ export class FiltersRepository {
         this.saveFilters();
     }
 
-    private loadFilters(): void {
-        const savedFilters = this.localStorageService.get<FilterItem[]>(FILTERS_STORAGE_KEY, this.defaultFilters);
-        this.userFiltersSignal.set(savedFilters);
+    private async loadFilters(): Promise<void> {
+        if (this.supabaseService.isLoggedIn()) {
+            const { data } = await this.supabaseService.client.from('user_data').select('filters').single();
+            this.userFiltersSignal.set((data?.filters as FilterItem[]) ?? this.defaultFilters);
+        } else {
+            const savedFilters = this.localStorageService.get<FilterItem[]>(FILTERS_STORAGE_KEY, this.defaultFilters);
+            this.userFiltersSignal.set(savedFilters);
+        }
     }
 
-    private saveFilters(): void {
-        this.localStorageService.set(FILTERS_STORAGE_KEY, this.userFiltersSignal());
+    private async saveFilters(): Promise<void> {
+        const isloggedin = this.supabaseService.isLoggedIn();
+        if (isloggedin) {
+            const userId = this.supabaseService.getUserId();
+            const result = await this.supabaseService.client
+                .from('user_data')
+                .upsert({ user_id: userId, filters: this.userFiltersSignal() }, { onConflict: 'user_id' });
+        } else {
+            this.localStorageService.set(FILTERS_STORAGE_KEY, this.userFiltersSignal());
+        }
     }
 
     resetUserFilters(): void {
         this.userFiltersSignal.set([]);
-        this.localStorageService.remove(FILTERS_STORAGE_KEY);
+        this.saveFilters();
     }
 }

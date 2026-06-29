@@ -2,11 +2,10 @@ import { computed, effect, inject, resource } from '@angular/core';
 import { Base, LeagueStats, PokemonInterface, PokemonSlug, RankPVP } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { PvpRankRepository } from '@repositories/pvp-rank-repository/pvp-rank.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { withPokemonSearch } from '@shared/features/pokemon-search/with-pokemon-search.feature';
 import { League } from './../pvp-rank.type';
-
-const LOCAL_STORAGE_PVP_RANK = 'pokemon-pvp_rank';
 
 export interface PvpRank {
     super: {
@@ -29,6 +28,7 @@ export const PVPRankStore = signalStore(
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
         _localStorageService: inject(LocalStorageService),
+        _pvpRankRepository: inject(PvpRankRepository),
     })),
     withProps((store) => ({
         _pokemonsResource: resource({
@@ -94,7 +94,7 @@ export const PVPRankStore = signalStore(
             });
             store.filteredPokemons().forEach((pokemon) => {
                 const base = pokemon as any as Base;
-
+                const test = rank[pokemon.slug]?.great;
                 const statGreat = statToFilterNumber(rank[pokemon.slug]?.great);
                 mapFilterGreat.ensureArray(statGreat.stableStringify()).push(base);
 
@@ -187,12 +187,16 @@ export const PVPRankStore = signalStore(
         modifyRank(pokemon: PokemonSlug, newRank: number, league: 'super' | 'hyper', form: 'normal' | 'obscur') {
             const rank = store._getOrInitRank(pokemon);
             rank[league][form] = newRank;
-            patchState(store, { allRank: new Map(store.allRank()) });
+            const nexRank = new Map(store.allRank());
+            console.log(nexRank);
+            patchState(store, { allRank: nexRank });
+            store._pvpRankRepository.save(store.allRank());
         },
         removeRank(pokemon: PokemonSlug, league: 'super' | 'hyper', form: 'normal' | 'obscur') {
             const rank = store._getOrInitRank(pokemon);
             rank[league][form] = null;
             patchState(store, { allRank: new Map(store.allRank()) });
+            store._pvpRankRepository.save(store.allRank());
         },
         getRankPokemon(pokemon: PokemonSlug, league: 'super' | 'hyper', form: 'normal' | 'obscur'): number | null {
             const rank = store._getOrInitRank(pokemon);
@@ -200,22 +204,19 @@ export const PVPRankStore = signalStore(
         },
     })),
     withHooks((store) => ({
-        async onInit() {
+        onInit() {
             effect(() => {
                 const pokemons = store._pokemonsResource.value();
                 if (pokemons) patchState(store, { _allPokemons: pokemons });
             });
 
-            // Chargement localStorage
-            const object = store._localStorageService.get(LOCAL_STORAGE_PVP_RANK, {});
-            const map = new Map(Object.entries(object) as [PokemonSlug, PvpRank][]);
-            patchState(store, { allRank: map });
+            // effect(() => {
+            //     console.log('save effect');
+            //     // if (!store._filteredResource.isLoading()) return;
+            // });
 
-            // Persistence
-            effect(() => {
-                if (!store._filteredResource.isLoading()) return;
-                store._localStorageService.set(LOCAL_STORAGE_PVP_RANK, store.allRank().toObject());
-            });
+            store._pvpRankRepository.load().then((data) => patchState(store, { allRank: data }));
+            // await after the effect for injection context
         },
     })),
 );

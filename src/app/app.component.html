@@ -7,5 +7,10 @@
     <a routerLink="/shop-packs">Packs</a>
     <a routerLink="/pvp-rank">PVP rank</a>
 </header>
+@if (supabase.isLoggedIn()) {
+    <button (click)="logout()">Se déconnecter</button>
+} @else {
+    <button (click)="login()">Se connecter avec Google</button>
+}
 <app-toast-container></app-toast-container>
 <router-outlet></router-outlet>

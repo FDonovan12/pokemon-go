@@ -62,7 +62,7 @@
     (filterAdded)="filterToEdit.set(undefined)"
 ></app-add-filter>
 
-@for (filter of filters(); track filter.id) {
+@for (filter of filters.value(); track filter.id) {
     <p>
         <button (click)="clipboardService.copyToClipboard(filter.query)">{{ filter.label }}</button>
         <button

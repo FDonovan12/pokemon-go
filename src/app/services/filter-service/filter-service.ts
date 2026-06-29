@@ -37,17 +37,17 @@ export class FilterService {
         return this.buildFilter(filter);
     }
 
-    simplifyPokemon(lists: ListCondition): PokemonInterface[] {
-        const pokemonsLists = lists.items.map((item) => {
-            let key = item.key;
-            // key is already the storage slug, do not slugify again
-            const pokemons = this._listPokemonRepository.getPokemonsForList({ slug: key });
-            if (item.inverted) {
-                return this._pokemonRepository.getAllOtherPokemons(pokemons);
-            } else {
-                return pokemons;
-            }
-        });
+    async simplifyPokemon(lists: ListCondition): Promise<PokemonInterface[]> {
+        const pokemonsLists = await Promise.all(
+            lists.items.map(async (item) => {
+                const pokemons = await this._listPokemonRepository.getPokemonsForList({ slug: item.key });
+                if (item.inverted) {
+                    return this._pokemonRepository.getAllOtherPokemons(pokemons);
+                } else {
+                    return pokemons;
+                }
+            }),
+        );
         if (lists.operator === 'AND') {
             if (pokemonsLists.length === 0) return [];
             return pokemonsLists.reduce((acc, pokemons) =>

@@ -36,7 +36,7 @@ export interface Base {
     eliteQuickMove: string[];
     eliteCinematicMove: string[];
     nonTmCinematicMoves: string[];
-    evolutionIds?: string[];
+    evolutionIds: string[];
     family: string;
     isLegendary: boolean;
     isMythical: boolean;

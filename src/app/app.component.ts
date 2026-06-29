@@ -1,6 +1,8 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
+import { DataSyncService } from '@services/data-sync-service/data-sync.service';
+import { SupabaseService } from '@services/supabase-service/supabase.service';
 import { ToastContainerComponent } from './shared/features/toast/components/toast-container.component';
 import { ToastService } from './shared/features/toast/toast.service';
 
@@ -15,6 +17,19 @@ import { ToastService } from './shared/features/toast/toast.service';
 export class AppComponent {
     private readonly toastService: ToastService = inject(ToastService);
     private readonly swUpdate: SwUpdate = inject(SwUpdate);
+    private readonly dataSyncService = inject(DataSyncService);
+
+    protected supabase = inject(SupabaseService);
+
+    session = this.supabase.session;
+
+    login() {
+        this.supabase.signInWithGoogle();
+    }
+
+    logout() {
+        this.supabase.signOut();
+    }
 
     deferredPrompt = signal<any>(null);
     isInstalled = signal(false);
@@ -27,6 +42,7 @@ export class AppComponent {
 
     constructor() {
         // Affiche le toast quand canInstall devient true
+        console.log('current url', window.location.href);
         effect(() => {
             if (this.canInstall()) {
                 this.toastService

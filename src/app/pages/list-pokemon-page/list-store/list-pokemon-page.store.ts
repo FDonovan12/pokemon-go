@@ -37,6 +37,28 @@ export const ListPokemonPageStore = signalStore(
         }),
     })),
     withMethods((store) => ({
+        _persistListKeys: () => {
+            const list = store.listEntries();
+            store._listPokemonRepository.saveListKeys(list);
+        },
+        _persistListOfPokemon: () => {
+            const listSlugs = store
+                .selectedPokemonWantKeep()
+                .toList()
+                .map((pokemon: PokemonInterface) => pokemon.slug);
+            const entry = store.selectedListEntry();
+            // store._listPokemonRepository.saveSlugsForList(entry, listSlugs);
+        },
+        _syncSelectedPokemonWantKeep: async () => {
+            const newSet: Set<PokemonInterface> = (
+                await store._listPokemonRepository.getPokemonsForList(store.selectedListEntry())
+            ).toSet();
+            patchState(store, {
+                selectedPokemonWantKeep: newSet,
+            });
+        },
+    })),
+    withMethods((store) => ({
         unselectAll() {
             patchState(store, { selectedPokemonWantKeep: new Set<PokemonInterface>() });
         },
@@ -50,8 +72,10 @@ export const ListPokemonPageStore = signalStore(
             const set = new Set<PokemonInterface>(store.selectedPokemonWantKeep());
             if (set.has(pokemon)) {
                 set.delete(pokemon);
+                store._listPokemonRepository.removeSlugFromList(store.selectedListEntry(), pokemon.slug);
             } else {
                 set.add(pokemon);
+                store._listPokemonRepository.addSlugToList(store.selectedListEntry(), pokemon.slug);
             }
             patchState(store, { selectedPokemonWantKeep: set });
         },
@@ -62,6 +86,7 @@ export const ListPokemonPageStore = signalStore(
             const newEntry: LabelEntry = { label: nameList, slug: newId };
             const newList = [...oldListNames, newEntry];
             patchState(store, { listEntries: newList, selectedListEntry: newEntry });
+            store._persistListKeys();
             return newEntry;
         },
     })),
@@ -84,6 +109,7 @@ export const ListPokemonPageStore = signalStore(
                         listEntries: newList,
                         selectedListEntry: selectedEntry ?? LOCAL_STORAGE_KEEP,
                     });
+                    store._persistListKeys();
                     store._toastService.prepare('✓ Supprimée', `Liste "${selectedLabel}" supprimée`).showSuccess();
                 },
                 () => {
@@ -91,34 +117,14 @@ export const ListPokemonPageStore = signalStore(
                 },
             );
         },
-        _persistListKeys: () => {
-            const list = store.listEntries();
-            store._listPokemonRepository.saveListKeys(list);
-        },
-        _persistListOfPokemon: () => {
-            const listSlugs = store
-                .selectedPokemonWantKeep()
-                .toList()
-                .map((pokemon: PokemonInterface) => pokemon.slug);
-            const entry = store.selectedListEntry();
-            store._listPokemonRepository.saveSlugsForList(entry, listSlugs);
-        },
-        _syncSelectedPokemonWantKeep: () => {
-            const newSet: Set<PokemonInterface> = store._listPokemonRepository
-                .getPokemonsForList(store.selectedListEntry())
-                .toSet();
-            patchState(store, {
-                selectedPokemonWantKeep: newSet,
-            });
-        },
     })),
     withHooks((store) => ({
-        onInit() {
+        async onInit() {
             effect(store._syncSelectedPokemonWantKeep);
             effect(store._persistListOfPokemon);
-            effect(store._persistListKeys);
+            // effect(store._persistListKeys);
 
-            const storageListEntries: LabelEntry[] = store._listPokemonRepository.getListKeys();
+            const storageListEntries: LabelEntry[] = await store._listPokemonRepository.getListKeys();
             const allPokemons = store._pokemonRepository.getAllPokemon();
             const selectedSlug = storageListEntries.first() ?? LOCAL_STORAGE_KEEP;
 

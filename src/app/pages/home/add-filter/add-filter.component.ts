@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, linkedSignal, output, signal } from '@angular/core';
+import { Component, inject, input, linkedSignal, output, resource, signal } from '@angular/core';
 import { form, FormField, required } from '@angular/forms/signals';
 import { FilterItem, FiltersFacade } from '@repositories/filters-repository';
 import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
@@ -35,9 +35,16 @@ export class AddFilterComponent {
     });
 
     showAddFilterPopup = signal(false);
-    availableLists = computed(() =>
-        [this.listPokemonRepository.getListKeys(), this.internalListPokemonRepository.getInternalLists()].flat(),
-    );
+    // availableLists = computed(() =>
+    //     [this.listPokemonRepository.getListKeys(), this.internalListPokemonRepository.getInternalLists()].flat(),
+    // );
+    availableLists = resource({
+        loader: async () => {
+            const keys = await this.listPokemonRepository.getListKeys();
+            return [keys, this.internalListPokemonRepository.getInternalLists()].flat();
+        },
+        defaultValue: [],
+    });
 
     openAddFilterPopup(): void {
         this.showAddFilterPopup.set(true);

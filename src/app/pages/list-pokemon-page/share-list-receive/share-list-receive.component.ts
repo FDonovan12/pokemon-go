@@ -65,7 +65,8 @@ export class ShareListReceiveComponent implements OnInit {
 
             const ids = this.shareData.ids;
             const slugs = ids.map((id) => this.pokemonRepository.getPokemonById(id)?.slug!).compact();
-            this.listPokemonRepository.saveSlugsForList(newList, slugs);
+            slugs.forEach((slug) => this.listPokemonRepository.addSlugToList(newList, slug));
+            // this.listPokemonRepository.saveSlugsForList(newList, slugs);
 
             this.toastService
                 .prepare('✓ Succès', `Liste "${newList}" créée avec ${slugs.length} pokémons`)

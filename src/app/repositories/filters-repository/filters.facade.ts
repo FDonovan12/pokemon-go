@@ -1,4 +1,4 @@
-import { Injectable, Signal, computed, inject } from '@angular/core';
+import { Injectable, ResourceRef, inject, resource } from '@angular/core';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
@@ -14,27 +14,29 @@ export class FiltersFacade {
     private readonly _listPokemonRepository = inject(ListPokemonRepository);
     private readonly _pokemonRepository = inject(PokemonRepository);
 
-    getFiltersResolved(): Signal<FilterItemResolved[]> {
-        return computed(() => {
-            const filters = this._filtersRepository.getFilters();
-
-            return this.resolveFilters(filters());
+    getFiltersResolved(): ResourceRef<FilterItemResolved[]> {
+        return resource({
+            params: () => this._filtersRepository.getFilters()(),
+            loader: async ({ params: filters }) => this.resolveFilters(filters),
+            defaultValue: [],
         });
     }
 
-    resolveFilters(filters: FilterItem[]): FilterItemResolved[] {
-        return filters.map((filter) => ({
-            id: filter.id,
-            label: filter.label,
-            query: this.resolveQuery(filter.query),
-        }));
+    async resolveFilters(filters: FilterItem[]): Promise<FilterItemResolved[]> {
+        return Promise.all(
+            filters.map(async (filter) => ({
+                id: filter.id,
+                label: filter.label,
+                query: await this.resolveQuery(filter.query),
+            })),
+        );
     }
 
     /**
      * Convertit une requête (string ou structure) en string
      * Pour l'instant, on ignore la partie lists/pokemons
      */
-    private resolveQuery(query: FilterQuery | string): string {
+    private async resolveQuery(query: FilterQuery | string): Promise<string> {
         if (typeof query === 'string') {
             return query;
         }
@@ -44,7 +46,7 @@ export class FiltersFacade {
 
         // TODO: Plus tard, résoudre la partie lists avec FilterService
         if (query.lists) {
-            const pokemons = this._filterService.simplifyPokemon(query.lists).sortAsc('id');
+            const pokemons = (await this._filterService.simplifyPokemon(query.lists)).sortAsc('id');
             const result = this._filterService.buildAllPokemon(pokemons);
             parts.push(result);
         }

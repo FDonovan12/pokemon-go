@@ -22,6 +22,7 @@
     "@angular/router": "^22.0.1",
     "@angular/service-worker": "^22.0.1",
     "@ngrx/signals": "^21.1.1",
+    "@supabase/supabase-js": "^2.108.2",
     "lz-string": "^1.5.0",
     "prettier": "^3.6.2",
     "rxjs": "^7.8.2",
