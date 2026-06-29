@@ -1,6 +1,6 @@
 // supabase.service.ts
 import { inject, Injectable, NgZone, signal } from '@angular/core';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 @Injectable({

@@ -1,4 +1,4 @@
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 
 export function MeasurePerf() {
     // ❌ En prod → on ne fait rien
