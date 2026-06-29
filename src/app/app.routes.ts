@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AuthCallbackComponent } from './app.component copy';
 
 export const routes: Routes = [
     {
@@ -40,7 +39,6 @@ export const routes: Routes = [
             },
         ],
     },
-    { path: 'auth/callback', component: AuthCallbackComponent },
     {
         path: 'dynamax',
         loadComponent: () => import('./pages/dynamax/dynamax.page').then((m) => m.DynamaxPage),

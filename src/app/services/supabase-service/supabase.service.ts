@@ -14,6 +14,8 @@ export class SupabaseService {
     readonly session = signal<any>(null);
 
     constructor() {
+        console.log(environment.supabaseUrl);
+        console.log(environment.supabaseAnonKey);
         this.client.auth.getSession().then(({ data }) => {
             this.session.set(data.session);
         });

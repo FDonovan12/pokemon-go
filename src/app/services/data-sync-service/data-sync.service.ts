@@ -21,6 +21,7 @@ export class DataSyncService {
     }
 
     private async syncIfFirstLogin(session: any): Promise<void> {
+        console.log('syncIfFirstLogin');
         const SyncWasMade = this.localStorageService.get(SYNC_ALREADY_MADE_KEY, false);
         if (SyncWasMade) return; // données déjà en BDD, pas un premier login
 
@@ -28,6 +29,9 @@ export class DataSyncService {
         const listKeys = this.localStorageService.get<LabelEntry[]>(LOCAL_STORAGE_KEEP_KEYS, []);
         const filters = this.localStorageService.get(FILTERS_STORAGE_KEY, []);
 
+        console.log(pvpRanks);
+        console.log(listKeys);
+        console.log(filters);
         const test = await this.supabaseService.client.from('user_data').upsert(
             {
                 user_id: session.user.id,
@@ -38,6 +42,7 @@ export class DataSyncService {
             { ignoreDuplicates: true },
         );
 
+        console.log(test);
         // migration list_pokemons
         for (const entry of listKeys) {
             const slugs = this.localStorageService.get(entry.slug, []);
