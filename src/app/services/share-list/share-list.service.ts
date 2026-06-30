@@ -12,7 +12,7 @@ export class ShareListService {
     generateShareUrl(ids: number[]): string {
         const compressed = this.compressShareData(ids);
         const baseUrl = window.location.origin;
-        return `${baseUrl}/#/keep/share/${compressed}`;
+        return `${baseUrl}/pokemon-go/keep/share/${compressed}`;
     }
 
     private compressShareData(ids: number[]): string {
