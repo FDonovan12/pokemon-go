@@ -44,6 +44,13 @@ export class ListPokemonRepository {
         const slugs = await this.getSlugsForList(entry);
         return this._pokemonRepository.getPokemonsBySLugs(slugs);
     }
+    async listExists(entry: { slug: string }): Promise<boolean> {
+        if (this._internalListPokemonRepository.getPokemonsForInternalList(entry)) {
+            return true;
+        }
+        const keys = await this.getListKeys(); // ou la méthode équivalente côté Supabase/localStorage
+        return keys.filter((key) => key.slug === entry.slug).length > 0;
+    }
 
     async addSlugToList(entry: LabelEntry | { slug: string }, slug: PokemonSlug): Promise<void> {
         if (this._supabaseService.isLoggedIn()) {

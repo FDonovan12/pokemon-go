@@ -37,9 +37,25 @@ export class FilterService {
         return this.buildFilter(filter);
     }
 
+    async cleanListCondition(lists: ListCondition): Promise<{ cleaned: ListCondition; removedKeys: string[] }> {
+        const checks = await Promise.all(
+            lists.items.map(async (item) => ({
+                item,
+                exists: await this._listPokemonRepository.listExists({ slug: item.key }),
+            })),
+        );
+
+        const removedKeys = checks.filter((c) => !c.exists).map((c) => c.item.key);
+        const items = checks.filter((c) => c.exists).map((c) => c.item);
+
+        return { cleaned: { ...lists, items }, removedKeys };
+    }
+
     async simplifyPokemon(lists: ListCondition): Promise<PokemonInterface[]> {
+        const { cleaned, removedKeys } = await this.cleanListCondition(lists);
+
         const pokemonsLists = await Promise.all(
-            lists.items.map(async (item) => {
+            cleaned.items.map(async (item) => {
                 const pokemons = await this._listPokemonRepository.getPokemonsForList({ slug: item.key });
                 if (item.inverted) {
                     return this._pokemonRepository.getAllOtherPokemons(pokemons);
