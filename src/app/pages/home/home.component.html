@@ -59,7 +59,7 @@
 
 <app-add-filter
     [filterItem]="filterToEdit()"
-    (filterAdded)="filterToEdit.set(undefined)"
+    (closed)="filterToEdit.set(undefined)"
 ></app-add-filter>
 
 @for (filter of filters.value(); track filter.id) {

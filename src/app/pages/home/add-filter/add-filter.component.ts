@@ -20,6 +20,7 @@ export class AddFilterComponent {
     private readonly toastService = inject(ToastService);
 
     filterAdded = output<void>();
+    closed = output<void>();
     filterItem = input<FilterItem>();
 
     private readonly baseValue: Omit<FilterItem, 'id'> = {
@@ -53,6 +54,7 @@ export class AddFilterComponent {
     closeAddFilterPopup(): void {
         this.filterForm().reset(this.baseValue);
         this.showAddFilterPopup.set(false);
+        this.closed.emit();
     }
 
     addNewFilter(): void {
@@ -67,8 +69,8 @@ export class AddFilterComponent {
             this.filtersFacade.addFilter(this.filterForm().value());
             this.toastService.prepare('✓ Succès', `Filtre "${label}" ajouté`).showSuccess();
         }
-        this.closeAddFilterPopup();
         this.filterAdded.emit();
+        this.closeAddFilterPopup();
     }
 
     isListSelected(slug: string): boolean {
