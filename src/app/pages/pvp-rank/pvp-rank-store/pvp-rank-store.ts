@@ -5,6 +5,7 @@ import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { PvpRankRepository } from '@repositories/pvp-rank-repository/pvp-rank.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { withPokemonSearch } from '@shared/features/pokemon-search/with-pokemon-search.feature';
+import { createTimer } from '@shared/utils/utils';
 import { League } from './../pvp-rank.type';
 
 export interface PvpRank {
@@ -104,11 +105,14 @@ export const PVPRankStore = signalStore(
     })),
     withComputed((store) => ({
         allRankFilter: computed(() => {
-            const subEvolutionsMap = store._subEvolutionsMap();
-            const mapFilterGreat = new Map<string, Base[]>();
-            const mapFilterUltra = new Map<string, Base[]>();
+            const tick = createTimer('allRankFilter');
+            const mapFilterGreat = new Map<number, Base[]>();
+            const mapFilterUltra = new Map<number, Base[]>();
             const rank = store._rankPVP.value();
             if (!rank) return { great: [], ultra: [], allPokemon: '' };
+            tick('setup + rank value');
+            const subEvolutionsMap = store._subEvolutionsMap();
+            tick('subEvolutionsMap');
             function ivToFilterValue(iv: number): number {
                 if (iv === 0) return 0;
                 if (iv <= 5) return 1;
@@ -116,16 +120,22 @@ export const PVPRankStore = signalStore(
                 if (iv <= 14) return 3;
                 return 4;
             }
-            const statToFilterNumber = (stats: LeagueStats) => ({
-                atq: ivToFilterValue(stats.atk),
-                def: ivToFilterValue(stats.def),
-                stamina: ivToFilterValue(stats.sta),
+            const statToFilterKey = (stats: LeagueStats): number => {
+                const atq = ivToFilterValue(stats.atk);
+                const def = ivToFilterValue(stats.def);
+                const sta = ivToFilterValue(stats.sta);
+                return atq * 25 + def * 5 + sta; // encodage en base 5, unique entre 0 et 124
+            };
+            const decodeFilterKey = (key: number) => ({
+                atq: Math.floor(key / 25),
+                def: Math.floor(key / 5) % 5,
+                stamina: key % 5,
             });
             store.filteredPokemons().forEach((pokemon) => {
                 const base = pokemon as any as Base;
                 const greatRankBetterThanActualRank = rank.get(pokemon.slug)?.great;
-                const statsGreat = greatRankBetterThanActualRank?.map((stat) => statToFilterNumber(stat));
-                statsGreat?.forEach((stat) => mapFilterGreat.ensureArray(stat.stableStringify()).push(base));
+                const statsGreat = greatRankBetterThanActualRank;
+                statsGreat?.forEach((stat) => mapFilterGreat.ensureArray(statToFilterKey(stat)).push(base));
 
                 const table = store._pokemonRepository.cpMultiplier.value();
                 const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
@@ -134,15 +144,16 @@ export const PVPRankStore = signalStore(
                     store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50) > 2480
                 ) {
                     const ultraRankBetterThanActualRank = rank.get(pokemon.slug)?.ultra;
-                    const statHyper = ultraRankBetterThanActualRank?.map((stat) => statToFilterNumber(stat));
-                    statHyper?.forEach((stat) => mapFilterUltra.ensureArray(stat.stableStringify()).push(base));
+                    const statHyper = ultraRankBetterThanActualRank;
+                    statHyper?.forEach((stat) => mapFilterUltra.ensureArray(statToFilterKey(stat)).push(base));
                 }
             });
+            tick('build maps (forEach principal)');
 
-            const toFilterList = (map: Map<string, Base[]>, league: League) =>
+            const toFilterList = (map: Map<number, Base[]>, league: League) =>
                 [...map.entries()]
                     .map(([key, pokemons]) => {
-                        const stats = JSON.parse(key) as { atq: number; def: number; stamina: number };
+                        const stats = decodeFilterKey(key) as { atq: number; def: number; stamina: number };
                         const dexNumbers = new Set(
                             pokemons
                                 .filter(
@@ -160,15 +171,21 @@ export const PVPRankStore = signalStore(
                         };
                     })
                     .sortDesc('count');
-            return {
-                great: toFilterList(mapFilterGreat, 'super'),
-                ultra: toFilterList(mapFilterUltra, 'hyper'),
-                allPokemon: [
-                    ...new Set(store.filteredPokemons().flatMap((p) => subEvolutionsMap.get((p as any).slug) ?? [])),
-                ]
-                    .map((p) => (p as any).dexNumber)
-                    .join(','),
-            };
+
+            const greatList = toFilterList(mapFilterGreat, 'super');
+            tick('toFilterList great');
+
+            const ultraList = toFilterList(mapFilterUltra, 'hyper');
+            tick('toFilterList ultra');
+
+            const allPokemon = [
+                ...new Set(store.filteredPokemons().flatMap((p) => subEvolutionsMap.get((p as any).slug) ?? [])),
+            ]
+                .map((p) => (p as any).dexNumber)
+                .join(',');
+            tick('allPokemon');
+
+            return { great: greatList, ultra: ultraList, allPokemon };
         }),
     })),
     withMethods((store) => ({
