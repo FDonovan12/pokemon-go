@@ -86,6 +86,7 @@ export interface LeagueStats {
     def: number;
     sta: number;
     level: number;
+    stat: number;
 }
 
 export interface Different {

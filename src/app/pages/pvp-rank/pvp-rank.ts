@@ -31,8 +31,6 @@ export class PvpRankPages {
 
     onRankClosed() {
         this.showDialog.set(false);
-
-        const test = this.store.rank1Filter();
     }
 
     openModifyRankDialog(pokemon: PokemonInterface, league: League = 'super', forme: Forme = 'normal') {

@@ -1,8 +1,9 @@
 import { httpResource, HttpResourceRef } from '@angular/common/http';
-import { computed, inject, Injectable, resource } from '@angular/core';
+import { inject, Injectable, resource } from '@angular/core';
 import {
     Base,
     GenerationPokemon,
+    LeagueStats,
     NamePokemon,
     PokemonFamily,
     PokemonInterface,
@@ -30,6 +31,11 @@ type PokemonIndex = {
     byId: Record<PokemonInterface['id'], PokemonInterface>;
     byName: Record<PokemonInterface['slug'], PokemonInterface>;
 };
+
+export type AllRankPVP = {
+    great: LeagueStats[];
+    ultra: LeagueStats[];
+};
 @Injectable({
     providedIn: 'root',
 })
@@ -45,6 +51,16 @@ export class PokemonRepository {
     rank1PVP: HttpResourceRef<Record<PokemonSlug, RankPVP> | undefined> = httpResource(
         () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/rank-1-pvp.json',
     );
+
+    async getPVPRank(slug: PokemonSlug): Promise<AllRankPVP> {
+        const result = await fetch(
+            `https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/rank-pvp/${slug}.json`,
+        );
+        return result.json();
+    }
+    // rankPVP: HttpResourceRef<Record<PokemonSlug, test> | undefined> = httpResource(
+    //     () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/rank-1-pvp.json',
+    // );
 
     filteredPokemonsResource = resource({
         params: () => {
@@ -68,27 +84,6 @@ export class PokemonRepository {
                     return maxCp > 1480;
                 });
         },
-    });
-
-    // not work
-    readonly preEvolutionMap = computed(() => {
-        const map = new Map<string, number[]>();
-        if (!this.pokemonsSetting.hasValue()) return map;
-        const bases = this.pokemonsSetting.value() as any as Base[];
-
-        bases.forEach((pokemon) => {
-            pokemon.evolutionIds?.forEach((evoId) => {
-                const current = map.get(evoId) ?? [];
-                map.set(evoId, [...current, pokemon.dexNumber]);
-
-                // remonte récursivement les pré-évos déjà connues
-                const grandParents = map.get(pokemon.pokemonId) ?? [];
-                if (grandParents.length) {
-                    map.set(evoId, [...grandParents, pokemon.dexNumber, ...current]);
-                }
-            });
-        });
-        return map;
     });
 
     pureCalculateCp(pokemon: Base, table: Record<string, number>, iv: PokemonIv, level: number): number {
