@@ -86,24 +86,42 @@ export const PVPRankStore = signalStore(
                 return store.filteredPokemons().map((p) => p.slug);
             },
             loader: async ({ params: slugs }) => {
-                console.time('_rankPVP');
                 const entries = await Promise.all(
                     slugs.map(async (slug) => {
                         const data = await store._pokemonRepository.getPVPRank(slug);
-                        return [
-                            slug,
-                            {
-                                great: data.great.slice(0, (store.allRank().get(slug)?.super.normal ?? 4096) - 1),
-                                ultra: data.ultra.slice(0, (store.allRank().get(slug)?.hyper.normal ?? 4096) - 1),
-                            },
-                        ] as const;
+                        return [slug, data] as const;
                     }),
                 );
-                console.timeEnd('_rankPVP');
                 return new Map(entries);
             },
             // defaultValue: {} as Record<PokemonSlug, AllRankPVP>,
         }),
+    })),
+    withMethods((store) => ({
+        _getOrInitRank(pokemon: PokemonSlug): PvpRank {
+            const ranks = store.allRank();
+            if (!ranks.has(pokemon)) {
+                const initRank: PvpRank = {
+                    super: { obscur: null, normal: null },
+                    hyper: { obscur: null, normal: null },
+                };
+                ranks.set(pokemon, initRank);
+            }
+            return ranks.get(pokemon)!;
+        },
+        _getBetterRankWithLimit(slug: PokemonSlug, league: League, limit = 4096): LeagueStats[] {
+            const dataBestRankPVP = store._rankPVP.value();
+            if (!dataBestRankPVP) return [];
+
+            const allRank = dataBestRankPVP.get(slug);
+            if (!allRank) return [];
+
+            const ranks = store.allRank();
+            const mapLeague = { super: 'great', hyper: 'ultra' } as const;
+
+            const rank = Math.min(ranks.get(slug)?.[league]?.normal ?? limit, limit) - 1;
+            return allRank[mapLeague[league]].slice(0, rank);
+        },
     })),
     withComputed((store) => ({
         allRankFilter: computed(() => {
@@ -135,7 +153,7 @@ export const PVPRankStore = signalStore(
             });
             store.filteredPokemons().forEach((pokemon) => {
                 const base = pokemon as any as Base;
-                const greatRankBetterThanActualRank = rank.get(pokemon.slug)?.great;
+                const greatRankBetterThanActualRank = store._getBetterRankWithLimit(base.slug, 'super');
                 const statsGreat = greatRankBetterThanActualRank;
                 statsGreat?.forEach((stat) => mapFilterGreat.ensureArray(statToFilterKey(stat)).push(base));
 
@@ -145,7 +163,7 @@ export const PVPRankStore = signalStore(
                     table &&
                     store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50) > 2480
                 ) {
-                    const ultraRankBetterThanActualRank = rank.get(pokemon.slug)?.ultra;
+                    const ultraRankBetterThanActualRank = store._getBetterRankWithLimit(base.slug, 'hyper');
                     const statHyper = ultraRankBetterThanActualRank;
                     statHyper?.forEach((stat) => mapFilterUltra.ensureArray(statToFilterKey(stat)).push(base));
                 }
@@ -191,19 +209,10 @@ export const PVPRankStore = signalStore(
             return { great: greatList, ultra: ultraList, allPokemon };
         }),
     })),
+
     withMethods((store) => ({
-        _getOrInitRank(pokemon: PokemonSlug): PvpRank {
-            const ranks = store.allRank();
-            if (!ranks.has(pokemon)) {
-                const initRank: PvpRank = {
-                    super: { obscur: null, normal: null },
-                    hyper: { obscur: null, normal: null },
-                };
-                ranks.set(pokemon, initRank);
-            }
-            return ranks.get(pokemon)!;
-        },
-        getPokemonFilter(slug: PokemonSlug): string {
+        getPokemonFilter(pokemon: Base): string {
+            const slug = pokemon.slug;
             const rank = store._rankPVP.value();
             if (!rank) return '';
             const subEvolutionsMap = store._subEvolutionsMap();
@@ -231,27 +240,28 @@ export const PVPRankStore = signalStore(
 
             const data = rank.get(slug);
             if (!data) return '';
-
-            const great = data.great.slice(0, 10).map(statToFilterKey).unique().map(decodeFilterKey);
-            const ultra = data.great.slice(0, 10).map(statToFilterKey).unique().map(decodeFilterKey);
-            return (
-                store._filterService.buildComboFilter([...great, ...ultra]) +
-                (subEvolutionsMap.get(slug) ?? []).join(', ')
-            );
+            const table = store._pokemonRepository.cpMultiplier.value();
+            const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
+            const allIV = [] as LeagueStats[];
+            const great = store._getBetterRankWithLimit(slug, 'super', 10);
+            const ultra = store._getBetterRankWithLimit(slug, 'hyper', 10);
+            if (table && store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50) > 2480) {
+                allIV.push(...ultra);
+            }
+            if (table && store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50) > 1480) {
+                allIV.push(...great);
+            }
+            const finalIV = allIV.map(statToFilterKey).unique().map(decodeFilterKey);
+            const subEvolutionFilter = (subEvolutionsMap.get(slug) ?? [])
+                .map((pokemon) => pokemon.dexNumber)
+                .join(', ');
+            return store._filterService.buildComboFilter(finalIV) + ' & ' + subEvolutionFilter;
         },
-    })),
-    withMethods((store) => ({
         modifyRank(pokemon: PokemonSlug, newRank: number, league: 'super' | 'hyper', form: 'normal' | 'obscur') {
             const rank = store._getOrInitRank(pokemon);
             rank[league][form] = newRank;
             const newMap = new Map(store.allRank());
-            console.log('before');
-            console.log(newMap);
-            console.log(store.allRank());
             patchState(store, { allRank: newMap });
-            console.log('after');
-            console.log(newMap);
-            console.log(store.allRank());
             store._pvpRankRepository.savePVPRank(store.allRank());
         },
         removeRank(pokemon: PokemonSlug, league: 'super' | 'hyper', form: 'normal' | 'obscur') {

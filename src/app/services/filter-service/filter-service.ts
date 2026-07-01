@@ -76,7 +76,6 @@ export class FilterService {
         return result;
     }
     buildComboFilter(combos: Combo[]): string {
-        console.log(combos);
         let groups: GroupedCombo[] = combos.map((c) => this.comboToGrouped(c));
 
         let changed = true;
@@ -111,11 +110,9 @@ export class FilterService {
 
             groups = next;
         }
-        console.log(groups);
         return this.buildComboFilterClause(groups);
     }
     private buildComboFilterClause(combos: GroupedCombo[]): string {
-        console.log(combos);
         if (combos.length === 0) {
             return '';
         }
@@ -139,7 +136,9 @@ export class FilterService {
         }
 
         // Chaque combinaison devient un OR
-        return result.map((clause) => this.filterRedundantRanges(clause).map(this.formatRange).join(', ')).join(' & ');
+        const filter = result.map((clause) => this.filterRedundantRanges(clause));
+        const final = filter.map((clause) => clause.map(this.formatRange).join(', ')).join(' & ');
+        return final;
     }
     private filterRedundantRanges(ranges: RangeWithStat[]): RangeWithStat[] {
         return ranges.filter((r) => {

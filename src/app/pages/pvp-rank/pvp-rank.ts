@@ -22,8 +22,9 @@ const _store = PVPRankStore;
 export class PvpRankPages {
     print(pokemon: PokemonInterface) {
         console.log(pokemon);
-        console.log();
-        this.clipboardService.copyToClipboard(this.store.getPokemonFilter(pokemon.slug));
+        const filter = this.store.getPokemonFilter(pokemon as any as Base);
+        this.clipboardService.copyToClipboard(filter);
+        console.log(filter.length);
     }
     protected readonly store = inject(_store);
     protected readonly clipboardService = inject(ClipboardService);
