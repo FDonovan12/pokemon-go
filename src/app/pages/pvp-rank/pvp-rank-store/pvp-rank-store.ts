@@ -154,8 +154,9 @@ export const PVPRankStore = signalStore(
                 [...map.entries()]
                     .map(([key, pokemons]) => {
                         const stats = decodeFilterKey(key) as { atq: number; def: number; stamina: number };
+                        const uniquePokemon = pokemons.unique();
                         const dexNumbers = new Set(
-                            pokemons
+                            uniquePokemon
                                 .filter(
                                     (mainPokemon) =>
                                         (store.allRank().get(mainPokemon.slug)?.[league]?.normal ?? 0) !== 1,
@@ -165,7 +166,7 @@ export const PVPRankStore = signalStore(
                         return {
                             stats,
                             pokemons: dexNumbers as any as Base[],
-                            count: pokemons.length,
+                            count: uniquePokemon.length,
                             dexNumbers,
                             isIncluded: true,
                         };
@@ -205,9 +206,14 @@ export const PVPRankStore = signalStore(
         modifyRank(pokemon: PokemonSlug, newRank: number, league: 'super' | 'hyper', form: 'normal' | 'obscur') {
             const rank = store._getOrInitRank(pokemon);
             rank[league][form] = newRank;
-            const nexRank = new Map(store.allRank());
-            console.log(nexRank);
-            patchState(store, { allRank: nexRank });
+            const newMap = new Map(store.allRank());
+            console.log('before');
+            console.log(newMap);
+            console.log(store.allRank());
+            patchState(store, { allRank: newMap });
+            console.log('after');
+            console.log(newMap);
+            console.log(store.allRank());
             store._pvpRankRepository.save(store.allRank());
         },
         removeRank(pokemon: PokemonSlug, league: 'super' | 'hyper', form: 'normal' | 'obscur') {

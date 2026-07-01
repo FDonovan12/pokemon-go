@@ -19,7 +19,10 @@ export class PvpRankRepository {
     }
 
     async save(ranks: Map<PokemonSlug, PvpRank>): Promise<void> {
+        console.log('save');
+        console.log(ranks);
         if (this.supabaseService.isLoggedIn()) {
+            console.log(ranks);
             await this.saveToSupabase(ranks);
         } else {
             const save = ranks.toObject();
@@ -40,7 +43,8 @@ export class PvpRankRepository {
 
     private async saveToSupabase(ranks: Map<PokemonSlug, PvpRank>): Promise<void> {
         const userId = this.supabaseService.getUserId();
-        this.supabaseService.client
+        console.log(userId);
+        await this.supabaseService.client
             .from('user_data')
             .upsert({ user_id: userId, pvp_ranks: ranks.toObject() }, { onConflict: 'user_id' });
     }
