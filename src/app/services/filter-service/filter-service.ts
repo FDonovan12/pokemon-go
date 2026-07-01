@@ -194,7 +194,7 @@ export class FilterService {
     }
 
     async simplifyPokemon(lists: ListCondition): Promise<PokemonInterface[]> {
-        const { cleaned, removedKeys } = await this.cleanListCondition(lists);
+        const cleaned = lists;
 
         const pokemonsLists = await Promise.all(
             cleaned.items.map(async (item) => {

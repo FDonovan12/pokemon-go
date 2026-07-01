@@ -59,6 +59,8 @@ export class FiltersFacade {
 
         // TODO: Plus tard, résoudre la partie lists avec FilterService
         if (query.lists) {
+            const { cleaned, removedKeys } = await this._filterService.cleanListCondition(query.lists);
+            query.lists = cleaned;
             const pokemons = (await this._filterService.simplifyPokemon(query.lists)).sortAsc('id');
             const result = this._filterService.buildAllPokemon(pokemons);
             parts.push(result);
