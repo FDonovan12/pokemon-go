@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, resource } from '@angular/core';
 import { PokemonSlug } from '@entities/pokemon';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { SupabaseService } from '@services/supabase-service/supabase.service';
@@ -11,22 +11,21 @@ export class PvpRankRepository {
     private readonly localStorageService = inject(LocalStorageService);
     private readonly supabaseService = inject(SupabaseService);
 
-    async load(): Promise<Map<PokemonSlug, PvpRank>> {
-        if (this.supabaseService.isLoggedIn()) {
-            return this.loadFromSupabase();
-        }
-        return this.loadFromLocal();
-    }
+    readonly pvpRankResource = resource({
+        params: () => (this.supabaseService.isLoggedIn() ? true : undefined),
+        loader: async () => {
+            const remote = await this.loadFromSupabase();
+            this.saveToLocal(remote);
+            return remote;
+        },
+        defaultValue: this.loadFromLocal(),
+    });
 
-    async save(ranks: Map<PokemonSlug, PvpRank>): Promise<void> {
-        console.log('save');
-        console.log(ranks);
+    async savePVPRank(ranks: Map<PokemonSlug, PvpRank>): Promise<void> {
+        this.saveToLocal(ranks);
+
         if (this.supabaseService.isLoggedIn()) {
-            console.log(ranks);
             await this.saveToSupabase(ranks);
-        } else {
-            const save = ranks.toObject();
-            this.localStorageService.set(LOCAL_STORAGE_PVP_RANK, save);
         }
     }
 
@@ -39,6 +38,10 @@ export class PvpRankRepository {
         const { data } = await this.supabaseService.client.from('user_data').select('pvp_ranks').single();
         if (!data) return new Map();
         return new Map(Object.entries(data.pvp_ranks) as [PokemonSlug, PvpRank][]);
+    }
+
+    private saveToLocal(ranks: Map<PokemonSlug, PvpRank>): void {
+        this.localStorageService.set(LOCAL_STORAGE_PVP_RANK, ranks.toObject());
     }
 
     private async saveToSupabase(ranks: Map<PokemonSlug, PvpRank>): Promise<void> {

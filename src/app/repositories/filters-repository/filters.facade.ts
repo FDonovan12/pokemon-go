@@ -14,11 +14,24 @@ export class FiltersFacade {
     private readonly _listPokemonRepository = inject(ListPokemonRepository);
     private readonly _pokemonRepository = inject(PokemonRepository);
 
+    private resolveQuerySync(query: FilterQuery | string): string {
+        if (typeof query === 'string') return query;
+        return query.prefix;
+    }
+
     getFiltersResolved(): ResourceRef<FilterItemResolved[]> {
+        const defaultResolved = this._filtersRepository
+            .getFilters()()
+            .map((filter) => ({
+                id: filter.id,
+                label: filter.label,
+                query: this.resolveQuerySync(filter.query),
+            }));
+
         return resource({
             params: () => this._filtersRepository.getFilters()(),
             loader: async ({ params: filters }) => this.resolveFilters(filters),
-            defaultValue: [],
+            defaultValue: defaultResolved,
         });
     }
 

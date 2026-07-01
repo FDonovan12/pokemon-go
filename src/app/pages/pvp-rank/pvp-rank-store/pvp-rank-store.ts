@@ -214,13 +214,13 @@ export const PVPRankStore = signalStore(
             console.log('after');
             console.log(newMap);
             console.log(store.allRank());
-            store._pvpRankRepository.save(store.allRank());
+            store._pvpRankRepository.savePVPRank(store.allRank());
         },
         removeRank(pokemon: PokemonSlug, league: 'super' | 'hyper', form: 'normal' | 'obscur') {
             const rank = store._getOrInitRank(pokemon);
             rank[league][form] = null;
             patchState(store, { allRank: new Map(store.allRank()) });
-            store._pvpRankRepository.save(store.allRank());
+            store._pvpRankRepository.savePVPRank(store.allRank());
         },
         getRankPokemon(pokemon: PokemonSlug, league: 'super' | 'hyper', form: 'normal' | 'obscur'): number | null {
             const rank = store._getOrInitRank(pokemon);
@@ -234,13 +234,10 @@ export const PVPRankStore = signalStore(
                 if (pokemons) patchState(store, { _allPokemons: pokemons });
             });
 
-            // effect(() => {
-            //     console.log('save effect');
-            //     // if (!store._filteredResource.isLoading()) return;
-            // });
-
-            store._pvpRankRepository.load().then((data) => patchState(store, { allRank: data }));
-            // await after the effect for injection context
+            effect(() => {
+                const data = store._pvpRankRepository.pvpRankResource.value();
+                patchState(store, { allRank: data });
+            });
         },
     })),
 );

@@ -1,4 +1,4 @@
-import { inject, Injectable, signal, Signal } from '@angular/core';
+import { inject, Injectable, linkedSignal, resource, Signal } from '@angular/core';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
@@ -71,7 +71,8 @@ export class FiltersRepository {
         },
     ];
 
-    private userFiltersSignal = signal<FilterItem[]>([]);
+    // private userFiltersSignal = signal<FilterItem[]>([]);
+    readonly userFiltersSignal = linkedSignal(() => this._filtersResource.value());
 
     constructor() {
         this.loadFilters();
@@ -125,15 +126,25 @@ export class FiltersRepository {
         }
     }
 
+    private readonly _filtersResource = resource({
+        params: () => (this.supabaseService.isLoggedIn() ? true : undefined),
+        loader: async () => {
+            const { data } = await this.supabaseService.client.from('user_data').select('filters').single();
+            const filters = (data?.filters as FilterItem[]) ?? this.defaultFilters;
+            this.localStorageService.set(FILTERS_STORAGE_KEY, filters); // sync local avec Supabase
+            return filters;
+        },
+        defaultValue: this.localStorageService.get<FilterItem[]>(FILTERS_STORAGE_KEY, this.defaultFilters),
+    });
+
     private async saveFilters(): Promise<void> {
-        const isloggedin = this.supabaseService.isLoggedIn();
-        if (isloggedin) {
+        this.localStorageService.set(FILTERS_STORAGE_KEY, this.userFiltersSignal());
+
+        if (this.supabaseService.isLoggedIn()) {
             const userId = this.supabaseService.getUserId();
-            const result = await this.supabaseService.client
+            await this.supabaseService.client
                 .from('user_data')
                 .upsert({ user_id: userId, filters: this.userFiltersSignal() }, { onConflict: 'user_id' });
-        } else {
-            this.localStorageService.set(FILTERS_STORAGE_KEY, this.userFiltersSignal());
         }
     }
 
