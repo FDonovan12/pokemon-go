@@ -3,6 +3,7 @@ import { Base, LeagueStats, PokemonInterface, PokemonSlug, RankPVP } from '@enti
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { PvpRankRepository } from '@repositories/pvp-rank-repository/pvp-rank.repository';
+import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { withPokemonSearch } from '@shared/features/pokemon-search/with-pokemon-search.feature';
 import { createTimer } from '@shared/utils/utils';
@@ -30,6 +31,7 @@ export const PVPRankStore = signalStore(
         _pokemonRepository: inject(PokemonRepository),
         _localStorageService: inject(LocalStorageService),
         _pvpRankRepository: inject(PvpRankRepository),
+        _filterService: inject(FilterService),
     })),
     withProps((store) => ({
         _pokemonsResource: resource({
@@ -200,6 +202,42 @@ export const PVPRankStore = signalStore(
                 ranks.set(pokemon, initRank);
             }
             return ranks.get(pokemon)!;
+        },
+        getPokemonFilter(slug: PokemonSlug): string {
+            const rank = store._rankPVP.value();
+            if (!rank) return '';
+            const subEvolutionsMap = store._subEvolutionsMap();
+
+            function ivToFilterValue(iv: number): number {
+                if (iv === 0) return 0;
+                if (iv <= 5) return 1;
+                if (iv <= 10) return 2;
+                if (iv <= 14) return 3;
+                return 4;
+            }
+
+            const statToFilterKey = (stats: LeagueStats): number => {
+                const atq = ivToFilterValue(stats.atk);
+                const def = ivToFilterValue(stats.def);
+                const sta = ivToFilterValue(stats.sta);
+                return atq * 25 + def * 5 + sta;
+            };
+
+            const decodeFilterKey = (key: number) => ({
+                atq: Math.floor(key / 25),
+                def: Math.floor(key / 5) % 5,
+                stamina: key % 5,
+            });
+
+            const data = rank.get(slug);
+            if (!data) return '';
+
+            const great = data.great.slice(0, 10).map(statToFilterKey).unique().map(decodeFilterKey);
+            const ultra = data.great.slice(0, 10).map(statToFilterKey).unique().map(decodeFilterKey);
+            return (
+                store._filterService.buildComboFilter([...great, ...ultra]) +
+                (subEvolutionsMap.get(slug) ?? []).join(', ')
+            );
         },
     })),
     withMethods((store) => ({

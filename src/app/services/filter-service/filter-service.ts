@@ -7,11 +7,154 @@ import { ListCondition } from './../../repositories/filters-repository/filter.mo
 const OR_JOIN = ',';
 const AND_JOIN = '&';
 const NOT_JOIN = '!';
+type Combo = {
+    atq: number;
+    def: number;
+    stamina: number;
+};
+type Range = { min: number; max: number };
+type GroupedCombo = { atq: Range; def: Range; stamina: Range };
+type StatKey = 'atq' | 'def' | 'stamina';
 
+type RangeWithStat = {
+    stat: StatKey;
+    range: Range;
+};
 @Injectable({
     providedIn: 'root',
 })
 export class FilterService {
+    private comboToTerms(combo: GroupedCombo): RangeWithStat[] {
+        return [
+            { stat: 'atq', range: combo.atq },
+            { stat: 'def', range: combo.def },
+            { stat: 'stamina', range: combo.stamina },
+        ];
+    }
+    private comboToGrouped(combo: Combo): GroupedCombo {
+        return {
+            atq: { min: combo.atq, max: combo.atq },
+            def: { min: combo.def, max: combo.def },
+            stamina: { min: combo.stamina, max: combo.stamina },
+        };
+    }
+    private equalsRange(a: Range, b: Range): boolean {
+        return a.min === b.min && a.max === b.max;
+    }
+    private canMerge(a: GroupedCombo, b: GroupedCombo): boolean {
+        let diff = 0;
+        const dims: (keyof GroupedCombo)[] = ['atq', 'def', 'stamina'];
+        for (const dim of dims) {
+            if (!this.equalsRange(a[dim], b[dim])) diff++;
+        }
+        if (diff !== 1) return false;
+
+        // la dimension différente doit être adjacente
+        const dim = dims.find((d) => !this.equalsRange(a[d], b[d]))!;
+        const ra = a[dim],
+            rb = b[dim];
+        return ra.max + 1 === rb.min || rb.max + 1 === ra.min;
+    }
+    private readonly statSuffix: Record<StatKey, string> = {
+        atq: 'attaque',
+        def: 'défense',
+        stamina: 'pv',
+    };
+    private formatRange = (r: RangeWithStat): string => {
+        const suffix = this.statSuffix[r.stat];
+        return r.range.min === r.range.max ? `${r.range.min}${suffix}` : `${r.range.min}-${r.range.max}${suffix}`;
+    };
+    private merge(a: GroupedCombo, b: GroupedCombo): GroupedCombo {
+        const dims: (keyof GroupedCombo)[] = ['atq', 'def', 'stamina'];
+        const result = {} as GroupedCombo;
+        for (const dim of dims) {
+            result[dim] = {
+                min: Math.min(a[dim].min, b[dim].min),
+                max: Math.max(a[dim].max, b[dim].max),
+            };
+        }
+        return result;
+    }
+    buildComboFilter(combos: Combo[]): string {
+        console.log(combos);
+        let groups: GroupedCombo[] = combos.map((c) => this.comboToGrouped(c));
+
+        let changed = true;
+
+        while (changed) {
+            changed = false;
+            const next: GroupedCombo[] = [];
+            const used = new Array(groups.length).fill(false);
+
+            for (let i = 0; i < groups.length; i++) {
+                if (used[i]) continue;
+
+                let merged = false;
+
+                for (let j = i + 1; j < groups.length; j++) {
+                    if (used[j]) continue;
+
+                    if (this.canMerge(groups[i], groups[j])) {
+                        next.push(this.merge(groups[i], groups[j]));
+                        used[i] = true;
+                        used[j] = true;
+                        merged = true;
+                        changed = true;
+                        break;
+                    }
+                }
+
+                if (!merged && !used[i]) {
+                    next.push(groups[i]);
+                }
+            }
+
+            groups = next;
+        }
+        console.log(groups);
+        return this.buildComboFilterClause(groups);
+    }
+    private buildComboFilterClause(combos: GroupedCombo[]): string {
+        console.log(combos);
+        if (combos.length === 0) {
+            return '';
+        }
+
+        // Chaque combo devient un tableau de termes
+        const groups = combos.map(this.comboToTerms);
+
+        // Produit cartésien des groupes
+        let result: RangeWithStat[][] = [[]];
+
+        for (const group of groups) {
+            const next: RangeWithStat[][] = [];
+
+            for (const partial of result) {
+                for (const term of group) {
+                    next.push([...partial, term]);
+                }
+            }
+
+            result = next;
+        }
+
+        // Chaque combinaison devient un OR
+        return result.map((clause) => this.filterRedundantRanges(clause).map(this.formatRange).join(', ')).join(' & ');
+    }
+    private filterRedundantRanges(ranges: RangeWithStat[]): RangeWithStat[] {
+        return ranges.filter((r) => {
+            // garde r seulement si aucune autre range de même stat ne le contient entièrement
+            return !ranges.some(
+                (other) =>
+                    other !== r &&
+                    other.stat === r.stat &&
+                    other.range.min <= r.range.min &&
+                    other.range.max >= r.range.max &&
+                    (other.range.min < r.range.min || other.range.max > r.range.max), // other est strictement plus large
+            );
+        });
+    }
+
     private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
     private readonly _listPokemonRepository: ListPokemonRepository = inject(ListPokemonRepository);
 

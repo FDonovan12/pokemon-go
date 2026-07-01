@@ -20,9 +20,15 @@ const _store = PVPRankStore;
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PvpRankPages {
+    print(pokemon: PokemonInterface) {
+        console.log(pokemon);
+        console.log();
+        this.clipboardService.copyToClipboard(this.store.getPokemonFilter(pokemon.slug));
+    }
     protected readonly store = inject(_store);
     protected readonly clipboardService = inject(ClipboardService);
     private readonly _pokemonRepository = inject(PokemonRepository);
+    protected readonly console = console;
 
     selectedPokemon: WritableSignal<PokemonInterface> = signal(this._pokemonRepository.getPokemonById(1)!);
     selectedLeague: League = 'super';
