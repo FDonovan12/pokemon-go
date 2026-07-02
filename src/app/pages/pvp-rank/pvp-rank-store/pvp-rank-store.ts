@@ -201,12 +201,15 @@ export const PVPRankStore = signalStore(
             store.filteredPokemons().forEach((pokemon) => {
                 console.log(pokemon.slug);
                 const base = pokemon as any as Base;
-                const greatRankBetterThanActualRank = store._getBetterRankWithLimit(base.slug, 'super');
-                const statsGreat = greatRankBetterThanActualRank;
-                statsGreat?.forEach((stat) => mapFilterGreat.ensureArray(statToFilterKey(stat)).push(base));
+
+                if (store.isPokemonsAvaible().get(pokemon.slug)?.super) {
+                    const greatRankBetterThanActualRank = store._getBetterRankWithLimit(base.slug, 'super', 1000);
+                    const statsGreat = greatRankBetterThanActualRank;
+                    statsGreat?.forEach((stat) => mapFilterGreat.ensureArray(statToFilterKey(stat)).push(base));
+                }
 
                 if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper) {
-                    const ultraRankBetterThanActualRank = store._getBetterRankWithLimit(base.slug, 'hyper');
+                    const ultraRankBetterThanActualRank = store._getBetterRankWithLimit(base.slug, 'hyper', 1000);
                     const statHyper = ultraRankBetterThanActualRank;
                     statHyper?.forEach((stat) => mapFilterUltra.ensureArray(statToFilterKey(stat)).push(base));
                 }
