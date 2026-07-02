@@ -74,6 +74,11 @@ export class HomeComponent {
 
     filters = this.filtersFacade.getFiltersResolved();
 
+    copyFilter(filter: FilterItemResolved) {
+        const preview = filter.query.length > 50 ? filter.query.slice(0, 50) + '…' : filter.query;
+        const message = `🏆 Filtre "${filter.label.capitalize()}" copié (${filter.query.length} caractères)\n\n${preview}`;
+        this.clipboardService.copyToClipboard(filter.query, { message });
+    }
     ngOnInit(): void {
         // this.getData();
     }

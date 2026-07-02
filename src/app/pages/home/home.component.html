@@ -64,7 +64,7 @@
 
 @for (filter of filters.value(); track filter.id) {
     <p>
-        <button (click)="clipboardService.copyToClipboard(filter.query)">{{ filter.label }}</button>
+        <button (click)="copyFilter(filter)">{{ filter.label }}</button>
         <button
             style="margin-left: 10px"
             type="button"

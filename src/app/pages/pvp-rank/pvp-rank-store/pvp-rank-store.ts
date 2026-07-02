@@ -211,7 +211,7 @@ export const PVPRankStore = signalStore(
     })),
 
     withMethods((store) => ({
-        getPokemonFilter(pokemon: Base): string {
+        getPokemonFilter(pokemon: Base, league?: League): string {
             const slug = pokemon.slug;
             const rank = store._rankPVP.value();
             if (!rank) return '';
@@ -245,10 +245,13 @@ export const PVPRankStore = signalStore(
             const allIV = [] as LeagueStats[];
             const great = store._getBetterRankWithLimit(slug, 'super', 10);
             const ultra = store._getBetterRankWithLimit(slug, 'hyper', 10);
-            if (table && store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50) > 2480) {
+
+            if (!table) return '';
+            const maxPcOfPokemon = store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50);
+            if (maxPcOfPokemon > 2480 && [undefined, 'hyper'].includes(league)) {
                 allIV.push(...ultra);
             }
-            if (table && store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50) > 1480) {
+            if (maxPcOfPokemon > 1480 && [undefined, 'super'].includes(league)) {
                 allIV.push(...great);
             }
             const finalIV = allIV.map(statToFilterKey).unique().map(decodeFilterKey);

@@ -57,7 +57,6 @@ export class FiltersFacade {
         query.prefix;
         const parts: string[] = [query.prefix];
 
-        // TODO: Plus tard, résoudre la partie lists avec FilterService
         if (query.lists) {
             const { cleaned, removedKeys } = await this._filterService.cleanListCondition(query.lists);
             query.lists = cleaned;

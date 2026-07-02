@@ -69,6 +69,7 @@
     font-size: 0.9rem;
     opacity: 0.9;
     word-break: break-all;
+    white-space: pre-line;
 }
 
 .toast__actions {

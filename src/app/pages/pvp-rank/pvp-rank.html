@@ -46,12 +46,12 @@
         <app-image-pokemon
             [pokemon]="pokemon"
             [height]="100"
-            (click)="print(pokemon)"
+            (click)="copyPokemonFilterBetterRankPVP(pokemon)"
         ></app-image-pokemon>
         <div>
             <span></span>
-            <span>Ⓖ</span>
-            <span>Ⓤ</span>
+            <span (click)="copyPokemonFilterBetterRankPVP(pokemon, 'super')">Ⓖ</span>
+            <span (click)="copyPokemonFilterBetterRankPVP(pokemon, 'hyper')">Ⓤ</span>
             <span>⚪</span>
             <span (click)="openModifyRankDialog(pokemon, 'super', 'normal')">
                 {{ store.allRank().get(pokemon.slug)?.super?.normal ?? '' }}

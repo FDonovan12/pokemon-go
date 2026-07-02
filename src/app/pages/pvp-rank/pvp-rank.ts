@@ -20,16 +20,15 @@ const _store = PVPRankStore;
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PvpRankPages {
-    print(pokemon: PokemonInterface) {
-        console.log(pokemon);
-        const filter = this.store.getPokemonFilter(pokemon as any as Base);
-        this.clipboardService.copyToClipboard(filter);
-        console.log(filter.length);
+    copyPokemonFilterBetterRankPVP(pokemon: PokemonInterface, league?: League) {
+        const filter = this.store.getPokemonFilter(pokemon as any as Base, league);
+        this.clipboardService.copyToClipboard(filter, {
+            message: `🏆 Filtre PVP copié pour ${pokemon.slug.titleCase()} (${filter.length} caractères)`,
+        });
     }
     protected readonly store = inject(_store);
     protected readonly clipboardService = inject(ClipboardService);
     private readonly _pokemonRepository = inject(PokemonRepository);
-    protected readonly console = console;
 
     selectedPokemon: WritableSignal<PokemonInterface> = signal(this._pokemonRepository.getPokemonById(1)!);
     selectedLeague: League = 'super';
