@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
-import { Base, PokemonInterface } from '@entities/pokemon';
+import { Base, LeagueStats, PokemonInterface } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
@@ -20,12 +20,6 @@ const _store = PVPRankStore;
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PvpRankPages {
-    copyPokemonFilterBetterRankPVP(pokemon: PokemonInterface, league?: League) {
-        const filter = this.store.getPokemonFilter(pokemon as any as Base, league);
-        this.clipboardService.copyToClipboard(filter, {
-            message: `🏆 Filtre PVP copié pour ${pokemon.slug.titleCase()} (${filter.length} caractères)`,
-        });
-    }
     protected readonly store = inject(_store);
     protected readonly clipboardService = inject(ClipboardService);
     private readonly _pokemonRepository = inject(PokemonRepository);
@@ -35,8 +29,23 @@ export class PvpRankPages {
     selectedForm: Forme = 'normal';
     showDialog = signal(false);
 
+    copyPokemonFilterBetterRankPVP(pokemon: PokemonInterface, league?: League) {
+        const filter = this.store.getPokemonFilter(pokemon as any as Base, league);
+        this.clipboardService.copyToClipboard(filter, {
+            message: `🏆 Filtre PVP copié pour ${pokemon.slug.titleCase()} (${filter.length} caractères)`,
+        });
+    }
     onRankClosed() {
         this.showDialog.set(false);
+    }
+
+    getBadge(stats: LeagueStats): '🌦️' | '🔄' | '⚔️' | '🍀' | null {
+        const min = Math.min(stats.atk, stats.def, stats.sta);
+        if (min >= 12) return '🍀';
+        if (min >= 10) return '⚔️';
+        if (min >= 5) return '🔄';
+        if (min >= 4) return '🌦️';
+        return null;
     }
 
     openModifyRankDialog(pokemon: PokemonInterface, league: League = 'super', forme: Forme = 'normal') {

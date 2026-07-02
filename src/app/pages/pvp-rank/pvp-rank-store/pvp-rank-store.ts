@@ -78,6 +78,18 @@ export const PVPRankStore = signalStore(
                 : (store._filteredResource.value() ?? store.resultSelected()),
         ),
         _subEvolutionsMap: computed(() => buildSubEvolutionsMap(store._pokemonsResource.value() as any as Base[])),
+        isPokemonsAvaible: computed(() => {
+            const table = store._pokemonRepository.cpMultiplier.value();
+            if (!table) return new Map<PokemonSlug, { super: boolean; hyper: boolean }>();
+            const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
+
+            return new Map(
+                (store._filteredResource.value() as any as Base[]).map((pokemon) => {
+                    const maxCp = store._pokemonRepository.pureCalculateCp(pokemon, table, IV_MAX, 50);
+                    return [pokemon.slug, { super: maxCp > 1480, hyper: maxCp > 2480 }];
+                }),
+            );
+        }),
     })),
     withProps((store) => ({
         _rankPVP: resource({
@@ -124,6 +136,34 @@ export const PVPRankStore = signalStore(
         },
     })),
     withComputed((store) => ({
+        mapOfIconRank1: computed(() => {
+            const rank1 = store._rank1PVP.value();
+            const leagues = store.isPokemonsAvaible();
+            if (!rank1) return new Map();
+
+            const getBadge = (stats: LeagueStats, available: boolean): string | null => {
+                if (!available) return '❌';
+                const min = Math.min(stats.atk, stats.def, stats.sta);
+                if (min >= 12) return '🍀';
+                if (min >= 10) return '⚔️';
+                if (min >= 5) return '🔄';
+                if (min >= 4) return '🌦️';
+                return null;
+            };
+
+            const result = new Map<PokemonSlug, { great: string | null; ultra: string | null }>();
+            (store.filteredPokemons() as any as Base[]).forEach((pokemon) => {
+                const data = rank1[pokemon.slug];
+                const league = leagues.get(pokemon.slug);
+                if (!data || !league) return;
+                result.set(pokemon.slug, {
+                    great: getBadge(data.great, league.super),
+                    ultra: getBadge(data.ultra, league.hyper),
+                });
+            });
+
+            return result;
+        }),
         allRankFilter: computed(() => {
             const tick = createTimer('allRankFilter');
             const mapFilterGreat = new Map<number, Base[]>();
@@ -157,12 +197,7 @@ export const PVPRankStore = signalStore(
                 const statsGreat = greatRankBetterThanActualRank;
                 statsGreat?.forEach((stat) => mapFilterGreat.ensureArray(statToFilterKey(stat)).push(base));
 
-                const table = store._pokemonRepository.cpMultiplier.value();
-                const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
-                if (
-                    table &&
-                    store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50) > 2480
-                ) {
+                if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper) {
                     const ultraRankBetterThanActualRank = store._getBetterRankWithLimit(base.slug, 'hyper');
                     const statHyper = ultraRankBetterThanActualRank;
                     statHyper?.forEach((stat) => mapFilterUltra.ensureArray(statToFilterKey(stat)).push(base));
@@ -240,18 +275,15 @@ export const PVPRankStore = signalStore(
 
             const data = rank.get(slug);
             if (!data) return '';
-            const table = store._pokemonRepository.cpMultiplier.value();
             const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
             const allIV = [] as LeagueStats[];
             const great = store._getBetterRankWithLimit(slug, 'super', 10);
             const ultra = store._getBetterRankWithLimit(slug, 'hyper', 10);
 
-            if (!table) return '';
-            const maxPcOfPokemon = store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50);
-            if (maxPcOfPokemon > 2480 && [undefined, 'hyper'].includes(league)) {
+            if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper && [undefined, 'hyper'].includes(league)) {
                 allIV.push(...ultra);
             }
-            if (maxPcOfPokemon > 1480 && [undefined, 'super'].includes(league)) {
+            if (store.isPokemonsAvaible().get(pokemon.slug)?.super && [undefined, 'super'].includes(league)) {
                 allIV.push(...great);
             }
             const finalIV = allIV.map(statToFilterKey).unique().map(decodeFilterKey);
