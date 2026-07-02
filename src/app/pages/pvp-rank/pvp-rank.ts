@@ -77,7 +77,9 @@ export class PvpRankPages {
                 .join(',');
             str = `${ids} & ${allAtq}, ${allDef}, ${allStamina} & !# `;
         }
-        this.clipboardService.copyToClipboard(str);
+
+        const message = `🏆 Filtre copié (${str.length} caractères, ${filter.pokemons.length} pokemons)`;
+        this.clipboardService.copyToClipboard(str, { message });
         filter.isIncluded = !filter.isIncluded;
     }
 }
