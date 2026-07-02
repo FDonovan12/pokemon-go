@@ -56,6 +56,10 @@ export class PokemonRepository {
         const result = await fetch(
             `https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/rank-pvp/${slug}.json`,
         );
+        if (!result.ok) {
+            console.warn(`PVP rank not found for slug: ${slug} (${result.status})`);
+            return null as any as AllRankPVP;
+        }
         return result.json();
     }
     // rankPVP: HttpResourceRef<Record<PokemonSlug, test> | undefined> = httpResource(

@@ -1,7 +1,7 @@
 import { computed, effect, inject, resource } from '@angular/core';
 import { Base, LeagueStats, PokemonInterface, PokemonSlug, RankPVP } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
-import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { AllRankPVP, PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { PvpRankRepository } from '@repositories/pvp-rank-repository/pvp-rank.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
@@ -98,15 +98,22 @@ export const PVPRankStore = signalStore(
                 return store.filteredPokemons().map((p) => p.slug);
             },
             loader: async ({ params: slugs }) => {
-                const entries = await Promise.all(
-                    slugs.map(async (slug) => {
-                        const data = await store._pokemonRepository.getPVPRank(slug);
-                        return [slug, data] as const;
-                    }),
-                );
-                return new Map(entries);
+                const results: [string, AllRankPVP][] = [];
+                const batchSize = 10;
+
+                for (let i = 0; i < slugs.length; i += batchSize) {
+                    const batch = slugs.slice(i, i + batchSize);
+                    const batchResults = await Promise.all(
+                        batch.map(async (slug) => {
+                            const data = await store._pokemonRepository.getPVPRank(slug);
+                            return [slug, data] as const;
+                        }),
+                    );
+                    results.push(...(batchResults.filter(([, data]) => data !== null) as [string, AllRankPVP][]));
+                }
+
+                return new Map(results);
             },
-            // defaultValue: {} as Record<PokemonSlug, AllRankPVP>,
         }),
     })),
     withMethods((store) => ({
@@ -192,6 +199,7 @@ export const PVPRankStore = signalStore(
                 stamina: key % 5,
             });
             store.filteredPokemons().forEach((pokemon) => {
+                console.log(pokemon.slug);
                 const base = pokemon as any as Base;
                 const greatRankBetterThanActualRank = store._getBetterRankWithLimit(base.slug, 'super');
                 const statsGreat = greatRankBetterThanActualRank;
