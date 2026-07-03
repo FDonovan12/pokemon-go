@@ -22,6 +22,8 @@ export interface PvpRank {
 
 const initialState = {
     allRank: new Map<PokemonSlug, PvpRank>(),
+    limitFilterGeneral: 1000,
+    limitFilterPokemon: 20,
 };
 
 export const PVPRankStore = signalStore(
@@ -117,6 +119,8 @@ export const PVPRankStore = signalStore(
         }),
     })),
     withMethods((store) => ({
+        setLimitFilterGeneral: (value: number) => patchState(store, { limitFilterGeneral: value }),
+        setLimitFilterPokemon: (value: number) => patchState(store, { limitFilterPokemon: value }),
         _getOrInitRank(pokemon: PokemonSlug): PvpRank {
             const ranks = store.allRank();
             if (!ranks.has(pokemon)) {
@@ -138,7 +142,7 @@ export const PVPRankStore = signalStore(
             const ranks = store.allRank();
             const mapLeague = { super: 'great', hyper: 'ultra' } as const;
 
-            const rank = Math.min(ranks.get(slug)?.[league]?.normal ?? limit, limit) - 1;
+            const rank = Math.min((ranks.get(slug)?.[league]?.normal ?? limit + 1) - 1, limit);
             return allRank[mapLeague[league]].slice(0, rank);
         },
     })),
@@ -203,13 +207,21 @@ export const PVPRankStore = signalStore(
                 const base = pokemon as any as Base;
 
                 if (store.isPokemonsAvaible().get(pokemon.slug)?.super) {
-                    const greatRankBetterThanActualRank = store._getBetterRankWithLimit(base.slug, 'super', 1000);
+                    const greatRankBetterThanActualRank = store._getBetterRankWithLimit(
+                        base.slug,
+                        'super',
+                        store.limitFilterGeneral(),
+                    );
                     const statsGreat = greatRankBetterThanActualRank;
                     statsGreat?.forEach((stat) => mapFilterGreat.ensureArray(statToFilterKey(stat)).push(base));
                 }
 
                 if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper) {
-                    const ultraRankBetterThanActualRank = store._getBetterRankWithLimit(base.slug, 'hyper', 1000);
+                    const ultraRankBetterThanActualRank = store._getBetterRankWithLimit(
+                        base.slug,
+                        'hyper',
+                        store.limitFilterGeneral(),
+                    );
                     const statHyper = ultraRankBetterThanActualRank;
                     statHyper?.forEach((stat) => mapFilterUltra.ensureArray(statToFilterKey(stat)).push(base));
                 }
@@ -288,15 +300,28 @@ export const PVPRankStore = signalStore(
             if (!data) return '';
             const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
             const allIV = [] as LeagueStats[];
-            const great = store._getBetterRankWithLimit(slug, 'super', 10);
-            const ultra = store._getBetterRankWithLimit(slug, 'hyper', 10);
 
-            if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper && [undefined, 'hyper'].includes(league)) {
+            const ultraIsAvaible =
+                store.isPokemonsAvaible().get(pokemon.slug)?.hyper && [undefined, 'hyper'].includes(league);
+            const greatIsAvaible =
+                store.isPokemonsAvaible().get(pokemon.slug)?.super && [undefined, 'super'].includes(league);
+
+            let greatLimit = greatIsAvaible ? store.limitFilterPokemon() : 0;
+            let ultraLimit = ultraIsAvaible ? store.limitFilterPokemon() : 0;
+            if (ultraIsAvaible) greatLimit /= 2;
+            if (greatIsAvaible) ultraLimit /= 2;
+
+            const great = store._getBetterRankWithLimit(slug, 'super', greatLimit);
+            const ultra = store._getBetterRankWithLimit(slug, 'hyper', ultraLimit);
+
+            if (ultraIsAvaible) {
                 allIV.push(...ultra);
             }
-            if (store.isPokemonsAvaible().get(pokemon.slug)?.super && [undefined, 'super'].includes(league)) {
+            if (greatIsAvaible) {
                 allIV.push(...great);
             }
+
+            console.log(allIV.length);
             const finalIV = allIV.map(statToFilterKey).unique().map(decodeFilterKey);
             const subEvolutionFilter = (subEvolutionsMap.get(slug) ?? [])
                 .map((pokemon) => pokemon.dexNumber)

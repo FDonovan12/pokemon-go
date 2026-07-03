@@ -2,8 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { PokemonInterface } from '@entities/pokemon';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { ToastService } from '@shared/features/toast/toast.service';
 import { ListCondition } from './../../repositories/filters-repository/filter.model';
-
+const MAX_GROUPS = 6; // 3^6 = 729 clauses max
 const OR_JOIN = ',';
 const AND_JOIN = '&';
 const NOT_JOIN = '!';
@@ -24,6 +25,8 @@ type RangeWithStat = {
     providedIn: 'root',
 })
 export class FilterService {
+    private readonly _toastService: ToastService = inject(ToastService);
+
     private comboToTerms(combo: GroupedCombo): RangeWithStat[] {
         return [
             { stat: 'atq', range: combo.atq },
@@ -109,6 +112,13 @@ export class FilterService {
             }
 
             groups = next;
+        }
+        if (groups.length > MAX_GROUPS) {
+            console.log(groups.length);
+            this._toastService
+                .prepare('❌ Erreur', `Filtre trop complexe — modifier la "limite filtre pokemon"`)
+                .showError();
+            return '';
         }
         return this.buildComboFilterClause(groups);
     }
