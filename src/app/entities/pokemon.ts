@@ -77,8 +77,8 @@ export enum Type {
 }
 
 export interface RankPVP {
-    great: LeagueStats;
-    ultra: LeagueStats;
+    super: LeagueStats;
+    hyper: LeagueStats;
 }
 
 export interface LeagueStats {

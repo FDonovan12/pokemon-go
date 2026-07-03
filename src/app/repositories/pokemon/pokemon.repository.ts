@@ -33,8 +33,8 @@ type PokemonIndex = {
 };
 
 export type AllRankPVP = {
-    great: LeagueStats[];
-    ultra: LeagueStats[];
+    super: LeagueStats[];
+    hyper: LeagueStats[];
 };
 @Injectable({
     providedIn: 'root',
