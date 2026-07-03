@@ -36,6 +36,9 @@
                     (click)="copyFilter(filter, 'great')"
                     [style]="filter.isIncluded ? '' : 'background-color: coral'"
                 >
+                    @if (filter.stats.atq > 1 || filter.stats.def < 3 || filter.stats.stamina < 3) {
+                        💡
+                    }
                     {{ filter.stats.atq }}atq / {{ filter.stats.def }}def / {{ filter.stats.stamina }}pv
                     <span class="count">({{ filter.count }})</span>
                 </button>
@@ -49,6 +52,9 @@
                     (click)="copyFilter(filter, 'ultra')"
                     [style]="filter.isIncluded ? '' : 'background-color: coral'"
                 >
+                    @if (filter.stats.atq > 1 || filter.stats.def < 3 || filter.stats.stamina < 3) {
+                        💡
+                    }
                     {{ filter.stats.atq }}atq / {{ filter.stats.def }}def / {{ filter.stats.stamina }}pv
                     <span class="count">({{ filter.count }})</span>
                 </button>

@@ -203,7 +203,6 @@ export const PVPRankStore = signalStore(
                 stamina: key % 5,
             });
             store.filteredPokemons().forEach((pokemon) => {
-                console.log(pokemon.slug);
                 const base = pokemon as any as Base;
 
                 if (store.isPokemonsAvaible().get(pokemon.slug)?.super) {
