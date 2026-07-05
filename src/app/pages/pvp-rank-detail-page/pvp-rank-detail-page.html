@@ -1,0 +1,68 @@
+<div class="detail">
+    <div class="header">
+        <app-image-pokemon
+            [pokemon]="pokemon()!"
+            [height]="80"
+        />
+        <div>
+            <div class="pokemon-name">{{ pokemon()?.name }}</div>
+            <div class="pokemon-sub">#{{ pokemon()?.dexNumber }}</div>
+        </div>
+    </div>
+
+    @if (bestRanks(); as ranks) {
+        <div class="leagues">
+            <div class="league-card">
+                <div class="league-title">Ⓖ Grande Ligue</div>
+                @if (ranks.great) {
+                    @for (source of sources; track source) {
+                        <div class="source-row">
+                            <div class="source-label">
+                                <span>{{ sourceIcons[source] }}</span>
+                                {{ sourceLabels[source] }}
+                            </div>
+                            @if (ranks.great[source]; as bestRank) {
+                                <div class="rank-info">
+                                    <span class="rank-num">Rank {{ bestRank.rank }}</span>
+                                    <span class="rank-ivs">
+                                        {{ bestRank.stat.atk }} / {{ bestRank.stat.def }} / {{ bestRank.stat.sta }}
+                                    </span>
+                                </div>
+                            } @else {
+                                <span class="no-rank">Non disponible</span>
+                            }
+                        </div>
+                    }
+                } @else {
+                    <div class="unavailable">❌ CP insuffisant pour cette ligue</div>
+                }
+            </div>
+
+            <div class="league-card">
+                <div class="league-title">Ⓤ Ultra Ligue</div>
+                @if (ranks.ultra) {
+                    @for (source of sources; track source) {
+                        <div class="source-row">
+                            <div class="source-label">
+                                <span>{{ sourceIcons[source] }}</span>
+                                {{ sourceLabels[source] }}
+                            </div>
+                            @if (ranks.ultra[source]; as bestRank) {
+                                <div class="rank-info">
+                                    <span class="rank-num">Rank {{ bestRank.rank }}</span>
+                                    <span class="rank-ivs">
+                                        {{ bestRank.stat.atk }} / {{ bestRank.stat.def }} / {{ bestRank.stat.sta }}
+                                    </span>
+                                </div>
+                            } @else {
+                                <span class="no-rank">Non disponible</span>
+                            }
+                        </div>
+                    }
+                } @else {
+                    <div class="unavailable">❌ CP insuffisant pour cette ligue</div>
+                }
+            </div>
+        </div>
+    }
+</div>

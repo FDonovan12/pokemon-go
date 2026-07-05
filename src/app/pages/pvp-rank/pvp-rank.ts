@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { Base, LeagueStats, PokemonInterface } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
@@ -14,7 +15,7 @@ const _store = PVPRankStore;
 
 @Component({
     selector: 'app-pvp-rank',
-    imports: [ImagePokemon, ModifyRankDialogComponent, PokemonSearchComponent, LogRangeComponent],
+    imports: [RouterOutlet, ImagePokemon, ModifyRankDialogComponent, PokemonSearchComponent, LogRangeComponent],
     providers: [provideSearchStore(_store)],
     templateUrl: './pvp-rank.html',
     styleUrl: './pvp-rank.css',
@@ -24,6 +25,7 @@ export class PvpRankPages {
     protected readonly store = inject(_store);
     protected readonly clipboardService = inject(ClipboardService);
     private readonly _pokemonRepository = inject(PokemonRepository);
+    private readonly _router = inject(Router);
 
     selectedPokemon: WritableSignal<PokemonInterface> = signal(this._pokemonRepository.getPokemonById(1)!);
     selectedLeague: League = 'super';
@@ -82,5 +84,9 @@ export class PvpRankPages {
         const message = `🏆 Filtre copié (${str.length} caractères, ${filter.pokemons.length} pokemons)`;
         this.clipboardService.copyToClipboard(str, { message });
         filter.isIncluded = !filter.isIncluded;
+    }
+
+    navigateDetailPokemon(pokemon: PokemonInterface) {
+        this._router.navigate(['pvp-rank', 'detail', pokemon.slug]);
     }
 }

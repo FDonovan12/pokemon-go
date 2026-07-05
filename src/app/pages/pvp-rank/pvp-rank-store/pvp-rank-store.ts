@@ -1,4 +1,4 @@
-import { computed, effect, inject, resource } from '@angular/core';
+import { computed, effect, inject, resource, ResourceRef } from '@angular/core';
 import { Base, LeagueStats, PokemonInterface, PokemonSlug, RankPVP } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { AllRankPVP, PokemonRepository } from '@repositories/pokemon/pokemon.repository';
@@ -40,15 +40,9 @@ export const PVPRankStore = signalStore(
         _filterService: inject(FilterService),
     })),
     withProps((store) => ({
-        _pokemonsResource: resource({
-            params: () => store._pokemonRepository.pokemonsSetting.value(),
-            loader: async ({ params: pokemons }) => {
-                return pokemons
-                    .map((form) => [form.base, ...form.different.map((d) => d.base)])
-                    .flat() as any as PokemonInterface[];
-            },
-            defaultValue: [],
-        }),
+        _pokemonsResource: store._pokemonRepository.allDifferentFormPokemonsSetting as any as ResourceRef<
+            PokemonInterface[]
+        >,
         _rank1PVP: resource({
             params: () => store._pokemonRepository.rank1PVP.value(),
             loader: async ({ params: pokemons }) => {

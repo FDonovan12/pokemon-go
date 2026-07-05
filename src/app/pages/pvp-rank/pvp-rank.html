@@ -73,7 +73,7 @@
         <app-image-pokemon
             [pokemon]="pokemon"
             [height]="100"
-            (click)="copyPokemonFilterBetterRankPVP(pokemon)"
+            (click)="navigateDetailPokemon(pokemon)"
         ></app-image-pokemon>
         <div>
             <span></span>
@@ -133,3 +133,4 @@
         (closed)="onRankClosed()"
     ></app-modify-rank-dialog>
 }
+<router-outlet />

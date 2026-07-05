@@ -45,6 +45,14 @@ export class PokemonRepository {
     pokemonsSetting: HttpResourceRef<PokemonSetting[] | undefined> = httpResource(
         () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon-setting.json',
     );
+    allDifferentFormPokemonsSetting = resource({
+        params: () => this.pokemonsSetting.value(),
+        loader: async ({ params: pokemons }) => {
+            if (!pokemons) return [];
+            return pokemons.map((form) => [form.base, ...form.different.map((d) => d.base)]).flat();
+        },
+        defaultValue: [] as Base[],
+    });
     cpMultiplier: HttpResourceRef<Record<string, number> | undefined> = httpResource(
         () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon/cp-multiplier.json',
     );
@@ -61,6 +69,12 @@ export class PokemonRepository {
             return null as any as AllRankPVP;
         }
         return result.json();
+    }
+
+    isPokemonAvailableForLeagues(pokemon: Base, table: Record<string, number>): { super: boolean; hyper: boolean } {
+        const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
+        const maxCp = this.pureCalculateCp(pokemon, table, IV_MAX, 50);
+        return { super: maxCp > 1480, hyper: maxCp > 2480 };
     }
     // rankPVP: HttpResourceRef<Record<PokemonSlug, test> | undefined> = httpResource(
     //     () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/rank-1-pvp.json',

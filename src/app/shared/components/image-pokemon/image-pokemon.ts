@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { PokemonInterface } from '@entities/pokemon';
+import { Base, PokemonInterface } from '@entities/pokemon';
 
 @Component({
     selector: 'app-image-pokemon',
@@ -22,6 +22,6 @@ import { PokemonInterface } from '@entities/pokemon';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImagePokemon {
-    pokemon = input.required<PokemonInterface>();
+    pokemon = input.required<PokemonInterface | Base>();
     height = input<number>();
 }

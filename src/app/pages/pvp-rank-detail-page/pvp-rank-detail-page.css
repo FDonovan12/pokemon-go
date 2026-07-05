@@ -1,0 +1,113 @@
+:host {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail {
+    background: var(--surface-2);
+    border-radius: 12px;
+    border: 0.5px solid var(--border);
+    padding: 1.5rem;
+    width: min(600px, 90vw);
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: aliceblue;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 1.5rem;
+}
+
+.pokemon-name {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.pokemon-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.leagues {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.league-card {
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+}
+
+.league-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 0.5px solid var(--border);
+}
+
+.source-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 0.5px solid var(--border);
+}
+
+.source-row:last-child {
+    border-bottom: none;
+}
+
+.source-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.rank-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.rank-num {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.rank-ivs {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+.no-rank {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.unavailable {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 8px 0;
+    text-align: center;
+}

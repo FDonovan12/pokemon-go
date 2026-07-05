@@ -56,5 +56,12 @@ export const routes: Routes = [
     {
         path: 'pvp-rank',
         loadComponent: () => import('./pages/pvp-rank/pvp-rank').then((m) => m.PvpRankPages),
+        children: [
+            {
+                path: 'detail/:slug',
+                loadComponent: () =>
+                    import('./pages/pvp-rank-detail-page/pvp-rank-detail-page').then((m) => m.PvpRankDetailPage),
+            },
+        ],
     },
 ];
