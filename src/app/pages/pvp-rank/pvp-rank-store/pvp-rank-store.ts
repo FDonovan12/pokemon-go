@@ -81,13 +81,12 @@ export const PVPRankStore = signalStore(
         isPokemonsAvaible: computed(() => {
             const table = store._pokemonRepository.cpMultiplier.value();
             if (!table) return new Map<PokemonSlug, { super: boolean; hyper: boolean }>();
-            const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
 
             return new Map(
-                (store._filteredResource.value() as any as Base[]).map((pokemon) => {
-                    const maxCp = store._pokemonRepository.pureCalculateCp(pokemon, table, IV_MAX, 50);
-                    return [pokemon.slug, { super: maxCp > 1480, hyper: maxCp > 2480 }];
-                }),
+                (store._filteredResource.value() as any as Base[]).map((pokemon) => [
+                    pokemon.slug,
+                    store._pokemonRepository.isPokemonAvailableForLeagues(pokemon, table),
+                ]),
             );
         }),
     })),

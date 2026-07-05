@@ -12,57 +12,64 @@
 
     @if (bestRanks(); as ranks) {
         <div class="leagues">
-            <div class="league-card">
-                <div class="league-title">Ⓖ Grande Ligue</div>
-                @if (ranks.great) {
-                    @for (source of sources; track source) {
-                        <div class="source-row">
-                            <div class="source-label">
-                                <span>{{ sourceIcons[source] }}</span>
-                                {{ sourceLabels[source] }}
-                            </div>
-                            @if (ranks.great[source]; as bestRank) {
-                                <div class="rank-info">
-                                    <span class="rank-num">Rank {{ bestRank.rank }}</span>
-                                    <span class="rank-ivs">
-                                        {{ bestRank.stat.atk }} / {{ bestRank.stat.def }} / {{ bestRank.stat.sta }}
-                                    </span>
-                                </div>
-                            } @else {
-                                <span class="no-rank">Non disponible</span>
-                            }
-                        </div>
-                    }
-                } @else {
-                    <div class="unavailable">❌ CP insuffisant pour cette ligue</div>
-                }
-            </div>
-
-            <div class="league-card">
-                <div class="league-title">Ⓤ Ultra Ligue</div>
-                @if (ranks.ultra) {
-                    @for (source of sources; track source) {
-                        <div class="source-row">
-                            <div class="source-label">
-                                <span>{{ sourceIcons[source] }}</span>
-                                {{ sourceLabels[source] }}
-                            </div>
-                            @if (ranks.ultra[source]; as bestRank) {
-                                <div class="rank-info">
-                                    <span class="rank-num">Rank {{ bestRank.rank }}</span>
-                                    <span class="rank-ivs">
-                                        {{ bestRank.stat.atk }} / {{ bestRank.stat.def }} / {{ bestRank.stat.sta }}
-                                    </span>
-                                </div>
-                            } @else {
-                                <span class="no-rank">Non disponible</span>
-                            }
-                        </div>
-                    }
-                } @else {
-                    <div class="unavailable">❌ CP insuffisant pour cette ligue</div>
-                }
-            </div>
+            <ng-container
+                [ngTemplateOutlet]="leagueCard"
+                [ngTemplateOutletContext]="{ league: ranks.great, leagueKey: 'super', label: 'Ⓖ Grande Ligue' }"
+            />
+            <ng-container
+                [ngTemplateOutlet]="leagueCard"
+                [ngTemplateOutletContext]="{ league: ranks.ultra, leagueKey: 'hyper', label: 'Ⓤ Ultra Ligue' }"
+            />
         </div>
     }
 </div>
+
+<ng-template
+    #leagueCard
+    let-league="league"
+    let-leagueKey="leagueKey"
+    let-label="label"
+>
+    <div class="league-card">
+        <div class="league-title">{{ label }}</div>
+        @if (league) {
+            @if (actualRank()?.[leagueKey === 'super' ? 'super' : 'hyper']?.normal; as rank) {
+                <div>Rank actuel : {{ rank }}</div>
+            }
+            @for (source of sources; track source) {
+                <div class="source-row">
+                    <div class="source-label">
+                        <span>{{ sourceIcons[source] }}</span>
+                        {{ sourceLabels[source] }}
+                    </div>
+                    @if (league[source]; as stat) {
+                        <div class="rank-info">
+                            <div class="rank-top">
+                                <span class="rank-num">Rank {{ stat.rank }}</span>
+                                @switch (getRankDelta(stat, leagueKey)) {
+                                    @case ('better') {
+                                        <span class="delta better">↑</span>
+                                    }
+                                    @case ('worse') {
+                                        <span class="delta worse">↓</span>
+                                    }
+                                    @case ('same') {
+                                        <span class="delta same">→</span>
+                                    }
+                                }
+                            </div>
+                            <span class="rank-ivs">{{ stat.stat.atk }} / {{ stat.stat.def }} / {{ stat.stat.sta }}</span>
+                            @if (source !== 'meilleur') {
+                                <span class="rank-proba">{{ stat.betterCount }} meilleurs : ({{ stat.percentage }}%)</span>
+                            }
+                        </div>
+                    } @else {
+                        <span class="no-rank">Non disponible</span>
+                    }
+                </div>
+            }
+        } @else {
+            <div class="unavailable">❌ CP insuffisant pour cette ligue</div>
+        }
+    </div>
+</ng-template>
