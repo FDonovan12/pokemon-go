@@ -154,9 +154,11 @@ export class PokemonDynamaxRepository {
             new Dynamax(pokemons.Rhinolove, 161, ['Psy', 'Vol']),
             new Gigamax(pokemons.Pikachu, 112, ['Électrik'], true),
             new Gigamax(pokemons.Miaouss, 92, ['Normal'], true),
+            new Dynamax(pokemons.Elekable, 249, ['Combat', 'Électrik'], true),
+            new Dynamax(pokemons.Noarfang, 145, ['Psy', 'Vol'], true),
 
-            new Dynamax(pokemons.Elekable, 249, ['Combat', 'Électrik'], false),
-            new Dynamax(pokemons.Noarfang, 145, ['Psy', 'Vol'], false),
+            new Dynamax(pokemons.Trioxhydre, 256, ['Dragon', 'Ténèbres'], false),
+            new Dynamax(pokemons.Milobellus, 192, ['Eau', 'Dragon'], false),
 
             new Gigamax(pokemons.Evoli, 104, ['Normal'], false),
             new Gigamax(pokemons.Melmetal, 226, ['Acier'], false),
