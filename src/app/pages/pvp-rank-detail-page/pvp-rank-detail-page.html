@@ -14,11 +14,11 @@
         <div class="leagues">
             <ng-container
                 [ngTemplateOutlet]="leagueCard"
-                [ngTemplateOutletContext]="{ league: ranks.great, leagueKey: 'super', label: 'Ⓖ Grande Ligue' }"
+                [ngTemplateOutletContext]="{ league: ranks.great, rank: actualRank()?.super?.normal, label: 'Ⓖ Grande Ligue' }"
             />
             <ng-container
                 [ngTemplateOutlet]="leagueCard"
-                [ngTemplateOutletContext]="{ league: ranks.ultra, leagueKey: 'hyper', label: 'Ⓤ Ultra Ligue' }"
+                [ngTemplateOutletContext]="{ league: ranks.ultra, rank: actualRank()?.hyper?.normal, label: 'Ⓤ Ultra Ligue' }"
             />
         </div>
     }
@@ -27,39 +27,24 @@
 <ng-template
     #leagueCard
     let-league="league"
-    let-leagueKey="leagueKey"
+    let-rank="rank"
     let-label="label"
 >
     <div class="league-card">
         <div class="league-title">{{ label }}</div>
         @if (league) {
-            @if (actualRank()?.[leagueKey === 'super' ? 'super' : 'hyper']?.normal; as rank) {
-                <div>Rank actuel : {{ rank }}</div>
-            }
+            <div class="current-rank">Rank actuel : {{ rank ?? '-' }}</div>
             @for (source of sources; track source) {
                 <div class="source-row">
                     <div class="source-label">
-                        <span>{{ sourceIcons[source] }}</span>
-                        {{ sourceLabels[source] }}
+                        <span>{{ source.icon }}</span>
+                        {{ source.label }}
                     </div>
-                    @if (league[source]; as stat) {
+                    @if (league[source.key]; as stat) {
                         <div class="rank-info">
-                            <div class="rank-top">
-                                <span class="rank-num">Rank {{ stat.rank }}</span>
-                                @switch (getRankDelta(stat, leagueKey)) {
-                                    @case ('better') {
-                                        <span class="delta better">↑</span>
-                                    }
-                                    @case ('worse') {
-                                        <span class="delta worse">↓</span>
-                                    }
-                                    @case ('same') {
-                                        <span class="delta same">→</span>
-                                    }
-                                }
-                            </div>
+                            <div class="rank-top">Rank {{ stat.rank }}</div>
                             <span class="rank-ivs">{{ stat.stat.atk }} / {{ stat.stat.def }} / {{ stat.stat.sta }}</span>
-                            @if (source !== 'meilleur') {
+                            @if (source.key !== 'meilleur') {
                                 <span class="rank-proba">{{ stat.betterCount }} meilleurs : ({{ stat.percentage }}%)</span>
                             }
                         </div>

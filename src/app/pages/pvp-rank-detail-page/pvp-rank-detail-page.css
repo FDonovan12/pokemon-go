@@ -12,7 +12,7 @@
     background: var(--surface-2);
     border-radius: 12px;
     border: 0.5px solid var(--border);
-    padding: 1.5rem;
+    padding: min(1.5em, 3vw);
     width: min(600px, 90vw);
     max-height: 90vh;
     overflow-y: auto;
@@ -40,14 +40,13 @@
 .leagues {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: min(5ch, 5vw);
 }
 
 .league-card {
     background: var(--surface-1);
     border: 0.5px solid var(--border);
     border-radius: 12px;
-    padding: 1rem 1.25rem;
 }
 
 .league-title {
