@@ -62,12 +62,14 @@ export class FilterService {
     groupedComboToFilter = <T extends number>(group: GroupedCombo<T>): string => {
         const rangestats = this.groupComboToRangeWithStat(group);
         const strings = rangestats.map(this.formatRange);
+        console.log(strings);
+        console.log(strings.join('\n'));
         return strings.join('\n');
     };
 
     private formatRange = <T extends number>(r: RangeWithStat<T>): string => {
         const suffix = this.statSuffix[r.stat];
-        return r.range.min === r.range.max ? `${r.range.min}${suffix}` : `${r.range.min}-${r.range.max}${suffix}`;
+        return r.range.min === r.range.max ? `${r.range.min}${suffix}` : `${r.range.min}\u2011${r.range.max}${suffix}`;
     };
 
     private merge<T extends number>(a: GroupedCombo<T>, b: GroupedCombo<T>): GroupedCombo<T> {
