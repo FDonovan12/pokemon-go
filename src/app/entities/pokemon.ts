@@ -76,19 +76,6 @@ export enum Type {
     PokemonTypeWater = 'POKEMON_TYPE_WATER',
 }
 
-export interface RankPVP {
-    super: LeagueStats;
-    hyper: LeagueStats;
-}
-
-export interface LeagueStats {
-    atk: number;
-    def: number;
-    sta: number;
-    level: number;
-    stat: number;
-}
-
 export interface Different {
     base: Base;
     same: Base[];

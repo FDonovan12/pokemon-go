@@ -1,7 +1,8 @@
 import { computed, effect, inject, resource, ResourceRef } from '@angular/core';
-import { Base, LeagueStats, PokemonInterface, PokemonSlug, RankPVP } from '@entities/pokemon';
+import { Base, PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { AllRankPVP, Combo, FilterTier, IV, LeagueStats, RankPVP } from '@entities/stats';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
-import { AllRankPVP, PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { PvpRankRepository } from '@repositories/pvp-rank-repository/pvp-rank.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
@@ -97,7 +98,7 @@ export const PVPRankStore = signalStore(
                 return store.filteredPokemons().map((p) => p.slug);
             },
             loader: async ({ params: slugs }) => {
-                const results: [string, AllRankPVP][] = [];
+                const results: [string, AllRankPVP<IV>][] = [];
                 const batchSize = 10;
 
                 for (let i = 0; i < slugs.length; i += batchSize) {
@@ -108,7 +109,7 @@ export const PVPRankStore = signalStore(
                             return [slug, data] as const;
                         }),
                     );
-                    results.push(...(batchResults.filter(([, data]) => data !== null) as [string, AllRankPVP][]));
+                    results.push(...(batchResults.filter(([, data]) => data !== null) as [string, AllRankPVP<IV>][]));
                 }
 
                 return new Map(results);
@@ -129,7 +130,7 @@ export const PVPRankStore = signalStore(
             }
             return ranks.get(pokemon)!;
         },
-        _getBetterRankWithLimit(slug: PokemonSlug, league: League, limit = 4096): LeagueStats[] {
+        _getBetterRankWithLimit(slug: PokemonSlug, league: League, limit = 4096): LeagueStats<IV>[] {
             const dataBestRankPVP = store._rankPVP.value();
             if (!dataBestRankPVP) return [];
 
@@ -301,23 +302,24 @@ export const PVPRankStore = signalStore(
                 return 4;
             }
 
-            const statToFilterKey = (stats: LeagueStats): number => {
+            const statToFilterKey = (stats: LeagueStats<IV>): number => {
                 const atq = ivToFilterValue(stats.atk);
                 const def = ivToFilterValue(stats.def);
                 const sta = ivToFilterValue(stats.sta);
                 return atq * 25 + def * 5 + sta;
             };
 
-            const decodeFilterKey = (key: number) => ({
-                atq: Math.floor(key / 25),
-                def: Math.floor(key / 5) % 5,
-                stamina: key % 5,
-            });
+            const decodeFilterKey = (key: number): Combo<FilterTier> =>
+                ({
+                    atq: Math.floor(key / 25),
+                    def: Math.floor(key / 5) % 5,
+                    stamina: key % 5,
+                }) as Combo<FilterTier>;
 
             const data = rank.get(slug);
             if (!data) return '';
             const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
-            const allIV = [] as LeagueStats[];
+            const allIV = [] as LeagueStats<IV>[];
 
             const ultraIsAvaible =
                 store.isPokemonsAvaible().get(pokemon.slug)?.hyper && [undefined, 'hyper'].includes(league);

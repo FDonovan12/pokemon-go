@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { Base, LeagueStats, PokemonInterface } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
@@ -10,6 +9,8 @@ import { provideSearchStore } from '@shared/features/pokemon-search/search.token
 import { ModifyRankDialogComponent } from './modify-rank-dialog/modify-rank-dialog';
 import { PVPRankStore } from './pvp-rank-store/pvp-rank-store';
 import { Forme, League } from './pvp-rank.type';
+import { PokemonInterface, Base } from '@entities/pokemon';
+import { LeagueStats } from '@entities/stats';
 
 const _store = PVPRankStore;
 

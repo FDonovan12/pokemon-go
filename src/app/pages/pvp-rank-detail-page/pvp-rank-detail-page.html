@@ -45,7 +45,9 @@
                 @for (row of rows(); track row.key) {
                     <tr>
                         <td class="row-label">
-                            <span>{{ row.icon }}</span>
+                            @if (row.icon) {
+                                <span>{{ row.icon }}</span>
+                            }
                             {{ row.label }}
                         </td>
                         <td>

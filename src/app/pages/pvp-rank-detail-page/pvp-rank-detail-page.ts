@@ -12,12 +12,13 @@ import {
     Signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Base, LeagueStats, PokemonSlug } from '@entities/pokemon';
-import { AllRankPVP, PokemonRepository } from '@repositories/pokemon/pokemon.repository';
-import { FilterService, GroupedCombo, RangeCombo } from '@services/filter-service/filter-service';
+import { Base, PokemonSlug } from '@entities/pokemon';
+import { AllRankPVP, GroupedCombo, IV, LeagueStats, RangeCombo } from '@entities/stats';
+import { FilterService } from '@services/filter-service/filter-service';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { PvpRank, PVPRankStore } from '../pvp-rank/pvp-rank-store/pvp-rank-store';
 import { League } from '../pvp-rank/pvp-rank.type';
+import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 
 type RankedStat = {
     rank: number;
@@ -30,7 +31,7 @@ type RankedStat = {
 type RankRow = {
     key: string;
     label: string;
-    icon: string;
+    icon?: string;
 };
 
 const createSource = (minIv: number, label: string, icon: string) => ({
@@ -52,15 +53,12 @@ type Source = keyof typeof SOURCES;
 
 type FilterDef = {
     key: string;
-    icon: string;
-    combo: GroupedCombo;
+    combo: GroupedCombo<IV>;
 };
 
-// ⚠️ Filtres hardcodés à ajuster selon les valeurs que tu veux réellement afficher
 const FILTERS: FilterDef[] = [
     {
-        key: 'perfect',
-        icon: '💯',
+        key: 'low-atk-high-other',
         combo: {
             atq: { min: 0, max: 5 },
             def: { min: 11, max: 15 },
@@ -68,15 +66,30 @@ const FILTERS: FilterDef[] = [
         },
     },
     {
-        key: 'great-bulk',
-        icon: '🛡️',
+        key: 'midlow-atk-high-other',
         combo: {
             atq: { min: 0, max: 10 },
             def: { min: 11, max: 15 },
             stamina: { min: 11, max: 15 },
         },
     },
-];
+    {
+        key: 'midlow-atk-midhigh-other',
+        combo: {
+            atq: { min: 0, max: 10 },
+            def: { min: 6, max: 15 },
+            stamina: { min: 6, max: 15 },
+        },
+    },
+    {
+        key: 'low-atk-midhigh-other',
+        combo: {
+            atq: { min: 0, max: 5 },
+            def: { min: 6, max: 15 },
+            stamina: { min: 6, max: 15 },
+        },
+    },
+] as FilterDef[];
 
 @Component({
     selector: 'app-pvp-rank-detail-page',
@@ -95,8 +108,6 @@ export class PvpRankDetailPage {
         key: key as Source,
         ...value,
     }));
-
-    readonly filters: FilterDef[] = FILTERS;
 
     displayMode = signal<'capture' | 'filter'>('capture');
 
@@ -123,10 +134,9 @@ export class PvpRankDetailPage {
                 icon: source.icon,
             }));
         }
-        return this.filters.map((filter) => ({
+        return FILTERS.map((filter) => ({
             key: filter.key,
             label: this._filterService.groupedComboToFilter(filter.combo),
-            icon: filter.icon,
         }));
     });
 
@@ -178,7 +188,7 @@ export class PvpRankDetailPage {
 
     private getBestRankByFilter(data: AllRankPVP, league: League): Record<string, RankedStat | null> {
         const ranks = data[league];
-        const resultList = this.filters.map((filter) => {
+        const resultList = FILTERS.map((filter) => {
             const index = ranks.findIndex((r) => this.matchesCombo(r, filter.combo));
             if (index === -1) return { key: filter.key, value: null };
 

@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { PokemonInterface } from '@entities/pokemon';
+import { Combo, FilterTier, GroupedCombo, RangeCombo, RangeWithStat, StatKey } from '@entities/stats';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ToastService } from '@shared/features/toast/toast.service';
@@ -8,45 +9,38 @@ const MAX_GROUPS = 6; // 3^6 = 729 clauses max
 const OR_JOIN = ',';
 const AND_JOIN = '&';
 const NOT_JOIN = '!';
-type Combo = {
-    atq: number;
-    def: number;
-    stamina: number;
-};
-export type RangeCombo = { min: number; max: number };
-export type GroupedCombo = { atq: RangeCombo; def: RangeCombo; stamina: RangeCombo };
-type StatKey = 'atq' | 'def' | 'stamina';
 
-type RangeWithStat = {
-    stat: StatKey;
-    range: RangeCombo;
-};
 @Injectable({
     providedIn: 'root',
 })
 export class FilterService {
     private readonly _toastService: ToastService = inject(ToastService);
+    private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
+    private readonly _listPokemonRepository: ListPokemonRepository = inject(ListPokemonRepository);
 
-    private groupComboToRangeWithStat(combo: GroupedCombo): RangeWithStat[] {
+    groupComboToRangeWithStat<T extends number>(combo: GroupedCombo<T>): RangeWithStat<T>[] {
         return [
             { stat: 'atq', range: combo.atq },
             { stat: 'def', range: combo.def },
             { stat: 'stamina', range: combo.stamina },
         ];
     }
-    private comboToGrouped(combo: Combo): GroupedCombo {
+
+    private comboToGrouped<T extends number>(combo: Combo<T>): GroupedCombo<T> {
         return {
             atq: { min: combo.atq, max: combo.atq },
             def: { min: combo.def, max: combo.def },
             stamina: { min: combo.stamina, max: combo.stamina },
         };
     }
-    private equalsRange(a: RangeCombo, b: RangeCombo): boolean {
+
+    private equalsRange<T extends number>(a: RangeCombo<T>, b: RangeCombo<T>): boolean {
         return a.min === b.min && a.max === b.max;
     }
-    private canMerge(a: GroupedCombo, b: GroupedCombo): boolean {
+
+    private canMerge<T extends number>(a: GroupedCombo<T>, b: GroupedCombo<T>): boolean {
         let diff = 0;
-        const dims: (keyof GroupedCombo)[] = ['atq', 'def', 'stamina'];
+        const dims: (keyof GroupedCombo<T>)[] = ['atq', 'def', 'stamina'];
         for (const dim of dims) {
             if (!this.equalsRange(a[dim], b[dim])) diff++;
         }
@@ -58,40 +52,44 @@ export class FilterService {
             rb = b[dim];
         return ra.max + 1 === rb.min || rb.max + 1 === ra.min;
     }
+
     private readonly statSuffix: Record<StatKey, string> = {
         atq: 'attaque',
         def: 'défense',
         stamina: 'pv',
     };
 
-    groupedComboToFilter = (group: GroupedCombo): string => {
+    groupedComboToFilter = <T extends number>(group: GroupedCombo<T>): string => {
         const rangestats = this.groupComboToRangeWithStat(group);
         const strings = rangestats.map(this.formatRange);
-        return strings.join(', ');
+        return strings.join('\n');
     };
-    private formatRange = (r: RangeWithStat): string => {
+
+    private formatRange = <T extends number>(r: RangeWithStat<T>): string => {
         const suffix = this.statSuffix[r.stat];
         return r.range.min === r.range.max ? `${r.range.min}${suffix}` : `${r.range.min}-${r.range.max}${suffix}`;
     };
-    private merge(a: GroupedCombo, b: GroupedCombo): GroupedCombo {
-        const dims: (keyof GroupedCombo)[] = ['atq', 'def', 'stamina'];
-        const result = {} as GroupedCombo;
+
+    private merge<T extends number>(a: GroupedCombo<T>, b: GroupedCombo<T>): GroupedCombo<T> {
+        const dims: (keyof GroupedCombo<T>)[] = ['atq', 'def', 'stamina'];
+        const result = {} as GroupedCombo<T>;
         for (const dim of dims) {
             result[dim] = {
-                min: Math.min(a[dim].min, b[dim].min),
-                max: Math.max(a[dim].max, b[dim].max),
+                min: Math.min(a[dim].min, b[dim].min) as T,
+                max: Math.max(a[dim].max, b[dim].max) as T,
             };
         }
         return result;
     }
-    buildComboFilter(combos: Combo[]): string {
-        let groups: GroupedCombo[] = combos.map((c) => this.comboToGrouped(c));
+
+    buildComboFilter(combos: Combo<FilterTier>[]): string {
+        let groups: GroupedCombo<FilterTier>[] = combos.map((c) => this.comboToGrouped(c));
 
         let changed = true;
 
         while (changed) {
             changed = false;
-            const next: GroupedCombo[] = [];
+            const next: GroupedCombo<FilterTier>[] = [];
             const used = new Array(groups.length).fill(false);
 
             for (let i = 0; i < groups.length; i++) {
@@ -128,7 +126,8 @@ export class FilterService {
         }
         return this.buildComboFilterClause(groups);
     }
-    private buildComboFilterClause(combos: GroupedCombo[]): string {
+
+    private buildComboFilterClause(combos: GroupedCombo<FilterTier>[]): string {
         if (combos.length === 0) {
             return '';
         }
@@ -137,10 +136,10 @@ export class FilterService {
         const groups = combos.map(this.groupComboToRangeWithStat);
 
         // Produit cartésien des groupes
-        let result: RangeWithStat[][] = [[]];
+        let result: RangeWithStat<FilterTier>[][] = [[]];
 
         for (const group of groups) {
-            const next: RangeWithStat[][] = [];
+            const next: RangeWithStat<FilterTier>[][] = [];
 
             for (const partial of result) {
                 for (const term of group) {
@@ -156,7 +155,8 @@ export class FilterService {
         const final = filter.map((clause) => clause.map(this.formatRange).join(', ')).join(' & ');
         return final;
     }
-    private filterRedundantRanges(ranges: RangeWithStat[]): RangeWithStat[] {
+
+    private filterRedundantRanges(ranges: RangeWithStat<FilterTier>[]): RangeWithStat<FilterTier>[] {
         return ranges.filter((r) => {
             // garde r seulement si aucune autre range de même stat ne le contient entièrement
             return !ranges.some(
@@ -169,9 +169,6 @@ export class FilterService {
             );
         });
     }
-
-    private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
-    private readonly _listPokemonRepository: ListPokemonRepository = inject(ListPokemonRepository);
 
     private stringify(elem: FilterElement): string {
         if (typeof elem === 'string') return elem;

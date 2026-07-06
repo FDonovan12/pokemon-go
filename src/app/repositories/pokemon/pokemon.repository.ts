@@ -3,14 +3,13 @@ import { inject, Injectable, resource } from '@angular/core';
 import {
     Base,
     GenerationPokemon,
-    LeagueStats,
     NamePokemon,
     PokemonFamily,
     PokemonInterface,
     PokemonSetting,
     PokemonSlug,
-    RankPVP,
 } from '@entities/pokemon';
+import { AllRankPVP, RankPVP } from '@entities/stats';
 import { ToastService } from '@shared/features/toast/toast.service';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 import pokemonsData from '../../bdd/bdd-pokemons.json';
@@ -32,10 +31,6 @@ type PokemonIndex = {
     byName: Record<PokemonInterface['slug'], PokemonInterface>;
 };
 
-export type AllRankPVP = {
-    super: LeagueStats[];
-    hyper: LeagueStats[];
-};
 @Injectable({
     providedIn: 'root',
 })
