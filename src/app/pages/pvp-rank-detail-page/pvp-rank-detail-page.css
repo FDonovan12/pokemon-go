@@ -132,13 +132,11 @@
 }
 
 .no-rank {
-    font-size: 13px;
     color: var(--text-muted);
     font-style: italic;
 }
 
 .unavailable {
-    font-size: 13px;
     color: var(--text-muted);
     font-style: italic;
 }
