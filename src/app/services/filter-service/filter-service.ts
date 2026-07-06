@@ -13,13 +13,13 @@ type Combo = {
     def: number;
     stamina: number;
 };
-type Range = { min: number; max: number };
-type GroupedCombo = { atq: Range; def: Range; stamina: Range };
+export type RangeCombo = { min: number; max: number };
+export type GroupedCombo = { atq: RangeCombo; def: RangeCombo; stamina: RangeCombo };
 type StatKey = 'atq' | 'def' | 'stamina';
 
 type RangeWithStat = {
     stat: StatKey;
-    range: Range;
+    range: RangeCombo;
 };
 @Injectable({
     providedIn: 'root',
@@ -27,7 +27,7 @@ type RangeWithStat = {
 export class FilterService {
     private readonly _toastService: ToastService = inject(ToastService);
 
-    private comboToTerms(combo: GroupedCombo): RangeWithStat[] {
+    private groupComboToRangeWithStat(combo: GroupedCombo): RangeWithStat[] {
         return [
             { stat: 'atq', range: combo.atq },
             { stat: 'def', range: combo.def },
@@ -41,7 +41,7 @@ export class FilterService {
             stamina: { min: combo.stamina, max: combo.stamina },
         };
     }
-    private equalsRange(a: Range, b: Range): boolean {
+    private equalsRange(a: RangeCombo, b: RangeCombo): boolean {
         return a.min === b.min && a.max === b.max;
     }
     private canMerge(a: GroupedCombo, b: GroupedCombo): boolean {
@@ -62,6 +62,12 @@ export class FilterService {
         atq: 'attaque',
         def: 'défense',
         stamina: 'pv',
+    };
+
+    groupedComboToFilter = (group: GroupedCombo): string => {
+        const rangestats = this.groupComboToRangeWithStat(group);
+        const strings = rangestats.map(this.formatRange);
+        return strings.join(', ');
     };
     private formatRange = (r: RangeWithStat): string => {
         const suffix = this.statSuffix[r.stat];
@@ -128,7 +134,7 @@ export class FilterService {
         }
 
         // Chaque combo devient un tableau de termes
-        const groups = combos.map(this.comboToTerms);
+        const groups = combos.map(this.groupComboToRangeWithStat);
 
         // Produit cartésien des groupes
         let result: RangeWithStat[][] = [[]];

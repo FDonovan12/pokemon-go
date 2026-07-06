@@ -10,51 +10,81 @@
         </div>
     </div>
 
+    <div class="mode-toggle">
+        <button
+            type="button"
+            [class.active]="displayMode() === 'capture'"
+            (click)="displayMode.set('capture')"
+        >
+            Par capture
+        </button>
+        <button
+            type="button"
+            [class.active]="displayMode() === 'filter'"
+            (click)="displayMode.set('filter')"
+        >
+            Par filtre
+        </button>
+    </div>
+
     @if (bestRanks(); as ranks) {
-        <div class="leagues">
-            <ng-container
-                [ngTemplateOutlet]="leagueCard"
-                [ngTemplateOutletContext]="{ league: ranks.great, rank: actualRank()?.super?.normal, label: 'Ⓖ Grande Ligue' }"
-            />
-            <ng-container
-                [ngTemplateOutlet]="leagueCard"
-                [ngTemplateOutletContext]="{ league: ranks.ultra, rank: actualRank()?.hyper?.normal, label: 'Ⓤ Ultra Ligue' }"
-            />
-        </div>
+        <table class="leagues-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Ⓖ Grande Ligue</th>
+                    <th>Ⓤ Ultra Ligue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="current-rank-row">
+                    <td class="row-label">Rank actuel</td>
+                    <td>{{ actualRank()?.super?.normal ?? '-' }}</td>
+                    <td>{{ actualRank()?.hyper?.normal ?? '-' }}</td>
+                </tr>
+                @for (row of rows(); track row.key) {
+                    <tr>
+                        <td class="row-label">
+                            <span>{{ row.icon }}</span>
+                            {{ row.label }}
+                        </td>
+                        <td>
+                            <ng-container
+                                [ngTemplateOutlet]="leagueCell"
+                                [ngTemplateOutletContext]="{ league: ranks.great, row: row }"
+                            />
+                        </td>
+                        <td>
+                            <ng-container
+                                [ngTemplateOutlet]="leagueCell"
+                                [ngTemplateOutletContext]="{ league: ranks.ultra, row: row }"
+                            />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
 </div>
 
 <ng-template
-    #leagueCard
+    #leagueCell
     let-league="league"
-    let-rank="rank"
-    let-label="label"
+    let-row="row"
 >
-    <div class="league-card">
-        <div class="league-title">{{ label }}</div>
-        @if (league) {
-            <div class="current-rank">Rank actuel : {{ rank ?? '-' }}</div>
-            @for (source of sources; track source) {
-                <div class="source-row">
-                    <div class="source-label">
-                        <span>{{ source.icon }}</span>
-                        {{ source.label }}
-                    </div>
-                    @if (league[source.key]; as stat) {
-                        <div class="rank-info">
-                            <div class="rank-top">Rank {{ stat.rank }}</div>
-                            <span class="rank-ivs">{{ stat.stat.atk }} / {{ stat.stat.def }} / {{ stat.stat.sta }}</span>
-                            @if (source.key !== 'meilleur') {
-                                <span class="rank-proba">{{ stat.betterCount }} meilleurs : ({{ stat.percentage }}%)</span>
-                            }
-                        </div>
-                    } @else {
-                        <span class="no-rank">Non disponible</span>
-                    }
-                </div>
-            }
+    @if (league) {
+        @if (league[row.key]; as stat) {
+            <div class="rank-info">
+                <div class="rank-top">Rank {{ stat.rank }}</div>
+                <span class="rank-ivs">{{ stat.stat.atk }} / {{ stat.stat.def }} / {{ stat.stat.sta }}</span>
+                @if (row.key !== 'meilleur') {
+                    <span class="rank-proba">{{ stat.betterCount }} meilleurs : ({{ stat.percentage }}%)</span>
+                }
+            </div>
         } @else {
-            <div class="unavailable">❌ CP insuffisant pour cette ligue</div>
+            <span class="no-rank">Non disponible</span>
         }
-    </div>
+    } @else {
+        <span class="unavailable">❌</span>
+    }
 </ng-template>

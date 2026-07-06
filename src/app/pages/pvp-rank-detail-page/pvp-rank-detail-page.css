@@ -4,8 +4,9 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 100;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    padding-top: 10vh;
 }
 
 .detail {
@@ -36,59 +37,90 @@
     font-size: 14px;
     color: var(--text-secondary);
 }
-
-.leagues {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: min(5ch, 5vw);
+.mode-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1rem;
 }
 
-.league-card {
-    background: var(--surface-1);
-    border: 0.5px solid var(--border);
-    border-radius: 12px;
-}
-
-.league-title {
+.mode-toggle button {
+    flex: 1;
+    padding: 8px 12px;
     font-size: 13px;
     font-weight: 500;
     color: var(--text-secondary);
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 0.5px solid var(--border);
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
 }
 
-.source-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 0.5px solid var(--border);
+.mode-toggle button:hover {
+    background: var(--surface-2);
 }
 
-.source-row:last-child {
+.mode-toggle button.active {
+    background: var(--accent, #4a90d9);
+    color: white;
+    border-color: transparent;
+}
+.leagues-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.leagues-table th {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    border-bottom: 0.5px solid var(--border);
+    text-align: center;
+}
+
+.leagues-table th:first-child {
+    text-align: left;
+}
+
+.leagues-table td {
+    padding: 8px 12px;
+    text-align: center;
+    border-bottom: 0.5px solid var(--border);
+    vertical-align: middle;
+}
+
+.leagues-table tr:last-child td {
     border-bottom: none;
 }
 
-.source-label {
+.row-label {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 13px;
     color: var(--text-secondary);
+    text-align: left !important;
+    white-space: nowrap;
+}
+
+.current-rank-row td {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
 }
 
 .rank-info {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     gap: 2px;
-}
-
-.rank-num {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-primary);
 }
 
 .rank-ivs {
@@ -107,6 +139,4 @@
     font-size: 13px;
     color: var(--text-muted);
     font-style: italic;
-    padding: 8px 0;
-    text-align: center;
 }
