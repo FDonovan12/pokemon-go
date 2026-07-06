@@ -6,7 +6,9 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 10vh;
+    padding-top: clamp(2vh, 10vh, 10vh);
+    padding-bottom: 2vh;
+    overflow-y: auto;
 }
 
 .detail {
