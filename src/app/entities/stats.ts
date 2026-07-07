@@ -12,18 +12,18 @@ export type IVRange = RangeCombo<IV>;
 export type FilterRange = RangeCombo<FilterTier>;
 
 export type Combo<T extends number = number> = {
-    atq: T;
-    def: T;
+    attack: T;
+    defense: T;
     stamina: T;
 };
 
 export type GroupedCombo<T extends number = number> = {
-    atq: RangeCombo<T>;
-    def: RangeCombo<T>;
+    attack: RangeCombo<T>;
+    defense: RangeCombo<T>;
     stamina: RangeCombo<T>;
 };
 
-export type StatKey = 'atq' | 'def' | 'stamina';
+export type StatKey = 'attack' | 'defense' | 'stamina';
 
 export type RangeWithStat<T extends number = number> = {
     stat: StatKey;
@@ -39,9 +39,22 @@ export interface RankPVP<T extends number = number> {
 }
 
 export interface LeagueStats<T extends number = number> {
-    atk: T;
-    def: T;
-    sta: T;
+    attack: T;
+    defense: T;
+    stamina: T;
     level: number;
     stat: number;
 }
+
+export type FilterDef<T extends number = number> = {
+    key: string;
+    combo: GroupedCombo<T>;
+};
+
+export type DeepConvert<T> = T extends IV
+    ? FilterTier
+    : T extends readonly (infer U)[]
+      ? DeepConvert<U>[]
+      : T extends object
+        ? { [K in keyof T]: DeepConvert<T[K]> }
+        : T;

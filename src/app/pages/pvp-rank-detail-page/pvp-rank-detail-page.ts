@@ -13,12 +13,12 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Base, PokemonSlug } from '@entities/pokemon';
-import { AllRankPVP, GroupedCombo, IV, LeagueStats, RangeCombo } from '@entities/stats';
+import { AllRankPVP, GroupedCombo, LeagueStats, RangeCombo } from '@entities/stats';
+import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { PvpRank, PVPRankStore } from '../pvp-rank/pvp-rank-store/pvp-rank-store';
 import { League } from '../pvp-rank/pvp-rank.type';
-import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 
 type RankedStat = {
     rank: number;
@@ -50,46 +50,6 @@ const SOURCES = {
 } as const;
 
 type Source = keyof typeof SOURCES;
-
-type FilterDef = {
-    key: string;
-    combo: GroupedCombo<IV>;
-};
-
-const FILTERS: FilterDef[] = [
-    {
-        key: 'low-atk-high-other',
-        combo: {
-            atq: { min: 0, max: 5 },
-            def: { min: 11, max: 15 },
-            stamina: { min: 11, max: 15 },
-        },
-    },
-    {
-        key: 'midlow-atk-high-other',
-        combo: {
-            atq: { min: 0, max: 10 },
-            def: { min: 11, max: 15 },
-            stamina: { min: 11, max: 15 },
-        },
-    },
-    {
-        key: 'midlow-atk-midhigh-other',
-        combo: {
-            atq: { min: 0, max: 10 },
-            def: { min: 6, max: 15 },
-            stamina: { min: 6, max: 15 },
-        },
-    },
-    {
-        key: 'low-atk-midhigh-other',
-        combo: {
-            atq: { min: 0, max: 5 },
-            def: { min: 6, max: 15 },
-            stamina: { min: 6, max: 15 },
-        },
-    },
-] as FilterDef[];
 
 @Component({
     selector: 'app-pvp-rank-detail-page',
@@ -134,9 +94,9 @@ export class PvpRankDetailPage {
                 icon: source.icon,
             }));
         }
-        return FILTERS.map((filter) => ({
+        return this._filterService.BASIC_FILTER.map((filter) => ({
             key: filter.key,
-            label: this._filterService.groupedComboToFilter(filter.combo),
+            label: this._filterService.groupedComboToLabel(filter.combo),
         }));
     });
 
@@ -166,11 +126,13 @@ export class PvpRankDetailPage {
         const ranks = data[league];
         const resultList = this.sources.map((source) => {
             const minIv = source.minIv;
-            const index = ranks.findIndex((r) => r.atk >= minIv && r.def >= minIv && r.sta >= minIv);
+            const index = ranks.findIndex((r) => r.attack >= minIv && r.defense >= minIv && r.stamina >= minIv);
             if (index === -1) return { key: source.key, value: null };
 
             const sliced = ranks.slice(0, this.actualRank()?.[league].normal ?? 4096);
-            const betterCount = sliced.filter((r) => r.atk >= minIv && r.def >= minIv && r.sta >= minIv).length;
+            const betterCount = sliced.filter(
+                (r) => r.attack >= minIv && r.defense >= minIv && r.stamina >= minIv,
+            ).length;
 
             const totalCombos = source.combos;
             const percentage = Math.round((betterCount / totalCombos) * 1000) / 10;
@@ -188,7 +150,7 @@ export class PvpRankDetailPage {
 
     private getBestRankByFilter(data: AllRankPVP, league: League): Record<string, RankedStat | null> {
         const ranks = data[league];
-        const resultList = FILTERS.map((filter) => {
+        const resultList = this._filterService.BASIC_FILTER.map((filter) => {
             const index = ranks.findIndex((r) => this.matchesCombo(r, filter.combo));
             if (index === -1) return { key: filter.key, value: null };
 
@@ -215,15 +177,15 @@ export class PvpRankDetailPage {
 
     private matchesCombo(r: LeagueStats, combo: GroupedCombo): boolean {
         return (
-            this.matchesRange(r.atk, combo.atq) &&
-            this.matchesRange(r.def, combo.def) &&
-            this.matchesRange(r.sta, combo.stamina)
+            this.matchesRange(r.attack, combo.attack) &&
+            this.matchesRange(r.defense, combo.defense) &&
+            this.matchesRange(r.stamina, combo.stamina)
         );
     }
 
     private comboSize(combo: GroupedCombo): number {
         const size = (range: RangeCombo) => range.max - range.min + 1;
-        return size(combo.atq) * size(combo.def) * size(combo.stamina);
+        return size(combo.attack) * size(combo.defense) * size(combo.stamina);
     }
 
     // bestRanks = computed(() => {

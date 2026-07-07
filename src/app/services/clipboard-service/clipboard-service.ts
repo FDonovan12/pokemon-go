@@ -12,7 +12,7 @@ export class ClipboardService {
             .writeText(string)
             .then(() => {
                 const messageToPrint = options?.message ?? string;
-                console.log('Text copied to clipboard:', messageToPrint);
+                console.log('Text copied to clipboard:', string);
                 this.toastService.prepare('Texte Copié', messageToPrint).showInfo();
             })
             .catch((err) => {

@@ -1,6 +1,6 @@
 import { computed, effect, inject, resource, ResourceRef } from '@angular/core';
 import { Base, PokemonInterface, PokemonSlug } from '@entities/pokemon';
-import { AllRankPVP, Combo, FilterTier, IV, LeagueStats, RankPVP } from '@entities/stats';
+import { AllRankPVP, Combo, FilterDef, FilterTier, IV, LeagueStats, RankPVP } from '@entities/stats';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { PvpRankRepository } from '@repositories/pvp-rank-repository/pvp-rank.repository';
@@ -47,9 +47,9 @@ export const PVPRankStore = signalStore(
         _rank1PVP: resource({
             params: () => store._pokemonRepository.rank1PVP.value(),
             loader: async ({ params: pokemons }) => {
-                return pokemons;
+                return pokemons as Record<PokemonSlug, RankPVP<IV>>;
             },
-            defaultValue: {} as Record<PokemonSlug, RankPVP>,
+            defaultValue: {} as Record<PokemonSlug, RankPVP<IV>>,
         }),
     })),
     withProps((store) => ({
@@ -151,7 +151,7 @@ export const PVPRankStore = signalStore(
 
             const getBadge = (stats: LeagueStats, available: boolean): string | null => {
                 if (!available) return '❌';
-                const min = Math.min(stats.atk, stats.def, stats.sta);
+                const min = Math.min(stats.attack, stats.defense, stats.stamina);
                 if (min >= 12) return '🍀';
                 if (min >= 10) return '⚔️';
                 if (min >= 5) return '🔄';
@@ -172,6 +172,50 @@ export const PVPRankStore = signalStore(
 
             return result;
         }),
+        basicRankFilter: computed(() => {
+            const rank1 = store._rank1PVP.value();
+            const pokemonsDisplay = store._filteredResource.value();
+            const subEvolutionMap = store._subEvolutionsMap();
+            const filterIV = store._filterService.BASIC_FILTER;
+            const filterTier: FilterDef<FilterTier>[] = store._filterService.convertIvToFilterTier(filterIV);
+            const buildFiltersFor = (league: 'super' | 'hyper') =>
+                filterTier.map((filter) => {
+                    const pokemons = (
+                        rank1
+                            ? pokemonsDisplay.groupBy((pokemon) =>
+                                  store._filterService.isInTheFilterTier(filter, rank1[pokemon.slug][league]),
+                              )
+                            : new Map()
+                    ) as Map<boolean, Base[]>;
+
+                    const dexNumberIncluded = pokemons
+                        .get(true)
+                        ?.map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
+                        .flat()
+                        .unique();
+
+                    const dexNumberExcluded = pokemons
+                        .get(false)
+                        ?.map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
+                        .flat()
+                        .unique();
+                    const filterPokemonIncluded = dexNumberIncluded?.join(',');
+                    const filterPokemonExcluded = dexNumberExcluded?.join(',');
+
+                    return {
+                        label: filter.key,
+                        filter: `${store._filterService.comboToFilter(filter.combo)} & ${filterPokemonIncluded}`,
+                        excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)} & ${filterPokemonExcluded}`,
+                        length: dexNumberIncluded?.length,
+                        excludedLength: dexNumberExcluded?.length,
+                    };
+                });
+
+            const filtersSuper = buildFiltersFor('super');
+            const filtersHyper = buildFiltersFor('hyper');
+            // const filtersSuper = {...filters, pokemons: rank1 ? pokemonsDisplay.map(pokemon => rank1[pokemon.slug].super): []}
+            return { super: filtersSuper, hyper: filtersHyper };
+        }),
         allRankFilter: computed(() => {
             const tick = createTimer('allRankFilter');
             const mapFilterGreat = new Map<number, FilterMapValue>();
@@ -191,16 +235,17 @@ export const PVPRankStore = signalStore(
                 return 4;
             }
             const statToFilterKey = (stats: LeagueStats): number => {
-                const atq = ivToFilterValue(stats.atk);
-                const def = ivToFilterValue(stats.def);
-                const sta = ivToFilterValue(stats.sta);
-                return atq * 25 + def * 5 + sta; // encodage en base 5, unique entre 0 et 124
+                const attack = ivToFilterValue(stats.attack);
+                const defense = ivToFilterValue(stats.defense);
+                const stamina = ivToFilterValue(stats.stamina);
+                return attack * 25 + defense * 5 + stamina; // encodage en base 5, unique entre 0 et 124
             };
-            const decodeFilterKey = (key: number) => ({
-                atq: Math.floor(key / 25),
-                def: Math.floor(key / 5) % 5,
-                stamina: key % 5,
-            });
+            const decodeFilterKey = (key: number): Combo<FilterTier> =>
+                ({
+                    attack: Math.floor(key / 25),
+                    defense: Math.floor(key / 5) % 5,
+                    stamina: key % 5,
+                }) as Combo<FilterTier>;
             store.filteredPokemons().forEach((pokemon) => {
                 const base = pokemon as any as Base;
 
@@ -257,7 +302,7 @@ export const PVPRankStore = signalStore(
                                 .filter((mainSlug) => (store.allRank().get(mainSlug)?.[league]?.normal ?? 0) !== 1)
                                 .flatMap((mainSlug) => subEvolutionsMap.get(mainSlug) ?? []),
                         ).toList();
-                        const isNotInTheStandardFilter = stats.atq > 1 || stats.def < 3 || stats.stamina < 3;
+                        const isNotInTheStandardFilter = stats.attack > 1 || stats.defense < 3 || stats.stamina < 3;
                         return {
                             stats,
                             pokemons: dexNumbers as any as Base[],
@@ -303,16 +348,16 @@ export const PVPRankStore = signalStore(
             }
 
             const statToFilterKey = (stats: LeagueStats<IV>): number => {
-                const atq = ivToFilterValue(stats.atk);
-                const def = ivToFilterValue(stats.def);
-                const sta = ivToFilterValue(stats.sta);
+                const atq = ivToFilterValue(stats.attack);
+                const def = ivToFilterValue(stats.defense);
+                const sta = ivToFilterValue(stats.stamina);
                 return atq * 25 + def * 5 + sta;
             };
 
             const decodeFilterKey = (key: number): Combo<FilterTier> =>
                 ({
-                    atq: Math.floor(key / 25),
-                    def: Math.floor(key / 5) % 5,
+                    attack: Math.floor(key / 25),
+                    defense: Math.floor(key / 5) % 5,
                     stamina: key % 5,
                 }) as Combo<FilterTier>;
 

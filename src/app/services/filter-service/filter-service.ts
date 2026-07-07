@@ -1,6 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { PokemonInterface } from '@entities/pokemon';
-import { Combo, FilterTier, GroupedCombo, RangeCombo, RangeWithStat, StatKey } from '@entities/stats';
+import {
+    Combo,
+    DeepConvert,
+    FilterDef,
+    FilterTier,
+    GroupedCombo,
+    IV,
+    RangeCombo,
+    RangeWithStat,
+    StatKey,
+} from '@entities/stats';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ToastService } from '@shared/features/toast/toast.service';
@@ -18,20 +28,83 @@ export class FilterService {
     private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
     private readonly _listPokemonRepository: ListPokemonRepository = inject(ListPokemonRepository);
 
-    groupComboToRangeWithStat<T extends number>(combo: GroupedCombo<T>): RangeWithStat<T>[] {
-        return [
-            { stat: 'atq', range: combo.atq },
-            { stat: 'def', range: combo.def },
-            { stat: 'stamina', range: combo.stamina },
-        ];
+    readonly BASIC_FILTER: FilterDef<IV>[] = [
+        {
+            key: 'low-atk-high-other',
+            combo: {
+                attack: { min: 0, max: 5 },
+                defense: { min: 11, max: 15 },
+                stamina: { min: 11, max: 15 },
+            },
+        },
+        {
+            key: 'low-atk-midhigh-other',
+            combo: {
+                attack: { min: 0, max: 5 },
+                defense: { min: 6, max: 15 },
+                stamina: { min: 6, max: 15 },
+            },
+        },
+        {
+            key: 'midlow-atk-high-other',
+            combo: {
+                attack: { min: 0, max: 10 },
+                defense: { min: 11, max: 15 },
+                stamina: { min: 11, max: 15 },
+            },
+        },
+        {
+            key: 'midlow-atk-midhigh-other',
+            combo: {
+                attack: { min: 0, max: 10 },
+                defense: { min: 6, max: 15 },
+                stamina: { min: 6, max: 15 },
+            },
+        },
+    ] as FilterDef<IV>[];
+
+    isInTheFilterTier(filterTier: FilterDef<FilterTier>, pokemonStat: Combo<IV>): boolean {
+        const pokemonTier = this.convertIvToFilterTier(pokemonStat);
+        const isAttackInRange =
+            pokemonTier.attack <= filterTier.combo.attack.max && pokemonTier.attack >= filterTier.combo.attack.min;
+        const isDefenseInRange =
+            pokemonTier.defense <= filterTier.combo.defense.max && pokemonTier.defense >= filterTier.combo.defense.min;
+        const isStaminaInRange =
+            pokemonTier.stamina <= filterTier.combo.stamina.max && pokemonTier.stamina >= filterTier.combo.stamina.min;
+        return isAttackInRange && isDefenseInRange && isStaminaInRange;
     }
 
-    private comboToGrouped<T extends number>(combo: Combo<T>): GroupedCombo<T> {
-        return {
-            atq: { min: combo.atq, max: combo.atq },
-            def: { min: combo.def, max: combo.def },
-            stamina: { min: combo.stamina, max: combo.stamina },
-        };
+    ivToFilterTier(iv: IV): FilterTier {
+        let result = 4;
+        if (iv <= 14) result = 3;
+        if (iv <= 10) result = 2;
+        if (iv <= 5) result = 1;
+        if (iv === 0) result = 0;
+        return result as FilterTier;
+    }
+    convertIvToFilterTier<T>(value: T): DeepConvert<T> {
+        if (typeof value === 'number') {
+            return this.ivToFilterTier(value as any as IV) as DeepConvert<T>;
+        }
+        if (Array.isArray(value)) {
+            return value.map((v) => this.convertIvToFilterTier(v)) as DeepConvert<T>;
+        }
+        if (typeof value === 'object' && value !== null) {
+            const result = {} as Record<string, unknown>;
+            for (const key in value) {
+                result[key] = this.convertIvToFilterTier((value as Record<string, unknown>)[key]);
+            }
+            return result as DeepConvert<T>;
+        }
+        return value as DeepConvert<T>;
+    }
+
+    groupComboToRangeWithStat<T extends number>(combo: GroupedCombo<T>): RangeWithStat<T>[] {
+        return [
+            { stat: 'attack', range: combo.attack },
+            { stat: 'defense', range: combo.defense },
+            { stat: 'stamina', range: combo.stamina },
+        ];
     }
 
     private equalsRange<T extends number>(a: RangeCombo<T>, b: RangeCombo<T>): boolean {
@@ -40,7 +113,7 @@ export class FilterService {
 
     private canMerge<T extends number>(a: GroupedCombo<T>, b: GroupedCombo<T>): boolean {
         let diff = 0;
-        const dims: (keyof GroupedCombo<T>)[] = ['atq', 'def', 'stamina'];
+        const dims: (keyof GroupedCombo<T>)[] = ['attack', 'defense', 'stamina'];
         for (const dim of dims) {
             if (!this.equalsRange(a[dim], b[dim])) diff++;
         }
@@ -54,16 +127,56 @@ export class FilterService {
     }
 
     private readonly statSuffix: Record<StatKey, string> = {
-        atq: 'attaque',
-        def: 'défense',
+        attack: 'attaque',
+        defense: 'défense',
         stamina: 'pv',
     };
 
-    groupedComboToFilter = <T extends number>(group: GroupedCombo<T>): string => {
+    private comboToGrouped<T extends number>(combo: Combo<T>): GroupedCombo<T> {
+        return {
+            attack: { min: combo.attack, max: combo.attack },
+            defense: { min: combo.defense, max: combo.defense },
+            stamina: { min: combo.stamina, max: combo.stamina },
+        };
+    }
+    comboToFilter = (input: Combo<FilterTier> | GroupedCombo<FilterTier>): string => {
+        const group = this.isGroupedCombo(input) ? input : this.comboToGrouped(input);
+        return this.groupedComboToFilter(group);
+    };
+    private isGroupedCombo<T extends number>(input: Combo<T> | GroupedCombo<T>): input is GroupedCombo<T> {
+        return typeof input.attack === 'object';
+    }
+
+    private excludedForStat(range: RangeCombo<FilterTier>, stat: StatKey): string {
+        const suffix = this.statSuffix[stat];
+        const allStats = [0, 1, 2, 3, 4];
+        return allStats
+            .filter((tier) => tier < range.min || tier > range.max)
+            .map((tier) => `${tier}${suffix}`)
+            .join(',');
+    }
+
+    comboToFilterExcluded = (combo: Combo<FilterTier> | GroupedCombo<FilterTier>): string => {
+        const group = this.isGroupedCombo(combo) ? combo : this.comboToGrouped(combo);
+        const allAtq = this.excludedForStat(group.attack, 'attack');
+        const allDef = this.excludedForStat(group.defense, 'defense');
+        const allStamina = this.excludedForStat(group.stamina, 'stamina');
+        return `${allAtq}, ${allDef}, ${allStamina}`;
+    };
+
+    groupedComboToFilter = (group: GroupedCombo<FilterTier>): string => {
         const rangestats = this.groupComboToRangeWithStat(group);
         const strings = rangestats.map(this.formatRange);
-        console.log(strings);
-        console.log(strings.join('\n'));
+        return strings.join(', ');
+    };
+    reverseGroupedComboToFilter = <T extends number>(group: GroupedCombo<T>): string => {
+        const rangestats = this.groupComboToRangeWithStat(group);
+        const strings = rangestats.map(this.formatRange);
+        return strings.join(', ');
+    };
+    groupedComboToLabel = <T extends number>(group: GroupedCombo<T>): string => {
+        const rangestats = this.groupComboToRangeWithStat(group);
+        const strings = rangestats.map(this.formatRange);
         return strings.join('\n');
     };
 
@@ -73,7 +186,7 @@ export class FilterService {
     };
 
     private merge<T extends number>(a: GroupedCombo<T>, b: GroupedCombo<T>): GroupedCombo<T> {
-        const dims: (keyof GroupedCombo<T>)[] = ['atq', 'def', 'stamina'];
+        const dims: (keyof GroupedCombo<T>)[] = ['attack', 'defense', 'stamina'];
         const result = {} as GroupedCombo<T>;
         for (const dim of dims) {
             result[dim] = {
