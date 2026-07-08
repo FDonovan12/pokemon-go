@@ -14,14 +14,14 @@
         <button
             type="button"
             [class.active]="displayMode() === 'capture'"
-            (click)="displayMode.set('capture')"
+            (click)="toggleDisplayMode()"
         >
             Par capture
         </button>
         <button
             type="button"
             [class.active]="displayMode() === 'filter'"
-            (click)="displayMode.set('filter')"
+            (click)="toggleDisplayMode()"
         >
             Par filtre
         </button>
@@ -78,7 +78,7 @@
         @if (league[row.key]; as stat) {
             <div class="rank-info">
                 <div class="rank-top">Rank {{ stat.rank }}</div>
-                <span class="rank-ivs">{{ stat.stat.atk }} / {{ stat.stat.def }} / {{ stat.stat.sta }}</span>
+                <span class="rank-ivs">{{ stat.stat.attack }} / {{ stat.stat.defense }} / {{ stat.stat.stamina }}</span>
                 @if (row.key !== 'meilleur') {
                     <span class="rank-proba">{{ stat.betterCount }} : ({{ stat.percentage }}% drop)</span>
                 }
