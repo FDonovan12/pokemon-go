@@ -64,7 +64,12 @@
 
 @for (filter of filters.value(); track filter.id) {
     <p>
-        <button (click)="copyFilter(filter)">{{ filter.label }}</button>
+        <button
+            (click)="copyFilter(filter)"
+            [disabled]="filters.isLoading()"
+        >
+            {{ filter.label }}
+        </button>
         <button
             style="margin-left: 10px"
             type="button"

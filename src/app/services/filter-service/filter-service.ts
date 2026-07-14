@@ -182,7 +182,7 @@ export class FilterService {
 
     private formatRange = <T extends number>(r: RangeWithStat<T>): string => {
         const suffix = this.statSuffix[r.stat];
-        return r.range.min === r.range.max ? `${r.range.min}${suffix}` : `${r.range.min}\u2011${r.range.max}${suffix}`;
+        return r.range.min === r.range.max ? `${r.range.min}${suffix}` : `${r.range.min}-${r.range.max}${suffix}`; //`${r.range.min}\u2011${r.range.max}${suffix}`;
     };
 
     private merge<T extends number>(a: GroupedCombo<T>, b: GroupedCombo<T>): GroupedCombo<T> {

@@ -29,6 +29,7 @@ export interface Base {
     slug: PokemonSlug;
     imageId: number;
     image: string;
+    imageShiny: string;
     type: Type[];
     stats: Stats;
     quickMoves: string[];
@@ -86,6 +87,7 @@ export interface PokemonInterface {
     name: NamePokemon;
     slug: PokemonSlug;
     image: string;
+    imageShiny: string;
     sprite: string;
     type: TypePokemon[];
     isLegendary: boolean;

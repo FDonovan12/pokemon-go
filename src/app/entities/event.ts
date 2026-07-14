@@ -86,6 +86,10 @@ export class PokemonWithRarity implements PokemonInterface {
         return this.pokemon.image;
     }
 
+    get imageShiny(): string {
+        return this.pokemon.image;
+    }
+
     get sprite(): string {
         return this.pokemon.sprite;
     }

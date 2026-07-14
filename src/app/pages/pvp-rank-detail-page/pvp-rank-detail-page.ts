@@ -16,6 +16,7 @@ import { Base, PokemonSlug } from '@entities/pokemon';
 import { AllRankPVP, GroupedCombo, LeagueStats, RangeCombo } from '@entities/stats';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
+import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { PvpRank, PVPRankStore } from '../pvp-rank/pvp-rank-store/pvp-rank-store';
 import { League } from '../pvp-rank/pvp-rank.type';
@@ -51,6 +52,8 @@ const SOURCES = {
 
 type Source = keyof typeof SOURCES;
 
+const DISPLAY_MODE_LOCAL_STORAGE = 'pokemon-display-mode-local-storage';
+
 @Component({
     selector: 'app-pvp-rank-detail-page',
     imports: [ImagePokemon, NgTemplateOutlet],
@@ -63,16 +66,19 @@ export class PvpRankDetailPage {
     private readonly _pVPRankStore = inject(PVPRankStore);
     private readonly _router = inject(Router);
     private readonly _filterService: FilterService = inject(FilterService);
+    private readonly _localStorageService: LocalStorageService = inject(LocalStorageService);
 
     readonly sources = Object.entries(SOURCES).map(([key, value]) => ({
         key: key as Source,
         ...value,
     }));
 
-    displayMode = signal<'capture' | 'filter'>('capture');
+    displayMode = signal<'capture' | 'filter'>(this._localStorageService.get(DISPLAY_MODE_LOCAL_STORAGE, 'capture'));
 
     toggleDisplayMode(): void {
         this.displayMode.update((mode) => (mode === 'capture' ? 'filter' : 'capture'));
+        console.log('toggleDisplayMode');
+        this._localStorageService.set(DISPLAY_MODE_LOCAL_STORAGE, this.displayMode());
     }
 
     pokemon: Signal<Base | undefined> = computed(() =>

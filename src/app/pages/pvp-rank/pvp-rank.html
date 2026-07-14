@@ -72,20 +72,16 @@
     <div class="league-column">
         @for (filter of store.basicRankFilter().super; track $index) {
             <div>
-                <button (click)="clipboardService.copyToClipboard(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
-                <button (click)="clipboardService.copyToClipboard(filter.excludedFilter)">
-                    {{ filter.label }} exclue ({{ filter.excludedLength }})
-                </button>
+                <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
+                <button (click)="copyBasicFilter(filter.excludedFilter)">{{ filter.label }} exclue ({{ filter.excludedLength }})</button>
             </div>
         }
     </div>
     <div class="league-column">
         @for (filter of store.basicRankFilter().hyper; track $index) {
             <div>
-                <button (click)="clipboardService.copyToClipboard(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
-                <button (click)="clipboardService.copyToClipboard(filter.excludedFilter)">
-                    {{ filter.label }} exclue ({{ filter.excludedLength }})
-                </button>
+                <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
+                <button (click)="copyBasicFilter(filter.excludedFilter)">{{ filter.label }} exclue ({{ filter.excludedLength }})</button>
             </div>
         }
     </div>

@@ -206,8 +206,8 @@ export const PVPRankStore = signalStore(
                         label: filter.key,
                         filter: `${store._filterService.comboToFilter(filter.combo)} & ${filterPokemonIncluded}`,
                         excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)} & ${filterPokemonExcluded}`,
-                        length: dexNumberIncluded?.length,
-                        excludedLength: dexNumberExcluded?.length,
+                        length: dexNumberIncluded?.length ?? 0,
+                        excludedLength: dexNumberExcluded?.length ?? 0,
                     };
                 });
 

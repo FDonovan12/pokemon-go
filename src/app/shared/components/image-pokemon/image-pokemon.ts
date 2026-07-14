@@ -6,10 +6,10 @@ import { Base, PokemonInterface } from '@entities/pokemon';
     imports: [],
     template: `
         <img
-            [src]="pokemon().image"
+            [src]="isShiny() ? pokemon().imageShiny : pokemon().image"
             [alt]="pokemon().slug"
             [title]="pokemon().slug"
-            [style.height.px]="height() ?? 50"
+            [style.height.px]="height()"
             [style.aspect-ratio]="'1'"
         />
     `,
@@ -23,5 +23,6 @@ import { Base, PokemonInterface } from '@entities/pokemon';
 })
 export class ImagePokemon {
     pokemon = input.required<PokemonInterface | Base>();
-    height = input<number>();
+    height = input<number>(50);
+    isShiny = input<boolean>(false);
 }

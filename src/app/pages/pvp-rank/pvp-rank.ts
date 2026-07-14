@@ -76,6 +76,11 @@ export class PvpRankPages {
         filter.isIncluded = !filter.isIncluded;
     }
 
+    copyBasicFilter(filter: string): void {
+        const message = filter.replaceAll('-', '\u2011');
+        this.clipboardService.copyToClipboard(filter, { message });
+    }
+
     navigateDetailPokemon(pokemon: PokemonInterface) {
         this._router.navigate(['pvp-rank', 'detail', pokemon.slug]);
     }
