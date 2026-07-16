@@ -167,7 +167,7 @@ export class FilterService {
     groupedComboToFilter = (group: GroupedCombo<FilterTier>): string => {
         const rangestats = this.groupComboToRangeWithStat(group);
         const strings = rangestats.map(this.formatRange);
-        return strings.join(', ');
+        return strings.join('& ');
     };
     reverseGroupedComboToFilter = <T extends number>(group: GroupedCombo<T>): string => {
         const rangestats = this.groupComboToRangeWithStat(group);
