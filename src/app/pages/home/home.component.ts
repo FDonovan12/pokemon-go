@@ -27,7 +27,7 @@ export class HomeComponent {
     private readonly bddEvent = inject(EventRepository);
     private readonly filtersFacade = inject(FiltersFacade);
     protected readonly keepStore = inject(ListPokemonPageStore);
-    protected readonly clipboardService = inject(ClipboardService);
+    private readonly clipboardService = inject(ClipboardService);
     private readonly toastService = inject(ToastService);
 
     today = new Date();
@@ -75,9 +75,10 @@ export class HomeComponent {
     filters = this.filtersFacade.getFiltersResolved();
 
     copyFilter(filter: FilterItemResolved) {
-        const preview = filter.query.length > 50 ? filter.query.slice(0, 50) + '…' : filter.query;
-        const message = `🏆 Filtre "${filter.label.capitalize()}" copié (${filter.query.length} caractères)\n\n${preview}`;
-        this.clipboardService.copyToClipboard(filter.query, { message });
+        const query = filter.query.replaceAll('/n', '');
+        const preview = query.length > 50 ? query.slice(0, 50) + '…' : query;
+        const message = `🏆 Filtre "${filter.label.capitalize()}" copié (${query.length} caractères)\n\n${preview}`;
+        this.clipboardService.copyToClipboard(query, { message });
     }
     ngOnInit(): void {
         // this.getData();
