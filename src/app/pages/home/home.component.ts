@@ -75,7 +75,7 @@ export class HomeComponent {
     filters = this.filtersFacade.getFiltersResolved();
 
     copyFilter(filter: FilterItemResolved) {
-        const query = filter.query.replaceAll('/n', '');
+        const query = filter.query.replaceAll('\n', '');
         const preview = query.length > 50 ? query.slice(0, 50) + '…' : query;
         const message = `🏆 Filtre "${filter.label.capitalize()}" copié (${query.length} caractères)\n\n${preview}`;
         this.clipboardService.copyToClipboard(query, { message });
