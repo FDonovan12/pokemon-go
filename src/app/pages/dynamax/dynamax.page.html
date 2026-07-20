@@ -1,78 +1,82 @@
-<label for="">
-    <!-- prettier-ignore -->
-    <span>Recherche : </span>
-    <input
-        id="searchInput"
-        #searchInput
-        type="text"
-        [(ngModel)]="search"
-    />
-</label>
-<button (click)="dynamaxStore.setSearch('')">Reset</button>
-@for (type of typesList; track $index) {
-    <div
-        [class]="type"
-        style="
-            display: flex;
-            align-items: center;
-            margin: 5px;
-            border: rgb(136, 136, 136) solid 1px;
-            border-radius: 10px;
-            width: fit-content;
-        "
-    >
-        <app-type
-            [type]="type"
-            style="margin-inline: 3px"
-        ></app-type>
-        @for (damage of dynamaxStore.searchPokemon()?.get(type); track $index) {
-            <div
-                [style.margin.px]="5"
-                (click)="dynamaxStore.selectPokemon(damage)"
-                [class.selected]="damage.isSelected"
-                [class.badDynamax]="damage.isBadComparedToSelected"
-                [class.unreleased]="!damage.dynamax.isRelease"
-            >
-                <div>
-                    <app-image-pokemon [pokemon]="damage.dynamax.pokemon"></app-image-pokemon>
-                </div>
-                <div>
-                    <app-type [type]="damage.typeAttack"></app-type>
-                </div>
+<div>
+    <label for="">
+        <!-- prettier-ignore -->
+        <span>Recherche : </span>
+        <input
+            id="searchInput"
+            #searchInput
+            type="text"
+            [(ngModel)]="search"
+        />
+    </label>
+    <button (click)="dynamaxStore.setSearch('')">Reset</button>
+</div>
+<div style="overflow-x: auto; max-width: 100%">
+    @for (type of typesList; track $index) {
+        <div
+            [class]="type"
+            style="
+                display: flex;
+                align-items: center;
+                margin: 5px;
+                border: rgb(136, 136, 136) solid 1px;
+                border-radius: 10px;
+                width: fit-content;
+            "
+        >
+            <app-type
+                [type]="type"
+                style="margin-inline: 3px"
+            ></app-type>
+            @for (damage of dynamaxStore.searchPokemon()?.get(type); track $index) {
                 <div
-                    app-percent-color
-                    [value]="damage.damage"
-                    [maximumValue]="maxDamage"
-                    [viewPercent]="true"
-                    [style.width.px]="60"
-                    [style.display]="'inline-block'"
-                ></div>
-            </div>
-        }
-        <div style="background-color: rgb(165, 165, 165); width: 1px; height: 100px; border-radius: 100vw"></div>
-        @for (damage of test.get(type); track $index) {
-            <div
-                [style.margin.px]="5"
-                (click)="dynamaxStore.selectPokemon(damage)"
-                [class.selected]="damage.isSelected"
-                [class.badDynamax]="damage.isBadComparedToSelected"
-                [class.unreleased]="!damage.dynamax.isRelease"
-            >
-                <div>
-                    <app-image-pokemon [pokemon]="damage.dynamax.pokemon"></app-image-pokemon>
+                    [style.margin.px]="5"
+                    (click)="dynamaxStore.selectPokemon(damage)"
+                    [class.selected]="damage.isSelected"
+                    [class.badDynamax]="damage.isBadComparedToSelected"
+                    [class.unreleased]="!damage.dynamax.isRelease"
+                >
+                    <div>
+                        <app-image-pokemon [pokemon]="damage.dynamax.pokemon"></app-image-pokemon>
+                    </div>
+                    <div>
+                        <app-type [type]="damage.typeAttack"></app-type>
+                    </div>
+                    <div
+                        app-percent-color
+                        [value]="damage.damage"
+                        [maximumValue]="maxDamage"
+                        [viewPercent]="true"
+                        [style.width.px]="60"
+                        [style.display]="'inline-block'"
+                    ></div>
                 </div>
-                <div>
-                    <app-type [type]="damage.typeAttack"></app-type>
-                </div>
+            }
+            <div style="background-color: rgb(165, 165, 165); width: 1px; height: 100px; border-radius: 100vw"></div>
+            @for (damage of test.get(type); track $index) {
                 <div
-                    app-percent-color
-                    [value]="damage.damage"
-                    [maximumValue]="maxDamage"
-                    [viewPercent]="true"
-                    [style.width.px]="60"
-                    [style.display]="'inline-block'"
-                ></div>
-            </div>
-        }
-    </div>
-}
+                    [style.margin.px]="5"
+                    (click)="dynamaxStore.selectPokemon(damage)"
+                    [class.selected]="damage.isSelected"
+                    [class.badDynamax]="damage.isBadComparedToSelected"
+                    [class.unreleased]="!damage.dynamax.isRelease"
+                >
+                    <div>
+                        <app-image-pokemon [pokemon]="damage.dynamax.pokemon"></app-image-pokemon>
+                    </div>
+                    <div>
+                        <app-type [type]="damage.typeAttack"></app-type>
+                    </div>
+                    <div
+                        app-percent-color
+                        [value]="damage.damage"
+                        [maximumValue]="maxDamage"
+                        [viewPercent]="true"
+                        [style.width.px]="60"
+                        [style.display]="'inline-block'"
+                    ></div>
+                </div>
+            }
+        </div>
+    }
+</div>
