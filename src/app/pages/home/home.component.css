@@ -39,3 +39,11 @@
     font-size: 13px;
     margin: 4px 0;
 }
+
+.drag-handle {
+    cursor: grab;
+    padding: 4px 10px;
+    touch-action: none;
+    font-size: 18px;
+    color: #999;
+}

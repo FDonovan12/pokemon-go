@@ -238,6 +238,28 @@ export class FiltersRepository {
         this.saveFilters();
     }
 
+    reorderFolders(fromIndex: number, toIndex: number): void {
+        const list = this.userFiltersSignal();
+        const folders = list.filter((i): i is FilterFolder => i.type === 'folder');
+        const rootFilters = list.filter((i): i is FilterItem => i.type !== 'folder');
+        const reordered = [...folders];
+        const [moved] = reordered.splice(fromIndex, 1);
+        reordered.splice(toIndex, 0, moved);
+        this.userFiltersSignal.set([...reordered, ...rootFilters]);
+        this.saveFilters();
+    }
+
+    reorderRootFilters(fromIndex: number, toIndex: number): void {
+        const list = this.userFiltersSignal();
+        const folders = list.filter((i): i is FilterFolder => i.type === 'folder');
+        const rootFilters = list.filter((i): i is FilterItem => i.type !== 'folder');
+        const reordered = [...rootFilters];
+        const [moved] = reordered.splice(fromIndex, 1);
+        reordered.splice(toIndex, 0, moved);
+        this.userFiltersSignal.set([...folders, ...reordered]);
+        this.saveFilters();
+    }
+
     getFolderById(id: string): FilterFolder | undefined {
         return this.userFiltersSignal().find((item): item is FilterFolder => item.type === 'folder' && item.id === id);
     }

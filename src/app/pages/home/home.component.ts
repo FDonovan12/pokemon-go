@@ -33,7 +33,7 @@ export class HomeComponent {
     private readonly httpClient = inject(HttpClient);
     private readonly getAllService = inject(PokemonRepository);
     private readonly bddEvent = inject(EventRepository);
-    private readonly filtersFacade = inject(FiltersFacade);
+    protected readonly filtersFacade = inject(FiltersFacade);
     protected readonly keepStore = inject(ListPokemonPageStore);
     private readonly clipboardService = inject(ClipboardService);
     private readonly toastService = inject(ToastService);
@@ -81,6 +81,7 @@ export class HomeComponent {
     );
 
     filters = this.filtersFacade.getFiltersResolved();
+    readonly emptyDropListData: unknown[] = [];
 
     copyFilter(filter: FilterItemResolved) {
         const query = filter.query.replaceAll('\n', '');
@@ -128,12 +129,9 @@ export class HomeComponent {
             );
     }
 
-    onlyFilterPredicate = (drag: CdkDrag<FilterListItemResolved>): boolean => drag.data.type === 'filter';
-
     connectedFolderIds = computed(() => [
         'root',
-        ...this.filters
-            .value()
+        ...this.filters()
             .filter((entry): entry is FilterFolderResolved => entry.type === 'folder' && entry.isOpen)
             .map((folder) => 'folder-' + folder.id),
     ]);
@@ -158,6 +156,38 @@ export class HomeComponent {
             const movedFilter = event.item.data as FilterItemResolved;
             this.filtersFacade.moveFilter(movedFilter.id, folderId, event.currentIndex);
         }
+    }
+
+    folderEntries = computed(() => this.filters().filter((e): e is FilterFolderResolved => e.type === 'folder'));
+
+    rootFilterEntries = computed(() => this.filters().filter((e): e is FilterItemResolved => e.type === 'filter'));
+
+    connectedFilterIds = computed(() => [
+        'filters-root',
+        ...this.folderEntries().flatMap((folder) => [
+            'folder-header-' + folder.id,
+            ...(folder.isOpen ? ['folder-' + folder.id] : []),
+        ]),
+    ]);
+
+    onlyFilterPredicate = (drag: CdkDrag<FilterListItemResolved>) => drag.data.type !== 'folder';
+
+    onFoldersDrop(event: CdkDragDrop<FilterFolderResolved[]>): void {
+        this.filtersFacade.reorderFolders(event.previousIndex, event.currentIndex);
+    }
+
+    onRootFiltersDrop(event: CdkDragDrop<FilterItemResolved[]>): void {
+        if (event.previousContainer === event.container) {
+            this.filtersFacade.reorderRootFilters(event.previousIndex, event.currentIndex);
+        } else {
+            const movedFilter = event.item.data as FilterItemResolved;
+            this.filtersFacade.moveFilter(movedFilter.id, null, event.currentIndex);
+        }
+    }
+
+    onFolderHeaderDrop(event: CdkDragDrop<unknown[]>, folderId: string): void {
+        const movedFilter = event.item.data as FilterItemResolved;
+        this.filtersFacade.moveFilter(movedFilter.id, folderId, 0);
     }
 
     public getData() {

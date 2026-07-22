@@ -1,4 +1,4 @@
-import { Injectable, ResourceRef, inject, resource } from '@angular/core';
+import { Injectable, ResourceRef, Signal, computed, inject, resource } from '@angular/core';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
@@ -28,11 +28,65 @@ export class FiltersFacade {
         return query.prefix;
     }
 
-    getFiltersResolved(): ResourceRef<FilterListItemResolved[]> {
+    // getFiltersResolved(): ResourceRef<FilterListItemResolved[]> {
+    //     const flatten = (list: FilterListItem[]): FilterItem[] =>
+    //         list.flatMap((item) => (item.type === 'folder' ? item.children : [item]));
+
+    //     const rebuild = (list: FilterListItem[], resolvedQueryById: Map<string, string>): FilterListItemResolved[] =>
+    //         list.map((item) =>
+    //             item.type === 'folder'
+    //                 ? {
+    //                       type: 'folder' as const,
+    //                       id: item.id,
+    //                       label: item.label,
+    //                       isOpen: item.isOpen,
+    //                       children: item.children.map((f) => ({
+    //                           type: 'filter' as const,
+    //                           id: f.id,
+    //                           label: f.label,
+    //                           query: resolvedQueryById.get(f.id) ?? '',
+    //                       })),
+    //                   }
+    //                 : {
+    //                       type: 'filter' as const,
+    //                       id: item.id,
+    //                       label: item.label,
+    //                       query: resolvedQueryById.get(item.id) ?? '',
+    //                   },
+    //         );
+
+    //     const currentList = this._filtersRepository.getFilters()();
+    //     const defaultResolvedMap = new Map(flatten(currentList).map((f) => [f.id, this.resolveQuerySync(f.query)]));
+
+    //     return resource({
+    //         params: () => this._filtersRepository.getFilters()(),
+    //         loader: async ({ params: filterList }) => {
+    //             const resolvedFlat = await this.resolveFilters(flatten(filterList));
+    //             const resolvedMap = new Map(resolvedFlat.map((f) => [f.id, f.query]));
+    //             return rebuild(filterList, resolvedMap);
+    //         },
+    //         defaultValue: rebuild(currentList, defaultResolvedMap),
+    //     });
+    // }
+
+    private _queryCacheResource?: ResourceRef<Map<string, string>>;
+
+    isFilterResolving(filterId: string): boolean {
+        return !!this._queryCacheResource?.isLoading() && !this._queryCacheResource.value().has(filterId);
+    }
+
+    getFiltersResolved(): Signal<FilterListItemResolved[]> {
         const flatten = (list: FilterListItem[]): FilterItem[] =>
             list.flatMap((item) => (item.type === 'folder' ? item.children : [item]));
 
-        const rebuild = (list: FilterListItem[], resolvedQueryById: Map<string, string>): FilterListItemResolved[] =>
+        const resolveKey = computed(() =>
+            flatten(this._filtersRepository.getFilters()())
+                .map((f) => `${f.id}:${JSON.stringify(f.query)}`)
+                .sort()
+                .join('|'),
+        );
+
+        const rebuild = (list: FilterListItem[], resolvedQueryById?: Map<string, string>): FilterListItemResolved[] =>
             list.map((item) =>
                 item.type === 'folder'
                     ? {
@@ -44,29 +98,33 @@ export class FiltersFacade {
                               type: 'filter' as const,
                               id: f.id,
                               label: f.label,
-                              query: resolvedQueryById.get(f.id) ?? '',
+                              query: resolvedQueryById?.get(f.id) ?? '',
                           })),
                       }
                     : {
                           type: 'filter' as const,
                           id: item.id,
                           label: item.label,
-                          query: resolvedQueryById.get(item.id) ?? '',
+                          query: resolvedQueryById?.get(item.id) ?? '',
                       },
             );
 
         const currentList = this._filtersRepository.getFilters()();
         const defaultResolvedMap = new Map(flatten(currentList).map((f) => [f.id, this.resolveQuerySync(f.query)]));
 
-        return resource({
-            params: () => this._filtersRepository.getFilters()(),
-            loader: async ({ params: filterList }) => {
-                const resolvedFlat = await this.resolveFilters(flatten(filterList));
-                const resolvedMap = new Map(resolvedFlat.map((f) => [f.id, f.query]));
-                return rebuild(filterList, resolvedMap);
+        this._queryCacheResource = resource({
+            params: resolveKey,
+            loader: async () => {
+                const currentFlat = flatten(this._filtersRepository.getFilters()());
+                const resolvedFlat = await this.resolveFilters(currentFlat);
+                return new Map(resolvedFlat.map((f) => [f.id, f.query]));
             },
-            defaultValue: rebuild(currentList, defaultResolvedMap),
+            defaultValue: defaultResolvedMap,
         });
+
+        // computed() plutôt que resource(): se recalcule dès que getFilterList() OU
+        // queryCache.value() change, sans avoir besoin d'un second cycle async.
+        return computed(() => rebuild(this._filtersRepository.getFilters()(), this._queryCacheResource?.value()));
     }
 
     async resolveFilters(filters: FilterItem[]): Promise<FilterItemResolved[]> {
@@ -162,5 +220,13 @@ export class FiltersFacade {
 
     updateFolder(id: string, newFolder: { label: string }) {
         this._filtersRepository.updateFolder(id, newFolder);
+    }
+
+    reorderFolders(fromIndex: number, toIndex: number): void {
+        this._filtersRepository.reorderFolders(fromIndex, toIndex);
+    }
+
+    reorderRootFilters(fromIndex: number, toIndex: number): void {
+        this._filtersRepository.reorderRootFilters(fromIndex, toIndex);
     }
 }

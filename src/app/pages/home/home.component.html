@@ -57,10 +57,6 @@
     </div>
 }
 
-<!-- <app-add-filter
-    [filterItem]="filterToEdit()"
-    (closed)="filterToEdit.set(undefined)"
-></app-add-filter> -->
 <router-outlet />
 <button>
     <a
@@ -78,113 +74,147 @@
         ➕ Ajouter un dossier
     </a>
 </button>
+
 <div cdkDropListGroup>
     <div
-        id="root"
+        id="folders-root"
         cdkDropList
-        [cdkDropListData]="filters.value()"
-        [cdkDropListConnectedTo]="connectedFolderIds()"
-        (cdkDropListDropped)="onRootDrop($event)"
+        [cdkDropListData]="folderEntries()"
+        (cdkDropListDropped)="onFoldersDrop($event)"
     >
-        @for (entry of filters.value(); track entry.id) {
-            @if (entry.type === 'folder') {
+        @for (folder of folderEntries(); track folder.id) {
+            <div
+                class="folder"
+                cdkDrag
+                [cdkDragData]="folder"
+            >
                 <div
-                    class="folder"
-                    cdkDrag
-                    [cdkDragData]="entry"
+                    class="folder-header"
+                    cdkDropList
+                    [id]="'folder-header-' + folder.id"
+                    [cdkDropListData]="emptyDropListData"
+                    [cdkDropListConnectedTo]="connectedFilterIds()"
+                    [cdkDropListEnterPredicate]="onlyFilterPredicate"
+                    (cdkDropListDropped)="onFolderHeaderDrop($event, folder.id)"
                 >
-                    <p class="folder-header">
-                        <button
-                            type="button"
-                            class="folder-toggle"
-                            (click)="toggleFolder(entry)"
-                        >
-                            {{ entry.isOpen ? '▼' : '▶' }} 📁 {{ entry.label }}
-                        </button>
-                        <button
-                            style="margin-left: 10px"
-                            type="button"
-                            (click)="editFolder(entry)"
-                        >
-                            🖊️
-                        </button>
-                        <button
-                            (click)="removeFolder(entry)"
-                            style="margin-left: 10px; color: red"
-                        >
-                            ✕
-                        </button>
-                    </p>
-
-                    @if (entry.isOpen) {
-                        <div
-                            [id]="'folder-' + entry.id"
-                            cdkDropList
-                            [cdkDropListData]="entry.children"
-                            [cdkDropListConnectedTo]="connectedFolderIds()"
-                            [cdkDropListEnterPredicate]="onlyFilterPredicate"
-                            (cdkDropListDropped)="onFolderDrop($event, entry.id)"
-                            class="folder-content"
-                        >
-                            @for (filter of entry.children; track filter.id) {
-                                <p
-                                    cdkDrag
-                                    [cdkDragData]="filter"
-                                    class="folder-item"
-                                >
-                                    <button
-                                        (click)="copyFilter(filter)"
-                                        [disabled]="filters.isLoading()"
-                                    >
-                                        {{ filter.label }}
-                                    </button>
-                                    <button
-                                        style="margin-left: 10px"
-                                        type="button"
-                                        (click)="editFilter(filter)"
-                                    >
-                                        🖊️
-                                    </button>
-                                    <button
-                                        (click)="removeFilter(filter)"
-                                        style="margin-left: 10px; color: red"
-                                    >
-                                        ✕
-                                    </button>
-                                </p>
-                            }
-                            @if (entry.children.length === 0) {
-                                <p class="folder-empty">Dossier vide</p>
-                            }
-                        </div>
-                    }
-                </div>
-            } @else {
-                <p
-                    cdkDrag
-                    [cdkDragData]="entry"
-                >
-                    <button
-                        (click)="copyFilter(entry)"
-                        [disabled]="filters.isLoading()"
+                    <span
+                        cdkDragHandle
+                        class="drag-handle"
                     >
-                        {{ entry.label }}
+                        ⠿
+                    </span>
+                    <button
+                        type="button"
+                        class="folder-toggle"
+                        (click)="toggleFolder(folder)"
+                    >
+                        {{ folder.isOpen ? '▼' : '▶' }} 📁 {{ folder.label }}
                     </button>
                     <button
                         style="margin-left: 10px"
                         type="button"
-                        (click)="editFilter(entry)"
+                        (click)="editFolder(folder)"
                     >
                         🖊️
                     </button>
                     <button
-                        (click)="removeFilter(entry)"
+                        (click)="removeFolder(folder)"
                         style="margin-left: 10px; color: red"
                     >
                         ✕
                     </button>
-                </p>
-            }
+                </div>
+
+                @if (folder.isOpen) {
+                    <div
+                        [id]="'folder-' + folder.id"
+                        cdkDropList
+                        [cdkDropListData]="folder.children"
+                        [cdkDropListConnectedTo]="connectedFilterIds()"
+                        [cdkDropListEnterPredicate]="onlyFilterPredicate"
+                        (cdkDropListDropped)="onFolderDrop($event, folder.id)"
+                        class="folder-content"
+                    >
+                        @for (filter of folder.children; track filter.id) {
+                            <p
+                                cdkDrag
+                                [cdkDragData]="filter"
+                                class="folder-item"
+                            >
+                                <span
+                                    cdkDragHandle
+                                    class="drag-handle"
+                                >
+                                    ⠿
+                                </span>
+                                <button
+                                    (click)="copyFilter(filter)"
+                                    [disabled]="filtersFacade.isFilterResolving(filter.id)"
+                                >
+                                    {{ filter.label }}
+                                </button>
+                                <button
+                                    style="margin-left: 10px"
+                                    type="button"
+                                    (click)="editFilter(filter)"
+                                >
+                                    🖊️
+                                </button>
+                                <button
+                                    (click)="removeFilter(filter)"
+                                    style="margin-left: 10px; color: red"
+                                >
+                                    ✕
+                                </button>
+                            </p>
+                        }
+                        @if (folder.children.length === 0) {
+                            <p class="folder-empty">Dossier vide</p>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <div
+        id="filters-root"
+        cdkDropList
+        [cdkDropListData]="rootFilterEntries()"
+        [cdkDropListConnectedTo]="connectedFilterIds()"
+        (cdkDropListDropped)="onRootFiltersDrop($event)"
+    >
+        @for (filter of rootFilterEntries(); track filter.id) {
+            <p
+                cdkDrag
+                [cdkDragData]="filter"
+            >
+                <span
+                    cdkDragHandle
+                    class="drag-handle"
+                >
+                    ⠿
+                </span>
+                <button
+                    (click)="copyFilter(filter)"
+                    [disabled]="filtersFacade.isFilterResolving(filter.id)"
+                >
+                    {{ filter.label }}
+                </button>
+                <button
+                    style="margin-left: 10px"
+                    type="button"
+                    (click)="editFilter(filter)"
+                >
+                    🖊️
+                </button>
+                <button
+                    (click)="removeFilter(filter)"
+                    style="margin-left: 10px; color: red"
+                >
+                    ✕
+                </button>
+            </p>
         }
     </div>
 </div>
