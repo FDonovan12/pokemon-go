@@ -7,7 +7,8 @@ button {
         background-color: #4caf50;
         color: white;
     }
-    &:disabled {
+    &:disabled,
+    &.disabled {
         background-color: gray;
     }
     &.abort {

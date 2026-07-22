@@ -1,60 +1,153 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --color-acier: 240 20% 77%;
+    --color-combat: 3 66% 45%;
+    --color-dragon: 258 93% 60%;
+    --color-eau: 222 82% 67%;
+    --color-electrik: 48 93% 58%;
+    --color-fee: 347 71% 77%;
+    --color-feu: 25 86% 56%;
+    --color-glace: 180 45% 72%;
+    --color-insecte: 66 70% 42%;
+    --color-normal: 60 22% 56%;
+    --color-plante: 100 52% 55%;
+    --color-poison: 300 43% 44%;
+    --color-psy: 342 92% 66%;
+    --color-roche: 49 53% 47%;
+    --color-sol: 44 66% 64%;
+    --color-spectre: 263 27% 47%;
+    --color-tenebres: 23 12% 58%;
+    --color-vol: 255 76% 75%;
+}
 
 .Acier {
+    background-color: hsl(var(--color-acier) / 0.15);
+}
+.Combat {
+    background-color: hsl(var(--color-combat) / 0.15);
+}
+.Dragon {
+    background-color: hsl(var(--color-dragon) / 0.15);
+}
+.Eau {
+    background-color: hsl(var(--color-eau) / 0.15);
+}
+.Électrik {
+    background-color: hsl(var(--color-electrik) / 0.15);
+}
+.Fée {
+    background-color: hsl(var(--color-fee) / 0.15);
+}
+.Feu {
+    background-color: hsl(var(--color-feu) / 0.15);
+}
+.Glace {
+    background-color: hsl(var(--color-glace) / 0.15);
+}
+.Insecte {
+    background-color: hsl(var(--color-insecte) / 0.15);
+}
+.Normal {
+    background-color: hsl(var(--color-normal) / 0.15);
+}
+.Plante {
+    background-color: hsl(var(--color-plante) / 0.15);
+}
+.Poison {
+    background-color: hsl(var(--color-poison) / 0.15);
+}
+.Psy {
+    background-color: hsl(var(--color-psy) / 0.15);
+}
+.Roche {
+    background-color: hsl(var(--color-roche) / 0.15);
+}
+.Sol {
+    background-color: hsl(var(--color-sol) / 0.15);
+}
+.Spectre {
+    background-color: hsl(var(--color-spectre) / 0.15);
+}
+.Ténèbres {
+    background-color: hsl(var(--color-tenebres) / 0.15);
+}
+.Vol {
+    background-color: hsl(var(--color-vol) / 0.15);
+}
+
+/* .Acier {
     background-color: #f5f5f8;
+    background-color: hsla(240, 20%, 77%, 0.15);
 }
 
 .Combat {
     background-color: aliceblue;
+    background-color: rgba(192, 48, 40, 0.15);
 }
 .Dragon {
     background-color: #f7f5fe;
+    background-color: rgba(112, 56, 248, 0.15);
 }
 .Eau {
     background-color: #edf2fd;
+    background-color: rgba(104, 144, 240, 0.15);
 }
 .Électrik {
     background-color: #fffbeb;
+    background-color: rgba(248, 208, 48, 0.15);
 }
 .Fée {
     background-color: aliceblue;
+    background-color: rgba(238, 153, 172, 0.15);
 }
 .Feu {
     background-color: #fdf2ea;
+    background-color: rgba(240, 128, 48, 0.15);
 }
 .Glace {
     background-color: aliceblue;
+    background-color: rgba(152, 216, 216, 0.15);
 }
 .Insecte {
     background-color: #f5f6e5;
+    background-color: rgba(168, 184, 32, 0.15);
 }
 .Normal {
     background-color: #f6f6f1;
+    background-color: rgba(168, 168, 120, 0.15);
 }
 .Plante {
     background-color: #ecf7e7;
+    background-color: rgba(120, 200, 80, 0.15);
 }
 .Poison {
     background-color: aliceblue;
+    background-color: rgba(160, 64, 160, 0.15);
 }
 .Psy {
-    background-color: aliceblue;
+    background-color: #f8588826;
+    background-color: rgba(248, 88, 136, 0.15);
 }
 .Roche {
     background-color: aliceblue;
+    background-color: rgba(184, 160, 56, 0.15);
 }
 .Sol {
     background-color: aliceblue;
+    background-color: rgba(224, 192, 104, 0.15);
 }
 .Spectre {
     background-color: #efedf3;
+    background-color: rgba(112, 88, 152, 0.15);
 }
 .Ténèbres {
     background-color: aliceblue;
+    background-color: rgba(162, 146, 136, 0.15);
 }
 .Vol {
     background-color: aliceblue;
-}
+    background-color: rgba(168, 144, 240, 0.15);
+} */
 
 :root {
     --spacer: 0.2em; /* affect margin padding .btn */
@@ -113,4 +206,7 @@ input {
         --_color-input: var(--warning-color);
     }
     outline: none;
+}
+.error {
+    color: var(--danger-color);
 }

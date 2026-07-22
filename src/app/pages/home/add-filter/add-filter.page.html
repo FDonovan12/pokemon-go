@@ -98,7 +98,7 @@
         </button>
         <button
             type="submit"
-            [disabled]="filterForm().invalid()"
+            [class.disabled]="filterForm().invalid()"
         >
             {{ filter() ? 'Enregistrer' : 'Ajouter' }}
         </button>

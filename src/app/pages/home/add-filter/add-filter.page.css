@@ -38,10 +38,6 @@
     }
 }
 
-.error {
-    color: red;
-}
-
 .lists-block {
     margin-bottom: 15px;
     padding: 10px;
@@ -133,7 +129,8 @@
             color: white;
         }
 
-        &:disabled {
+        &:disabled,
+        &.disabled {
             background-color: gray;
         }
 

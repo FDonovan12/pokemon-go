@@ -1,4 +1,5 @@
 import { Component, HostListener, inject, input, linkedSignal, resource } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { form, FormField, required } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import { FilterItem, FiltersFacade } from '@repositories/filters-repository';
@@ -9,7 +10,7 @@ import { ToastService } from '@shared/features/toast/toast.service';
 @Component({
     selector: 'app-add-filter',
     standalone: true,
-    imports: [FormField],
+    imports: [FormField, FormsModule],
     templateUrl: './add-filter.page.html',
     styleUrl: './add-filter.page.css',
 })

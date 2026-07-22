@@ -1,4 +1,14 @@
-import { Component, HostListener, inject, input, linkedSignal } from '@angular/core';
+import {
+    afterNextRender,
+    Component,
+    ElementRef,
+    HostListener,
+    inject,
+    input,
+    linkedSignal,
+    viewChild,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { form, FormField, required } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import { FilterFolder, FiltersFacade } from '@repositories/filters-repository';
@@ -6,7 +16,7 @@ import { FilterFolder, FiltersFacade } from '@repositories/filters-repository';
 @Component({
     selector: 'app-add-folder',
     standalone: true,
-    imports: [FormField],
+    imports: [FormField, FormsModule],
     templateUrl: './add-folder.page.html',
     styleUrl: './add-folder.page.css',
 })
@@ -15,7 +25,13 @@ export class AddFolderPage {
     private readonly _filtersFacade = inject(FiltersFacade);
 
     readonly folder = input<FilterFolder | undefined>();
+    private readonly labelInput = viewChild<ElementRef<HTMLInputElement>>('labelInput');
 
+    constructor() {
+        afterNextRender(() => {
+            this.labelInput()?.nativeElement.focus();
+        });
+    }
     readonly folderForm = form(
         linkedSignal(() => ({ label: this.folder()?.label ?? '' })),
         (path) => {
@@ -23,7 +39,7 @@ export class AddFolderPage {
         },
     );
 
-    @HostListener('click', ['$event'])
+    @HostListener('mousedown', ['$event'])
     onHostClick(event: MouseEvent): void {
         if (event.target === event.currentTarget) {
             this.cancel();

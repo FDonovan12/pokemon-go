@@ -7,20 +7,24 @@
     <div class="field">
         <label>Nom du dossier:</label>
         <input
+            #labelInput
             type="text"
             [formField]="folderForm.label"
             placeholder="ex: Mes filtres PVP"
         />
-        @if (folderForm.label().touched() && folderForm.label().invalid()) {
-            @for (error of folderForm.label().errors(); track error) {
-                <p class="error">{{ error.message }}</p>
+        <p class="error">
+            @if (folderForm.label().touched() && folderForm.label().invalid()) {
+                @for (error of folderForm.label().errors(); track error) {
+                    {{ error.message }}
+                }
             }
-        }
+        </p>
     </div>
 
     <div class="actions">
         <button
-            (click)="cancel()"
+            type="button"
+            (mousedown)="cancel()"
             class="abort"
         >
             Annuler
@@ -28,7 +32,7 @@
         <button
             (click)="save()"
             type="submit"
-            [disabled]="folderForm().invalid()"
+            [class.disabled]="folderForm().invalid()"
         >
             {{ folder() ? 'Enregistrer' : 'Ajouter' }}
         </button>
