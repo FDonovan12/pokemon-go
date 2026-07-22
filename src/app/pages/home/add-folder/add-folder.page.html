@@ -1,0 +1,36 @@
+<form
+    class="modal"
+    (ngSubmit)="save()"
+>
+    <h2>{{ folder() ? 'Modifier le dossier' : 'Ajouter un nouveau dossier' }}</h2>
+
+    <div class="field">
+        <label>Nom du dossier:</label>
+        <input
+            type="text"
+            [formField]="folderForm.label"
+            placeholder="ex: Mes filtres PVP"
+        />
+        @if (folderForm.label().touched() && folderForm.label().invalid()) {
+            @for (error of folderForm.label().errors(); track error) {
+                <p class="error">{{ error.message }}</p>
+            }
+        }
+    </div>
+
+    <div class="actions">
+        <button
+            (click)="cancel()"
+            class="abort"
+        >
+            Annuler
+        </button>
+        <button
+            (click)="save()"
+            type="submit"
+            [disabled]="folderForm().invalid()"
+        >
+            {{ folder() ? 'Enregistrer' : 'Ajouter' }}
+        </button>
+    </div>
+</form>

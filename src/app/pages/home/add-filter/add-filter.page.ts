@@ -1,5 +1,6 @@
-import { Component, inject, input, linkedSignal, output, resource, signal } from '@angular/core';
+import { Component, HostListener, inject, input, linkedSignal, resource } from '@angular/core';
 import { form, FormField, required } from '@angular/forms/signals';
+import { Router } from '@angular/router';
 import { FilterItem, FiltersFacade } from '@repositories/filters-repository';
 import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
@@ -9,36 +10,32 @@ import { ToastService } from '@shared/features/toast/toast.service';
     selector: 'app-add-filter',
     standalone: true,
     imports: [FormField],
-    templateUrl: './add-filter.component.html',
-
-    styleUrl: './add-filter.component.css',
+    templateUrl: './add-filter.page.html',
+    styleUrl: './add-filter.page.css',
 })
-export class AddFilterComponent {
+export class AddFilterPage {
+    private readonly router = inject(Router);
     private readonly filtersFacade = inject(FiltersFacade);
     private readonly listPokemonRepository = inject(ListPokemonRepository);
     private readonly internalListPokemonRepository = inject(InternalListPokemonRepository);
     private readonly toastService = inject(ToastService);
 
-    filterAdded = output<void>();
-    closed = output<void>();
-    filterItem = input<FilterItem>();
+    readonly filter = input<FilterItem | undefined>();
 
     private readonly baseValue: Omit<FilterItem, 'id'> = {
+        type: 'filter',
         label: '',
         query: {
             prefix: '',
             lists: { items: [], operator: 'AND' },
         },
     };
-    private readonly formData = linkedSignal(() => this.filterItem() ?? this.baseValue);
+
+    private readonly formData = linkedSignal(() => this.filter() ?? this.baseValue);
     protected readonly filterForm = form(this.formData, (path) => {
         required(path.label, { message: 'Le label est obligatoire' });
     });
 
-    showAddFilterPopup = signal(false);
-    // availableLists = computed(() =>
-    //     [this.listPokemonRepository.getListKeys(), this.internalListPokemonRepository.getInternalLists()].flat(),
-    // );
     availableLists = resource({
         loader: async () => {
             const keys = await this.listPokemonRepository.getListKeys();
@@ -47,38 +44,40 @@ export class AddFilterComponent {
         defaultValue: [],
     });
 
-    openAddFilterPopup(): void {
-        this.showAddFilterPopup.set(true);
+    @HostListener('click', ['$event'])
+    onHostClick(event: MouseEvent): void {
+        if (event.target === event.currentTarget) {
+            this.cancel();
+        }
     }
 
-    closeAddFilterPopup(): void {
-        this.filterForm().reset(this.baseValue);
-        this.showAddFilterPopup.set(false);
-        this.closed.emit();
+    cancel(): void {
+        this.router.navigate(['/']);
     }
 
-    addNewFilter(): void {
+    save(): void {
         this.filterForm().markAsTouched();
-        const label = this.filterForm().value().label;
+        if (this.filterForm().invalid()) return;
 
-        if (this.filterItem()) {
-            const id = this.filterItem()!.id;
-            this.filtersFacade.updateFilter({ id, ...this.filterForm().value() });
+        const label = this.filterForm().value().label;
+        const existing = this.filter();
+
+        if (existing) {
+            this.filtersFacade.updateFilter({ id: existing.id, ...this.filterForm().value() });
             this.toastService.prepare('✓ Succès', `Filtre "${label}" modifié`).showSuccess();
         } else {
             this.filtersFacade.addFilter(this.filterForm().value());
             this.toastService.prepare('✓ Succès', `Filtre "${label}" ajouté`).showSuccess();
         }
-        this.filterAdded.emit();
-        this.closeAddFilterPopup();
+        this.router.navigate(['/']);
     }
 
     isListSelected(slug: string): boolean {
-        const rezult = this.filterForm()
+        return this.filterForm()
             .value()
             .query.lists!.items.some((item) => item.key === slug);
-        return rezult;
     }
+
     toggleListSelection(slug: string): void {
         this.formData.update((d) => {
             const clone = structuredClone(d);

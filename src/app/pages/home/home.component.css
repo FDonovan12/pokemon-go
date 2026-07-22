@@ -1,0 +1,41 @@
+.folder {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background-color: #fafafa;
+}
+
+.folder-header {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 8px;
+}
+
+.folder-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: left;
+    flex: 1;
+    padding: 4px;
+}
+
+.folder-content {
+    padding: 4px 8px 8px 24px; /* décalage vers la droite */
+    border-left: 3px solid #ccc;
+    margin-left: 12px;
+    min-height: 8px; /* zone de drop visible même si peu d'items */
+}
+
+.folder-item {
+    margin: 6px 0;
+}
+
+.folder-empty {
+    color: #999;
+    font-style: italic;
+    font-size: 13px;
+    margin: 4px 0;
+}

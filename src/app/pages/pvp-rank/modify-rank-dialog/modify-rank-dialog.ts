@@ -72,7 +72,7 @@ export class ModifyRankDialogComponent {
     }
 
     confirm() {
-        this.rankForm().markAsTouched;
+        this.rankForm().markAsTouched();
         if (this.rankForm().invalid()) return;
         const { pokemon, rank, league, forme } = this.formModel();
         this.store.modifyRank(pokemon.slug, rank, league, forme);

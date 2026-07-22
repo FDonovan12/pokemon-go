@@ -1,9 +1,30 @@
 import { Routes } from '@angular/router';
+import { filterResolver, folderResolver } from '@shared/resolver/filter';
 
 export const routes: Routes = [
     {
         path: '',
         loadComponent: () => import('./pages/home/home.component').then((m) => m.HomeComponent),
+        children: [
+            {
+                path: 'filters/add',
+                loadComponent: () => import('./pages/home/add-filter/add-filter.page').then((m) => m.AddFilterPage),
+            },
+            {
+                path: 'filters/edit/:id',
+                loadComponent: () => import('./pages/home/add-filter/add-filter.page').then((m) => m.AddFilterPage),
+                resolve: { filter: filterResolver },
+            },
+            {
+                path: 'filters/folder/add',
+                loadComponent: () => import('./pages/home/add-folder/add-folder.page').then((m) => m.AddFolderPage),
+            },
+            {
+                path: 'filters/folder/edit/:id',
+                loadComponent: () => import('./pages/home/add-folder/add-folder.page').then((m) => m.AddFolderPage),
+                resolve: { folder: folderResolver },
+            },
+        ],
     },
     {
         path: 'event',

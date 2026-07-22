@@ -1,27 +1,35 @@
+import { CdkDrag, CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, signal, Signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { PokemonInterface } from '@entities/pokemon';
-import { FilterItem, FilterItemResolved, FiltersFacade } from '@repositories/filters-repository';
+import {
+    FilterFolderResolved,
+    FilterItem,
+    FilterItemResolved,
+    FilterListItemResolved,
+    FiltersFacade,
+} from '@repositories/filters-repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { ToastService } from '@shared/features/toast/toast.service';
 import { EventPokemon } from '../../entities/event';
 import { EventRepository } from '../../repositories/event/event.repository';
 import { ListPokemonPageStore } from '../list-pokemon-page/list-store/list-pokemon-page.store';
-import { AddFilterComponent } from './add-filter/add-filter.component';
+import { AddFilterPage } from './add-filter/add-filter.page';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [RouterLink, DatePipe, AddFilterComponent, FormsModule],
+    imports: [RouterLink, DatePipe, FormsModule, DragDropModule, RouterOutlet],
     templateUrl: './home.component.html',
 
     styleUrl: './home.component.css',
 })
 export class HomeComponent {
+    private readonly _router: Router = inject(Router);
     private readonly httpClient = inject(HttpClient);
     private readonly getAllService = inject(PokemonRepository);
     private readonly bddEvent = inject(EventRepository);
@@ -32,7 +40,7 @@ export class HomeComponent {
 
     today = new Date();
 
-    @ViewChild(AddFilterComponent) addFilterComponent!: AddFilterComponent;
+    @ViewChild(AddFilterPage) addFilterComponent!: AddFilterPage;
     filterToEdit = signal<FilterItem | undefined>(undefined);
 
     getName(pokemon: PokemonInterface | string): string {
@@ -85,12 +93,7 @@ export class HomeComponent {
     }
 
     editFilter(filter: FilterItemResolved) {
-        console.log('editFilter');
-        const original = this.filtersFacade.getFilterById(filter.id);
-        console.log(original);
-        this.filterToEdit.set(original);
-        console.log(this.filterToEdit());
-        this.addFilterComponent.openAddFilterPopup();
+        this._router.navigate(['/filters/edit', filter.id]);
     }
 
     removeFilter(filter: FilterItemResolved): void {
@@ -105,6 +108,56 @@ export class HomeComponent {
                     // Annulation, ne rien faire
                 },
             );
+    }
+
+    editFolder(folder: FilterFolderResolved): void {
+        this._router.navigate(['/filters/folder/edit', folder.id]);
+    }
+
+    removeFolder(folder: FilterFolderResolved): void {
+        this.toastService
+            .prepare('Confirmation', `Êtes-vous sûr de vouloir supprimer le dossier "${folder.label}" ?`)
+            .showConfirmation(
+                () => {
+                    this.filtersFacade.removeFolder(folder.id);
+                    this.toastService.prepare('✓ Supprimé', 'Dossier supprimé avec succès').showSuccess();
+                },
+                () => {
+                    // Annulation, ne rien faire
+                },
+            );
+    }
+
+    onlyFilterPredicate = (drag: CdkDrag<FilterListItemResolved>): boolean => drag.data.type === 'filter';
+
+    connectedFolderIds = computed(() => [
+        'root',
+        ...this.filters
+            .value()
+            .filter((entry): entry is FilterFolderResolved => entry.type === 'folder' && entry.isOpen)
+            .map((folder) => 'folder-' + folder.id),
+    ]);
+
+    toggleFolder(folder: FilterFolderResolved): void {
+        this.filtersFacade.toggleFolder(folder);
+    }
+
+    onRootDrop(event: CdkDragDrop<FilterListItemResolved[]>): void {
+        if (event.previousContainer === event.container) {
+            this.filtersFacade.reorderRoot(event.previousIndex, event.currentIndex);
+        } else {
+            const movedFilter = event.item.data as FilterItemResolved;
+            this.filtersFacade.moveFilter(movedFilter.id, null, event.currentIndex);
+        }
+    }
+
+    onFolderDrop(event: CdkDragDrop<FilterItemResolved[]>, folderId: string): void {
+        if (event.previousContainer === event.container) {
+            this.filtersFacade.reorderInFolder(folderId, event.previousIndex, event.currentIndex);
+        } else {
+            const movedFilter = event.item.data as FilterItemResolved;
+            this.filtersFacade.moveFilter(movedFilter.id, folderId, event.currentIndex);
+        }
     }
 
     public getData() {

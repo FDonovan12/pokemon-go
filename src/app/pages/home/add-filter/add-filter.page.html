@@ -1,0 +1,106 @@
+<form
+    class="modal"
+    (ngSubmit)="save()"
+>
+    <h2>{{ filter() ? 'Modifier le filtre' : 'Ajouter un nouveau filtre' }}</h2>
+
+    <div class="field">
+        <label>Libellé du filtre:</label>
+        <input
+            type="text"
+            [formField]="filterForm.label"
+            placeholder="ex: Mon filtre perso"
+        />
+        @if (filterForm.label().touched() && filterForm.label().invalid()) {
+            @for (error of filterForm.label().errors(); track error) {
+                <p class="error">{{ error.message }}</p>
+            }
+        }
+    </div>
+
+    <div class="field">
+        <label>Requête du filtre:</label>
+        <textarea
+            [formField]="filterForm.query.prefix"
+            placeholder="ex: 2-attaque, -1défense"
+        ></textarea>
+    </div>
+
+    <div class="lists-block">
+        <div class="lists-select">
+            <label>Listes à inclure:</label>
+
+            <div class="lists-container">
+                @if (availableLists.value().length === 0) {
+                    <p class="empty">Aucune liste disponible</p>
+                } @else {
+                    @for (listEntry of availableLists.value(); track listEntry.slug) {
+                        <div class="list-row">
+                            <input
+                                type="checkbox"
+                                [checked]="isListSelected(listEntry.slug)"
+                                (change)="toggleListSelection(listEntry.slug)"
+                            />
+                            <span class="list-label">{{ listEntry.label }}</span>
+                            @if (isListSelected(listEntry.slug)) {
+                                <button
+                                    type="button"
+                                    (click)="toggleListInversion(listEntry.slug)"
+                                    [class.inverted]="
+                                        this.filterForm()
+                                            .value()
+                                            .query.lists!.items.find((item) => item.key === listEntry.slug)?.inverted
+                                    "
+                                >
+                                    {{
+                                        this.filterForm()
+                                            .value()
+                                            .query.lists!.items.find((item) => item.key === listEntry.slug)?.inverted
+                                            ? 'Inversé'
+                                            : 'Base'
+                                    }}
+                                </button>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="operator-block">
+            <label class="operator-title">Opérateur:</label>
+            <label class="operator-option">
+                <input
+                    type="radio"
+                    value="AND"
+                    [formField]="filterForm.query.lists?.operator!"
+                />
+                ET (AND) - toutes les listes doivent correspondre
+            </label>
+            <label class="operator-option">
+                <input
+                    type="radio"
+                    value="OR"
+                    [formField]="filterForm.query.lists?.operator!"
+                />
+                OU (OR) - au moins une liste doit correspondre
+            </label>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button
+            (click)="cancel()"
+            type="button"
+            class="abort"
+        >
+            Annuler
+        </button>
+        <button
+            type="submit"
+            [disabled]="filterForm().invalid()"
+        >
+            {{ filter() ? 'Enregistrer' : 'Ajouter' }}
+        </button>
+    </div>
+</form>

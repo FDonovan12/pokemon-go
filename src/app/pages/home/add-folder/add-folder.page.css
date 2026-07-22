@@ -1,0 +1,40 @@
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    &[type='submit'] {
+        background-color: #4caf50;
+        color: white;
+    }
+    &:disabled {
+        background-color: gray;
+    }
+    &.abort {
+        background-color: #f0f0f0;
+        color: black;
+    }
+}
+:host {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 20px 0;
+}
+
+/* .field, .error, .lists-block, .actions, etc. : identiques à avant */
