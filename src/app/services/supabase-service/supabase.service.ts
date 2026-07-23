@@ -1,5 +1,5 @@
 // supabase.service.ts
-import { inject, Injectable, NgZone, signal } from '@angular/core';
+import { computed, inject, Injectable, NgZone, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
@@ -25,6 +25,8 @@ export class SupabaseService {
             this.session.set(session);
         });
     }
+
+    currentUser = computed(() => this.session()?.user);
 
     getUserId(): string | null {
         const session = this.session();

@@ -8,7 +8,15 @@
     <a routerLink="/pvp-rank">PVP rank</a>
 </header>
 @if (supabase.isLoggedIn()) {
-    <button (click)="logout()">Se déconnecter</button>
+    <div class="profile">
+        <img
+            [src]="supabase.currentUser()?.user_metadata?.['avatar_url']"
+            alt=""
+            class="avatar"
+        />
+        <span>{{ supabase.currentUser()?.user_metadata?.['full_name'] }}</span>
+        <button (click)="logout()">Se déconnecter</button>
+    </div>
 } @else {
     <button (click)="login()">Se connecter avec Google</button>
 }
