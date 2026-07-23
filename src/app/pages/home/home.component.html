@@ -136,7 +136,7 @@
                         class="folder-content"
                     >
                         @for (filter of folder.children; track filter.id) {
-                            <p
+                            <div
                                 cdkDrag
                                 [cdkDragData]="filter"
                                 class="folder-item"
@@ -166,7 +166,7 @@
                                 >
                                     ✕
                                 </button>
-                            </p>
+                            </div>
                         }
                         @if (folder.children.length === 0) {
                             <p class="folder-empty">Dossier vide</p>
@@ -185,7 +185,7 @@
         (cdkDropListDropped)="onRootFiltersDrop($event)"
     >
         @for (filter of rootFilterEntries(); track filter.id) {
-            <p
+            <div
                 cdkDrag
                 [cdkDragData]="filter"
             >
@@ -214,7 +214,7 @@
                 >
                     ✕
                 </button>
-            </p>
+            </div>
         }
     </div>
 </div>

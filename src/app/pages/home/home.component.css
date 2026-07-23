@@ -29,10 +29,6 @@
     min-height: 8px; /* zone de drop visible même si peu d'items */
 }
 
-.folder-item {
-    margin: 6px 0;
-}
-
 .folder-empty {
     color: #999;
     font-style: italic;
@@ -46,4 +42,8 @@
     touch-action: none;
     font-size: 18px;
     color: #999;
+}
+
+.cdk-drag:not(.folder) {
+    padding: 0.25em;
 }
