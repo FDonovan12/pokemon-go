@@ -1,4 +1,3 @@
-// supabase.service.ts
 import { computed, inject, Injectable, NgZone, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
@@ -14,15 +13,12 @@ export class SupabaseService {
     readonly session = signal<any>(null);
 
     constructor() {
-        console.log(environment.supabaseUrl);
-        console.log(environment.supabaseAnonKey);
         this.client.auth.getSession().then(({ data }) => {
-            this.session.set(data.session);
+            this.zone.run(() => this.session.set(data.session));
         });
 
         this.client.auth.onAuthStateChange((event, session) => {
-            console.log(event, session);
-            this.session.set(session);
+            this.zone.run(() => this.session.set(session));
         });
     }
 
