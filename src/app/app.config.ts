@@ -1,5 +1,11 @@
 import { ApplicationConfig, LOCALE_ID, isDevMode, provideAppInitializer } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import {
+    PreloadAllModules,
+    provideRouter,
+    withComponentInputBinding,
+    withInMemoryScrolling,
+    withPreloading,
+} from '@angular/router';
 
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideServiceWorker } from '@angular/service-worker';
@@ -20,19 +26,13 @@ export const appConfig: ApplicationConfig = {
                 scrollPositionRestoration: 'enabled',
                 anchorScrolling: 'enabled',
             }),
+            withPreloading(PreloadAllModules),
         ),
         provideAppInitializer(() => runMigrations()),
+
         { provide: LOCALE_ID, useValue: 'fr-FR' },
         { provide: Logger, useClass: environment.production ? LoggerProd : LoggerDev },
         // { provide: LocationStrategy, useClass: HashLocationStrategy },
-        provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000',
-        }),
-        provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000',
-        }),
         provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000',
