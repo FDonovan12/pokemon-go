@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
 import { filterResolver, folderResolver } from '@shared/resolver/filter';
-import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
     {
         path: '',
-        // loadComponent: () => import('./pages/home/home.component').then((m) => m.HomeComponent),
-        component: HomeComponent,
+        loadComponent: () => import('./pages/home/home.component').then((m) => m.HomeComponent),
         children: [
             {
                 path: 'filters/add',

@@ -1,5 +1,6 @@
 {
     "name": "pokemon-go",
+    "id": "/pokemon-go/",
     "short_name": "pokemon-go",
     "display": "standalone",
     "scope": "./",
