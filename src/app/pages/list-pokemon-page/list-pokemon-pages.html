@@ -59,7 +59,6 @@
 }
 
 <h2>Pokemon sélectionné</h2>
-<button (click)="store.unselectAll()">Reset</button>
 @for (generation of generations; track $index) {
     @if (store.actualListPokemonMap().has(generation) && store.actualListPokemonMap().get(generation)?.length !== 0) {
         <h3>Generation {{ generation }}</h3>
