@@ -38,27 +38,27 @@ export class FilterService {
             },
         },
         {
-            key: 'low-atk-midhigh-other',
+            key: 'low-atk-mid-other',
             combo: {
                 attack: { min: 0, max: 5 },
-                defense: { min: 6, max: 15 },
-                stamina: { min: 6, max: 15 },
+                defense: { min: 6, max: 10 },
+                stamina: { min: 6, max: 10 },
             },
         },
         {
-            key: 'midlow-atk-high-other',
+            key: 'mid-atk-high-other',
             combo: {
-                attack: { min: 0, max: 10 },
+                attack: { min: 6, max: 10 },
                 defense: { min: 11, max: 15 },
                 stamina: { min: 11, max: 15 },
             },
         },
         {
-            key: 'midlow-atk-midhigh-other',
+            key: 'mid-atk-mid-other',
             combo: {
-                attack: { min: 0, max: 10 },
-                defense: { min: 6, max: 15 },
-                stamina: { min: 6, max: 15 },
+                attack: { min: 6, max: 10 },
+                defense: { min: 6, max: 10 },
+                stamina: { min: 6, max: 10 },
             },
         },
     ] as FilterDef<IV>[];
