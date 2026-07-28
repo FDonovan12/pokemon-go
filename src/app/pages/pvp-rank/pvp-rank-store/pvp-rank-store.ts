@@ -143,6 +143,14 @@ export const PVPRankStore = signalStore(
             return allRank[league].slice(0, rank);
         },
     })),
+    withMethods((store) => ({
+        _pokemonIsWorseThanRank(pokemon: PokemonSlug, league: League, rank: number = 1): boolean {
+            const ranks: PvpRank = store._getOrInitRank(pokemon);
+            console.log(ranks);
+            console.log((ranks[league].normal ?? 4096) > rank);
+            return (ranks[league].normal ?? 4096) > rank;
+        },
+    })),
     withComputed((store) => ({
         mapOfIconRank1: computed(() => {
             const rank1 = store._rank1PVP.value();
@@ -182,9 +190,15 @@ export const PVPRankStore = signalStore(
                 filterTier.map((filter) => {
                     const pokemons = (
                         rank1
-                            ? pokemonsDisplay.groupBy((pokemon) =>
-                                  store._filterService.isInTheFilterTier(filter, rank1[pokemon.slug][league]),
-                              )
+                            ? pokemonsDisplay
+                                  .filter(
+                                      (pokemon) =>
+                                          store._pokemonIsWorseThanRank(pokemon.slug, league, 1) &&
+                                          store.isPokemonsAvaible().get(pokemon.slug)?.[league],
+                                  )
+                                  .groupBy((pokemon) =>
+                                      store._filterService.isInTheFilterTier(filter, rank1[pokemon.slug][league]),
+                                  )
                             : new Map()
                     ) as Map<boolean, Base[]>;
 
