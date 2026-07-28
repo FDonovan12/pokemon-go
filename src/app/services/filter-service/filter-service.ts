@@ -61,6 +61,14 @@ export class FilterService {
                 stamina: { min: 6, max: 10 },
             },
         },
+        {
+            key: 'high-atk-high-other',
+            combo: {
+                attack: { min: 11, max: 15 },
+                defense: { min: 11, max: 15 },
+                stamina: { min: 11, max: 15 },
+            },
+        },
     ] as FilterDef<IV>[];
 
     isInTheFilterTier(filterTier: FilterDef<FilterTier>, pokemonStat: Combo<IV>): boolean {
