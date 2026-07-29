@@ -21,6 +21,7 @@ import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { PvpRank, PVPRankStore } from '../pvp-rank/pvp-rank-store/pvp-rank-store';
 import { League } from '../pvp-rank/pvp-rank.type';
 
+type MatchesByLeague = Map<string, RankedStat[]>;
 type RankedStat = {
     rank: number;
     stat: LeagueStats;
@@ -100,48 +101,48 @@ export class PvpRankDetailPage {
         return this.expandedRows().has(key);
     }
 
-    allMatchesForRow(row: RankRow): AllMatchesResult | null {
-        const data = this.rankPVP.value();
-        const poke = this.pokemon();
-        const table = this._pokemonRepository.cpMultiplier.value();
-        if (!data || !poke || !table) return null;
+    // allMatchesForRow(row: RankRow): AllMatchesResult | null {
+    //     const data = this.rankPVP.value();
+    //     const poke = this.pokemon();
+    //     const table = this._pokemonRepository.cpMultiplier.value();
+    //     if (!data || !poke || !table) return null;
 
-        const availability = this._pokemonRepository.isPokemonAvailableForLeagues(poke as any, table);
+    //     const availability = this._pokemonRepository.isPokemonAvailableForLeagues(poke as any, table);
 
-        const getAllMatches = (league: League, available: boolean): RankedStat[] | null => {
-            if (!available) return null;
-            const ranks = data[league];
+    //     const getAllMatches = (league: League, available: boolean): RankedStat[] | null => {
+    //         if (!available) return null;
+    //         const ranks = data[league];
 
-            const matches: LeagueStats[] =
-                this.displayMode() === 'capture'
-                    ? ranks.filter((r) => {
-                          const source = SOURCES[row.key as Source];
-                          return r.attack >= source.minIv && r.defense >= source.minIv && r.stamina >= source.minIv;
-                      })
-                    : ranks.filter((r) => {
-                          const filter = this._filterService.BASIC_FILTER.find((f) => f.key === row.key);
-                          return filter ? this.matchesCombo(r, filter.combo) : false;
-                      });
+    //         const matches: LeagueStats[] =
+    //             this.displayMode() === 'capture'
+    //                 ? ranks.filter((r) => {
+    //                       const source = SOURCES[row.key as Source];
+    //                       return r.attack >= source.minIv && r.defense >= source.minIv && r.stamina >= source.minIv;
+    //                   })
+    //                 : ranks.filter((r) => {
+    //                       const filter = this._filterService.BASIC_FILTER.find((f) => f.key === row.key);
+    //                       return filter ? this.matchesCombo(r, filter.combo) : false;
+    //                   });
 
-            const totalCombos =
-                this.displayMode() === 'capture'
-                    ? SOURCES[row.key as Source].combos
-                    : this.comboSize(this._filterService.BASIC_FILTER.find((f) => f.key === row.key)!.combo);
+    //         const totalCombos =
+    //             this.displayMode() === 'capture'
+    //                 ? SOURCES[row.key as Source].combos
+    //                 : this.comboSize(this._filterService.BASIC_FILTER.find((f) => f.key === row.key)!.combo);
 
-            return matches.map((stat, index) => ({
-                rank: index + 1,
-                stat,
-                betterCount: index + 1,
-                totalCombos,
-                percentage: Math.round(((index + 1) / totalCombos) * 1000) / 10,
-            }));
-        };
+    //         return matches.map((stat, index) => ({
+    //             rank: index + 1,
+    //             stat,
+    //             betterCount: index + 1,
+    //             totalCombos,
+    //             percentage: Math.round(((index + 1) / totalCombos) * 1000) / 10,
+    //         }));
+    //     };
 
-        return {
-            great: getAllMatches('super', availability.super),
-            ultra: getAllMatches('hyper', availability.hyper),
-        };
-    }
+    //     return {
+    //         great: getAllMatches('super', availability.super),
+    //         ultra: getAllMatches('hyper', availability.hyper),
+    //     };
+    // }
     pokemon: Signal<Base | undefined> = computed(() =>
         this._pokemonRepository.allDifferentFormPokemonsSetting.value()?.find((p) => p.slug === this.slug()),
     );
@@ -166,28 +167,115 @@ export class PvpRankDetailPage {
             label: this._filterService.groupedComboToLabel(filter.combo),
         }));
     });
-
-    bestRanks = computed(() => {
+    readonly matchesByRow = computed(() => {
         const data = this.rankPVP.value();
-        const table = this._pokemonRepository.cpMultiplier.value();
         const poke = this.pokemon();
-        if (!data || !table || !poke) return null;
+        const table = this._pokemonRepository.cpMultiplier.value();
+        if (!data || !poke || !table) return null;
 
         const availability = this._pokemonRepository.isPokemonAvailableForLeagues(poke as any, table);
 
-        const getBestRank = (league: League, available: boolean): Record<string, RankedStat | null> | null => {
-            if (!available) return null;
+        const computeForLeague = (league: League, available: boolean): MatchesByLeague => {
+            const map: MatchesByLeague = new Map();
+            if (!available) return map;
+            const ranks = data[league];
+            const actualLimit = (this.actualRank()?.[league].normal ?? 4096) - 1;
+            const sliced = ranks.slice(0, actualLimit);
+            console.log(league, sliced);
+
+            const filterAndBuild = (matchFn: (r: LeagueStats) => boolean, totalCombos: number): RankedStat[] => {
+                const betterCount = sliced.filter(matchFn).length;
+                const percentage = Math.round((betterCount / totalCombos) * 10000) / 100;
+
+                const result: RankedStat[] = [];
+                ranks.forEach((stat, index) => {
+                    if (matchFn(stat)) {
+                        result.push({
+                            rank: index + 1,
+                            stat,
+                            betterCount,
+                            totalCombos,
+                            percentage,
+                        });
+                    }
+                });
+                return result;
+            };
+
             if (this.displayMode() === 'capture') {
-                return this.getBestRankByCapture(data, league);
+                for (const source of this.sources) {
+                    map.set(
+                        source.key,
+                        filterAndBuild(
+                            (r) => r.attack >= source.minIv && r.defense >= source.minIv && r.stamina >= source.minIv,
+                            source.combos,
+                        ),
+                    );
+                }
+            } else {
+                for (const filter of this._filterService.BASIC_FILTER) {
+                    const totalCombos = this.comboSize(filter.combo);
+                    map.set(
+                        filter.key,
+                        filterAndBuild((r) => this.matchesCombo(r, filter.combo), totalCombos),
+                    );
+                }
             }
-            return this.getBestRankByFilter(data, league);
+            return map;
         };
 
         return {
-            great: getBestRank('super', availability.super),
-            ultra: getBestRank('hyper', availability.hyper),
+            great: computeForLeague('super', availability.super),
+            ultra: computeForLeague('hyper', availability.hyper),
         };
     });
+
+    allMatchesForRow(row: RankRow): AllMatchesResult | null {
+        const matches = this.matchesByRow();
+        if (!matches) return null;
+        console.log(row);
+        return {
+            great: matches.great.size ? (matches.great.get(row.key) ?? []) : null,
+            ultra: matches.ultra?.size ? (matches.ultra.get(row.key) ?? []) : null,
+        };
+    }
+    bestRanks = computed(() => {
+        const matches = this.matchesByRow();
+        if (!matches) return null;
+
+        const toBestRecord = (map: MatchesByLeague): Record<string, RankedStat | null> | null => {
+            if (map.size === 0) return null;
+            const obj: Record<string, RankedStat | null> = {};
+            for (const [key, list] of map) obj[key] = list[0] ?? null;
+            return obj;
+        };
+
+        return {
+            great: toBestRecord(matches.great),
+            ultra: toBestRecord(matches.ultra),
+        };
+    });
+    // bestRanks = computed(() => {
+    //     const data = this.rankPVP.value();
+    //     const table = this._pokemonRepository.cpMultiplier.value();
+    //     const poke = this.pokemon();
+    //     if (!data || !table || !poke) return null;
+
+    //     const availability = this._pokemonRepository.isPokemonAvailableForLeagues(poke as any, table);
+
+    //     const getBestRank = (league: League, available: boolean): Record<string, RankedStat | null> | null => {
+    //         if (!available) return null;
+    //         if (this.displayMode() === 'capture') {
+    //             return this.getBestRankByCapture(data, league);
+    //         }
+    //         return this.getBestRankByFilter(data, league);
+    //     };
+
+    //     return {
+    //         great: getBestRank('super', availability.super),
+    //         ultra: getBestRank('hyper', availability.hyper),
+    //     };
+    // });
 
     private getBestRankByCapture(data: AllRankPVP, league: League): Record<Source, RankedStat | null> {
         const ranks = data[league];

@@ -135,9 +135,7 @@
             <div class="rank-info">
                 <div class="rank-top">Rank {{ stat.rank }}</div>
                 <span class="rank-ivs">{{ stat.stat.attack }} / {{ stat.stat.defense }} / {{ stat.stat.stamina }}</span>
-                @if (row.key !== 'meilleur') {
-                    <span class="rank-proba">{{ stat.betterCount }} : ({{ stat.percentage }}% drop)</span>
-                }
+                <span class="rank-proba">{{ stat.betterCount }} : ({{ stat.percentage }}% drop)</span>
             </div>
         } @else {
             <span class="no-rank">Non disponible</span>

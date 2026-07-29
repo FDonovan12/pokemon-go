@@ -146,8 +146,6 @@ export const PVPRankStore = signalStore(
     withMethods((store) => ({
         _pokemonIsWorseThanRank(pokemon: PokemonSlug, league: League, rank: number = 1): boolean {
             const ranks: PvpRank = store._getOrInitRank(pokemon);
-            console.log(ranks);
-            console.log((ranks[league].normal ?? 4096) > rank);
             return (ranks[league].normal ?? 4096) > rank;
         },
     })),
