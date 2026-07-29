@@ -101,48 +101,6 @@ export class PvpRankDetailPage {
         return this.expandedRows().has(key);
     }
 
-    // allMatchesForRow(row: RankRow): AllMatchesResult | null {
-    //     const data = this.rankPVP.value();
-    //     const poke = this.pokemon();
-    //     const table = this._pokemonRepository.cpMultiplier.value();
-    //     if (!data || !poke || !table) return null;
-
-    //     const availability = this._pokemonRepository.isPokemonAvailableForLeagues(poke as any, table);
-
-    //     const getAllMatches = (league: League, available: boolean): RankedStat[] | null => {
-    //         if (!available) return null;
-    //         const ranks = data[league];
-
-    //         const matches: LeagueStats[] =
-    //             this.displayMode() === 'capture'
-    //                 ? ranks.filter((r) => {
-    //                       const source = SOURCES[row.key as Source];
-    //                       return r.attack >= source.minIv && r.defense >= source.minIv && r.stamina >= source.minIv;
-    //                   })
-    //                 : ranks.filter((r) => {
-    //                       const filter = this._filterService.BASIC_FILTER.find((f) => f.key === row.key);
-    //                       return filter ? this.matchesCombo(r, filter.combo) : false;
-    //                   });
-
-    //         const totalCombos =
-    //             this.displayMode() === 'capture'
-    //                 ? SOURCES[row.key as Source].combos
-    //                 : this.comboSize(this._filterService.BASIC_FILTER.find((f) => f.key === row.key)!.combo);
-
-    //         return matches.map((stat, index) => ({
-    //             rank: index + 1,
-    //             stat,
-    //             betterCount: index + 1,
-    //             totalCombos,
-    //             percentage: Math.round(((index + 1) / totalCombos) * 1000) / 10,
-    //         }));
-    //     };
-
-    //     return {
-    //         great: getAllMatches('super', availability.super),
-    //         ultra: getAllMatches('hyper', availability.hyper),
-    //     };
-    // }
     pokemon: Signal<Base | undefined> = computed(() =>
         this._pokemonRepository.allDifferentFormPokemonsSetting.value()?.find((p) => p.slug === this.slug()),
     );
@@ -179,7 +137,7 @@ export class PvpRankDetailPage {
             const map: MatchesByLeague = new Map();
             if (!available) return map;
             const ranks = data[league];
-            const actualLimit = (this.actualRank()?.[league].normal ?? 4096) - 1;
+            const actualLimit = (this.actualRank()?.[league].normal ?? 4096 + 1) - 1;
             const sliced = ranks.slice(0, actualLimit);
             console.log(league, sliced);
 
@@ -255,76 +213,6 @@ export class PvpRankDetailPage {
             ultra: toBestRecord(matches.ultra),
         };
     });
-    // bestRanks = computed(() => {
-    //     const data = this.rankPVP.value();
-    //     const table = this._pokemonRepository.cpMultiplier.value();
-    //     const poke = this.pokemon();
-    //     if (!data || !table || !poke) return null;
-
-    //     const availability = this._pokemonRepository.isPokemonAvailableForLeagues(poke as any, table);
-
-    //     const getBestRank = (league: League, available: boolean): Record<string, RankedStat | null> | null => {
-    //         if (!available) return null;
-    //         if (this.displayMode() === 'capture') {
-    //             return this.getBestRankByCapture(data, league);
-    //         }
-    //         return this.getBestRankByFilter(data, league);
-    //     };
-
-    //     return {
-    //         great: getBestRank('super', availability.super),
-    //         ultra: getBestRank('hyper', availability.hyper),
-    //     };
-    // });
-
-    private getBestRankByCapture(data: AllRankPVP, league: League): Record<Source, RankedStat | null> {
-        const ranks = data[league];
-        const resultList = this.sources.map((source) => {
-            const minIv = source.minIv;
-            const index = ranks.findIndex((r) => r.attack >= minIv && r.defense >= minIv && r.stamina >= minIv);
-            if (index === -1) return { key: source.key, value: null };
-
-            const sliced = ranks.slice(0, this.actualRank()?.[league].normal ?? 4096);
-            const betterCount = sliced.filter(
-                (r) => r.attack >= minIv && r.defense >= minIv && r.stamina >= minIv,
-            ).length;
-
-            const totalCombos = source.combos;
-            const percentage = Math.round((betterCount / totalCombos) * 1000) / 10;
-
-            return {
-                key: source.key,
-                value: { rank: index + 1, stat: ranks[index], betterCount, totalCombos, percentage },
-            };
-        });
-        return resultList.toObject(
-            (obj) => obj.key,
-            (obj) => obj.value,
-        );
-    }
-
-    private getBestRankByFilter(data: AllRankPVP, league: League): Record<string, RankedStat | null> {
-        const ranks = data[league];
-        const resultList = this._filterService.BASIC_FILTER.map((filter) => {
-            const index = ranks.findIndex((r) => this.matchesCombo(r, filter.combo));
-            if (index === -1) return { key: filter.key, value: null };
-
-            const sliced = ranks.slice(0, this.actualRank()?.[league].normal ?? 4096);
-            const betterCount = sliced.filter((r) => this.matchesCombo(r, filter.combo)).length;
-
-            const totalCombos = this.comboSize(filter.combo);
-            const percentage = Math.round((betterCount / totalCombos) * 1000) / 10;
-
-            return {
-                key: filter.key,
-                value: { rank: index + 1, stat: ranks[index], betterCount, totalCombos, percentage },
-            };
-        });
-        return resultList.toObject(
-            (obj) => obj.key,
-            (obj) => obj.value,
-        );
-    }
 
     private matchesRange(value: number, range: RangeCombo): boolean {
         return value >= range.min && value <= range.max;
@@ -342,46 +230,6 @@ export class PvpRankDetailPage {
         const size = (range: RangeCombo) => range.max - range.min + 1;
         return size(combo.attack) * size(combo.defense) * size(combo.stamina);
     }
-
-    // bestRanks = computed(() => {
-    //     const data = this.rankPVP.value();
-    //     const table = this._pokemonRepository.cpMultiplier.value();
-    //     const poke = this.pokemon();
-    //     if (!data || !table || !poke) return null;
-
-    //     const availability = this._pokemonRepository.isPokemonAvailableForLeagues(poke as any, table);
-
-    //     const getBestRank = (league: League, available: boolean): Record<Source, RankedStat | null> | null => {
-    //         const ranks = data[league];
-    //         if (!available) return null;
-    //         const resultList = this.sources.map((source) => {
-    //             const minIv = source.minIv;
-    //             const index = ranks.findIndex((r) => r.atk >= minIv && r.def >= minIv && r.sta >= minIv);
-    //             if (index === -1) return { key: source.key, value: null };
-
-    //             const sliced = ranks.slice(0, this.actualRank()?.[league].normal ?? 4096);
-    //             const betterCount = sliced.filter((r) => r.atk >= minIv && r.def >= minIv && r.sta >= minIv).length;
-
-    //             const totalCombos = source.combos;
-    //             const percentage = Math.round((betterCount / totalCombos) * 1000) / 10;
-
-    //             return {
-    //                 key: source.key,
-    //                 value: { rank: index + 1, stat: ranks[index], betterCount, totalCombos, percentage },
-    //             };
-    //         });
-    //         const resultObject = resultList.toObject(
-    //             (obj) => obj.key,
-    //             (obj) => obj.value,
-    //         );
-    //         return resultObject;
-    //     };
-
-    //     return {
-    //         great: getBestRank('super', availability.super),
-    //         ultra: getBestRank('hyper', availability.hyper),
-    //     };
-    // });
 
     constructor() {
         effect(() => {

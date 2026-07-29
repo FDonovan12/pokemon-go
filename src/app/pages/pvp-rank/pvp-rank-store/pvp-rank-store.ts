@@ -29,6 +29,7 @@ const initialState = {
     allRank: new Map<PokemonSlug, PvpRank>(),
     limitFilterGeneral: 1000,
     limitFilterPokemon: 20,
+    _importantPokemons: new Set<PokemonSlug>(),
 };
 
 export const PVPRankStore = signalStore(
@@ -142,6 +143,18 @@ export const PVPRankStore = signalStore(
             const rank = Math.min((ranks.get(slug)?.[league]?.normal ?? limit + 1) - 1, limit);
             return allRank[league].slice(0, rank);
         },
+        toggleImportantPokemon(slug: PokemonSlug): void {
+            const set = new Set<PokemonSlug>(store._importantPokemons());
+            if (set.has(slug)) {
+                set.delete(slug);
+            } else {
+                set.add(slug);
+            }
+            patchState(store, { _importantPokemons: set });
+        },
+        isImportantPokemon(slug: PokemonSlug): boolean {
+            return store._importantPokemons().has(slug);
+        },
     })),
     withMethods((store) => ({
         _pokemonIsWorseThanRank(pokemon: PokemonSlug, league: League, rank: number = 1): boolean {
@@ -180,76 +193,113 @@ export const PVPRankStore = signalStore(
         }),
         basicRankFilter: computed(() => {
             const rank1 = store._rank1PVP.value();
-            const rankPVP = store._rankPVP.value();
             const pokemonsDisplay = store._filteredResource.value();
             const subEvolutionMap = store._subEvolutionsMap();
             const isAvailable = store.isPokemonsAvaible();
             const filterIV = store._filterService.BASIC_FILTER;
             const filterTier: FilterDef<FilterTier>[] = store._filterService.convertIvToFilterTier(filterIV);
+            const limit = store.limitFilterGeneral();
 
-            return filterTier.map((filter) => {
-                const pokemons = (
-                    rank1
-                        ? pokemonsDisplay
-                              .filter((pokemon) => {
-                                  const validSuper =
-                                      store._pokemonIsWorseThanRank(pokemon.slug, 'super', 1) &&
-                                      isAvailable.get(pokemon.slug)?.super;
-                                  const validHyper =
-                                      store._pokemonIsWorseThanRank(pokemon.slug, 'hyper', 1) &&
-                                      isAvailable.get(pokemon.slug)?.hyper;
-                                  return validSuper || validHyper;
-                              })
-                              .groupBy((pokemon) => {
-                                  const validSuper =
-                                      store._pokemonIsWorseThanRank(pokemon.slug, 'super', 1) &&
-                                      isAvailable.get(pokemon.slug)?.super;
-                                  const validHyper =
-                                      store._pokemonIsWorseThanRank(pokemon.slug, 'hyper', 1) &&
-                                      isAvailable.get(pokemon.slug)?.hyper;
+            const tierFilters = filterTier.map((filter) => {
+                const pokemonsIncluded: Base[] = [];
+                const pokemonsExcluded: Base[] = [];
 
-                                  const limit = store.limitFilterGeneral();
+                if (rank1) {
+                    pokemonsDisplay.forEach((pokemon) => {
+                        const validSuper =
+                            store._pokemonIsWorseThanRank(pokemon.slug, 'super', 1) &&
+                            isAvailable.get(pokemon.slug)?.super;
+                        const validHyper =
+                            store._pokemonIsWorseThanRank(pokemon.slug, 'hyper', 1) &&
+                            isAvailable.get(pokemon.slug)?.hyper;
 
-                                  const betterSuper = validSuper
-                                      ? store._getBetterRankWithLimit(pokemon.slug, 'super', limit)
-                                      : [];
-                                  const betterHyper = validHyper
-                                      ? store._getBetterRankWithLimit(pokemon.slug, 'hyper', limit)
-                                      : [];
+                        if (!validSuper && !validHyper) return;
 
-                                  return (
-                                      betterSuper.some((stat) =>
-                                          store._filterService.isInTheFilterTier(filter, stat),
-                                      ) ||
-                                      betterHyper.some((stat) => store._filterService.isInTheFilterTier(filter, stat))
-                                  );
-                              })
-                        : new Map()
-                ) as Map<boolean, Base[]>;
+                        const checkLeague = (league: 'super' | 'hyper', valid: boolean | undefined) => {
+                            if (!valid) return { included: false, excluded: false };
 
-                const dexNumberIncluded = pokemons
-                    .get(true)
-                    ?.map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
+                            const rank1InTier = store._filterService.isInTheFilterTier(
+                                filter,
+                                rank1[pokemon.slug][league],
+                            );
+
+                            const betterRanks = store._getBetterRankWithLimit(pokemon.slug, league, limit);
+                            const matchCount = betterRanks.filter((stat) =>
+                                store._filterService.isInTheFilterTier(filter, stat),
+                            ).length;
+                            const percentage = betterRanks.length > 0 ? matchCount / betterRanks.length : 0;
+                            // console.log(percentage * 100, pokemon.slug, filter.key);
+                            return {
+                                included: rank1InTier || percentage >= 0.5,
+                                excluded: !rank1InTier || percentage < 0.5,
+                            };
+                        };
+
+                        const superResult = checkLeague('super', validSuper);
+                        const hyperResult = checkLeague('hyper', validHyper);
+
+                        if (superResult.included || hyperResult.included) pokemonsIncluded.push(pokemon as any as Base);
+                        if (superResult.excluded || hyperResult.excluded) pokemonsExcluded.push(pokemon as any as Base);
+                    });
+                }
+
+                const dexNumberIncluded = pokemonsIncluded
+                    .map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
                     .flat()
                     .unique();
 
-                const dexNumberExcluded = pokemons
-                    .get(false)
-                    ?.map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
+                const dexNumberExcluded = pokemonsExcluded
+                    .map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
                     .flat()
                     .unique();
 
-                const filterPokemonIncluded = dexNumberIncluded?.join(',');
-                const filterPokemonExcluded = dexNumberExcluded?.join(',');
+                const includedSet = new Set(dexNumberIncluded);
+                const excludedSet = new Set(dexNumberExcluded);
 
-                return {
+                const excludedNotIncluded = dexNumberExcluded.filter((dex) => !includedSet.has(dex));
+                const includedNotExcluded = dexNumberIncluded.filter((dex) => !excludedSet.has(dex));
+                console.log(
+                    pokemonsIncluded.map((po) => po.dexNumber),
+                    pokemonsIncluded.length,
+                );
+                const mainFilter = {
                     label: filter.key,
-                    filter: `${store._filterService.comboToFilter(filter.combo)} & ${filterPokemonIncluded} & !#`,
-                    excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)} & ${filterPokemonExcluded} & !#`,
-                    length: pokemons.get(true)?.length ?? 0,
-                    excludedLength: pokemons.get(false)?.length ?? 0,
+                    filter: `${store._filterService.comboToFilter(filter.combo)} & ${dexNumberIncluded.join(',')} & !#`,
+                    excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)} & ${dexNumberExcluded.join(',')} & !#`,
+                    length: pokemonsIncluded.length,
+                    excludedLength: pokemonsExcluded.length,
                 };
+                const noNeedToCheckFilter = {
+                    label: `${filter.key}-sans-verif`,
+                    filter: `${store._filterService.comboToFilter(filter.combo)} & ${excludedNotIncluded.join(',')} & !#`,
+                    excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)} & ${includedNotExcluded.join(',')} & !#`,
+                    length: excludedNotIncluded.length,
+                    excludedLength: includedNotExcluded.length,
+                };
+                return [mainFilter, noNeedToCheckFilter];
+                // return {
+                //     label: filter.key,
+                //     filter: `${store._filterService.comboToFilter(filter.combo)} & ${filterPokemonIncluded} & !#`,
+                //     excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)} & ${filterPokemonExcluded} & !#`,
+                //     length: pokemonsIncluded.length,
+                //     excludedLength: pokemonsExcluded.length,
+                // };
             });
+            const importantSlugs = store._importantPokemons();
+            const dexNumberImportant = [...importantSlugs]
+                .map((slug) => subEvolutionMap.get(slug)?.map((pokemon) => pokemon.dexNumber))
+                .flat()
+                .unique();
+
+            const importantFilter = {
+                label: 'important',
+                filter: `${dexNumberImportant?.join(',')}, obscur & !#`,
+                excludedFilter: '',
+                length: importantSlugs.size,
+                excludedLength: 0,
+            };
+            console.log(tierFilters);
+            return tierFilters;
         }),
         oldBasicRankFilter: computed(() => {
             const rank1 = store._rank1PVP.value();
@@ -471,7 +521,6 @@ export const PVPRankStore = signalStore(
                 allIV.push(...great);
             }
 
-            console.log(allIV.length);
             const finalIV = allIV.map(statToFilterKey).unique().map(decodeFilterKey);
             const subEvolutionFilter = (subEvolutionsMap.get(slug) ?? [])
                 .map((pokemon) => pokemon.dexNumber)

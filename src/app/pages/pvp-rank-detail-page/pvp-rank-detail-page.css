@@ -188,8 +188,8 @@
 }
 
 .chevron {
-    font-size: 0.85em;
-    opacity: 0.5;
+    font-size: 1.15em;
+    opacity: 0.7;
     transition: transform 0.15s ease;
 }
 

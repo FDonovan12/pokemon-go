@@ -68,7 +68,7 @@
     [realMax]="4096"
     (valueChange)="store.setLimitFilterGeneral($event)"
 />
-<div class="filters-container">
+<!-- <div class="filters-container">
     <div class="league-column">
         @for (filter of store.oldBasicRankFilter().super; track $index) {
             <div>
@@ -85,22 +85,25 @@
             </div>
         }
     </div>
-</div>
-new
+</div> -->
 <div class="filters-container">
     <div class="league-column">
         @for (filter of store.basicRankFilter(); track $index) {
             <div>
-                <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
-                <button (click)="copyBasicFilter(filter.excludedFilter)">{{ filter.label }} exclue ({{ filter.excludedLength }})</button>
+                <button (click)="copyBasicFilter(filter[0].filter)">{{ filter[0].label }} ({{ filter[0].length }})</button>
+                <button (click)="copyBasicFilter(filter[0].excludedFilter)">
+                    {{ filter[0].label }} exclue2 ({{ filter[0].excludedLength }})
+                </button>
             </div>
         }
     </div>
     <div class="league-column">
         @for (filter of store.basicRankFilter(); track $index) {
             <div>
-                <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
-                <button (click)="copyBasicFilter(filter.excludedFilter)">{{ filter.label }} exclue ({{ filter.excludedLength }})</button>
+                <button (click)="copyBasicFilter(filter[1].filter)">{{ filter[1].label }} ({{ filter[1].length }})</button>
+                <button (click)="copyBasicFilter(filter[1].excludedFilter)">
+                    {{ filter[1].label }} exclue ({{ filter[1].excludedLength }})
+                </button>
             </div>
         }
     </div>
@@ -113,7 +116,12 @@ new
             (click)="navigateDetailPokemon(pokemon)"
         ></app-image-pokemon>
         <div>
-            <span></span>
+            <span
+                class="important-toggle"
+                (click)="store.toggleImportantPokemon(pokemon.slug)"
+            >
+                {{ store.isImportantPokemon(pokemon.slug) ? '⭐' : '☆' }}
+            </span>
             <span
                 (click)="copyPokemonFilterBetterRankPVP(pokemon, 'super')"
                 class="league-cell"
