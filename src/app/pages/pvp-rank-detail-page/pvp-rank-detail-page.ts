@@ -28,7 +28,10 @@ type RankedStat = {
     totalCombos: number;
     percentage: number;
 };
-
+type AllMatchesResult = {
+    great: RankedStat[] | null;
+    ultra: RankedStat[] | null;
+};
 type RankRow = {
     key: string;
     label: string;
@@ -80,7 +83,65 @@ export class PvpRankDetailPage {
         console.log('toggleDisplayMode');
         this._localStorageService.set(DISPLAY_MODE_LOCAL_STORAGE, this.displayMode());
     }
+    expandedRows = signal<Set<string>>(new Set());
+    toggleRow(key: string): void {
+        this.expandedRows.update((set) => {
+            const next = new Set(set);
+            if (next.has(key)) {
+                next.delete(key);
+            } else {
+                next.add(key);
+            }
+            return next;
+        });
+    }
 
+    isRowExpanded(key: string): boolean {
+        return this.expandedRows().has(key);
+    }
+
+    allMatchesForRow(row: RankRow): AllMatchesResult | null {
+        const data = this.rankPVP.value();
+        const poke = this.pokemon();
+        const table = this._pokemonRepository.cpMultiplier.value();
+        if (!data || !poke || !table) return null;
+
+        const availability = this._pokemonRepository.isPokemonAvailableForLeagues(poke as any, table);
+
+        const getAllMatches = (league: League, available: boolean): RankedStat[] | null => {
+            if (!available) return null;
+            const ranks = data[league];
+
+            const matches: LeagueStats[] =
+                this.displayMode() === 'capture'
+                    ? ranks.filter((r) => {
+                          const source = SOURCES[row.key as Source];
+                          return r.attack >= source.minIv && r.defense >= source.minIv && r.stamina >= source.minIv;
+                      })
+                    : ranks.filter((r) => {
+                          const filter = this._filterService.BASIC_FILTER.find((f) => f.key === row.key);
+                          return filter ? this.matchesCombo(r, filter.combo) : false;
+                      });
+
+            const totalCombos =
+                this.displayMode() === 'capture'
+                    ? SOURCES[row.key as Source].combos
+                    : this.comboSize(this._filterService.BASIC_FILTER.find((f) => f.key === row.key)!.combo);
+
+            return matches.map((stat, index) => ({
+                rank: index + 1,
+                stat,
+                betterCount: index + 1,
+                totalCombos,
+                percentage: Math.round(((index + 1) / totalCombos) * 1000) / 10,
+            }));
+        };
+
+        return {
+            great: getAllMatches('super', availability.super),
+            ultra: getAllMatches('hyper', availability.hyper),
+        };
+    }
     pokemon: Signal<Base | undefined> = computed(() =>
         this._pokemonRepository.allDifferentFormPokemonsSetting.value()?.find((p) => p.slug === this.slug()),
     );

@@ -43,8 +43,17 @@
                     <td>{{ actualRank()?.hyper?.normal ?? '-' }}</td>
                 </tr>
                 @for (row of rows(); track row.key) {
-                    <tr>
+                    <tr
+                        (click)="toggleRow(row.key)"
+                        class="clickable-row"
+                    >
                         <td class="row-label">
+                            <span
+                                class="chevron"
+                                [class.open]="isRowExpanded(row.key)"
+                            >
+                                ▸
+                            </span>
                             @if (row.icon) {
                                 <span>{{ row.icon }}</span>
                             }
@@ -63,6 +72,53 @@
                             />
                         </td>
                     </tr>
+                    @if (isRowExpanded(row.key)) {
+                        <tr class="expanded-row">
+                            <td colspan="3">
+                                @let allMatches = allMatchesForRow(row);
+                                <div class="expanded-content">
+                                    <div class="expanded-league">
+                                        <div class="expanded-league-title">Grande Ligue</div>
+                                        <div class="expanded-list">
+                                            @if (allMatches?.great; as list) {
+                                                @for (item of list; track item.rank) {
+                                                    <div class="expanded-item">
+                                                        <span>Rank {{ item.rank }}</span>
+                                                        <span>
+                                                            {{ item.stat.attack }} / {{ item.stat.defense }} / {{ item.stat.stamina }}
+                                                        </span>
+                                                    </div>
+                                                } @empty {
+                                                    <span class="no-rank">Aucun résultat</span>
+                                                }
+                                            } @else {
+                                                <span class="unavailable">❌</span>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="expanded-league">
+                                        <div class="expanded-league-title">Ultra Ligue</div>
+                                        <div class="expanded-list">
+                                            @if (allMatches?.ultra; as list) {
+                                                @for (item of list; track item.rank) {
+                                                    <div class="expanded-item">
+                                                        <span>Rank {{ item.rank }}</span>
+                                                        <span>
+                                                            {{ item.stat.attack }} / {{ item.stat.defense }} / {{ item.stat.stamina }}
+                                                        </span>
+                                                    </div>
+                                                } @empty {
+                                                    <span class="no-rank">Aucun résultat</span>
+                                                }
+                                            } @else {
+                                                <span class="unavailable">❌</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
