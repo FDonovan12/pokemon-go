@@ -16,13 +16,6 @@
     <summary>Filtres PvP Rank</summary>
 
     <div class="filters-container">
-        <app-log-range
-            label="Limite filtre général"
-            [value]="store.limitFilterGeneral()"
-            [realMin]="1"
-            [realMax]="4096"
-            (valueChange)="store.setLimitFilterGeneral($event)"
-        />
         <button
             style="grid-column: span 2; width: fit-content"
             (click)="clipboardService.copyToClipboard(store.allRankFilter().allPokemon)"
@@ -68,9 +61,16 @@
         </div>
     </div>
 </details>
+<app-log-range
+    label="Limite filtre général"
+    [value]="store.limitFilterGeneral()"
+    [realMin]="1"
+    [realMax]="4096"
+    (valueChange)="store.setLimitFilterGeneral($event)"
+/>
 <div class="filters-container">
     <div class="league-column">
-        @for (filter of store.basicRankFilter().super; track $index) {
+        @for (filter of store.oldBasicRankFilter().super; track $index) {
             <div>
                 <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
                 <button (click)="copyBasicFilter(filter.excludedFilter)">{{ filter.label }} exclue ({{ filter.excludedLength }})</button>
@@ -78,7 +78,26 @@
         }
     </div>
     <div class="league-column">
-        @for (filter of store.basicRankFilter().hyper; track $index) {
+        @for (filter of store.oldBasicRankFilter().hyper; track $index) {
+            <div>
+                <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
+                <button (click)="copyBasicFilter(filter.excludedFilter)">{{ filter.label }} exclue ({{ filter.excludedLength }})</button>
+            </div>
+        }
+    </div>
+</div>
+new
+<div class="filters-container">
+    <div class="league-column">
+        @for (filter of store.basicRankFilter(); track $index) {
+            <div>
+                <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
+                <button (click)="copyBasicFilter(filter.excludedFilter)">{{ filter.label }} exclue ({{ filter.excludedLength }})</button>
+            </div>
+        }
+    </div>
+    <div class="league-column">
+        @for (filter of store.basicRankFilter(); track $index) {
             <div>
                 <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
                 <button (click)="copyBasicFilter(filter.excludedFilter)">{{ filter.label }} exclue ({{ filter.excludedLength }})</button>

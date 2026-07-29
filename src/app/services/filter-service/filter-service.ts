@@ -30,6 +30,14 @@ export class FilterService {
 
     readonly BASIC_FILTER: FilterDef<IV>[] = [
         {
+            key: 'zero-atk',
+            combo: {
+                attack: { min: 0, max: 5 },
+                defense: { min: 0, max: 15 },
+                stamina: { min: 0, max: 15 },
+            },
+        },
+        {
             key: 'low-atk-high-other',
             combo: {
                 attack: { min: 0, max: 5 },
