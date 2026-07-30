@@ -134,14 +134,14 @@ export class InternalListPokemonRepository {
         return this.internalLists.map((list) => ({ label: list.label, slug: list.slug }) as LabelEntry);
     }
 
-    getPokemonsForInternalList(entry: LabelEntry | { slug: string }): PokemonData[] {
+    getPokemonsForInternalList(entry: LabelEntry | { slug: string }): PokemonData[] | undefined {
         const list = this.internalLists.find((l) => l.slug === entry.slug);
-        return list ? this._pokemonSource().filter(list.matches) : [];
+        return list ? this._pokemonSource().filter(list.matches) : undefined;
     }
 
-    getPokemonsForInternalListBySearch(search: string): PokemonData[] {
+    getPokemonsForInternalListBySearch(search: string): PokemonData[] | undefined {
         const list = this.internalLists.find((l) => l.aliases.slugifyIncludes(search));
-        return list ? this._pokemonSource().filter(list.matches) : [];
+        return list ? this._pokemonSource().filter(list.matches) : undefined;
     }
 }
 function hash(str: string): string {
