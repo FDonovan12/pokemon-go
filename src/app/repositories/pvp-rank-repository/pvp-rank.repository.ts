@@ -5,6 +5,7 @@ import { SupabaseService } from '@services/supabase-service/supabase.service';
 import { PvpRank } from '../../pages/pvp-rank/pvp-rank-store/pvp-rank-store';
 
 export const LOCAL_STORAGE_PVP_RANK = 'pokemon-pvp_rank';
+export const LOCAL_STORAGE_IMPORTANT_POKEMON = 'pokemon-pvp-IMPORTANT';
 
 @Injectable({ providedIn: 'root' })
 export class PvpRankRepository {
@@ -21,12 +22,51 @@ export class PvpRankRepository {
         defaultValue: this.loadFromLocal(),
     });
 
+    readonly pvpImportantPokemonResource = resource({
+        params: () => (this.supabaseService.isLoggedIn() ? true : undefined),
+        loader: async () => {
+            const remote = await this.loadImportantPokemonFromSupabase();
+            this.saveImportantPokemonsToLocal(remote);
+            return remote;
+        },
+        defaultValue: this.loadImportantPokemonFromLocal(),
+    });
+
     async savePVPRank(ranks: Map<PokemonSlug, PvpRank>): Promise<void> {
         this.saveToLocal(ranks);
 
         if (this.supabaseService.isLoggedIn()) {
             await this.saveToSupabase(ranks);
         }
+    }
+
+    async saveImportantPokemons(pokemons: Set<PokemonSlug>): Promise<void> {
+        this.saveImportantPokemonsToLocal(pokemons);
+
+        if (this.supabaseService.isLoggedIn()) {
+            this.saveImportantPokemonsToSupabase(pokemons);
+        }
+    }
+
+    private saveImportantPokemonsToLocal(pokemons: Set<PokemonSlug>): void {
+        this.localStorageService.set(LOCAL_STORAGE_IMPORTANT_POKEMON, pokemons.toList());
+    }
+
+    private async saveImportantPokemonsToSupabase(pokemons: Set<PokemonSlug>): Promise<void> {
+        const userId = this.supabaseService.getUserId();
+        await this.supabaseService.client
+            .from('user_data')
+            .upsert({ user_id: userId, pvp_important_pokemons: pokemons.toList() }, { onConflict: 'user_id' });
+    }
+
+    private loadImportantPokemonFromLocal(): Set<PokemonSlug> {
+        const object = this.localStorageService.get(LOCAL_STORAGE_IMPORTANT_POKEMON, [] as PokemonSlug[]);
+        return new Set(object);
+    }
+    private async loadImportantPokemonFromSupabase(): Promise<Set<PokemonSlug>> {
+        const { data } = await this.supabaseService.client.from('user_data').select('pvp_important_pokemons').single();
+        if (!data) return new Set();
+        return new Set(data.pvp_important_pokemons);
     }
 
     private loadFromLocal(): Map<PokemonSlug, PvpRank> {

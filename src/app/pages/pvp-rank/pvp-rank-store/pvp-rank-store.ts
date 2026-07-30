@@ -153,6 +153,7 @@ export const PVPRankStore = signalStore(
                 set.add(slug);
             }
             patchState(store, { _importantPokemons: set });
+            void store._pvpRankRepository.saveImportantPokemons(set);
         },
         isImportantPokemon(slug: PokemonSlug): boolean {
             return store._importantPokemons().has(slug);
@@ -205,6 +206,7 @@ export const PVPRankStore = signalStore(
             const tierFilters = filterTier.map((filter) => {
                 const pokemonsIncluded: Base[] = [];
                 const pokemonsExcluded: Base[] = [];
+                const pokemonsNeither: Base[] = [];
 
                 if (rank1) {
                     pokemonsDisplay.forEach((pokemon) => {
@@ -215,7 +217,10 @@ export const PVPRankStore = signalStore(
                             store._pokemonIsWorseThanRank(pokemon.slug, 'hyper', 1) &&
                             isAvailable.get(pokemon.slug)?.hyper;
 
-                        if (!validSuper && !validHyper) return false;
+                        if (!validSuper && !validHyper) {
+                            pokemonsNeither.push(pokemon);
+                            return;
+                        }
 
                         const checkLeague = (league: 'super' | 'hyper', valid: boolean | undefined) => {
                             if (!valid) return { included: false, excluded: false };
@@ -230,7 +235,6 @@ export const PVPRankStore = signalStore(
                                 store._filterService.isInTheFilterTier(filter, stat),
                             ).length;
                             const percentage = betterRanks.length > 0 ? matchCount / betterRanks.length : 0;
-                            // console.log(percentage * 100, pokemon.slug, filter.key);
                             return {
                                 included: rank1InTier || percentage >= 0.5,
                                 excluded: !rank1InTier || percentage < 0.5,
@@ -240,8 +244,10 @@ export const PVPRankStore = signalStore(
                         const superResult = checkLeague('super', validSuper);
                         const hyperResult = checkLeague('hyper', validHyper);
 
-                        if (superResult.included || hyperResult.included) pokemonsIncluded.push(pokemon);
-                        if (superResult.excluded || hyperResult.excluded) pokemonsExcluded.push(pokemon);
+                        if (superResult.included || hyperResult.included || store.isImportantPokemon(pokemon.slug))
+                            pokemonsIncluded.push(pokemon);
+                        if (superResult.excluded || hyperResult.excluded || store.isImportantPokemon(pokemon.slug))
+                            pokemonsExcluded.push(pokemon);
                         return true;
                     });
                 }
@@ -256,15 +262,23 @@ export const PVPRankStore = signalStore(
                     .flat()
                     .unique();
 
+                const dexNumberNeither = pokemonsNeither
+                    .map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
+                    .flat()
+                    .unique();
+
                 const includedSet = new Set(dexNumberIncluded);
                 const excludedSet = new Set(dexNumberExcluded);
 
-                const excludedNotIncluded = dexNumberExcluded.filter((dex) => !includedSet.has(dex));
-                const includedNotExcluded = dexNumberIncluded.filter((dex) => !excludedSet.has(dex));
-                console.log(
-                    pokemonsIncluded.map((po) => po.dexNumber),
-                    pokemonsIncluded.length,
-                );
+                const excludedNotIncluded = [
+                    ...dexNumberExcluded.filter((dex) => !includedSet.has(dex)),
+                    ...dexNumberNeither.filter((dex) => !includedSet.has(dex)),
+                ].unique();
+                const includedNotExcluded = [
+                    ...dexNumberIncluded.filter((dex) => !excludedSet.has(dex)),
+                    ...dexNumberNeither.filter((dex) => !excludedSet.has(dex)),
+                ].unique();
+
                 const mainFilter = {
                     label: filter.key,
                     filter: `${store._filterService.comboToFilter(filter.combo)} & ${dexNumberIncluded.join(',')} & !#`,
@@ -301,7 +315,6 @@ export const PVPRankStore = signalStore(
                 length: importantSlugs.size,
                 excludedLength: 0,
             };
-            console.log(tierFilters);
             return tierFilters;
         }),
         oldBasicRankFilter: computed(() => {
@@ -561,6 +574,11 @@ export const PVPRankStore = signalStore(
             effect(() => {
                 const data = store._pvpRankRepository.pvpRankResource.value();
                 patchState(store, { allRank: data });
+            });
+
+            effect(() => {
+                const data = store._pvpRankRepository.pvpImportantPokemonResource.value();
+                patchState(store, { _importantPokemons: data });
             });
         },
     })),

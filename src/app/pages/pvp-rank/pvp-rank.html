@@ -12,7 +12,7 @@
     [realMax]="500"
     (valueChange)="store.setLimitFilterPokemon($event)"
 />
-<details>
+<!-- <details>
     <summary>Filtres PvP Rank</summary>
 
     <div class="filters-container">
@@ -60,7 +60,7 @@
             }
         </div>
     </div>
-</details>
+</details> -->
 <app-log-range
     label="Limite filtre général"
     [value]="store.limitFilterGeneral()"
@@ -86,28 +86,26 @@
         }
     </div>
 </div> -->
-<div class="filters-container">
-    <div class="league-column">
-        @for (filter of store.basicRankFilter(); track $index) {
+@for (filter of store.basicRankFilter(); track $index) {
+    <div class="filters-container">
+        <div class="league-column">
             <div>
                 <button (click)="copyBasicFilter(filter[0].filter)">{{ filter[0].label }} ({{ filter[0].length }})</button>
                 <button (click)="copyBasicFilter(filter[0].excludedFilter)">
-                    {{ filter[0].label }} exclue2 ({{ filter[0].excludedLength }})
+                    {{ filter[0].label }} exclue ({{ filter[0].excludedLength }})
                 </button>
             </div>
-        }
-    </div>
-    <div class="league-column">
-        @for (filter of store.basicRankFilter(); track $index) {
+        </div>
+        <div class="league-column">
             <div>
                 <button (click)="copyBasicFilter(filter[1].filter)">{{ filter[1].label }} ({{ filter[1].length }})</button>
                 <button (click)="copyBasicFilter(filter[1].excludedFilter)">
                     {{ filter[1].label }} exclue ({{ filter[1].excludedLength }})
                 </button>
             </div>
-        }
+        </div>
     </div>
-</div>
+}
 @for (pokemon of store.filteredPokemons(); track pokemon.slug) {
     <div class="test">
         <app-image-pokemon
