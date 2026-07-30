@@ -213,7 +213,7 @@ export const PVPRankStore = signalStore(
                             store._pokemonIsWorseThanRank(pokemon.slug, 'hyper', 1) &&
                             isAvailable.get(pokemon.slug)?.hyper;
 
-                        if (!validSuper && !validHyper) return;
+                        if (!validSuper && !validHyper) return false;
 
                         const checkLeague = (league: 'super' | 'hyper', valid: boolean | undefined) => {
                             if (!valid) return { included: false, excluded: false };
@@ -240,6 +240,7 @@ export const PVPRankStore = signalStore(
 
                         if (superResult.included || hyperResult.included) pokemonsIncluded.push(pokemon as any as Base);
                         if (superResult.excluded || hyperResult.excluded) pokemonsExcluded.push(pokemon as any as Base);
+                        return true;
                     });
                 }
 

@@ -32,7 +32,7 @@ export class FilterService {
         {
             key: 'zero-atk',
             combo: {
-                attack: { min: 0, max: 5 },
+                attack: { min: 0, max: 0 },
                 defense: { min: 0, max: 15 },
                 stamina: { min: 0, max: 15 },
             },
