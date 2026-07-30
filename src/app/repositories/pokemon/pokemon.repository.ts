@@ -27,7 +27,7 @@ interface PokemonIv {
 type PokemonHomeMade = (typeof pokemonsListHomeMade)[number];
 
 type PokemonIndex = {
-    byId: Record<PokemonInterface['id'], PokemonInterface>;
+    byId: Record<PokemonInterface['dexNumber'], PokemonInterface>;
     byName: Record<PokemonInterface['slug'], PokemonInterface>;
 };
 
@@ -114,51 +114,6 @@ export class PokemonRepository {
         return Math.max(10, cp);
     }
 
-    // calculateCp(pokemon: Base, iv: PokemonIv, level: number): number {
-    //     console.log(pokemon.slug);
-    //     const table = this.getCPMultiplier();
-    //     const cpm: number = table[level + ''];
-
-    //     if (!cpm) {
-    //         throw new Error(`CPM non trouvé pour le niveau ${level}. Vérifie ta table CPM.`);
-    //     }
-
-    //     const attackTotal = pokemon.stats.baseAttack + iv.attack;
-    //     const defenseTotal = pokemon.stats.baseDefense + iv.defense;
-    //     const staminaTotal = pokemon.stats.baseStamina + iv.stamina;
-
-    //     const cp = Math.floor(
-    //         (attackTotal * Math.sqrt(defenseTotal) * Math.sqrt(staminaTotal) * Math.pow(cpm, 2)) / 10,
-    //     );
-
-    //     return Math.max(10, cp);
-    // }
-
-    // async getPokemonSetting(): Promise<PokemonSetting[]> {
-    //     console.log('getPokemonSetting');
-    //     if (this.pokemonsSetting) return this.pokemonsSetting;
-    //     const url = 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon-setting.json';
-    //     console.log(url);
-    //     const res = await fetch(url);
-    //     console.log('res');
-    //     const data = (await res.json()) as PokemonSetting[];
-    //     this.pokemonsSetting = data;
-    //     return data;
-    // }
-
-    // async getPokemonSettingBySlug(slug: PokemonSlug): Promise<Base> {
-    //     const pokemonSetting = this.getPokemonSetting();
-    //     const flatData: Base[] = (await pokemonSetting)
-    //         .map((pokemon) => {
-    //             const base = pokemon.base;
-    //             const diff = pokemon.different.map((d) => [d.base, ...d.same]).flat();
-    //             const same = pokemon.same;
-    //             return [base, ...diff, ...same].flat();
-    //         })
-    //         .flat();
-    //     return flatData.find((pokemon) => pokemon.slug === slug)!;
-    // }
-
     private buildPokemonIndex = (
         listFromAPI: PokemonInterface[],
         listHomemade: readonly PokemonHomeMade[] = [],
@@ -167,7 +122,10 @@ export class PokemonRepository {
         const list = [...listFromAPI, ...listHomemade] as PokemonInterface[];
 
         return {
-            byId: Object.fromEntries(list.map((p) => [p.id, p])) as Record<PokemonInterface['id'], PokemonInterface>,
+            byId: Object.fromEntries(list.map((p) => [p.dexNumber, p])) as Record<
+                PokemonInterface['dexNumber'],
+                PokemonInterface
+            >,
             byName: Object.fromEntries(list.map((p) => [p.slug, p])) as Record<
                 PokemonInterface['slug'],
                 PokemonInterface
@@ -272,7 +230,7 @@ export class PokemonRepository {
 
         for (const p of pokemons) {
             try {
-                const speciesRes = await fetch(`${base}/pokemon-species/${p.id}`);
+                const speciesRes = await fetch(`${base}/pokemon-species/${p.dexNumber}`);
                 if (!speciesRes.ok) continue;
                 const species = await speciesRes.json();
 

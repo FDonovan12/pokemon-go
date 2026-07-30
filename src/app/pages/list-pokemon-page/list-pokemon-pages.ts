@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal, Signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
+import { ListLabel } from '@entities/label';
 import { generationsPokemon } from '@entities/pokemon';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { FilterService } from '@services/filter-service/filter-service';
@@ -10,7 +11,6 @@ import { PokemonSearchComponent } from '@shared/features/pokemon-search/pokemon-
 import { provideSearchStore } from '@shared/features/pokemon-search/search.token';
 import { ToastService } from '@shared/features/toast/toast.service';
 import { ListPokemonPageStore } from './list-store/list-pokemon-page.store';
-import { ListLabel } from '@entities/label';
 
 const _store = ListPokemonPageStore;
 
@@ -52,7 +52,7 @@ export class ListPokemonPages {
             return;
         }
 
-        const ids = pokemons.map((p) => p.id);
+        const ids = pokemons.map((p) => p.dexNumber);
         const shareUrl = this.shareListService.generateShareUrl(ids);
 
         this.clipboardService.copyToClipboard(shareUrl);

@@ -148,7 +148,7 @@ export const DynamaxStore = signalStore(
 
 function isSameResultDamage(resultDamage1: ResultDamage, resultDamage2: ResultDamage): boolean {
     return (
-        resultDamage1.dynamax.pokemon.id === resultDamage2.dynamax.pokemon.id &&
+        resultDamage1.dynamax.pokemon.dexNumber === resultDamage2.dynamax.pokemon.dexNumber &&
         resultDamage1.typeAttack === resultDamage2.typeAttack
     );
 }

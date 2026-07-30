@@ -17,7 +17,7 @@ const initialState = {
 
 export const ListPokemonPageStore = signalStore(
     { providedIn: 'root' },
-    withPokemonSearch(),
+    withPokemonSearch<PokemonInterface>(),
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
         _listPokemonRepository: inject(ListPokemonRepository),
@@ -31,7 +31,7 @@ export const ListPokemonPageStore = signalStore(
     withComputed((store) => ({
         actualListPokemonMap: computed(() => {
             const list = [...store.selectedPokemonWantKeep()];
-            const sorted = list.sortAsc((pokemon) => pokemon.id);
+            const sorted = list.sortAsc((pokemon) => pokemon.dexNumber);
             const map = sorted.groupBy((pokemon) => pokemon.generation);
             return map;
         }),

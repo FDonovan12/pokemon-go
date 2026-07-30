@@ -153,7 +153,7 @@ export class FiltersFacade {
         if (query.lists) {
             const { cleaned, removedKeys } = await this._filterService.cleanListCondition(query.lists);
             query.lists = cleaned;
-            const pokemons = (await this._filterService.simplifyPokemon(query.lists)).sortAsc('id');
+            const pokemons = (await this._filterService.simplifyPokemon(query.lists)).sortAsc('dexNumber');
             const result = this._filterService.buildAllPokemon(pokemons);
             parts.push(result);
         }

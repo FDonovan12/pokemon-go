@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { LabelEntry } from '@entities/label';
-import { PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { Base, PokemonInterface, PokemonSlug } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { SupabaseService } from '@services/supabase-service/supabase.service';
@@ -39,7 +39,7 @@ export class ListPokemonRepository {
 
     async getPokemonsForList(entry: LabelEntry | { slug: string }): Promise<PokemonInterface[]> {
         const internal = this._internalListPokemonRepository.getPokemonsForInternalList(entry);
-        if (internal) return internal;
+        if (internal) return internal as Base[] as PokemonInterface[];
 
         const slugs = await this.getSlugsForList(entry);
         return this._pokemonRepository.getPokemonsBySLugs(slugs);

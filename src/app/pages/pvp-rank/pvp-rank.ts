@@ -36,7 +36,7 @@ export class PvpRankPages {
     showDialog = signal(false);
 
     copyPokemonFilterBetterRankPVP(pokemon: PokemonInterface, league?: League) {
-        const filter = this.store.getPokemonFilter(pokemon as any as Base, league);
+        const filter = this.store.getPokemonFilter(pokemon, league);
         this.clipboardService.copyToClipboard(filter, {
             message: `🏆 Filtre PVP copié pour ${pokemon.slug.titleCase()} (${filter.length} caractères)`,
         });

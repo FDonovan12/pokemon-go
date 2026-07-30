@@ -13,6 +13,8 @@ export const IMAGES = {
     "Sprite_CT_Attaque_Immédiate_d'élite_GO": "assets/items\\Sprite_CT_Attaque_Immédiate_d'élite_GO.png",
     "Sprite_CT_Attaque_Immédiate_GO": "assets/items\\Sprite_CT_Attaque_Immédiate_GO.png",
     "Sprite_Encens_GO": "assets/items\\Sprite_Encens_GO.png",
+    "Sprite_Hyper_Ball_GO": "assets/items\\Sprite_Hyper_Ball_GO.png",
+    "Sprite_Hyper_Potion_GO": "assets/items\\Sprite_Hyper_Potion_GO.png",
     "Sprite_Incubateur_GO": "assets/items\\Sprite_Incubateur_GO.png",
     "Sprite_Leurre_Glacial_GO": "assets/items\\Sprite_Leurre_Glacial_GO.png",
     "Sprite_Leurre_Magnétique_GO": "assets/items\\Sprite_Leurre_Magnétique_GO.png",
@@ -22,12 +24,22 @@ export const IMAGES = {
     "Sprite_Morceau_d'étoile_GO": "assets/items\\Sprite_Morceau_d'étoile_GO.png",
     "Sprite_Passe_de_combat_premium_GO": "assets/items\\Sprite_Passe_de_combat_premium_GO.png",
     "Sprite_Passe_de_Raid_à_Distance_GO": "assets/items\\Sprite_Passe_de_Raid_à_Distance_GO.png",
+    "Sprite_Pierre_Sinnoh_GO": "assets/items\\Sprite_Pierre_Sinnoh_GO.png",
+    "Sprite_Pierre_Unys_GO": "assets/items\\Sprite_Pierre_Unys_GO.png",
     "Sprite_Poffin_GO": "assets/items\\Sprite_Poffin_GO.png",
+    "Sprite_Poké_Ball_GO": "assets/items\\Sprite_Poké_Ball_GO.png",
+    "Sprite_Potion_GO": "assets/items\\Sprite_Potion_GO.png",
+    "Sprite_Potion_Max_GO": "assets/items\\Sprite_Potion_Max_GO.png",
     "Sprite_Radar_Rocket_GO": "assets/items\\Sprite_Radar_Rocket_GO.png",
+    "Sprite_Rappel_GO": "assets/items\\Sprite_Rappel_GO.png",
+    "Sprite_Rappel_Max_GO": "assets/items\\Sprite_Rappel_Max_GO.png",
     "Sprite_Sac_GO": "assets/items\\Sprite_Sac_GO.png",
     "Sprite_Stockage_de_Pokémon_GO": "assets/items\\Sprite_Stockage_de_Pokémon_GO.png",
     "Sprite_Super-Incubateur_GO": "assets/items\\Sprite_Super-Incubateur_GO.png",
+    "Sprite_Super_Ball_GO": "assets/items\\Sprite_Super_Ball_GO.png",
     "Sprite_Super_Bonbon_GO": "assets/items\\Sprite_Super_Bonbon_GO.png",
+    "Sprite_Super_Potion_GO": "assets/items\\Sprite_Super_Potion_GO.png",
+    "Sprite_Super_Radar_Rocket_GO": "assets/items\\Sprite_Super_Radar_Rocket_GO.png",
     "Sprite_Œuf_Chance_GO": "assets/items\\Sprite_Œuf_Chance_GO.png"
   },
   "raid": {
@@ -52,6 +64,7 @@ export const IMAGES = {
       "Pokemon-GO-Taux-shiny": "assets/ressources\\infographie\\Pokemon-GO-Taux-shiny.jpg"
     }
   },
+  "shiny-icon": "assets/shiny-icon.webp",
   "types": {
     "Acier": "assets/types\\Acier.png",
     "Combat": "assets/types\\Combat.png",

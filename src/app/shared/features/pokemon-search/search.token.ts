@@ -1,7 +1,7 @@
 import { InjectionToken, Provider, Signal, Type } from '@angular/core';
-import { PokemonInterface } from '@entities/pokemon';
+import { PokemonData } from '@entities/pokemon';
 
-export interface WithSearch {
+export interface WithSearch<T extends PokemonData = PokemonData> {
     incrementGeneration(): void;
     decrementGeneration(): void;
     search: Signal<string>;
@@ -9,11 +9,11 @@ export interface WithSearch {
     setSearch: (v: string) => void;
     clearSearch: () => void;
     selectGeneration: (v: number) => void;
-    resultSelected: () => PokemonInterface[];
-    filteredPokemons: () => PokemonInterface[];
+    resultSelected: () => T[];
+    filteredPokemons: () => T[];
 }
-export const SEARCH_STORE = new InjectionToken<WithSearch>('SearchStore');
+export const SEARCH_STORE = new InjectionToken<WithSearch<any>>('SearchStore');
 
-export function provideSearchStore(store: Type<WithSearch>): Provider {
+export function provideSearchStore(store: Type<WithSearch<any>>): Provider {
     return { provide: SEARCH_STORE, useExisting: store };
 }

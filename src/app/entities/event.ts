@@ -1,4 +1,5 @@
 import {
+    AlternativePokemon,
     GenerationPokemon,
     NamePokemon,
     PokemonFamily,
@@ -65,9 +66,11 @@ export class PokemonWithRarity implements PokemonInterface {
         public pokemon: PokemonInterface,
         public isRare: boolean = false,
     ) {}
+    mega?: { id: number; type: string[] } | undefined;
+    alternatives?: AlternativePokemon | undefined;
 
-    get id(): number {
-        return this.pokemon.id;
+    get dexNumber(): number {
+        return this.pokemon.dexNumber;
     }
 
     get slug(): PokemonSlug {
@@ -88,10 +91,6 @@ export class PokemonWithRarity implements PokemonInterface {
 
     get imageShiny(): string {
         return this.pokemon.image;
-    }
-
-    get sprite(): string {
-        return this.pokemon.sprite;
     }
 
     get isLegendary(): boolean {

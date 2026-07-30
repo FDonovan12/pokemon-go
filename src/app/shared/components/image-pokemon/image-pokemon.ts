@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { Base, PokemonInterface } from '@entities/pokemon';
+import { PokemonData } from '@entities/pokemon';
 
 @Component({
     selector: 'app-image-pokemon',
@@ -22,7 +22,7 @@ import { Base, PokemonInterface } from '@entities/pokemon';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImagePokemon {
-    pokemon = input.required<PokemonInterface | Base>();
+    pokemon = input.required<PokemonData>();
     height = input<number>(50);
     isShiny = input<boolean>(false);
 }

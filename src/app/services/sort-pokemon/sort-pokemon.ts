@@ -90,7 +90,7 @@ export class SortPokemonService {
     }
 
     public getOrderedList(pokemons: PokemonWithRarity[], megaPokemons: PokemonInterface[]): PokemonWithRarity[] {
-        this.idMap = new Map(pokemons.map((p) => [p.id, p]));
+        this.idMap = new Map(pokemons.map((p) => [p.dexNumber, p]));
 
         const graph = this.buildWeightedGraph(pokemons, megaPokemons);
 
@@ -199,14 +199,14 @@ export class SortPokemonService {
 
         for (const a of pokemons) {
             for (const b of pokemons) {
-                if (a.id >= b.id) continue;
+                if (a.dexNumber >= b.dexNumber) continue;
 
                 const weight = this.getWeightEdge(a, b, megaPokemons);
 
-                if (!graph.has(a.id)) graph.set(a.id, []);
-                if (!graph.has(b.id)) graph.set(b.id, []);
-                graph.get(a.id)!.push({ target: b.id, node: a.id, weight });
-                graph.get(b.id)!.push({ target: a.id, node: b.id, weight });
+                if (!graph.has(a.dexNumber)) graph.set(a.dexNumber, []);
+                if (!graph.has(b.dexNumber)) graph.set(b.dexNumber, []);
+                graph.get(a.dexNumber)!.push({ target: b.dexNumber, node: a.dexNumber, weight });
+                graph.get(b.dexNumber)!.push({ target: a.dexNumber, node: b.dexNumber, weight });
             }
         }
 

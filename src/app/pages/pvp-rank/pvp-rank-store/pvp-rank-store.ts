@@ -1,5 +1,5 @@
-import { computed, effect, inject, resource, ResourceRef } from '@angular/core';
-import { Base, PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { computed, effect, inject, resource } from '@angular/core';
+import { Base, PokemonSlug } from '@entities/pokemon';
 import { AllRankPVP, Combo, FilterDef, FilterTier, IV, LeagueStats, RankPVP } from '@entities/stats';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
@@ -25,6 +25,7 @@ type FilterMapValue = {
     hasRank1: boolean;
     // futurs champs ici
 };
+
 const initialState = {
     allRank: new Map<PokemonSlug, PvpRank>(),
     limitFilterGeneral: 1000,
@@ -34,7 +35,7 @@ const initialState = {
 
 export const PVPRankStore = signalStore(
     { providedIn: 'root' },
-    withPokemonSearch(),
+    withPokemonSearch<Base>(),
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
         _localStorageService: inject(LocalStorageService),
@@ -42,9 +43,7 @@ export const PVPRankStore = signalStore(
         _filterService: inject(FilterService),
     })),
     withProps((store) => ({
-        _pokemonsResource: store._pokemonRepository.allDifferentFormPokemonsSetting as any as ResourceRef<
-            PokemonInterface[]
-        >,
+        _pokemonsResource: store._pokemonRepository.allDifferentFormPokemonsSetting,
         _rank1PVP: resource({
             params: () => store._pokemonRepository.rank1PVP.value(),
             loader: async ({ params: pokemons }) => {
@@ -64,31 +63,34 @@ export const PVPRankStore = signalStore(
             loader: async ({ params: { table, pokemons } }) => {
                 const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
                 return pokemons.filter(
-                    (pokemon) =>
-                        store._pokemonRepository.pureCalculateCp(pokemon as any as Base, table, IV_MAX, 50) > 1480,
+                    (pokemon) => store._pokemonRepository.pureCalculateCp(pokemon, table, IV_MAX, 50) > 1480,
                 );
             },
-            defaultValue: [],
+            defaultValue: [] as Base[],
         }),
     })),
     withState(initialState),
     withComputed((store) => ({
         isLoading: computed(() => store._pokemonsResource.isLoading() || store._filteredResource.isLoading()),
-        filteredPokemons: computed(() =>
-            store._filteredResource.isLoading()
-                ? store.resultSelected()
-                : (store._filteredResource.value() ?? store.resultSelected()),
-        ),
-        _subEvolutionsMap: computed(() => buildSubEvolutionsMap(store._pokemonsResource.value() as any as Base[])),
+        filteredPokemons: computed(() => {
+            if (!store._filteredResource.isLoading()) {
+                return store._filteredResource.value() ?? [];
+            }
+
+            return store.resultSelected();
+        }),
+        _subEvolutionsMap: computed(() => buildSubEvolutionsMap(store._pokemonsResource.value())),
         isPokemonsAvaible: computed(() => {
             const table = store._pokemonRepository.cpMultiplier.value();
             if (!table) return new Map<PokemonSlug, { super: boolean; hyper: boolean }>();
 
             return new Map(
-                (store._filteredResource.value() as any as Base[]).map((pokemon) => [
-                    pokemon.slug,
-                    store._pokemonRepository.isPokemonAvailableForLeagues(pokemon, table),
-                ]),
+                store._filteredResource
+                    .value()
+                    .map((pokemon) => [
+                        pokemon.slug,
+                        store._pokemonRepository.isPokemonAvailableForLeagues(pokemon, table),
+                    ]),
             );
         }),
     })),
@@ -179,7 +181,7 @@ export const PVPRankStore = signalStore(
             };
 
             const result = new Map<PokemonSlug, { great: string | null; ultra: string | null }>();
-            (store.filteredPokemons() as any as Base[]).forEach((pokemon) => {
+            store.filteredPokemons().forEach((pokemon) => {
                 const data = rank1[pokemon.slug];
                 const league = leagues.get(pokemon.slug);
                 if (!data || !league) return;
@@ -238,8 +240,8 @@ export const PVPRankStore = signalStore(
                         const superResult = checkLeague('super', validSuper);
                         const hyperResult = checkLeague('hyper', validHyper);
 
-                        if (superResult.included || hyperResult.included) pokemonsIncluded.push(pokemon as any as Base);
-                        if (superResult.excluded || hyperResult.excluded) pokemonsExcluded.push(pokemon as any as Base);
+                        if (superResult.included || hyperResult.included) pokemonsIncluded.push(pokemon);
+                        if (superResult.excluded || hyperResult.excluded) pokemonsExcluded.push(pokemon);
                         return true;
                     });
                 }
@@ -383,11 +385,16 @@ export const PVPRankStore = signalStore(
                     stamina: key % 5,
                 }) as Combo<FilterTier>;
             store.filteredPokemons().forEach((pokemon) => {
-                const base = pokemon as any as Base;
+                if (
+                    !store.isPokemonsAvaible().get(pokemon.slug)?.super &&
+                    !store.isPokemonsAvaible().get(pokemon.slug)?.hyper
+                ) {
+                    return;
+                }
 
                 if (store.isPokemonsAvaible().get(pokemon.slug)?.super) {
                     const greatRankBetterThanActualRank = store._getBetterRankWithLimit(
-                        base.slug,
+                        pokemon.slug,
                         'super',
                         store.limitFilterGeneral(),
                     );
@@ -400,7 +407,7 @@ export const PVPRankStore = signalStore(
                             entry = { pokemonsSlug: [], hasRank1: false };
                             mapFilterGreat.set(key, entry);
                         }
-                        entry.pokemonsSlug.push(base.slug);
+                        entry.pokemonsSlug.push(pokemon.slug);
                         if (index === 0) entry.hasRank1 = true;
                         // mapFilterGreat.ensureArray(statToFilterKey(stat)).push(base);
                     });
@@ -408,7 +415,7 @@ export const PVPRankStore = signalStore(
 
                 if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper) {
                     const ultraRankBetterThanActualRank = store._getBetterRankWithLimit(
-                        base.slug,
+                        pokemon.slug,
                         'hyper',
                         store.limitFilterGeneral(),
                     );
@@ -420,7 +427,7 @@ export const PVPRankStore = signalStore(
                             entry = { pokemonsSlug: [], hasRank1: false };
                             mapFilterUltra.set(key, entry);
                         }
-                        entry.pokemonsSlug.push(base.slug);
+                        entry.pokemonsSlug.push(pokemon.slug);
                         if (index === 0) entry.hasRank1 = true;
                         // mapFilterUltra.ensureArray(statToFilterKey(stat)).push(base);
                     });
@@ -433,7 +440,7 @@ export const PVPRankStore = signalStore(
                     .map(([key, { pokemonsSlug, hasRank1 }]) => {
                         const stats = decodeFilterKey(key);
                         const uniquePokemonSlugs = pokemonsSlug.unique();
-                        const dexNumbers = new Set(
+                        const dexNumbers = new Set<Base>(
                             uniquePokemonSlugs
                                 .filter((mainSlug) => (store.allRank().get(mainSlug)?.[league]?.normal ?? 0) !== 1)
                                 .flatMap((mainSlug) => subEvolutionsMap.get(mainSlug) ?? []),
@@ -441,7 +448,7 @@ export const PVPRankStore = signalStore(
                         const isNotInTheStandardFilter = stats.attack > 1 || stats.defense < 3 || stats.stamina < 3;
                         return {
                             stats,
-                            pokemons: dexNumbers as any as Base[],
+                            pokemons: dexNumbers,
                             count: uniquePokemonSlugs.length,
                             dexNumbers,
                             isNotInTheStandardFilter,
@@ -457,10 +464,8 @@ export const PVPRankStore = signalStore(
             const ultraList = toFilterList(mapFilterUltra, 'hyper');
             tick('toFilterList ultra');
 
-            const allPokemon = [
-                ...new Set(store.filteredPokemons().flatMap((p) => subEvolutionsMap.get((p as any).slug) ?? [])),
-            ]
-                .map((p) => (p as any).dexNumber)
+            const allPokemon = [...new Set(store.filteredPokemons().flatMap((p) => subEvolutionsMap.get(p.slug) ?? []))]
+                .map((p) => p.dexNumber)
                 .join(',');
             tick('allPokemon');
 
@@ -469,7 +474,7 @@ export const PVPRankStore = signalStore(
     })),
 
     withMethods((store) => ({
-        getPokemonFilter(pokemon: Base, league?: League): string {
+        getPokemonFilter(pokemon: Base | { slug: PokemonSlug }, league?: League): string {
             const slug = pokemon.slug;
             const rank = store._rankPVP.value();
             if (!rank) return '';
@@ -561,14 +566,14 @@ export const PVPRankStore = signalStore(
     })),
 );
 function buildSubEvolutionsMap(allPokemon: Base[]): Map<string, Base[]> {
-    const byId = new Map(allPokemon.map((p: any) => [p.pokemonId, p]));
+    const byId = new Map(allPokemon.map((p) => [p.pokemonId, p]));
     const byFamily = new Map<string, Base[]>();
-    allPokemon.forEach((p: any) => {
+    allPokemon.forEach((p) => {
         byFamily.ensureArray(p.family).push(p);
     });
 
     const getAllEvolutionIds = (pokemon: Base): string[] => {
-        const directEvos = (pokemon as any).evolutionIds ?? [];
+        const directEvos = pokemon.evolutionIds ?? [];
         return [
             ...directEvos,
             ...directEvos.flatMap((evoId: string) => {
@@ -579,12 +584,12 @@ function buildSubEvolutionsMap(allPokemon: Base[]): Map<string, Base[]> {
     };
 
     const subEvolutionsMap = new Map<string, Base[]>();
-    allPokemon.forEach((pokemon: any) => {
+    allPokemon.forEach((pokemon) => {
         const allEvoIds = getAllEvolutionIds(pokemon);
         const family = byFamily.get(pokemon.family) ?? [];
         subEvolutionsMap.set(
             pokemon.slug,
-            family.filter((other: any) => !allEvoIds.includes(other.pokemonId)),
+            family.filter((other) => !allEvoIds.includes(other.pokemonId)),
         );
     });
 

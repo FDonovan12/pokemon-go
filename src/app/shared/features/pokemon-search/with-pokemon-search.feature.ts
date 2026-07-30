@@ -1,34 +1,34 @@
 import { computed, debounced, inject } from '@angular/core';
-import { generationsPokemon, PokemonInterface } from '@entities/pokemon';
+import { generationsPokemon, PokemonData } from '@entities/pokemon';
 import { patchState, signalStoreFeature, withComputed, withMethods, withProps, withState } from '@ngrx/signals';
 import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
 
 const MAX_GENERATION = Math.max(...generationsPokemon);
 const MIN_GENERATION = Math.min(...generationsPokemon);
 
-const initialState = {
-    _allPokemons: [] as PokemonInterface[],
+const createInitialState = <T extends PokemonData>() => ({
+    _allPokemons: [] as T[],
     generationSelected: 1,
     search: '',
-};
+});
 
-export function withPokemonSearch() {
+export function withPokemonSearch<T extends PokemonData>() {
     return signalStoreFeature(
         withProps(() => ({
             _internalListPokemonRepository: inject(InternalListPokemonRepository),
         })),
-        withState(initialState),
+        withState(createInitialState<T>()),
         withProps((store) => ({
             _debouncedSearch: debounced(store.search, 300),
         })),
         withComputed((store) => ({
-            resultSelected: computed((): PokemonInterface[] => {
+            resultSelected: computed((): T[] => {
                 const search = store._debouncedSearch.value();
-                const allPokemons = store._allPokemons() ?? ([] as PokemonInterface[]);
+                const allPokemons = store._allPokemons() ?? ([] as T[]);
                 if (search) {
                     if (search.trim() === '') return allPokemons;
                     const internal = store._internalListPokemonRepository.getPokemonsForInternalListBySearch(search);
-                    if (internal) return internal;
+                    if (internal) return internal as T[];
                     const allFamily = allPokemons
                         .filter(
                             (pokemon) =>

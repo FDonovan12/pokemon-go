@@ -24,13 +24,13 @@ export interface Base {
     id: string;
     pokemonId: string;
     dexNumber: number;
-    name: string;
-    generation: number;
+    name: NamePokemon;
+    generation: GenerationPokemon;
     slug: PokemonSlug;
     imageId: number;
     image: string;
     imageShiny: string;
-    type: Type[];
+    type: TypePokemon[];
     stats: Stats;
     quickMoves: string[];
     cinematicMoves: string[];
@@ -38,7 +38,7 @@ export interface Base {
     eliteCinematicMove: string[];
     nonTmCinematicMoves: string[];
     evolutionIds: string[];
-    family: string;
+    family: PokemonFamily;
     isLegendary: boolean;
     isMythical: boolean;
     isUltraBeast: boolean;
@@ -56,39 +56,17 @@ export interface Stats {
     baseDefense: number;
 }
 
-export enum Type {
-    PokemonTypeBug = 'POKEMON_TYPE_BUG',
-    PokemonTypeDark = 'POKEMON_TYPE_DARK',
-    PokemonTypeDragon = 'POKEMON_TYPE_DRAGON',
-    PokemonTypeElectric = 'POKEMON_TYPE_ELECTRIC',
-    PokemonTypeFairy = 'POKEMON_TYPE_FAIRY',
-    PokemonTypeFighting = 'POKEMON_TYPE_FIGHTING',
-    PokemonTypeFire = 'POKEMON_TYPE_FIRE',
-    PokemonTypeFlying = 'POKEMON_TYPE_FLYING',
-    PokemonTypeGhost = 'POKEMON_TYPE_GHOST',
-    PokemonTypeGrass = 'POKEMON_TYPE_GRASS',
-    PokemonTypeGround = 'POKEMON_TYPE_GROUND',
-    PokemonTypeIce = 'POKEMON_TYPE_ICE',
-    PokemonTypeNormal = 'POKEMON_TYPE_NORMAL',
-    PokemonTypePoison = 'POKEMON_TYPE_POISON',
-    PokemonTypePsychic = 'POKEMON_TYPE_PSYCHIC',
-    PokemonTypeRock = 'POKEMON_TYPE_ROCK',
-    PokemonTypeSteel = 'POKEMON_TYPE_STEEL',
-    PokemonTypeWater = 'POKEMON_TYPE_WATER',
-}
-
 export interface Different {
     base: Base;
     same: Base[];
 }
 
 export interface PokemonInterface {
-    id: number;
+    dexNumber: number;
     name: NamePokemon;
     slug: PokemonSlug;
     image: string;
     imageShiny: string;
-    sprite: string;
     type: TypePokemon[];
     isLegendary: boolean;
     isMythical: boolean;
@@ -97,6 +75,8 @@ export interface PokemonInterface {
     generation: GenerationPokemon;
     family: PokemonFamily;
 }
+
+export type PokemonData = PokemonInterface | Base;
 
 export type AlternativePokemon = Record<
     'Gmax' | 'Galar' | 'Alola' | 'Hisui' | 'Rapid-strike' | 'Single-strike-gmax' | 'Rapid-strike-gmax' | 'Crowned',
