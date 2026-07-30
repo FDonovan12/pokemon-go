@@ -273,10 +273,12 @@ export const PVPRankStore = signalStore(
                 const excludedNotIncluded = [
                     ...dexNumberExcluded.filter((dex) => !includedSet.has(dex)),
                     ...dexNumberNeither.filter((dex) => !includedSet.has(dex)),
+                    235, // Smeargle / Queulorior
                 ].unique();
                 const includedNotExcluded = [
                     ...dexNumberIncluded.filter((dex) => !excludedSet.has(dex)),
                     ...dexNumberNeither.filter((dex) => !excludedSet.has(dex)),
+                    235, // Smeargle / Queulorior
                 ].unique();
 
                 const mainFilter = {
