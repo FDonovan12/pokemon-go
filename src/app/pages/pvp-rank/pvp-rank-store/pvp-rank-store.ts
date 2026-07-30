@@ -265,7 +265,18 @@ export const PVPRankStore = signalStore(
                 const dexNumberNeither = pokemonsNeither
                     .map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
                     .flat()
-                    .unique();
+                    .unique()
+                    .concat([
+                        213, // Shuckle / Caratroc
+                        235, // Smeargle / Queulorior
+                        132, // Ditto / Métamorph
+                        201, // Unown / Zarbi
+                        202, // Wobbuffet / Qulbutoké
+                        327, // Spinda / Spinda
+                        360, // Wynaut / Okéoké
+                        370, // Luvdisc / Lovdisc
+                        417, // Pachirisu / Pachirisu
+                    ]);
 
                 const includedSet = new Set(dexNumberIncluded);
                 const excludedSet = new Set(dexNumberExcluded);
@@ -273,12 +284,10 @@ export const PVPRankStore = signalStore(
                 const excludedNotIncluded = [
                     ...dexNumberExcluded.filter((dex) => !includedSet.has(dex)),
                     ...dexNumberNeither.filter((dex) => !includedSet.has(dex)),
-                    235, // Smeargle / Queulorior
                 ].unique();
                 const includedNotExcluded = [
                     ...dexNumberIncluded.filter((dex) => !excludedSet.has(dex)),
                     ...dexNumberNeither.filter((dex) => !excludedSet.has(dex)),
-                    235, // Smeargle / Queulorior
                 ].unique();
 
                 const mainFilter = {
