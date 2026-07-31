@@ -293,14 +293,14 @@ export const PVPRankStore = signalStore(
                 const mainFilter = {
                     label: filter.key,
                     filter: `${store._filterService.comboToFilter(filter.combo)} & ${dexNumberIncluded.join(',')} & !#`,
-                    excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)} & ${dexNumberExcluded.join(',')} & !#`,
+                    excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)},obscur & ${dexNumberExcluded.join(',')},obscur & !#`,
                     length: pokemonsIncluded.length,
                     excludedLength: pokemonsExcluded.length,
                 };
                 const noNeedToCheckFilter = {
                     label: `${filter.key}-sans-verif`,
-                    filter: `${store._filterService.comboToFilter(filter.combo)} & ${excludedNotIncluded.join(',')} & !#`,
-                    excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)} & ${includedNotExcluded.join(',')} & !#`,
+                    filter: `${store._filterService.comboToFilter(filter.combo)} & ${excludedNotIncluded.join(',')} & !obscur & !#`,
+                    excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)} & ${includedNotExcluded.join(',')} & !obscur & !#`,
                     length: excludedNotIncluded.length,
                     excludedLength: includedNotExcluded.length,
                 };
