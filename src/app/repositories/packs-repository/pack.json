@@ -297,6 +297,15 @@
       "priceCoins": 150
     },
     {
+      "id": "boite-as",
+      "name": "Boite As",
+      "items": [
+        { "type": "particule_dynamax", "quantity": 4 },
+        { "type": "maxi_champi", "quantity": 1 }
+      ],
+      "priceCoins": 650
+    },
+    {
       "id": "particule-3lot",
       "name": "3 lots particule",
       "items": [{ "type": "particule_dynamax", "quantity": 3 }],

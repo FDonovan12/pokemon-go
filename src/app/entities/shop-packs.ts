@@ -101,6 +101,7 @@ export const ITEM_TYPES: Record<string, ItemTypeConfig> = {
     poke_ball: { label: 'Poke Ball', icon: 'Sprite_Poké_Ball_GO.png' },
     super_ball: { label: 'Super Ball', icon: 'Sprite_Super_Ball_GO.png' },
     hyper_ball: { label: 'Hyper Ball', icon: 'Sprite_Hyper_Ball_GO.png' },
+    maxi_champi: { label: 'Maxi Champi', icon: 'Pokemon-GO-Maxis-Champis.webp' },
 };
 
 // ── Pack class ────────────────────────────────────────────────────────────────
