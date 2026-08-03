@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal, Signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { form, FormField } from '@angular/forms/signals';
+import { form, FormField, required } from '@angular/forms/signals';
 import { ListLabel } from '@entities/label';
 import { generationsPokemon } from '@entities/pokemon';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
@@ -36,7 +36,9 @@ export class ListPokemonPages {
         this.filterService.buildNeitherPokemon(this.store.selectedPokemonWantKeep().toList()),
     );
 
-    addListForm = form(signal({ listName: '' }));
+    addListForm = form(signal({ listName: '' }), (path) => {
+        required(path.listName, { message: 'Le nom de la liste est requis' });
+    });
     generations = generationsPokemon;
 
     addList() {

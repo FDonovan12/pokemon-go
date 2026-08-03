@@ -91,6 +91,32 @@ export const ListPokemonPageStore = signalStore(
         },
     })),
     withMethods((store) => ({
+        selectListPokemon(pokemons: PokemonInterface[]) {
+            pokemons.forEach((pokemon) => store.selectPokemon(pokemon));
+        },
+        reverseSelectedPokemon() {
+            store._allPokemons().forEach((pokemon) => store.selectPokemon(pokemon));
+        },
+    })),
+    withMethods((store) => ({
+        renameSelectedList: (name: string) => {
+            const label = name as ListLabel;
+            const newSelectedEntry = store.selectedListEntry();
+            newSelectedEntry.label = label;
+            store._persistListKeys();
+        },
+        duplicateSelectedList: (name: string) => {
+            const label = name as ListLabel;
+            const newEntry = store.addList(label);
+            const oldSet: Set<PokemonInterface> = store.selectedPokemonWantKeep().toList().toSet();
+            store._listPokemonRepository.addAllSlugsToList(
+                newEntry,
+                oldSet.toList().map((pokemon) => pokemon.slug),
+            );
+            patchState(store, {
+                selectedPokemonWantKeep: oldSet,
+            });
+        },
         deleteSelectedList: () => {
             if (store.listEntries().length === 1) {
                 window.alert('Vous ne pouvez pas supprimer la dernière liste');

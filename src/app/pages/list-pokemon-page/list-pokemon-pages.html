@@ -9,13 +9,35 @@
             type="text"
             [formField]="addListForm.listName"
         />
-        <button type="submit">Ajouter liste</button>
+        <button
+            type="submit"
+            [disabled]="addListForm().invalid()"
+        >
+            Ajouter liste
+        </button>
+        <button
+            type="button"
+            (click)="store.duplicateSelectedList(addListForm.listName().value())"
+            [disabled]="addListForm().invalid()"
+            title="Dupliquer"
+        >
+            📋
+        </button>
+        <button
+            type="button"
+            (click)="store.renameSelectedList(addListForm.listName().value())"
+            [disabled]="addListForm().invalid()"
+            title="Renommer"
+        >
+            ✏️
+        </button>
     </div>
     <button
         type="button"
         (click)="store.deleteSelectedList()"
+        title="Supprimer"
     >
-        supprimer liste actuelle
+        🗑️
     </button>
 </form>
 <br />
@@ -57,8 +79,10 @@
         [class.selected]="store.selectedPokemonWantKeep().has(pokemon)"
     ></app-image-pokemon>
 }
-
-<h2>Pokemon sélectionné</h2>
+<div style="display: flex; align-items: center">
+    <h2>Pokemon sélectionné</h2>
+    <button (click)="store.reverseSelectedPokemon()">Inverser selection</button>
+</div>
 @for (generation of generations; track $index) {
     @if (store.actualListPokemonMap().has(generation) && store.actualListPokemonMap().get(generation)?.length !== 0) {
         <h3>Generation {{ generation }}</h3>
