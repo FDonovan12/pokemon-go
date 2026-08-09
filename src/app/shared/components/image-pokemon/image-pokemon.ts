@@ -6,6 +6,7 @@ import { PokemonData } from '@entities/pokemon';
     imports: [],
     template: `
         <img
+            loading="lazy"
             [src]="isShiny() ? pokemon().imageShiny : pokemon().image"
             [alt]="pokemon().slug"
             [title]="pokemon().slug"

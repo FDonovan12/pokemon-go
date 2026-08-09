@@ -594,32 +594,57 @@ export const PVPRankStore = signalStore(
         },
     })),
 );
-function buildSubEvolutionsMap(allPokemon: Base[]): Map<string, Base[]> {
-    const byId = new Map(allPokemon.map((p) => [p.pokemonId, p]));
-    const byFamily = new Map<string, Base[]>();
-    allPokemon.forEach((p) => {
-        byFamily.ensureArray(p.family).push(p);
+// function buildSubEvolutionsMap1(allPokemon: Base[]): Map<PokemonSlug, Base[]> {
+//     const byId = new Map(allPokemon.map((p) => [p.pokemonId, p]));
+//     const byFamily = new Map<PokemonFamily, Base[]>();
+//     allPokemon.forEach((p) => {
+//         byFamily.ensureArray(p.family).push(p);
+//     });
+
+//     const getAllEvolutionIds = (pokemon: Base): string[] => {
+//         const directEvos = pokemon.evolutionIds;
+//         return [
+//             ...directEvos,
+//             ...directEvos.flatMap((evoId: string) => {
+//                 const evo = byId.get(evoId);
+//                 return evo ? getAllEvolutionIds(evo) : [];
+//             }),
+//         ];
+//     };
+
+//     const subEvolutionsMap = new Map<PokemonSlug, Base[]>();
+//     allPokemon.forEach((pokemon) => {
+//         const allEvoIds = getAllEvolutionIds(pokemon);
+//         const family = byFamily.get(pokemon.family) ?? [];
+//         subEvolutionsMap.set(
+//             pokemon.slug,
+//             family.filter((other) => !allEvoIds.includes(other.pokemonId)),
+//         );
+//     });
+
+//     return subEvolutionsMap;
+// }
+
+function buildSubEvolutionsMap(allPokemon: Base[]): Map<PokemonSlug, Base[]> {
+    const byIdAndForm = new Map(allPokemon.map((p) => [`${p.pokemonId}::${p.form}`, p]));
+
+    const parentsById = new Map<string, Base[]>();
+    allPokemon.forEach((pokemon) => {
+        pokemon.evolutionIds.forEach(({ pokemonId, form }) => {
+            const target = byIdAndForm.get(`${pokemonId}::${form}`);
+            if (!target) return;
+            parentsById.ensureArray(target.id).push(pokemon);
+        });
     });
 
-    const getAllEvolutionIds = (pokemon: Base): string[] => {
-        const directEvos = pokemon.evolutionIds ?? [];
-        return [
-            ...directEvos,
-            ...directEvos.flatMap((evoId: string) => {
-                const evo = byId.get(evoId);
-                return evo ? getAllEvolutionIds(evo) : [];
-            }),
-        ];
+    const getAllAncestors = (pokemon: Base): Base[] => {
+        const directParents = parentsById.get(pokemon.id) ?? [];
+        return [...directParents, ...directParents.flatMap((parent) => getAllAncestors(parent))];
     };
 
-    const subEvolutionsMap = new Map<string, Base[]>();
+    const subEvolutionsMap = new Map<PokemonSlug, Base[]>();
     allPokemon.forEach((pokemon) => {
-        const allEvoIds = getAllEvolutionIds(pokemon);
-        const family = byFamily.get(pokemon.family) ?? [];
-        subEvolutionsMap.set(
-            pokemon.slug,
-            family.filter((other) => !allEvoIds.includes(other.pokemonId)),
-        );
+        subEvolutionsMap.set(pokemon.slug, [pokemon, ...getAllAncestors(pokemon)]);
     });
 
     return subEvolutionsMap;

@@ -537,7 +537,6 @@
       ],
       "priceEuro": 9
     },
-
     {
       "id": "pass_go_incubateur",
       "name": "Pass GO Incubateur",
@@ -550,6 +549,19 @@
         { "type": "radar_rocket", "quantity": 1 },
         { "type": "incubateur_normal", "quantity": 1 },
         { "type": "super_incubateur", "quantity": 1 },
+        { "type": "pass_raid_normal", "quantity": 3 },
+        { "type": "particule_dynamax", "quantity": 2.5 }
+      ],
+      "priceEuro": 9
+    },
+    {
+      "id": "pass_go_bibelot",
+      "name": "Pass GO Bibelot",
+      "items": [
+        { "type": "framby_doree", "quantity": 3 },
+        { "type": "oeuf_chance", "quantity": 1 },
+        { "type": "nanana_argente", "quantity": 6 },
+        { "type": "radar_rocket", "quantity": 1 },
         { "type": "pass_raid_normal", "quantity": 3 },
         { "type": "particule_dynamax", "quantity": 2.5 }
       ],

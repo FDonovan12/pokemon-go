@@ -37,13 +37,18 @@ export interface Base {
     eliteQuickMove: string[];
     eliteCinematicMove: string[];
     nonTmCinematicMoves: string[];
-    evolutionIds: string[];
+    evolutionIds: Evolution[];
     family: PokemonFamily;
     isLegendary: boolean;
     isMythical: boolean;
     isUltraBeast: boolean;
     form: string;
     encounter: Encounter;
+}
+
+export interface Evolution {
+    pokemonId?: string;
+    form: string;
 }
 
 export interface Encounter {
