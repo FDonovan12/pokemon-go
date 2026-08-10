@@ -61,15 +61,33 @@
         </div>
     </div>
 </details> -->
-<app-log-range
+<!-- <app-log-range
     label="Limite filtre général"
     [value]="store.limitFilterGeneral()"
     [realMin]="1"
     [realMax]="4096"
     (valueChange)="store.setLimitFilterGeneral($event)"
-/>
+/> -->
+
 <details>
     <summary>Filtre PVP</summary>
+
+    <div class="filters-container">
+        <div class="league-column">
+            @for (filter of store.basicRankFilter3().filters; track $index) {
+                <div>
+                    <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
+                </div>
+            }
+        </div>
+        <div class="league-column">
+            @for (filter of store.basicRankFilter3().noVerif; track $index) {
+                <div>
+                    <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
+                </div>
+            }
+        </div>
+    </div>
     <!-- <div class="filters-container">
         <div class="league-column">
             @for (filter of store.oldBasicRankFilter().super; track $index) {
@@ -92,26 +110,6 @@
             }
         </div>
     </div> -->
-    @for (filter of store.basicRankFilter(); track $index) {
-        <div class="filters-container">
-            <div class="league-column">
-                <div>
-                    <button (click)="copyBasicFilter(filter[0].filter)">{{ filter[0].label }} ({{ filter[0].length }})</button>
-                    <button (click)="copyBasicFilter(filter[0].excludedFilter)">
-                        {{ filter[0].label }} exclue ({{ filter[0].excludedLength }})
-                    </button>
-                </div>
-            </div>
-            <div class="league-column">
-                <div>
-                    <button (click)="copyBasicFilter(filter[1].filter)">{{ filter[1].label }} ({{ filter[1].length }})</button>
-                    <button (click)="copyBasicFilter(filter[1].excludedFilter)">
-                        {{ filter[1].label }} exclue ({{ filter[1].excludedLength }})
-                    </button>
-                </div>
-            </div>
-        </div>
-    }
 </details>
 @for (pokemon of store.filteredPokemons(); track pokemon.slug) {
     <div class="test">

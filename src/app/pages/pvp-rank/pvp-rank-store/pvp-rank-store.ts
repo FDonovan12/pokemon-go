@@ -85,8 +85,8 @@ export const PVPRankStore = signalStore(
             if (!table) return new Map<PokemonSlug, { super: boolean; hyper: boolean }>();
 
             return new Map(
-                store._filteredResource
-                    .value()
+                store
+                    ._allPokemons()
                     .map((pokemon) => [
                         pokemon.slug,
                         store._pokemonRepository.isPokemonAvailableForLeagues(pokemon, table),
@@ -171,7 +171,7 @@ export const PVPRankStore = signalStore(
             const leagues = store.isPokemonsAvaible();
             if (!rank1) return new Map();
 
-            const getBadge = (stats: LeagueStats, available: boolean): string | null => {
+            const getBadge = (stats: LeagueStats<IV>, available: boolean): string | null => {
                 if (!available) return '❌';
                 const min = Math.min(stats.attack, stats.defense, stats.stamina);
                 if (min >= 12) return '🍀';
@@ -194,139 +194,120 @@ export const PVPRankStore = signalStore(
 
             return result;
         }),
-        basicRankFilter: computed(() => {
+        basicRankFilter3: computed(() => {
             const rank1 = store._rank1PVP.value();
-            const pokemonsDisplay = store._filteredResource.value();
+            const pokemonsToFilter = store._allPokemons();
             const subEvolutionMap = store._subEvolutionsMap();
             const isAvailable = store.isPokemonsAvaible();
-            const filterIV = store._filterService.BASIC_FILTER;
+            const filterIV = store._filterService.NEW_BASIC_FILTER;
             const filterTier: FilterDef<FilterTier>[] = store._filterService.convertIvToFilterTier(filterIV);
-            const limit = store.limitFilterGeneral();
+            const pokemonBySlug = new Map(pokemonsToFilter.map((p) => [p.slug, p]));
 
-            const tierFilters = filterTier.map((filter) => {
-                const pokemonsIncluded: Base[] = [];
-                const pokemonsExcluded: Base[] = [];
-                const pokemonsNeither: Base[] = [];
+            const remainingSuper = new Set<PokemonSlug>();
+            const remainingHyper = new Set<PokemonSlug>();
 
-                if (rank1) {
-                    pokemonsDisplay.forEach((pokemon) => {
-                        const validSuper =
-                            store._pokemonIsWorseThanRank(pokemon.slug, 'super', 1) &&
-                            isAvailable.get(pokemon.slug)?.super;
-                        const validHyper =
-                            store._pokemonIsWorseThanRank(pokemon.slug, 'hyper', 1) &&
-                            isAvailable.get(pokemon.slug)?.hyper;
+            if (rank1) {
+                pokemonsToFilter.forEach((pokemon) => {
+                    const validSuper =
+                        store._pokemonIsWorseThanRank(pokemon.slug, 'super', 1) && isAvailable.get(pokemon.slug)?.super;
+                    const validHyper =
+                        store._pokemonIsWorseThanRank(pokemon.slug, 'hyper', 1) && isAvailable.get(pokemon.slug)?.hyper;
+                    if (validSuper) remainingSuper.add(pokemon.slug);
+                    if (validHyper) remainingHyper.add(pokemon.slug);
+                });
+            }
 
-                        if (!validSuper && !validHyper) {
-                            pokemonsNeither.push(pokemon);
-                            return;
-                        }
+            const tierDexSlugs: PokemonSlug[][] = filterTier.map((filter) => {
+                const includedBySlug = new Map<PokemonSlug, Base>();
 
-                        const checkLeague = (league: 'super' | 'hyper', valid: boolean | undefined) => {
-                            if (!valid) return { included: false, excluded: false };
+                remainingSuper.forEach((slug) => {
+                    if (rank1 && store._filterService.isInTheFilterTier(filter, rank1[slug].super)) {
+                        const pokemon = pokemonBySlug.get(slug);
+                        if (pokemon) includedBySlug.set(slug, pokemon);
+                        remainingSuper.delete(slug);
+                    }
+                });
+                remainingHyper.forEach((slug) => {
+                    if (rank1 && store._filterService.isInTheFilterTier(filter, rank1[slug].hyper)) {
+                        const pokemon = pokemonBySlug.get(slug);
+                        if (pokemon) includedBySlug.set(slug, pokemon);
+                        remainingHyper.delete(slug);
+                    }
+                });
 
-                            const rank1InTier = store._filterService.isInTheFilterTier(
-                                filter,
-                                rank1[pokemon.slug][league],
-                            );
-
-                            const betterRanks = store._getBetterRankWithLimit(pokemon.slug, league, limit);
-                            const matchCount = betterRanks.filter((stat) =>
-                                store._filterService.isInTheFilterTier(filter, stat),
-                            ).length;
-                            const percentage = betterRanks.length > 0 ? matchCount / betterRanks.length : 0;
-                            return {
-                                included: rank1InTier || percentage >= 0.5,
-                                excluded: !rank1InTier || percentage < 0.5,
-                            };
-                        };
-
-                        const superResult = checkLeague('super', validSuper);
-                        const hyperResult = checkLeague('hyper', validHyper);
-
-                        if (superResult.included || hyperResult.included || store.isImportantPokemon(pokemon.slug))
-                            pokemonsIncluded.push(pokemon);
-                        if (superResult.excluded || hyperResult.excluded || store.isImportantPokemon(pokemon.slug))
-                            pokemonsExcluded.push(pokemon);
-                        return true;
-                    });
-                }
-
-                const dexNumberIncluded = pokemonsIncluded
-                    .map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
-                    .flat()
-                    .unique();
-
-                const dexNumberExcluded = pokemonsExcluded
-                    .map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
-                    .flat()
-                    .unique();
-
-                const dexNumberNeither = pokemonsNeither
-                    .map((pokemon) => subEvolutionMap.get(pokemon.slug)?.map((pokemon) => pokemon.dexNumber))
-                    .flat()
-                    .unique()
-                    .concat([
-                        213, // Shuckle / Caratroc
-                        235, // Smeargle / Queulorior
-                        132, // Ditto / Métamorph
-                        201, // Unown / Zarbi
-                        202, // Wobbuffet / Qulbutoké
-                        327, // Spinda / Spinda
-                        360, // Wynaut / Okéoké
-                        370, // Luvdisc / Lovdisc
-                        417, // Pachirisu / Pachirisu
-                    ]);
-
-                const includedSet = new Set(dexNumberIncluded);
-                const excludedSet = new Set(dexNumberExcluded);
-
-                const excludedNotIncluded = [
-                    ...dexNumberExcluded.filter((dex) => !includedSet.has(dex)),
-                    ...dexNumberNeither.filter((dex) => !includedSet.has(dex)),
-                ].unique();
-                const includedNotExcluded = [
-                    ...dexNumberIncluded.filter((dex) => !excludedSet.has(dex)),
-                    ...dexNumberNeither.filter((dex) => !excludedSet.has(dex)),
-                ].unique();
-
-                const mainFilter = {
-                    label: filter.key,
-                    filter: `!# & ${store._filterService.comboToFilter(filter.combo)} & ${dexNumberIncluded.join(',')}`,
-                    excludedFilter: `!# & ${store._filterService.comboToFilterExcluded(filter.combo)},obscur & ${dexNumberExcluded.join(',')},obscur`,
-                    length: pokemonsIncluded.length,
-                    excludedLength: pokemonsExcluded.length,
-                };
-                const noNeedToCheckFilter = {
-                    label: `${filter.key}-sans-verif`,
-                    filter: `!# & ${store._filterService.comboToFilter(filter.combo)} & ${excludedNotIncluded.join(',')} & !obscur`,
-                    excludedFilter: `!# & ${store._filterService.comboToFilterExcluded(filter.combo)} & ${includedNotExcluded.join(',')} & !obscur`,
-                    length: excludedNotIncluded.length,
-                    excludedLength: includedNotExcluded.length,
-                };
-                return [mainFilter, noNeedToCheckFilter];
-                // return {
-                //     label: filter.key,
-                //     filter: `${store._filterService.comboToFilter(filter.combo)} & ${filterPokemonIncluded} & !#`,
-                //     excludedFilter: `${store._filterService.comboToFilterExcluded(filter.combo)} & ${filterPokemonExcluded} & !#`,
-                //     length: pokemonsIncluded.length,
-                //     excludedLength: pokemonsExcluded.length,
-                // };
+                return [...includedBySlug.keys()];
             });
-            const importantSlugs = store._importantPokemons();
-            const dexNumberImportant = [...importantSlugs]
-                .map((slug) => subEvolutionMap.get(slug)?.map((pokemon) => pokemon.dexNumber))
-                .flat()
-                .unique();
 
-            const importantFilter = {
-                label: 'important',
-                filter: `${dexNumberImportant?.join(',')}, obscur & !#`,
-                excludedFilter: '',
-                length: importantSlugs.size,
-                excludedLength: 0,
+            const tierDexNumbers = tierDexSlugs.map((filter) =>
+                filter
+                    .map((slug) => subEvolutionMap.get(slug)?.map((pokemon) => pokemon.dexNumber))
+                    .flat()
+                    .compact()
+                    .unique(),
+            );
+
+            const tierFilters = filterTier.map((filter, i) => ({
+                label: filter.key,
+                filter: `!# & ${store._filterService.comboToFilter(filter.combo)} & ${tierDexSlugs[i].join(',')}`,
+                length: tierDexSlugs[i].length,
+            }));
+
+            const importantSlugs = store._importantPokemons();
+            const remainingSlugs = new Set<PokemonSlug>([...remainingSuper, ...remainingHyper, ...importantSlugs]);
+            const dexNumberRemaining = ([...remainingSlugs]
+                .map((slug) => subEvolutionMap.get(slug)?.map((p) => p.dexNumber))
+                .flat()
+                .unique() ?? []) as number[];
+            const dexNumberRemainingSet = new Set(dexNumberRemaining);
+
+            const remainingFilter = {
+                label: 'reste',
+                filter: `!# & ${dexNumberRemaining.join(',')}`,
+                length: remainingSlugs.size,
             };
-            return tierFilters;
+            // Univers complet, on retire tout ce qui est déjà couvert (tiers + reste)
+            const uncoveredDexNumbers = new Set(pokemonsToFilter.map((p) => p.dexNumber));
+            tierDexNumbers.forEach((dexList) => dexList.forEach((dex) => uncoveredDexNumbers.delete(dex)));
+            dexNumberRemaining.forEach((dex) => uncoveredDexNumbers.delete(dex));
+            // "no-verif" : par signature exacte de tiers, en excluant tout dexNumber déjà dans remainingFilter
+            const dexToTierIndices = new Map<number, Set<number>>();
+            tierDexNumbers.forEach((dexList, tierIndex) => {
+                dexList.forEach((dex) => {
+                    if (dexNumberRemainingSet.has(dex)) return; // priorité à remainingFilter
+                    if (!dexToTierIndices.has(dex)) dexToTierIndices.set(dex, new Set());
+                    dexToTierIndices.get(dex)!.add(tierIndex);
+                });
+            });
+
+            const groupKey = (tiers: Set<number>) => [...tiers].sort((a, b) => a - b).join('-');
+            const dexByGroup = new Map<string, number[]>();
+            dexToTierIndices.forEach((tiers, dex) => {
+                const key = groupKey(tiers);
+                if (!dexByGroup.has(key)) dexByGroup.set(key, []);
+                dexByGroup.get(key)!.push(dex);
+            });
+
+            const noVerif = [...dexByGroup.entries()].map(([key, dexList]) => {
+                const tierIndices = key.split('-').map(Number);
+                const excludedCombo = tierIndices
+                    .map((i) => store._filterService.comboToFilterExcluded(filterTier[i].combo))
+                    .join(' & ');
+                const fullDexList = [...dexList, ...uncoveredDexNumbers].unique() as number[];
+                return {
+                    label: `sans-verif-${key}`,
+                    filter: `!# & ${excludedCombo} & ${fullDexList.join(',')}`,
+                    length: dexList.length,
+                };
+            });
+            const uncoveredEntry = {
+                label: 'sans-verif-jamais-couvert',
+                filter: `!# & ${uncoveredDexNumbers.toList().join(',')}`,
+                length: uncoveredDexNumbers.toList().length,
+            };
+            return {
+                filters: [...tierFilters, remainingFilter],
+                noVerif: [...noVerif, uncoveredEntry],
+            };
         }),
         oldBasicRankFilter: computed(() => {
             const rank1 = store._rank1PVP.value();
@@ -389,12 +370,12 @@ export const PVPRankStore = signalStore(
             tick('setup + rank value');
             const subEvolutionsMap = store._subEvolutionsMap();
             tick('subEvolutionsMap');
-            function ivToFilterValue(iv: number): number {
-                if (iv === 0) return 0;
-                if (iv <= 5) return 1;
-                if (iv <= 10) return 2;
-                if (iv <= 14) return 3;
-                return 4;
+            function ivToFilterValue(iv: IV): FilterTier {
+                if (iv === 0) return 0 as FilterTier;
+                if (iv <= 5) return 1 as FilterTier;
+                if (iv <= 10) return 2 as FilterTier;
+                if (iv <= 14) return 3 as FilterTier;
+                return 4 as FilterTier;
             }
             const statToFilterKey = (stats: LeagueStats<IV>): number => {
                 const attack = ivToFilterValue(stats.attack);
@@ -504,12 +485,12 @@ export const PVPRankStore = signalStore(
             if (!rank) return '';
             const subEvolutionsMap = store._subEvolutionsMap();
 
-            function ivToFilterValue(iv: number): number {
-                if (iv === 0) return 0;
-                if (iv <= 5) return 1;
-                if (iv <= 10) return 2;
-                if (iv <= 14) return 3;
-                return 4;
+            function ivToFilterValue(iv: IV): FilterTier {
+                if (iv === 0) return 0 as FilterTier;
+                if (iv <= 5) return 1 as FilterTier;
+                if (iv <= 10) return 2 as FilterTier;
+                if (iv <= 14) return 3 as FilterTier;
+                return 4 as FilterTier;
             }
 
             const statToFilterKey = (stats: LeagueStats<IV>): number => {
