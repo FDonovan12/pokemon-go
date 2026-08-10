@@ -243,12 +243,13 @@ export const PVPRankStore = signalStore(
                     .map((slug) => subEvolutionMap.get(slug)?.map((pokemon) => pokemon.dexNumber))
                     .flat()
                     .compact()
-                    .unique(),
+                    .unique()
+                    .sortAsc(),
             );
 
             const tierFilters = filterTier.map((filter, i) => ({
                 label: filter.key,
-                filter: `!# & ${store._filterService.comboToFilter(filter.combo)} & ${tierDexSlugs[i].join(',')}`,
+                filter: `!# & ${store._filterService.comboToFilter(filter.combo)} & ${tierDexNumbers[i].join(',')}`,
                 length: tierDexSlugs[i].length,
             }));
 
@@ -257,7 +258,9 @@ export const PVPRankStore = signalStore(
             const dexNumberRemaining = ([...remainingSlugs]
                 .map((slug) => subEvolutionMap.get(slug)?.map((p) => p.dexNumber))
                 .flat()
-                .unique() ?? []) as number[];
+                .compact()
+                .unique()
+                .sortAsc() ?? []) as number[];
             const dexNumberRemainingSet = new Set(dexNumberRemaining);
 
             const remainingFilter = {
