@@ -218,24 +218,24 @@ export const PVPRankStore = signalStore(
             }
 
             const tierDexSlugs: PokemonSlug[][] = filterTier.map((filter) => {
-                const includedBySlug = new Map<PokemonSlug, Base>();
+                const includedSlugs: PokemonSlug[] = [];
 
                 remainingSuper.forEach((slug) => {
                     if (rank1 && store._filterService.isInTheFilterTier(filter, rank1[slug].super)) {
                         const pokemon = pokemonBySlug.get(slug);
-                        if (pokemon) includedBySlug.set(slug, pokemon);
+                        if (pokemon) includedSlugs.push(slug);
                         remainingSuper.delete(slug);
                     }
                 });
                 remainingHyper.forEach((slug) => {
                     if (rank1 && store._filterService.isInTheFilterTier(filter, rank1[slug].hyper)) {
                         const pokemon = pokemonBySlug.get(slug);
-                        if (pokemon) includedBySlug.set(slug, pokemon);
+                        if (pokemon) includedSlugs.push(slug);
                         remainingHyper.delete(slug);
                     }
                 });
 
-                return [...includedBySlug.keys()];
+                return includedSlugs;
             });
 
             const tierDexNumbers = tierDexSlugs.map((filter) =>
@@ -250,7 +250,7 @@ export const PVPRankStore = signalStore(
             const tierFilters = filterTier.map((filter, i) => ({
                 label: filter.key,
                 filter: `!# & ${store._filterService.comboToFilter(filter.combo)} & ${tierDexNumbers[i].join(',')}`,
-                length: tierDexSlugs[i].length,
+                length: tierDexNumbers[i].length,
             }));
 
             const importantSlugs = store._importantPokemons();
@@ -265,13 +265,9 @@ export const PVPRankStore = signalStore(
 
             const remainingFilter = {
                 label: 'reste',
-                filter: `!# & ${dexNumberRemaining.join(',')}`,
+                filter: `!# & ${dexNumberRemaining.join(',')}, obscur`,
                 length: remainingSlugs.size,
             };
-            // Univers complet, on retire tout ce qui est déjà couvert (tiers + reste)
-            const uncoveredDexNumbers = new Set(pokemonsToFilter.map((p) => p.dexNumber));
-            tierDexNumbers.forEach((dexList) => dexList.forEach((dex) => uncoveredDexNumbers.delete(dex)));
-            dexNumberRemaining.forEach((dex) => uncoveredDexNumbers.delete(dex));
             // "no-verif" : par signature exacte de tiers, en excluant tout dexNumber déjà dans remainingFilter
             const dexToTierIndices = new Map<number, Set<number>>();
             tierDexNumbers.forEach((dexList, tierIndex) => {
@@ -290,6 +286,10 @@ export const PVPRankStore = signalStore(
                 dexByGroup.get(key)!.push(dex);
             });
 
+            // Univers complet, on retire tout ce qui est déjà couvert (tiers + reste)
+            const uncoveredDexNumbers = new Set(pokemonsToFilter.map((p) => p.dexNumber));
+            tierDexNumbers.forEach((dexList) => dexList.forEach((dex) => uncoveredDexNumbers.delete(dex)));
+            dexNumberRemaining.forEach((dex) => uncoveredDexNumbers.delete(dex));
             const noVerif = [...dexByGroup.entries()].map(([key, dexList]) => {
                 const tierIndices = key.split('-').map(Number);
                 const excludedCombo = tierIndices
@@ -298,13 +298,13 @@ export const PVPRankStore = signalStore(
                 const fullDexList = [...dexList, ...uncoveredDexNumbers].unique() as number[];
                 return {
                     label: `sans-verif-${key}`,
-                    filter: `!# & ${excludedCombo} & ${fullDexList.join(',')}`,
+                    filter: `!# & ${excludedCombo} & ${fullDexList.join(',')} & !obscur`,
                     length: dexList.length,
                 };
             });
             const uncoveredEntry = {
                 label: 'sans-verif-jamais-couvert',
-                filter: `!# & ${uncoveredDexNumbers.toList().join(',')}`,
+                filter: `!# & ${uncoveredDexNumbers.toList().join(',')} & !obscur`,
                 length: uncoveredDexNumbers.toList().length,
             };
             return {
