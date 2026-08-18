@@ -90,9 +90,7 @@ export class PvpRankDetailPage {
         return this.expandedRows().has(key);
     }
 
-    pokemon: Signal<Base | undefined> = computed(() =>
-        this._pokemonRepository.allDifferentFormPokemonsSetting.value()?.find((p) => p.slug === this.slug()),
-    );
+    pokemon: Signal<Base | undefined> = computed(() => this._pokemonRepository.getPokemonSettingBySlug(this.slug()));
 
     rankPVP: ResourceRef<AllRankPVP | undefined> = resource({
         params: () => this.slug(),

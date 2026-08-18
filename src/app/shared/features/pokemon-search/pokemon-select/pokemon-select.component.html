@@ -1,0 +1,23 @@
+<div
+    class="pokemon-select"
+    appClickOutside
+    (clickOutside)="isOpen.set(false)"
+>
+    <input
+        type="text"
+        [value]="store.search()"
+        (input)="onInput($event)"
+        (focus)="isOpen.set(true)"
+        placeholder="Rechercher un Pokémon..."
+    />
+    @if (isOpen()) {
+        <ul class="pokemon-select__results">
+            @for (pokemon of store.searchResults(); track pokemon.slug) {
+                <li (click)="select(pokemon)">
+                    <app-image-pokemon [pokemon]="pokemon"></app-image-pokemon>
+                    {{ pokemon.name }}
+                </li>
+            }
+        </ul>
+    }
+</div>

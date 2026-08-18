@@ -1,0 +1,137 @@
+:host {
+    display: block;
+}
+
+.stat-finder-card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.stat-finder-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.remove-card-button {
+    border: none;
+    background: transparent;
+    color: #999;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.remove-card-button:hover {
+    color: #d64545;
+    background: #fdecec;
+}
+
+.remove-card-button:focus-visible {
+    outline: 2px solid #3b4cca;
+    outline-offset: 1px;
+}
+
+/* --- Ligne résultat par pokémon --- */
+
+.pokemon-result-row {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.clickable-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    background: #fafafa;
+    user-select: none;
+}
+
+.clickable-row:hover {
+    background: #f2f2f2;
+}
+
+.clickable-row:focus-visible {
+    outline: 2px solid #3b4cca;
+    outline-offset: -2px;
+}
+
+.chevron {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    color: #888;
+    font-size: 0.8rem;
+}
+
+.chevron.open {
+    transform: rotate(90deg);
+}
+
+.result-name {
+    flex: 1;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.result-count {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.remove-pokemon-button {
+    border: none;
+    background: transparent;
+    color: #bbb;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.remove-pokemon-button:hover {
+    color: #d64545;
+    background: #fdecec;
+}
+
+/* --- Zone résultats dépliable --- */
+
+.expanded-results {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+}
+
+.expanded-results.open {
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.match-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    border-top: 1px solid #f0f0f0;
+    font-variant-numeric: tabular-nums;
+}
+
+.match-item:hover {
+    background: #f9f9f9;
+}
+
+@media (max-width: 480px) {
+    .match-item {
+        flex-direction: column;
+        gap: 2px;
+    }
+}

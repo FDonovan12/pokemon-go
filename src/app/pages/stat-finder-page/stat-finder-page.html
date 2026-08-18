@@ -1,0 +1,7 @@
+<div class="stat-finder-page">
+    <button (click)="store.addCard()">Ajouter une carte</button>
+
+    @for (card of store.cards(); track card.id) {
+        <app-stat-finder-card [cardId]="card.id" />
+    }
+</div>

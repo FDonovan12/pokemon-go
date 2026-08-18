@@ -11,6 +11,7 @@ import {
 } from '@entities/pokemon';
 import { AllRankPVP, RankPVP } from '@entities/stats';
 import { ToastService } from '@shared/features/toast/toast.service';
+import { createLookupBySlug } from '@shared/utils/utils';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 import pokemonsData from '../../bdd/bdd-pokemons.json';
 import { familyPokemon } from '../../bdd/family-pokemon';
@@ -48,12 +49,30 @@ export class PokemonRepository {
         },
         defaultValue: [] as Base[],
     });
+    allFormPokemonsSetting = resource({
+        params: () => this.pokemonsSetting.value(),
+        loader: async ({ params: pokemons }) => {
+            if (!pokemons) return [];
+            return pokemons.map((form) => [form.base, ...form.different.map((d) => d.base), ...form.same]).flat();
+        },
+        defaultValue: [] as Base[],
+    });
     cpMultiplier: HttpResourceRef<Record<string, number> | undefined> = httpResource(
         () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon/cp-multiplier.json',
     );
     rank1PVP: HttpResourceRef<Record<PokemonSlug, RankPVP> | undefined> = httpResource(
         () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/rank-1-pvp.json',
     );
+
+    private _pokemonBySlug = createLookupBySlug(this.allDifferentFormPokemonsSetting.value);
+
+    getPokemonSettingBySlug(slug: PokemonSlug): Base | undefined {
+        return this._pokemonBySlug.get(slug);
+    }
+
+    getManyPokemonSettingBySlug(slugs: PokemonSlug[]): Base[] {
+        return this._pokemonBySlug.getMany(slugs);
+    }
 
     async getPVPRank(slug: PokemonSlug): Promise<AllRankPVP> {
         const result = await fetch(
@@ -137,6 +156,10 @@ export class PokemonRepository {
     getPokemonBySlug(slug: PokemonSlug): PokemonInterface {
         return this.pokemonIndex.byName[slug];
     }
+
+    // getPokemonSettingBySlug(slug: PokemonSlug): Base {
+    //     return this.allFormPokemonsSetting.value().find((pokemon) => pokemon.slug === slug)!; // TODO add a pokemon in case of not find
+    // }
 
     getPokemonByName(name: NamePokemon): PokemonInterface {
         console.log('name : ', name);

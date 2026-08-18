@@ -1,0 +1,115 @@
+<div class="prerequisites-form">
+    <div class="field-row">
+        <label>
+            Niveau
+            <input
+                type="number"
+                min="1"
+                max="50"
+                step="0.5"
+                [value]="prerequisites().level ?? ''"
+                (input)="onLevelChange($event)"
+                placeholder="Tous"
+            />
+        </label>
+
+        <label>
+            PC
+            <input
+                type="number"
+                min="10"
+                [value]="prerequisites().cp ?? ''"
+                (input)="onCpChange($event)"
+                placeholder="Tous"
+            />
+        </label>
+    </div>
+
+    <div class="iv-section">
+        <div class="field-row">
+            <div class="segmented">
+                <button
+                    type="button"
+                    [class.active]="prerequisites().iv.mode === 'common'"
+                    (click)="setIvMode('common')"
+                >
+                    Commun
+                </button>
+                <button
+                    type="button"
+                    [class.active]="prerequisites().iv.mode === 'separate'"
+                    (click)="setIvMode('separate')"
+                >
+                    Séparé
+                </button>
+            </div>
+
+            <div class="segmented">
+                <button
+                    type="button"
+                    [class.active]="prerequisites().iv.comparison === 'exact'"
+                    (click)="setIvComparison('exact')"
+                >
+                    Exact
+                </button>
+                <button
+                    type="button"
+                    [class.active]="prerequisites().iv.comparison === 'min'"
+                    (click)="setIvComparison('min')"
+                >
+                    Minimum
+                </button>
+            </div>
+        </div>
+
+        @if (prerequisites().iv.mode === 'common') {
+            <label>
+                IV {{ prerequisites().iv.comparison === 'min' ? '(minimum)' : '' }}
+                <input
+                    type="number"
+                    min="0"
+                    max="15"
+                    [value]="prerequisites().iv.common ?? ''"
+                    (input)="onIvCommonChange($event)"
+                    placeholder="Tous"
+                />
+            </label>
+        } @else {
+            <div class="field-row">
+                <label>
+                    Att.
+                    <input
+                        type="number"
+                        min="0"
+                        max="15"
+                        [value]="prerequisites().iv.atk ?? ''"
+                        (input)="onIvStatChange('atk', $event)"
+                        placeholder="Tous"
+                    />
+                </label>
+                <label>
+                    Déf.
+                    <input
+                        type="number"
+                        min="0"
+                        max="15"
+                        [value]="prerequisites().iv.def ?? ''"
+                        (input)="onIvStatChange('def', $event)"
+                        placeholder="Tous"
+                    />
+                </label>
+                <label>
+                    End.
+                    <input
+                        type="number"
+                        min="0"
+                        max="15"
+                        [value]="prerequisites().iv.sta ?? ''"
+                        (input)="onIvStatChange('sta', $event)"
+                        placeholder="Tous"
+                    />
+                </label>
+            </div>
+        }
+    </div>
+</div>

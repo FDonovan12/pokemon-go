@@ -75,6 +75,10 @@ export const routes: Routes = [
             import('./pages/ressources-page/shop-packs/shop-packs-page').then((m) => m.ShopPacksComponent),
     },
     {
+        path: 'stat-finder',
+        loadComponent: () => import('./pages/stat-finder-page/stat-finder-page').then((m) => m.StatFinderPage),
+    },
+    {
         path: 'pvp-rank',
         loadComponent: () => import('./pages/pvp-rank/pvp-rank').then((m) => m.PvpRankPages),
         children: [

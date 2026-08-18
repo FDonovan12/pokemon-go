@@ -1,0 +1,83 @@
+:host {
+    display: block;
+}
+
+.prerequisites-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: #f8f8fb;
+    border-radius: 12px;
+}
+
+.field-row {
+    display: flex;
+    gap: 10px;
+}
+
+.field-row label {
+    flex: 1;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+input[type='number'] {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+input[type='number']:focus-visible {
+    outline: 2px solid #3b4cca;
+    outline-offset: 1px;
+    border-color: #3b4cca;
+}
+
+.iv-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.segmented {
+    display: inline-flex;
+    border: 1px solid #ddd;
+    border-radius: 999px;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.segmented button {
+    border: none;
+    background: #fff;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.segmented button.active {
+    background: #3b4cca;
+    color: #fff;
+}
+
+.segmented button:focus-visible {
+    outline: 2px solid #3b4cca;
+    outline-offset: -2px;
+}
+
+@media (max-width: 420px) {
+    .field-row {
+        flex-direction: column;
+    }
+}

@@ -1,50 +1,21 @@
-import { computed, debounced, inject } from '@angular/core';
+import { computed } from '@angular/core';
 import { generationsPokemon, PokemonData } from '@entities/pokemon';
-import { patchState, signalStoreFeature, withComputed, withMethods, withProps, withState } from '@ngrx/signals';
-import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
+import { patchState, signalStoreFeature, withComputed, withMethods, withState } from '@ngrx/signals';
+import { withPokemonTextSearch } from './with-pokemon-text-search.feature';
 
 const MAX_GENERATION = Math.max(...generationsPokemon);
 const MIN_GENERATION = Math.min(...generationsPokemon);
 
-const createInitialState = <T extends PokemonData>() => ({
-    _allPokemons: [] as T[],
-    generationSelected: 1,
-    search: '',
-});
-
 export function withPokemonSearch<T extends PokemonData>() {
     return signalStoreFeature(
-        withProps(() => ({
-            _internalListPokemonRepository: inject(InternalListPokemonRepository),
-        })),
-        withState(createInitialState<T>()),
-        withProps((store) => ({
-            _debouncedSearch: debounced(store.search, 300),
-        })),
+        withPokemonTextSearch<T>(),
+        withState({ generationSelected: 1 }),
         withComputed((store) => ({
             resultSelected: computed((): T[] => {
                 const search = store._debouncedSearch.value();
+                if (search && search.trim() !== '') return store.searchResults();
+
                 const allPokemons = store._allPokemons() ?? ([] as T[]);
-                if (search) {
-                    if (search.trim() === '') return allPokemons;
-                    const internal = store._internalListPokemonRepository.getPokemonsForInternalListBySearch(search);
-                    if (internal) return internal as T[];
-                    const allFamily = allPokemons
-                        .filter(
-                            (pokemon) =>
-                                pokemon.slug.slugifyIncludes(search) ||
-                                pokemon.type.some((type) => type.slugifyEquals(search)),
-                        )
-                        .map((pokemon) => pokemon.family)
-                        .toSet();
-
-                    return allPokemons
-                        .filter((pokemon) => allFamily.has(pokemon.family))
-                        .groupBy('family')
-                        .toList('values')
-                        .flat();
-                }
-
                 const onlyThisGeneration = allPokemons.filter(
                     (pokemon) => pokemon.generation === store.generationSelected(),
                 );
@@ -66,8 +37,6 @@ export function withPokemonSearch<T extends PokemonData>() {
                 patchState(store, { generationSelected: Math.max(store.generationSelected() - 1, MIN_GENERATION) }),
             incrementGeneration: () =>
                 patchState(store, { generationSelected: Math.min(store.generationSelected() + 1, MAX_GENERATION) }),
-            setSearch: (value: string) => patchState(store, { search: value }),
-            clearSearch: () => patchState(store, { search: '' }),
             selectGeneration: (generation: number) => patchState(store, { generationSelected: generation }),
         })),
     );

@@ -1,0 +1,46 @@
+:host {
+    display: block;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+}
+
+.stat-finder-page {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.stat-finder-page__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.add-card-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 999px;
+    background: #ffcb05; /* jaune Pikachu — à ajuster selon ta charte */
+    color: #2a2a2a;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.add-card-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 203, 5, 0.35);
+}
+
+.add-card-button:focus-visible {
+    outline: 3px solid #3b4cca;
+    outline-offset: 2px;
+}
