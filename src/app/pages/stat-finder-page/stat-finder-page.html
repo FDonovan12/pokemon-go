@@ -1,7 +1,25 @@
 <div class="stat-finder-page">
-    <button (click)="store.addCard()">Ajouter une carte</button>
+    <div class="stat-finder-page__header">
+        <button
+            class="add-card-button"
+            (click)="store.addCard()"
+        >
+            + Ajouter une carte
+        </button>
+    </div>
 
-    @for (card of store.cards(); track card.id) {
-        <app-stat-finder-card [cardId]="card.id" />
-    }
+    <div
+        cdkDropList
+        class="stat-finder-list"
+        (cdkDropListDropped)="onDrop($event)"
+    >
+        @for (card of store.cards(); track card.id) {
+            <div
+                cdkDrag
+                class="drag-wrapper"
+            >
+                <app-stat-finder-card [card]="card" />
+            </div>
+        }
+    </div>
 </div>

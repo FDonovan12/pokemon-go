@@ -75,80 +75,6 @@
     background-color: hsl(var(--color-vol) / 0.15);
 }
 
-/* .Acier {
-    background-color: #f5f5f8;
-    background-color: hsla(240, 20%, 77%, 0.15);
-}
-
-.Combat {
-    background-color: aliceblue;
-    background-color: rgba(192, 48, 40, 0.15);
-}
-.Dragon {
-    background-color: #f7f5fe;
-    background-color: rgba(112, 56, 248, 0.15);
-}
-.Eau {
-    background-color: #edf2fd;
-    background-color: rgba(104, 144, 240, 0.15);
-}
-.Électrik {
-    background-color: #fffbeb;
-    background-color: rgba(248, 208, 48, 0.15);
-}
-.Fée {
-    background-color: aliceblue;
-    background-color: rgba(238, 153, 172, 0.15);
-}
-.Feu {
-    background-color: #fdf2ea;
-    background-color: rgba(240, 128, 48, 0.15);
-}
-.Glace {
-    background-color: aliceblue;
-    background-color: rgba(152, 216, 216, 0.15);
-}
-.Insecte {
-    background-color: #f5f6e5;
-    background-color: rgba(168, 184, 32, 0.15);
-}
-.Normal {
-    background-color: #f6f6f1;
-    background-color: rgba(168, 168, 120, 0.15);
-}
-.Plante {
-    background-color: #ecf7e7;
-    background-color: rgba(120, 200, 80, 0.15);
-}
-.Poison {
-    background-color: aliceblue;
-    background-color: rgba(160, 64, 160, 0.15);
-}
-.Psy {
-    background-color: #f8588826;
-    background-color: rgba(248, 88, 136, 0.15);
-}
-.Roche {
-    background-color: aliceblue;
-    background-color: rgba(184, 160, 56, 0.15);
-}
-.Sol {
-    background-color: aliceblue;
-    background-color: rgba(224, 192, 104, 0.15);
-}
-.Spectre {
-    background-color: #efedf3;
-    background-color: rgba(112, 88, 152, 0.15);
-}
-.Ténèbres {
-    background-color: aliceblue;
-    background-color: rgba(162, 146, 136, 0.15);
-}
-.Vol {
-    background-color: aliceblue;
-    background-color: rgba(168, 144, 240, 0.15);
-} */
-
 :root {
     --spacer: 0.2em; /* affect margin padding .btn */
     --background-color: hsla(0, 0%, 0%, 0);
@@ -209,4 +135,20 @@ input {
 }
 .error {
     color: var(--danger-color);
+}
+
+/* styles.css (global, pas dans un composant) */
+.cdk-drag-preview {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+}
+
+.cdk-drag-placeholder {
+    opacity: 0.3;
+    border: 2px dashed #ccc;
+    border-radius: 16px;
+}
+
+.cdk-drag-animating {
+    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
 }

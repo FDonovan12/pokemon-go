@@ -2,6 +2,7 @@ import { effect, inject } from '@angular/core';
 import { patchState, signalStore, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { CardEntry, createEmptyCard } from '../stat-finder.types';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 const STORAGE_KEY = 'stat-finder-cards';
 
@@ -22,6 +23,11 @@ export const StatFinderPageStore = signalStore(
             patchState(store, {
                 cards: store.cards().map((c) => (c.id === id ? { ...c, ...partial } : c)),
             });
+        },
+        reorderCards(previousIndex: number, currentIndex: number) {
+            const cards = [...store.cards()];
+            moveItemInArray(cards, previousIndex, currentIndex);
+            patchState(store, { cards });
         },
     })),
     withHooks({

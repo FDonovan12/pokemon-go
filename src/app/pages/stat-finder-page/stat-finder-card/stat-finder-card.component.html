@@ -1,10 +1,31 @@
 <div class="stat-finder-card">
-    <button (click)="removeCard()">Supprimer la carte</button>
+    <div class="stat-finder-card__header">
+        <span
+            class="drag-handle"
+            cdkDragHandle
+            title="Réordonner"
+        >
+            ⠿
+        </span>
+        <input
+            class="card-name-input"
+            type="text"
+            [value]="card().name"
+            (input)="onNameChange($event)"
+            placeholder="Carte sans nom"
+        />
+        <button
+            class="remove-card-button"
+            (click)="removeCard()"
+        >
+            Supprimer
+        </button>
+    </div>
 
     <app-pokemon-select (selected)="addPokemon($event)" />
 
     <app-prerequisites-form
-        [prerequisites]="entry().prerequisites"
+        [prerequisites]="card().prerequisites"
         (prerequisitesChange)="updatePrerequisites($event)"
     />
 

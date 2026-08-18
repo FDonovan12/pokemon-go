@@ -20,6 +20,7 @@ export interface CardPrerequisites {
 
 export interface CardEntry {
     id: string;
+    name: string;
     pokemonSlugs: PokemonSlug[];
     prerequisites: CardPrerequisites;
 }
@@ -35,6 +36,7 @@ export interface StatMatch {
 export function createEmptyCard(): CardEntry {
     return {
         id: crypto.randomUUID(),
+        name: '',
         pokemonSlugs: [],
         prerequisites: {
             level: null,

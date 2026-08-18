@@ -44,3 +44,17 @@
     outline: 3px solid #3b4cca;
     outline-offset: 2px;
 }
+
+.stat-finder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.drag-wrapper.cdk-drag-animating {
+    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.stat-finder-list.cdk-drop-list-dragging .drag-wrapper:not(.cdk-drag-placeholder) {
+    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}

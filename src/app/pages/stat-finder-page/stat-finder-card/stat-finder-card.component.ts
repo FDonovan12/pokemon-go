@@ -1,3 +1,4 @@
+import { CdkDragHandle } from '@angular/cdk/drag-drop';
 import { Component, computed, inject, input } from '@angular/core';
 import { PokemonData } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
@@ -5,32 +6,27 @@ import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { PokemonSelectComponent } from '@shared/features/pokemon-search/pokemon-select/pokemon-select.component';
 import { createExpandableSet } from '@shared/utils/utils';
 import { findStatMatches, hasNoPrerequisites } from '../stat-finder.calc';
-import { CardPrerequisites } from '../stat-finder.types';
+import { CardEntry, CardPrerequisites } from '../stat-finder.types';
 import { StatFinderPageStore } from '../stats-finder-store/stat-finder-page.store';
 import { PrerequisitesFormComponent } from './prerequisites-form.component/prerequisites-form.component';
 
 @Component({
     selector: 'app-stat-finder-card',
     standalone: true,
-    imports: [PokemonSelectComponent, PrerequisitesFormComponent, ImagePokemon],
+    imports: [PokemonSelectComponent, PrerequisitesFormComponent, ImagePokemon, CdkDragHandle],
     templateUrl: './stat-finder-card.component.html',
     styleUrl: './stat-finder-card.component.css',
 })
 export class StatFinderCardComponent {
-    cardId = input.required<string>();
+    card = input.required<CardEntry>();
 
     private _pageStore = inject(StatFinderPageStore);
     private _pokemonRepository = inject(PokemonRepository);
 
     protected expandable = createExpandableSet<string>(); // clé = pokemon.slug
 
-    entry = computed(() => this._pageStore.cards().find((c) => c.id === this.cardId())!);
-
     resultsByPokemon = computed(() => {
-        const { pokemonSlugs, prerequisites } = this.entry();
-        // const allPokemons = this._pokemonRepository.allDifferentFormPokemonsSetting.value();
-        // if (allPokemons.length === 0) return;
-        // const pokemons = pokemonSlugs.map((slug) => allPokemons.find((pokemon) => pokemon.slug === slug)!);
+        const { pokemonSlugs, prerequisites } = this.card();
         const pokemons = this._pokemonRepository.getManyPokemonSettingBySlug(pokemonSlugs);
         if (hasNoPrerequisites(prerequisites)) {
             return pokemons.map((pokemon) => ({
@@ -58,24 +54,29 @@ export class StatFinderCardComponent {
     });
 
     addPokemon(pokemon: PokemonData) {
-        this._pageStore.updateCard(this.cardId(), {
-            pokemonSlugs: [...this.entry().pokemonSlugs, pokemon.slug],
+        this._pageStore.updateCard(this.card().id, {
+            pokemonSlugs: [...this.card().pokemonSlugs, pokemon.slug],
         });
     }
 
     removePokemon(slug: string) {
-        this._pageStore.updateCard(this.cardId(), {
-            pokemonSlugs: this.entry().pokemonSlugs.filter((s) => s !== slug),
+        this._pageStore.updateCard(this.card().id, {
+            pokemonSlugs: this.card().pokemonSlugs.filter((s) => s !== slug),
         });
     }
 
+    onNameChange(event: Event) {
+        const value = (event.target as HTMLInputElement).value;
+        this._pageStore.updateCard(this.card().id, { name: value });
+    }
+
     updatePrerequisites(partial: Partial<CardPrerequisites>) {
-        this._pageStore.updateCard(this.cardId(), {
-            prerequisites: { ...this.entry().prerequisites, ...partial },
+        this._pageStore.updateCard(this.card().id, {
+            prerequisites: { ...this.card().prerequisites, ...partial },
         });
     }
 
     removeCard() {
-        this._pageStore.removeCard(this.cardId());
+        this._pageStore.removeCard(this.card().id);
     }
 }
