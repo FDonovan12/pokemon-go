@@ -28,33 +28,6 @@ export class FilterService {
     private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
     private readonly _listPokemonRepository: ListPokemonRepository = inject(ListPokemonRepository);
 
-    readonly BASIC_FILTER: FilterDef<IV>[] = [
-        {
-            key: 'zero-atk',
-            combo: {
-                attack: { min: 0, max: 0 },
-                defense: { min: 0, max: 15 },
-                stamina: { min: 0, max: 15 },
-            },
-        },
-        {
-            key: 'low-atk-high-other',
-            combo: {
-                attack: { min: 0, max: 5 },
-                defense: { min: 11, max: 15 },
-                stamina: { min: 11, max: 15 },
-            },
-        },
-        {
-            key: 'low-atk-midhigh-other',
-            combo: {
-                attack: { min: 0, max: 5 },
-                defense: { min: 6, max: 15 },
-                stamina: { min: 6, max: 15 },
-            },
-        },
-    ] as FilterDef<IV>[];
-
     readonly NEW_BASIC_FILTER2: FilterDef<IV>[] = [
         {
             key: 'zero-atk',
@@ -66,7 +39,7 @@ export class FilterService {
         },
     ] as FilterDef<IV>[];
 
-    readonly NEW_BASIC_FILTER: FilterDef<IV>[] = [
+    readonly BASIC_FILTER: FilterDef<IV>[] = [
         {
             key: 'low-atk-high-other',
             combo: {

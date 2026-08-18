@@ -198,7 +198,7 @@ export const PVPRankStore = signalStore(
             const pokemonsToFilter = store._allPokemons();
             const subEvolutionMap = store._subEvolutionsMap();
             const isAvailable = store.isPokemonsAvaible();
-            const filterIV = store._filterService.NEW_BASIC_FILTER;
+            const filterIV = store._filterService.BASIC_FILTER;
             const filterTier: FilterDef<FilterTier>[] = store._filterService.convertIvToFilterTier(filterIV);
             const pokemonBySlug = new Map(pokemonsToFilter.map((p) => [p.slug, p]));
             if (!rank1)
