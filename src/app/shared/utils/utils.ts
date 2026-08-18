@@ -1,4 +1,13 @@
-import { Injector, Signal, WritableSignal, computed, effect, inject, signal } from '@angular/core';
+import {
+    Injector,
+    Signal,
+    WritableSignal,
+    computed,
+    effect,
+    inject,
+    runInInjectionContext,
+    signal,
+} from '@angular/core';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 
 export function createTimer(label: string) {
@@ -13,13 +22,18 @@ export function createTimer(label: string) {
 }
 
 export function persistToLocalStorage<T>(key: string, source: Signal<T>, injector?: Injector): void {
-    const localStorageService = inject(LocalStorageService);
-    effect(
-        () => {
+    const run = () => {
+        const localStorageService = inject(LocalStorageService);
+        effect(() => {
             localStorageService.set(key, source());
-        },
-        injector ? { injector } : undefined,
-    );
+        });
+    };
+
+    if (injector) {
+        runInInjectionContext(injector, run);
+    } else {
+        run(); // suppose qu'on est déjà dans un contexte d'injection valide
+    }
 }
 
 // localStorageSignal (standalone) devient juste une composition des deux :
