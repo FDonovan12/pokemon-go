@@ -1,16 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import {
-    Component,
-    computed,
-    effect,
-    HostListener,
-    inject,
-    input,
-    resource,
-    ResourceRef,
-    signal,
-    Signal,
-} from '@angular/core';
+import { Component, computed, effect, inject, input, resource, ResourceRef, signal, Signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Base, PokemonSlug } from '@entities/pokemon';
 import { AllRankPVP, GroupedCombo, LeagueStats, RangeCombo } from '@entities/stats';
@@ -18,6 +7,8 @@ import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
+import { ClickOutsideDirective } from '@shared/directive/click-outside.directive';
+import { localStorageSignal } from '@shared/utils/utils';
 import { PvpRank, PVPRankStore } from '../pvp-rank/pvp-rank-store/pvp-rank-store';
 import { League } from '../pvp-rank/pvp-rank.type';
 
@@ -60,7 +51,7 @@ const DISPLAY_MODE_LOCAL_STORAGE = 'pokemon-display-mode-local-storage';
 
 @Component({
     selector: 'app-pvp-rank-detail-page',
-    imports: [ImagePokemon, NgTemplateOutlet],
+    imports: [ImagePokemon, NgTemplateOutlet, ClickOutsideDirective],
     templateUrl: './pvp-rank-detail-page.html',
     styleUrl: './pvp-rank-detail-page.css',
 })
@@ -77,12 +68,10 @@ export class PvpRankDetailPage {
         ...value,
     }));
 
-    displayMode = signal<'capture' | 'filter'>(this._localStorageService.get(DISPLAY_MODE_LOCAL_STORAGE, 'capture'));
+    displayMode = localStorageSignal<'capture' | 'filter'>(DISPLAY_MODE_LOCAL_STORAGE, 'capture');
 
     toggleDisplayMode(): void {
         this.displayMode.update((mode) => (mode === 'capture' ? 'filter' : 'capture'));
-        console.log('toggleDisplayMode');
-        this._localStorageService.set(DISPLAY_MODE_LOCAL_STORAGE, this.displayMode());
     }
     expandedRows = signal<Set<string>>(new Set());
     toggleRow(key: string): void {
@@ -240,11 +229,8 @@ export class PvpRankDetailPage {
         });
     }
 
-    @HostListener('click', ['$event'])
-    onHostClick(event: MouseEvent): void {
-        if (event.target === event.currentTarget) {
-            this._router.navigate(['pvp-rank']);
-        }
+    close() {
+        this._router.navigate(['pvp-rank']);
     }
 
     getRankDelta(source: Source, league: 'great' | 'ultra'): 'better' | 'worse' | 'same' | null {

@@ -1,10 +1,14 @@
-.dialog-backdrop {
+:host {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
     display: flex;
+    align-items: flex-start;
     justify-content: center;
-    align-items: center;
+    padding-top: clamp(2vh, 10vh, 10vh);
+    padding-bottom: 2vh;
+    overflow-y: auto;
 }
 .dialog {
     background: white;

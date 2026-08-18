@@ -74,14 +74,14 @@
 
     <div class="filters-container">
         <div class="league-column">
-            @for (filter of store.basicRankFilter3().filters; track $index) {
+            @for (filter of store.basicRankFilter().filters; track $index) {
                 <div>
                     <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
                 </div>
             }
         </div>
         <div class="league-column">
-            @for (filter of store.basicRankFilter3().noVerif; track $index) {
+            @for (filter of store.basicRankFilter().noVerif; track $index) {
                 <div>
                     <button (click)="copyBasicFilter(filter.filter)">{{ filter.label }} ({{ filter.length }})</button>
                 </div>

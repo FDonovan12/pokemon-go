@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { form, FormField, max, min, validate } from '@angular/forms/signals';
 import { PokemonInterface } from '@entities/pokemon';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
+import { ClickOutsideDirective } from '@shared/directive/click-outside.directive';
 import { PVPRankStore } from '../pvp-rank-store/pvp-rank-store';
 import { Forme, formeValues, League, leagueValues } from '../pvp-rank.type';
 
@@ -25,7 +26,7 @@ const maxRank = 4096;
     templateUrl: './modify-rank-dialog.html',
     styleUrl: './modify-rank-dialog.css',
 
-    imports: [FormsModule, ImagePokemon, FormField],
+    imports: [FormsModule, ImagePokemon, FormField, ClickOutsideDirective],
 })
 export class ModifyRankDialogComponent {
     protected readonly store = inject(PVPRankStore);
@@ -76,16 +77,16 @@ export class ModifyRankDialogComponent {
         if (this.rankForm().invalid()) return;
         const { pokemon, rank, league, forme } = this.formModel();
         this.store.modifyRank(pokemon.slug, rank, league, forme);
-        this.closed.emit();
+        this.close();
     }
 
     removeRank() {
         const { pokemon, rank, league, forme } = this.formModel();
         this.store.removeRank(pokemon.slug, league, forme);
-        this.closed.emit();
+        this.close();
     }
 
-    cancel() {
+    close() {
         this.closed.emit();
     }
 }

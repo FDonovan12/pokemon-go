@@ -1,13 +1,16 @@
-import { computed, effect, inject } from '@angular/core';
+import { computed, effect, inject, Injector } from '@angular/core';
 import { LabelEntry, ListLabel, ListSlug } from '@entities/label';
 import { PokemonInterface } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { withPokemonSearch } from '@shared/features/pokemon-search/with-pokemon-search.feature';
 import { ToastService } from '@shared/features/toast/toast.service';
+import { persistToLocalStorage } from '@shared/utils/utils';
 
 const LOCAL_STORAGE_KEEP = { label: 'veut garder', slug: 'pokemon-want-keep' } as LabelEntry;
+const LAST_SELECTED_ENTRY_KEY = 'LAST_SELECTED_ENTRY_KEY';
 
 const initialState = {
     listEntries: [] as LabelEntry[],
@@ -20,6 +23,7 @@ export const ListPokemonPageStore = signalStore(
     withPokemonSearch<PokemonInterface>(),
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
+        _localStorageService: inject(LocalStorageService),
         _listPokemonRepository: inject(ListPokemonRepository),
         _toastService: inject(ToastService),
     })),
@@ -146,19 +150,24 @@ export const ListPokemonPageStore = signalStore(
     })),
     withHooks((store) => ({
         async onInit() {
+            const injector = inject(Injector);
             effect(store._syncSelectedPokemonWantKeep);
             effect(store._persistListOfPokemon);
             // effect(store._persistListKeys);
 
             const storageListEntries: LabelEntry[] = await store._listPokemonRepository.getListKeys();
             const allPokemons = store._pokemonRepository.getAllPokemon();
-            const selectedSlug = storageListEntries.first() ?? LOCAL_STORAGE_KEEP;
+            const selectedSlug = store._localStorageService.get(
+                LAST_SELECTED_ENTRY_KEY,
+                storageListEntries.first() ?? LOCAL_STORAGE_KEEP,
+            );
 
             patchState(store, {
                 _allPokemons: allPokemons,
                 listEntries: storageListEntries,
                 selectedListEntry: selectedSlug,
             });
+            persistToLocalStorage(LAST_SELECTED_ENTRY_KEY, store.selectedListEntry, injector);
         },
     })),
 );

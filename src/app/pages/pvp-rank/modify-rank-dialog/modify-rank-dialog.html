@@ -1,78 +1,74 @@
-<div
-    class="dialog-backdrop"
-    (click)="closed.emit()"
+<form
+    class="dialog"
+    appClickOutside
+    (clickOutside)="close()"
+    (ngSubmit)="confirm()"
 >
-    <form
-        class="dialog"
-        (click)="$event.stopPropagation()"
-        (ngSubmit)="confirm()"
-    >
-        <h3>Modifier le Rank</h3>
-        <app-image-pokemon
-            [pokemon]="pokemon()"
-            [height]="100"
-        ></app-image-pokemon>
-        <label>
-            Rank (1-4096):
-            <input
-                #rankInput
-                type="number"
-                [formField]="rankForm.rank"
-            />
-            @for (error of rankForm.rank().errors(); track $index) {
-                <div style="color: var(--danger-color)">
-                    {{ error.message }}
-                </div>
-            }
-        </label>
+    <h3>Modifier le Rank</h3>
+    <app-image-pokemon
+        [pokemon]="pokemon()"
+        [height]="100"
+    ></app-image-pokemon>
+    <label>
+        Rank (1-4096):
+        <input
+            #rankInput
+            type="number"
+            [formField]="rankForm.rank"
+        />
+        @for (error of rankForm.rank().errors(); track $index) {
+            <div style="color: var(--danger-color)">
+                {{ error.message }}
+            </div>
+        }
+    </label>
 
-        <label>
-            Ligue:
-            <select [formField]="rankForm.league">
-                <option value="super">Super</option>
-                <option value="hyper">Hyper</option>
-            </select>
+    <label>
+        Ligue:
+        <select [formField]="rankForm.league">
+            <option value="super">Super</option>
+            <option value="hyper">Hyper</option>
+        </select>
 
-            @for (error of rankForm.league().errors(); track $index) {
-                <div style="color: var(--danger-color)">
-                    {{ error.message }}
-                </div>
-            }
-        </label>
+        @for (error of rankForm.league().errors(); track $index) {
+            <div style="color: var(--danger-color)">
+                {{ error.message }}
+            </div>
+        }
+    </label>
 
-        <label>
-            Forme:
-            <select [formField]="rankForm.forme">
-                <option value="normal">Normal</option>
-                <option value="obscur">Obscur</option>
-            </select>
+    <label>
+        Forme:
+        <select [formField]="rankForm.forme">
+            <option value="normal">Normal</option>
+            <option value="obscur">Obscur</option>
+        </select>
 
-            @for (error of rankForm.forme().errors(); track $index) {
-                <div style="color: var(--danger-color)">
-                    {{ error.message }}
-                </div>
-            }
-        </label>
+        @for (error of rankForm.forme().errors(); track $index) {
+            <div style="color: var(--danger-color)">
+                {{ error.message }}
+            </div>
+        }
+    </label>
 
-        <div class="buttons">
-            <button
-                type="button"
-                (click)="closed.emit()"
-            >
-                Annuler
-            </button>
-            <button
-                type="button"
-                (click)="removeRank()"
-            >
-                Supprimer
-            </button>
-            <button
-                type="submit"
-                [disabled]="rankForm().invalid()"
-            >
-                Confirmer
-            </button>
-        </div>
-    </form>
-</div>
+    <div class="buttons">
+        <button
+            type="button"
+            (click)="closed.emit()"
+        >
+            Annuler
+        </button>
+        <button
+            type="button"
+            (click)="removeRank()"
+        >
+            Supprimer
+        </button>
+        <button
+            type="submit"
+            [disabled]="rankForm().invalid()"
+        >
+            Confirmer
+        </button>
+    </div>
+</form>

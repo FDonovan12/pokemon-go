@@ -1,4 +1,8 @@
-<div class="detail">
+<div
+    class="detail"
+    appClickOutside
+    (clickOutside)="close()"
+>
     <div class="header">
         <app-image-pokemon
             [pokemon]="pokemon()!"
