@@ -45,8 +45,9 @@ export class PvpRankPages {
         this.showDialog.set(false);
     }
 
-    getBadge(stats: LeagueStats): '🌦️' | '🔄' | '⚔️' | '🍀' | null {
+    getBadge(stats: LeagueStats): '⭐' | '🌦️' | '🔄' | '⚔️' | '🍀' | null {
         const min = Math.min(stats.attack, stats.defense, stats.stamina);
+        if (min >= 15) return '⭐';
         if (min >= 12) return '🍀';
         if (min >= 10) return '⚔️';
         if (min >= 5) return '🔄';
