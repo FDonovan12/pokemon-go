@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, computed, effect, inject, input, resource, ResourceRef, signal, Signal } from '@angular/core';
+import { Component, computed, effect, inject, input, resource, ResourceRef, Signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Base, PokemonSlug } from '@entities/pokemon';
 import { AllRankPVP, GroupedCombo, LeagueStats, RangeCombo } from '@entities/stats';
@@ -8,7 +8,7 @@ import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { ClickOutsideDirective } from '@shared/directive/click-outside.directive';
-import { localStorageSignal } from '@shared/utils/utils';
+import { createExpandableSet, localStorageSignal } from '@shared/utils/utils';
 import { PvpRank, PVPRankStore } from '../pvp-rank/pvp-rank-store/pvp-rank-store';
 import { League } from '../pvp-rank/pvp-rank.type';
 
@@ -73,24 +73,10 @@ export class PvpRankDetailPage {
     toggleDisplayMode(): void {
         this.displayMode.update((mode) => (mode === 'capture' ? 'filter' : 'capture'));
     }
-    expandedRows = signal<Set<string>>(new Set());
-    toggleRow(key: string): void {
-        this.expandedRows.update((set) => {
-            const next = new Set(set);
-            if (next.has(key)) {
-                next.delete(key);
-            } else {
-                next.add(key);
-            }
-            return next;
-        });
-    }
 
-    isRowExpanded(key: string): boolean {
-        return this.expandedRows().has(key);
-    }
+    protected expandable = createExpandableSet<string>();
 
-    pokemon: Signal<Base | undefined> = computed(() => this._pokemonRepository.getPokemonSettingBySlug(this.slug()));
+    pokemon: Signal<Base | undefined> = computed(() => this._pokemonRepository.differentForm.get(this.slug()));
 
     rankPVP: ResourceRef<AllRankPVP | undefined> = resource({
         params: () => this.slug(),
@@ -115,10 +101,9 @@ export class PvpRankDetailPage {
     readonly matchesByRow = computed(() => {
         const data = this.rankPVP.value();
         const poke = this.pokemon();
-        const table = this._pokemonRepository.cpMultiplier.value();
-        if (!data || !poke || !table) return null;
+        if (!data || !poke) return null;
 
-        const availability = this._pokemonRepository.isPokemonAvailableForLeagues(poke as any, table);
+        const availability = this._pokemonRepository.getPokemonLeagueAvailability(poke as any);
 
         const computeForLeague = (league: League, available: boolean): MatchesByLeague => {
             const map: MatchesByLeague = new Map();

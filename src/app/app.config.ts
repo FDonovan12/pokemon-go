@@ -1,4 +1,10 @@
-import { ApplicationConfig, LOCALE_ID, isDevMode, provideAppInitializer } from '@angular/core';
+import {
+    ApplicationConfig,
+    LOCALE_ID,
+    isDevMode,
+    provideAppInitializer,
+    provideZonelessChangeDetection,
+} from '@angular/core';
 import {
     PreloadAllModules,
     provideRouter,
@@ -18,6 +24,7 @@ import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        provideZonelessChangeDetection(),
         provideHttpClient(withXhr()),
         provideRouter(
             routes,

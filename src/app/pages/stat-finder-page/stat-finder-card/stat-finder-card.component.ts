@@ -1,11 +1,11 @@
 import { CdkDragHandle } from '@angular/cdk/drag-drop';
 import { Component, computed, inject, input } from '@angular/core';
-import { PokemonData } from '@entities/pokemon';
+import { PokemonData, PokemonSlug } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { PokemonSelectComponent } from '@shared/features/pokemon-search/pokemon-select/pokemon-select.component';
 import { createExpandableSet } from '@shared/utils/utils';
-import { findStatMatches, hasNoPrerequisites } from '../stat-finder.calc';
+import { hasNoPrerequisites, StatFinderCalcService } from '../stat-finder.calc';
 import { CardEntry, CardPrerequisites } from '../stat-finder.types';
 import { StatFinderPageStore } from '../stats-finder-store/stat-finder-page.store';
 import { PrerequisitesFormComponent } from './prerequisites-form.component/prerequisites-form.component';
@@ -22,12 +22,13 @@ export class StatFinderCardComponent {
 
     private _pageStore = inject(StatFinderPageStore);
     private _pokemonRepository = inject(PokemonRepository);
+    private _statFinderCalcService = inject(StatFinderCalcService);
 
-    protected expandable = createExpandableSet<string>(); // clé = pokemon.slug
+    protected expandable = createExpandableSet<PokemonSlug>();
 
     resultsByPokemon = computed(() => {
         const { pokemonSlugs, prerequisites } = this.card();
-        const pokemons = this._pokemonRepository.getManyPokemonSettingBySlug(pokemonSlugs);
+        const pokemons = this._pokemonRepository.differentForm.getMany(pokemonSlugs);
         if (hasNoPrerequisites(prerequisites)) {
             return pokemons.map((pokemon) => ({
                 pokemon,
@@ -36,17 +37,8 @@ export class StatFinderCardComponent {
                 matches: [],
             }));
         }
-        const cpms = this._pokemonRepository.cpMultiplier.value();
-        if (!cpms) {
-            return pokemons.map((pokemon) => ({
-                pokemon,
-                slug: pokemon.slug,
-                name: pokemon?.name ?? pokemon.slug,
-                matches: [],
-            }));
-        }
         return pokemons.map((pokemon) => {
-            const matches = (pokemon ? findStatMatches(pokemon.stats, cpms, prerequisites) : [])
+            const matches = (pokemon ? this._statFinderCalcService.findStatMatches(pokemon.stats, prerequisites) : [])
                 .sortAsc('cp')
                 .sortDesc('level');
             return { pokemon, slug: pokemon.slug, name: pokemon?.name ?? pokemon.slug, matches };

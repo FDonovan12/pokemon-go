@@ -130,17 +130,17 @@
                 class="league-cell"
             >
                 Ⓖ
-                <span class="league-cell__badge">{{ store.mapOfIconRank1().get(pokemon.slug)?.great }}</span>
+                <span class="league-cell__badge">{{ store.badgesByPokemon().get(pokemon.slug)?.great }}</span>
             </span>
             <span
                 (click)="copyPokemonFilterBetterRankPVP(pokemon, 'hyper')"
                 class="league-cell"
             >
                 <span class="league-cell__logo">Ⓤ</span>
-                <span class="league-cell__badge">{{ store.mapOfIconRank1().get(pokemon.slug)?.ultra }}</span>
+                <span class="league-cell__badge">{{ store.badgesByPokemon().get(pokemon.slug)?.ultra }}</span>
             </span>
             <span>⚪</span>
-            @if (store.isPokemonsAvaible().get(pokemon.slug)?.super) {
+            @if (_pokemonRepository.availabilityBySlug.asMap().get(pokemon.slug)?.super) {
                 <span (click)="openModifyRankDialog(pokemon, 'super', 'normal')">
                     {{ store.allRank().get(pokemon.slug)?.super?.normal ?? '' }}
                 </span>

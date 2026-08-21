@@ -3,6 +3,14 @@ import { Brand } from './pokemon';
 export type IV = Brand<number, 'IV'>; // 0-15
 export type FilterTier = Brand<number, 'FilterTier'>; // 0-4
 
+export function ivToFilterValue(iv: IV): FilterTier {
+    if (iv === 0) return 0 as FilterTier;
+    if (iv <= 5) return 1 as FilterTier;
+    if (iv <= 10) return 2 as FilterTier;
+    if (iv <= 14) return 3 as FilterTier;
+    return 4 as FilterTier;
+}
+
 export type RangeCombo<T extends number = number> = {
     min: T;
     max: T;

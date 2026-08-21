@@ -48,13 +48,13 @@
                 </tr>
                 @for (row of rows(); track row.key) {
                     <tr
-                        (click)="toggleRow(row.key)"
+                        (click)="expandable.toggle(row.key)"
                         class="clickable-row"
                     >
                         <td class="row-label">
                             <span
                                 class="chevron"
-                                [class.open]="isRowExpanded(row.key)"
+                                [class.open]="expandable.isExpanded(row.key)"
                             >
                                 ▸
                             </span>
@@ -76,7 +76,7 @@
                             />
                         </td>
                     </tr>
-                    @if (isRowExpanded(row.key)) {
+                    @if (expandable.isExpanded(row.key)) {
                         <tr class="expanded-row">
                             <td colspan="3">
                                 @let allMatches = allMatchesForRow(row);

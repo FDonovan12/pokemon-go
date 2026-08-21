@@ -1,5 +1,5 @@
 import { httpResource, HttpResourceRef } from '@angular/common/http';
-import { inject, Injectable, resource } from '@angular/core';
+import { computed, inject, Injectable, resource } from '@angular/core';
 import {
     Base,
     GenerationPokemon,
@@ -9,9 +9,10 @@ import {
     PokemonSetting,
     PokemonSlug,
 } from '@entities/pokemon';
-import { AllRankPVP, RankPVP } from '@entities/stats';
+import { AllRankPVP, Combo, IV, RankPVP } from '@entities/stats';
+import { PokemonCalcService } from '@services/pokemon-calc-service/pokemon-calc.services';
 import { ToastService } from '@shared/features/toast/toast.service';
-import { createLookupBySlug } from '@shared/utils/utils';
+import { computeByKey, createLookup } from '@shared/utils/create-lookup';
 import { pokemonsListHomeMade } from '../../bdd/bdd-home-made';
 import pokemonsData from '../../bdd/bdd-pokemons.json';
 import { familyPokemon } from '../../bdd/family-pokemon';
@@ -37,6 +38,7 @@ type PokemonIndex = {
 })
 export class PokemonRepository {
     private readonly _toastService: ToastService = inject(ToastService);
+    private readonly _pokemonCalcService: PokemonCalcService = inject(PokemonCalcService);
 
     pokemonsSetting: HttpResourceRef<PokemonSetting[] | undefined> = httpResource(
         () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon-setting.json',
@@ -49,7 +51,9 @@ export class PokemonRepository {
         },
         defaultValue: [] as Base[],
     });
-    allFormPokemonsSetting = resource({
+    differentForm = createLookup(this.allDifferentFormPokemonsSetting.value, (p) => p.slug);
+
+    private allFormPokemonsSetting = resource({
         params: () => this.pokemonsSetting.value(),
         loader: async ({ params: pokemons }) => {
             if (!pokemons) return [];
@@ -57,22 +61,48 @@ export class PokemonRepository {
         },
         defaultValue: [] as Base[],
     });
-    cpMultiplier: HttpResourceRef<Record<string, number> | undefined> = httpResource(
+
+    private cpMultiplierResource: HttpResourceRef<Record<string, number> | undefined> = httpResource(
         () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon/cp-multiplier.json',
     );
-    rank1PVP: HttpResourceRef<Record<PokemonSlug, RankPVP> | undefined> = httpResource(
-        () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/rank-1-pvp.json',
+    cpMultiplier = createLookup(this.cpMultiplierResource.value);
+
+    allLevels = computed(() => {
+        const MAX_LEVEL_POSSIBLE = 55;
+        const cpms = this.cpMultiplier.getAll();
+        if (!cpms) return [];
+        return cpms
+            .map(Number)
+            .filter((level) => level <= MAX_LEVEL_POSSIBLE)
+            .sortAsc();
+    });
+
+    pureCalculateCp(pokemon: Base, iv: Combo<IV>, level: number): number {
+        const cpm = this.cpMultiplier.get(level.toString());
+        if (!cpm) return 10;
+
+        return this._pokemonCalcService.calcCp(
+            pokemon.stats,
+            { attack: iv.attack, defense: iv.defense, stamina: iv.stamina },
+            cpm,
+        );
+    }
+    availabilityBySlug = computeByKey(
+        this.allDifferentFormPokemonsSetting.value,
+        (p) => p.slug,
+        (p) => this.getPokemonLeagueAvailability(p),
     );
 
-    private _pokemonBySlug = createLookupBySlug(this.allDifferentFormPokemonsSetting.value);
-
-    getPokemonSettingBySlug(slug: PokemonSlug): Base | undefined {
-        return this._pokemonBySlug.get(slug);
+    getPokemonLeagueAvailability(pokemon: Base): { super: boolean; hyper: boolean } {
+        const IV_MAX: Combo<IV> = { attack: 15, defense: 15, stamina: 15 } as Combo<IV>;
+        const maxCp = this.pureCalculateCp(pokemon, IV_MAX, 50);
+        return { super: maxCp > 1480, hyper: maxCp > 2480 };
     }
 
-    getManyPokemonSettingBySlug(slugs: PokemonSlug[]): Base[] {
-        return this._pokemonBySlug.getMany(slugs);
-    }
+    rank1PVP: HttpResourceRef<Record<PokemonSlug, RankPVP<IV>> | undefined> = httpResource(
+        () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/rank-1-pvp.json',
+    );
+    rank1Pvp = createLookup(this.rank1PVP.value);
 
     async getPVPRank(slug: PokemonSlug): Promise<AllRankPVP> {
         const result = await fetch(
@@ -85,59 +115,10 @@ export class PokemonRepository {
         return result.json();
     }
 
-    isPokemonAvailableForLeagues(pokemon: Base, table: Record<string, number>): { super: boolean; hyper: boolean } {
-        const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
-        const maxCp = this.pureCalculateCp(pokemon, table, IV_MAX, 50);
-        return { super: maxCp > 1480, hyper: maxCp > 2480 };
-    }
-    // rankPVP: HttpResourceRef<Record<PokemonSlug, test> | undefined> = httpResource(
-    //     () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/rank-1-pvp.json',
-    // );
-
-    filteredPokemonsResource = resource({
-        params: () => {
-            const table = this.cpMultiplier.value();
-            const pokemons = this.pokemonsSetting.value();
-
-            if (!table || !pokemons) return undefined;
-            return { table, pokemons };
-        },
-        // 2. La fonction de calcul prend directement la valeur émise par le stream
-        // (Plus besoin de .request, l'argument reçu est directement ton objet)
-        loader: async ({ params }) => {
-            const { table, pokemons } = params;
-            const IV_MAX = { attack: 15, defense: 15, stamina: 15 };
-
-            return pokemons
-                .map((form) => [form.base, ...form.different.map((different) => different.base)])
-                .flat()
-                .filter((pokemon) => {
-                    const maxCp = this.pureCalculateCp(pokemon, table, IV_MAX, 50);
-                    return maxCp > 1480;
-                });
-        },
-    });
-
-    pureCalculateCp(pokemon: Base, table: Record<string, number>, iv: PokemonIv, level: number): number {
-        const cpm = table[level + ''];
-        if (!cpm) return 10;
-
-        const attackTotal = pokemon.stats.baseAttack + iv.attack;
-        const defenseTotal = pokemon.stats.baseDefense + iv.defense;
-        const staminaTotal = pokemon.stats.baseStamina + iv.stamina;
-
-        const cp = Math.floor(
-            (attackTotal * Math.sqrt(defenseTotal) * Math.sqrt(staminaTotal) * Math.pow(cpm, 2)) / 10,
-        );
-
-        return Math.max(10, cp);
-    }
-
     private buildPokemonIndex = (
         listFromAPI: PokemonInterface[],
         listHomemade: readonly PokemonHomeMade[] = [],
     ): PokemonIndex => {
-        // console.log(this.enrichPokemonsGenerationAndFamily(listFromAPI));
         const list = [...listFromAPI, ...listHomemade] as PokemonInterface[];
 
         return {

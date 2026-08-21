@@ -27,7 +27,7 @@ export class PvpRankPages {
     protected readonly store = inject(_store);
     protected readonly clipboardService = inject(ClipboardService);
     private readonly _filterService = inject(FilterService);
-    private readonly _pokemonRepository = inject(PokemonRepository);
+    readonly _pokemonRepository = inject(PokemonRepository);
     private readonly _router = inject(Router);
 
     selectedPokemon: WritableSignal<PokemonInterface> = signal(this._pokemonRepository.getPokemonById(1)!);
@@ -35,7 +35,7 @@ export class PvpRankPages {
     selectedForm: Forme = 'normal';
     showDialog = signal(false);
 
-    copyPokemonFilterBetterRankPVP(pokemon: PokemonInterface, league?: League) {
+    copyPokemonFilterBetterRankPVP(pokemon: Base, league: League) {
         const filter = this.store.getPokemonFilter(pokemon, league);
         this.clipboardService.copyToClipboard(filter, {
             message: `🏆 Filtre PVP copié pour ${pokemon.slug.titleCase()} (${filter.length} caractères)`,

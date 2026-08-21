@@ -1,3 +1,7 @@
+import { Injectable, inject } from '@angular/core';
+import { Combo, IV } from '@entities/stats';
+import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { PokemonCalcService } from '@services/pokemon-calc-service/pokemon-calc.services';
 import { CardPrerequisites, IvComparison, IvCriteria, StatMatch } from './stat-finder.types';
 
 export interface Stats {
@@ -53,30 +57,6 @@ function resolveIvRanges(iv: IvCriteria): { atk: number[]; def: number[]; sta: n
     };
 }
 
-export function findStatMatches(
-    base: Stats,
-    cpms: Record<string, number>,
-    prerequisites: CardPrerequisites,
-): StatMatch[] {
-    const levels = prerequisites.level !== null ? [prerequisites.level] : allLevels(cpms);
-    const { atk: atkRange, def: defRange, sta: staRange } = resolveIvRanges(prerequisites.iv);
-
-    const results: StatMatch[] = [];
-    for (const level of levels) {
-        const cpm = cpms[level];
-        for (const atk of atkRange) {
-            for (const def of defRange) {
-                for (const sta of staRange) {
-                    const cp = calcCP(base, { atk, def, sta }, cpm);
-                    if (prerequisites.cp !== null && cp !== prerequisites.cp) continue;
-                    results.push({ level, atk, def, sta, cp });
-                }
-            }
-        }
-    }
-    return results;
-}
-
 export function hasNoPrerequisites(prerequisites: CardPrerequisites): boolean {
     if (prerequisites.cp !== null) return false;
     if (prerequisites.level !== null) return false;
@@ -84,4 +64,34 @@ export function hasNoPrerequisites(prerequisites: CardPrerequisites): boolean {
     const { iv } = prerequisites;
     if (iv.mode === 'common') return iv.common === null;
     return iv.atk === null && iv.def === null && iv.sta === null;
+}
+@Injectable({
+    providedIn: 'root',
+})
+export class StatFinderCalcService {
+    private _pokemonCalcService = inject(PokemonCalcService);
+    private _pokemonRepository = inject(PokemonRepository);
+
+    findStatMatches(base: Stats, prerequisites: CardPrerequisites): StatMatch[] {
+        const levels = prerequisites.level !== null ? [prerequisites.level] : this._pokemonRepository.allLevels();
+        const { atk: atkRange, def: defRange, sta: staRange } = resolveIvRanges(prerequisites.iv);
+
+        const results: StatMatch[] = [];
+        for (const level of levels) {
+            const cpm = this._pokemonRepository.cpMultiplier.get(level.toString());
+            if (!cpm) continue;
+
+            for (const atk of atkRange) {
+                for (const def of defRange) {
+                    for (const sta of staRange) {
+                        const iv: Combo<IV> = { attack: atk, defense: def, stamina: sta } as Combo<IV>;
+                        const cp = this._pokemonCalcService.calcCp(base, iv, cpm);
+                        if (prerequisites.cp !== null && cp !== prerequisites.cp) continue;
+                        results.push({ level, atk, def, sta, cp });
+                    }
+                }
+            }
+        }
+        return results;
+    }
 }

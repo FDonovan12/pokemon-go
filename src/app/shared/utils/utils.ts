@@ -1,13 +1,4 @@
-import {
-    Injector,
-    Signal,
-    WritableSignal,
-    computed,
-    effect,
-    inject,
-    runInInjectionContext,
-    signal,
-} from '@angular/core';
+import { Injector, Signal, WritableSignal, effect, inject, runInInjectionContext, signal } from '@angular/core';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 
 export function createTimer(label: string) {
@@ -60,20 +51,4 @@ export function createExpandableSet<K>() {
             });
         },
     };
-}
-
-export function createLookupByKey<T, K>(items: Signal<T[]>, keyFn: (item: T) => K) {
-    const byKey = computed(() => new Map(items().map((item) => [keyFn(item), item])));
-
-    return {
-        get: (key: K): T | undefined => byKey().get(key),
-        getMany: (keys: K[]): T[] => {
-            const map = byKey();
-            return keys.map((key) => map.get(key)).compact();
-        },
-    };
-}
-
-export function createLookupBySlug<T extends { slug: string }>(items: Signal<T[]>) {
-    return createLookupByKey(items, (item) => item.slug);
 }
