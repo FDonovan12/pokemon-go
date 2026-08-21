@@ -13,6 +13,7 @@
 
 .field-row {
     display: flex;
+    align-items: flex-end;
     gap: 10px;
 }
 
@@ -20,7 +21,8 @@
     flex: 1;
 }
 
-label {
+label,
+.form-field {
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -31,16 +33,22 @@ label {
 input[type='number'] {
     box-sizing: border-box;
     width: 100%;
+    min-height: var(--control-height);
     padding: 8px 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border: 1px solid var(--control-border);
+    border-radius: var(--control-radius);
     font-size: 0.9rem;
 }
 
 input[type='number']:focus-visible {
-    outline: 2px solid #3b4cca;
+    outline: 2px solid var(--control-focus);
     outline-offset: 1px;
-    border-color: #3b4cca;
+    border-color: var(--control-focus);
+}
+
+.field-row app-select {
+    display: block;
+    min-height: var(--control-height);
 }
 
 .iv-section {
@@ -51,7 +59,7 @@ input[type='number']:focus-visible {
 
 .segmented {
     display: inline-flex;
-    border: 1px solid #ddd;
+    border: 1px solid var(--control-border);
     border-radius: 999px;
     overflow: hidden;
     width: fit-content;
@@ -67,12 +75,12 @@ input[type='number']:focus-visible {
 }
 
 .segmented button.active {
-    background: #3b4cca;
+    background: var(--control-focus);
     color: #fff;
 }
 
 .segmented button:focus-visible {
-    outline: 2px solid #3b4cca;
+    outline: 2px solid var(--control-focus);
     outline-offset: -2px;
 }
 

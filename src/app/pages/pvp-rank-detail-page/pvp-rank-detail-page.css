@@ -168,10 +168,6 @@
     display: inline-block;
 }
 
-.chevron.open {
-    transform: rotate(90deg);
-}
-
 /**/
 .clickable-row {
     cursor: pointer;
@@ -189,17 +185,6 @@
 
 .chevron {
     font-size: 1.15em;
-    opacity: 0.7;
-    transition: transform 0.15s ease;
-}
-
-.clickable-row:hover .chevron {
-    opacity: 1;
-}
-
-.chevron.open {
-    transform: rotate(90deg);
-    opacity: 1;
 }
 
 .expanded-row {

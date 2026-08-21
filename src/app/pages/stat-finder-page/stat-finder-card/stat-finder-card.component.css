@@ -188,7 +188,3 @@
     color: #888;
     font-size: 0.85rem;
 }
-
-.collapse-toggle .chevron.open {
-    transform: rotate(90deg);
-}

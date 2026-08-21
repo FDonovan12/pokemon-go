@@ -50,8 +50,8 @@ export class PrerequisitesFormComponent {
 
     readonly levels = [
         { value: '', label: 'Aucun' },
-        { value: '15', label: 'Oeuf' },
-        { value: '20', label: 'Etude / Raid' },
+        { value: '15', label: 'Etude' },
+        { value: '20', label: 'Oeuf / Raid' },
         { value: '25', label: 'Raid boost' },
     ];
 }

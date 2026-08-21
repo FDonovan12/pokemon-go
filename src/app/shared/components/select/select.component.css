@@ -16,11 +16,12 @@
 
     width: 100%;
     box-sizing: border-box;
+    min-height: var(--control-height);
 
-    padding: 10px 14px;
+    padding: 8px 10px;
 
-    border: 1px solid #d9dce3;
-    border-radius: 8px;
+    border: 1px solid var(--control-border);
+    border-radius: var(--control-radius);
 
     background: #fff;
     color: #1f2937;
@@ -36,13 +37,13 @@
 }
 
 .select__trigger:hover {
-    border-color: #b8bdc8;
+    border-color: var(--control-border-hover);
 }
 
 .select__trigger:focus-visible {
     outline: none;
-    border-color: #5865f2;
-    box-shadow: 0 0 0 3px rgb(88 101 242 / 15%);
+    border-color: var(--control-focus);
+    box-shadow: 0 0 0 3px var(--control-focus-ring);
 }
 
 .select__trigger--placeholder {
@@ -103,7 +104,7 @@
 
 .select__option--selected {
     background: #f0f1ff;
-    color: #5865f2;
+    color: var(--control-focus);
 }
 
 .select__option--selected:hover {

@@ -41,7 +41,6 @@ export class StatFinderCardComponent {
                 matches: [],
             }));
         }
-        console.log('after hasNoPrerequisites', this.card().name);
         return pokemons.map((pokemon) => {
             const matches = (pokemon ? this._statFinderCalcService.findStatMatches(pokemon.stats, prerequisites) : [])
                 .sortAsc('cp')

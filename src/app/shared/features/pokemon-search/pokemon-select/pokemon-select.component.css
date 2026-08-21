@@ -11,15 +11,15 @@
     width: 100%;
     box-sizing: border-box;
     padding: 10px 14px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    border: 1px solid var(--control-border);
+    border-radius: var(--control-radius);
     font-size: 0.95rem;
 }
 
 .pokemon-select input:focus-visible {
-    outline: 2px solid #3b4cca;
+    outline: 2px solid var(--control-focus);
     outline-offset: 1px;
-    border-color: #3b4cca;
+    border-color: var(--control-focus);
 }
 
 .pokemon-select__results {

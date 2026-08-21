@@ -74,13 +74,11 @@ export class StatFinderCalcService {
 
     findStatMatches(base: Stats, prerequisites: CardPrerequisites): StatMatch[] {
         const levels = !!prerequisites.level === false ? this._pokemonRepository.allLevels() : [prerequisites.level];
-        console.log(levels);
         const { atk: atkRange, def: defRange, sta: staRange } = resolveIvRanges(prerequisites.iv);
 
         const results: StatMatch[] = [];
         for (const level of levels) {
             const cpm = this._pokemonRepository.cpMultiplier.get(level.toString());
-            console.log(level, cpm);
             if (!cpm) continue;
 
             for (const atk of atkRange) {
@@ -94,7 +92,6 @@ export class StatFinderCalcService {
                 }
             }
         }
-        console.log(results.length);
         return results;
     }
 }
