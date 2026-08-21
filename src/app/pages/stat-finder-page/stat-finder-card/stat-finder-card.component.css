@@ -172,3 +172,23 @@
     outline: 2px solid #3b4cca;
     background: #fff;
 }
+
+.collapse-toggle {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.collapse-toggle .chevron {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.collapse-toggle .chevron.open {
+    transform: rotate(90deg);
+}

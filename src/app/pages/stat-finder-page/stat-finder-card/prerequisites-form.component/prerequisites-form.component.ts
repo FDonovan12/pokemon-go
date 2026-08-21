@@ -1,8 +1,10 @@
 import { Component, input, output } from '@angular/core';
-import { CardPrerequisites, IvMode, IvComparison } from '../../stat-finder.types';
+import { SelectComponent } from '@shared/components/select/select.component';
+import { CardPrerequisites, IvComparison, IvMode } from '../../stat-finder.types';
 
 @Component({
     selector: 'app-prerequisites-form',
+    imports: [SelectComponent],
     standalone: true,
     templateUrl: './prerequisites-form.component.html',
     styleUrl: './prerequisites-form.component.css',
@@ -11,7 +13,10 @@ export class PrerequisitesFormComponent {
     prerequisites = input.required<CardPrerequisites>();
     prerequisitesChange = output<Partial<CardPrerequisites>>();
 
-    onLevelChange(event: Event) {
+    onLevelChange(value: string) {
+        this.prerequisitesChange.emit({ level: value === '' ? null : Number(value) });
+    }
+    onLevelChange2(event: Event) {
         const value = (event.target as HTMLInputElement).value;
         this.prerequisitesChange.emit({ level: value === '' ? null : Number(value) });
     }
@@ -42,4 +47,11 @@ export class PrerequisitesFormComponent {
             iv: { ...this.prerequisites().iv, [stat]: value === '' ? null : Number(value) },
         });
     }
+
+    readonly levels = [
+        { value: '', label: 'Aucun' },
+        { value: '15', label: 'Oeuf' },
+        { value: '20', label: 'Etude / Raid' },
+        { value: '25', label: 'Raid boost' },
+    ];
 }

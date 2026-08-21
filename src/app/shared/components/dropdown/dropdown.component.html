@@ -1,0 +1,25 @@
+<div
+    class="dropdown"
+    appClickOutside
+    (clickOutside)="close()"
+>
+    <input
+        type="text"
+        [value]="value()"
+        (input)="onInput($event)"
+        (focus)="onFocus()"
+        [placeholder]="placeholder()"
+    />
+
+    @if (isOpen()) {
+        <ul class="dropdown__results">
+            @for (item of items(); track $index) {
+                <li (click)="select(item)">
+                    @if (itemTemplate(); as template) {
+                        <ng-container *ngTemplateOutlet="template; context: { $implicit: item }"></ng-container>
+                    }
+                </li>
+            }
+        </ul>
+    }
+</div>

@@ -23,6 +23,7 @@ export interface CardEntry {
     name: string;
     pokemonSlugs: PokemonSlug[];
     prerequisites: CardPrerequisites;
+    isCollapsed: boolean;
 }
 
 export interface StatMatch {
@@ -43,5 +44,6 @@ export function createEmptyCard(): CardEntry {
             cp: null,
             iv: { mode: 'common', comparison: 'exact', common: null, atk: null, def: null, sta: null },
         },
+        isCollapsed: false,
     };
 }

@@ -7,6 +7,20 @@
         >
             ⠿
         </span>
+
+        <button
+            class="collapse-toggle"
+            (click)="toggleCollapse()"
+            [attr.aria-expanded]="!isCollapsed()"
+        >
+            <span
+                class="chevron"
+                [class.open]="!isCollapsed()"
+            >
+                ▸
+            </span>
+        </button>
+
         <input
             class="card-name-input"
             type="text"
@@ -22,49 +36,51 @@
         </button>
     </div>
 
-    <app-pokemon-select (selected)="addPokemon($event)" />
+    @if (!isCollapsed()) {
+        <app-pokemon-select (selected)="addPokemon($event)" />
 
-    <app-prerequisites-form
-        [prerequisites]="card().prerequisites"
-        (prerequisitesChange)="updatePrerequisites($event)"
-    />
+        <app-prerequisites-form
+            [prerequisites]="card().prerequisites"
+            (prerequisitesChange)="updatePrerequisites($event)"
+        />
 
-    @for (result of resultsByPokemon(); track result.slug) {
-        <div class="pokemon-result-row">
-            <div
-                (click)="expandable.toggle(result.slug)"
-                class="clickable-row"
-            >
-                <span
-                    class="chevron"
-                    [class.open]="expandable.isExpanded(result.slug)"
-                >
-                    ▸
-                </span>
-                <app-image-pokemon [pokemon]="result.pokemon"></app-image-pokemon>
-                <span>{{ result.name }} — {{ result.matches.length }} résultat(s)</span>
-                <button (click)="removePokemon(result.slug); $event.stopPropagation()">✕</button>
-            </div>
-
-            @if (expandable.isExpanded(result.slug)) {
+        @for (result of resultsByPokemon(); track result.slug) {
+            <div class="pokemon-result-row">
                 <div
-                    class="expanded-results"
-                    [class.open]="expandable.isExpanded(result.slug)"
+                    (click)="expandable.toggle(result.slug)"
+                    class="clickable-row"
                 >
-                    @for (match of result.matches; track match.level + '-' + match.atk + '-' + match.def + '-' + match.sta) {
+                    <span
+                        class="chevron"
+                        [class.open]="expandable.isExpanded(result.slug)"
+                    >
+                        ▸
+                    </span>
+                    <app-image-pokemon [pokemon]="result.pokemon"></app-image-pokemon>
+                    <span>{{ result.name }} — {{ result.matches.length }} résultat(s)</span>
+                    <button (click)="removePokemon(result.slug); $event.stopPropagation()">✕</button>
+                </div>
+
+                @if (expandable.isExpanded(result.slug)) {
+                    <div
+                        class="expanded-results"
+                        [class.open]="expandable.isExpanded(result.slug)"
+                    >
+                        @for (match of result.matches; track match.level + '-' + match.atk + '-' + match.def + '-' + match.sta) {
+                            <div class="match-item">
+                                Niv. {{ match.level }} — {{ match.atk }}/{{ match.def }}/{{ match.sta }} — {{ match.cp }} PC
+                            </div>
+                        }
+                    </div>
+                } @else {
+                    @let match = result.matches[0];
+                    @if (match) {
                         <div class="match-item">
                             Niv. {{ match.level }} — {{ match.atk }}/{{ match.def }}/{{ match.sta }} — {{ match.cp }} PC
                         </div>
                     }
-                </div>
-            } @else {
-                @let match = result.matches[0];
-                @if (match) {
-                    <div class="match-item">
-                        Niv. {{ match.level }} — {{ match.atk }}/{{ match.def }}/{{ match.sta }} — {{ match.cp }} PC
-                    </div>
                 }
-            }
-        </div>
+            </div>
+        }
     }
 </div>

@@ -69,9 +69,9 @@ export class PokemonRepository {
 
     allLevels = computed(() => {
         const MAX_LEVEL_POSSIBLE = 55;
-        const cpms = this.cpMultiplier.getAll();
+        const cpms = this.cpMultiplier.asMap();
         if (!cpms) return [];
-        return cpms
+        return [...cpms.keys()]
             .map(Number)
             .filter((level) => level <= MAX_LEVEL_POSSIBLE)
             .sortAsc();

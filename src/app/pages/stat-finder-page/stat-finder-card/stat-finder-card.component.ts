@@ -1,5 +1,5 @@
 import { CdkDragHandle } from '@angular/cdk/drag-drop';
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { PokemonData, PokemonSlug } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
@@ -25,7 +25,11 @@ export class StatFinderCardComponent {
     private _statFinderCalcService = inject(StatFinderCalcService);
 
     protected expandable = createExpandableSet<PokemonSlug>();
+    protected isCollapsed = signal(false);
 
+    toggleCollapse() {
+        this.isCollapsed.update((v) => !v);
+    }
     resultsByPokemon = computed(() => {
         const { pokemonSlugs, prerequisites } = this.card();
         const pokemons = this._pokemonRepository.differentForm.getMany(pokemonSlugs);
@@ -37,6 +41,7 @@ export class StatFinderCardComponent {
                 matches: [],
             }));
         }
+        console.log('after hasNoPrerequisites', this.card().name);
         return pokemons.map((pokemon) => {
             const matches = (pokemon ? this._statFinderCalcService.findStatMatches(pokemon.stats, prerequisites) : [])
                 .sortAsc('cp')

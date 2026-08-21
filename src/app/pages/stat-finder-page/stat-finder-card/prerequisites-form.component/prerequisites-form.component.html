@@ -1,8 +1,21 @@
 <div class="prerequisites-form">
     <div class="field-row">
-        <label>
-            Niveau
-            <input
+        <div class="form-field">
+            <label>Niveau</label>
+            <app-select
+                [value]="(prerequisites().level ?? '') + ''"
+                [options]="levels"
+                (valueChange)="onLevelChange($event)"
+            >
+                <ng-template
+                    #item
+                    let-level
+                >
+                    {{ level.label }}
+                </ng-template>
+            </app-select>
+        </div>
+        <!-- <input
                 type="number"
                 min="1"
                 max="50"
@@ -10,8 +23,7 @@
                 [value]="prerequisites().level ?? ''"
                 (input)="onLevelChange($event)"
                 placeholder="Tous"
-            />
-        </label>
+            /> -->
 
         <label>
             PC

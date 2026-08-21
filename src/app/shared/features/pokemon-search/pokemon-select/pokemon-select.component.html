@@ -1,23 +1,15 @@
-<div
-    class="pokemon-select"
-    appClickOutside
-    (clickOutside)="isOpen.set(false)"
+<app-dropdown
+    [value]="store.search()"
+    [items]="store.searchResults()"
+    placeholder="Rechercher un Pokémon..."
+    (valueChange)="onSearch($event)"
+    (selected)="select($event)"
 >
-    <input
-        type="text"
-        [value]="store.search()"
-        (input)="onInput($event)"
-        (focus)="isOpen.set(true)"
-        placeholder="Rechercher un Pokémon..."
-    />
-    @if (isOpen()) {
-        <ul class="pokemon-select__results">
-            @for (pokemon of store.searchResults(); track pokemon.slug) {
-                <li (click)="select(pokemon)">
-                    <app-image-pokemon [pokemon]="pokemon"></app-image-pokemon>
-                    {{ pokemon.name }}
-                </li>
-            }
-        </ul>
-    }
-</div>
+    <ng-template
+        #item
+        let-pokemon
+    >
+        <app-image-pokemon [pokemon]="pokemon"></app-image-pokemon>
+        {{ pokemon.name }}
+    </ng-template>
+</app-dropdown>
