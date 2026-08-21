@@ -42,8 +42,8 @@ export type AllRankPVP<T extends number = number> = {
     hyper: LeagueStats<T>[];
 };
 export interface RankPVP<T extends number = number> {
-    super: LeagueStats<T>;
-    hyper: LeagueStats<T>;
+    super: LeagueStats<T>[];
+    hyper: LeagueStats<T>[];
 }
 
 export interface LeagueStats<T extends number = number> {
@@ -52,6 +52,7 @@ export interface LeagueStats<T extends number = number> {
     stamina: T;
     level: number;
     stat: number;
+    rank: number;
 }
 
 export type FilterDef<T extends number = number> = {

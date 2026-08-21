@@ -127,8 +127,8 @@ export const PVPRankStore = signalStore(
 
             const ranks = store.allRank();
 
-            const rank = Math.min((ranks.get(slug)?.[league]?.normal ?? limit + 1) - 1, limit);
-            return allRank[league].slice(0, rank);
+            const actualRank = ranks.get(slug)?.[league]?.normal ?? limit + 1;
+            return allRank[league].filter((stats) => stats.rank < actualRank);
         },
         toggleImportantPokemon(slug: PokemonSlug): void {
             const set = new Set<PokemonSlug>(store._importantPokemons());
@@ -147,9 +147,9 @@ export const PVPRankStore = signalStore(
             return store._pokemonRepository.getPokemonLeagueAvailability(pokemon);
         },
         _getBadgePokemon(pokemon: Base) {
-            const getBadge = (stats: LeagueStats<IV>, available: boolean): string | null => {
+            const getBadge = (stats: LeagueStats<IV>[], available: boolean): string | null => {
                 if (!available) return '❌';
-                const min = Math.min(stats.attack, stats.defense, stats.stamina);
+                const min = stats.reduce((min, stat) => Math.min(stat.attack, stat.defense, stat.stamina, min), 15);
                 if (min >= 12) return '🍀';
                 if (min >= 10) return '⚔️';
                 if (min >= 5) return '🔄';
@@ -202,16 +202,16 @@ export const PVPRankStore = signalStore(
                 const includedSlugs: PokemonSlug[] = [];
 
                 remainingSuper.forEach((slug) => {
-                    const rank = store._pokemonRepository.rank1Pvp.get(slug)?.super;
-                    if (rank && store._filterService.isInTheFilterTier(filter, rank)) {
+                    const ranks = store._pokemonRepository.rank1Pvp.get(slug)?.super;
+                    if (ranks && ranks.some((rank) => store._filterService.isInTheFilterTier(filter, rank))) {
                         const pokemon = pokemonBySlug.get(slug);
                         if (pokemon) includedSlugs.push(slug);
                         remainingSuper.delete(slug);
                     }
                 });
                 remainingHyper.forEach((slug) => {
-                    const rank = store._pokemonRepository.rank1Pvp.get(slug)?.hyper;
-                    if (rank && store._filterService.isInTheFilterTier(filter, rank)) {
+                    const ranks = store._pokemonRepository.rank1Pvp.get(slug)?.hyper;
+                    if (ranks && ranks.some((rank) => store._filterService.isInTheFilterTier(filter, rank))) {
                         const pokemon = pokemonBySlug.get(slug);
                         if (pokemon) includedSlugs.push(slug);
                         remainingHyper.delete(slug);

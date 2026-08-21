@@ -109,8 +109,8 @@ export class PvpRankDetailPage {
             const map: MatchesByLeague = new Map();
             if (!available) return map;
             const ranks = data[league];
-            const actualLimit = (this.actualRank()?.[league].normal ?? 4096 + 1) - 1;
-            const sliced = ranks.slice(0, actualLimit);
+            const actualRank = this.actualRank()?.[league].normal ?? 4096 + 1;
+            const sliced = ranks.filter((stat) => stat.rank < actualRank);
             console.log(league, sliced);
 
             const filterAndBuild = (matchFn: (r: LeagueStats) => boolean, totalCombos: number): RankedStat[] => {
@@ -118,10 +118,10 @@ export class PvpRankDetailPage {
                 const percentage = Math.round((betterCount / totalCombos) * 10000) / 100;
 
                 const result: RankedStat[] = [];
-                ranks.forEach((stat, index) => {
+                ranks.forEach((stat) => {
                     if (matchFn(stat)) {
                         result.push({
-                            rank: index + 1,
+                            rank: stat.rank,
                             stat,
                             betterCount,
                             totalCombos,
