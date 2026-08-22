@@ -1,40 +1,26 @@
-import { effect, inject } from '@angular/core';
-import { patchState, signalStore, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
-import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
+import { signalStore, withMethods, withProps } from '@ngrx/signals';
+import { localStorageSignal } from '@shared/utils/utils';
 import { CardEntry, createEmptyCard } from '../stat-finder.types';
-import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 const STORAGE_KEY = 'stat-finder-cards';
 
 export const StatFinderPageStore = signalStore(
     { providedIn: 'root' },
     withProps(() => ({
-        _localStorageService: inject(LocalStorageService),
+        cards: localStorageSignal(STORAGE_KEY, [] as CardEntry[]),
     })),
-    withState<{ cards: CardEntry[] }>({ cards: [] }),
     withMethods((store) => ({
         addCard() {
-            patchState(store, { cards: [...store.cards(), createEmptyCard()] });
+            store.cards.update((previous) => [createEmptyCard(), ...previous]);
         },
         removeCard(id: string) {
-            patchState(store, { cards: store.cards().filter((c) => c.id !== id) });
+            store.cards.update((previous) => previous.filter((c) => c.id !== id));
         },
         updateCard(id: string, partial: Partial<CardEntry>) {
-            patchState(store, {
-                cards: store.cards().map((c) => (c.id === id ? { ...c, ...partial } : c)),
-            });
+            store.cards.update((previous) => previous.map((c) => (c.id === id ? { ...c, ...partial } : c)));
         },
         reorderCards(previousIndex: number, currentIndex: number) {
-            const cards = [...store.cards()];
-            moveItemInArray(cards, previousIndex, currentIndex);
-            patchState(store, { cards });
+            store.cards.update((previous) => [...previous.swap(previousIndex, currentIndex)]);
         },
     })),
-    withHooks({
-        onInit(store) {
-            const saved = store._localStorageService.get(STORAGE_KEY, [] as CardEntry[]);
-            patchState(store, { cards: saved });
-            effect(() => store._localStorageService.set(STORAGE_KEY, store.cards()));
-        },
-    }),
 );

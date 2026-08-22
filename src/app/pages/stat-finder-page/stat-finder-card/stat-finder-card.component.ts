@@ -1,5 +1,5 @@
 import { CdkDragHandle } from '@angular/cdk/drag-drop';
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { PokemonData, PokemonSlug } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
@@ -25,10 +25,10 @@ export class StatFinderCardComponent {
     private _statFinderCalcService = inject(StatFinderCalcService);
 
     protected expandable = createExpandableSet<PokemonSlug>();
-    protected isCollapsed = signal(false);
+    protected isCollapsed = computed(() => this.card().isCollapsed);
 
     toggleCollapse() {
-        this.isCollapsed.update((v) => !v);
+        this._pageStore.updateCard(this.card().id, { isCollapsed: !this.card().isCollapsed });
     }
     resultsByPokemon = computed(() => {
         const { pokemonSlugs, prerequisites } = this.card();
