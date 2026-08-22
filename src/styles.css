@@ -133,7 +133,7 @@ input {
         --_color-input: var(--danger-color);
     }
     &:focus {
-        box-shadow: 0 0 0 3px var(--control-focus-ring);
+        box-shadow: 0 0 10px 0px var(--_color-input);
     }
     &:focus:invalid {
         --_color-input: var(--warning-color);

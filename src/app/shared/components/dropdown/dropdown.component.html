@@ -4,11 +4,12 @@
     (clickOutside)="close()"
 >
     <input
-        type="text"
-        [value]="value()"
+        [type]="inputType()"
+        [(value)]="value"
         (input)="onInput($event)"
         (focus)="onFocus()"
         [placeholder]="placeholder()"
+        [id]="id()"
     />
 
     @if (isOpen()) {
