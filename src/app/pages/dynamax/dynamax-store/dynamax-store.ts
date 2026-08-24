@@ -1,12 +1,8 @@
 import { computed, inject } from '@angular/core';
 import { allTypes, Dynamax, TypePokemon } from '@entities/pokemon';
-import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonDynamaxRepository } from '@repositories/pokemon/pokemon-dynamax';
-import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
-import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { TypeEffectivenessService } from '@services/type-effectiveness-service/type-effectiveness-service';
-
-const LOCAL_STORAGE_DYNAMAX_KEY = 'pokemon-dynamax-key';
 
 export type ResultDamage = {
     dynamax: Dynamax;
@@ -16,33 +12,88 @@ export type ResultDamage = {
     isBadComparedToSelected?: boolean;
 };
 
+const resultDamageKey = (dynamax: Dynamax, typeAttack: TypePokemon) => `${dynamax.pokemon.dexNumber}-${typeAttack}`;
+
 const initialState = {
-    _allDynamaxPokemonResultDamageBase: new Map<TypePokemon, ResultDamage[]>(),
-    maxDamageFind: 0,
-    _selectedPokemon: new Set<ResultDamage>(),
-    bestSelectedPokemonByType: new Map<TypePokemon, ResultDamage>(),
+    _selectedKeys: new Set<string>(),
     search: '',
 };
 
 export const DynamaxStore = signalStore(
     { providedIn: 'root' },
     withProps(() => ({
-        _pokemonRepository: inject(PokemonRepository),
         _typeEffectivenessService: inject(TypeEffectivenessService),
         _pokemonDynamaxRepository: inject(PokemonDynamaxRepository),
-        _localStorageService: inject(LocalStorageService),
     })),
     withState(initialState),
     withComputed((store) => ({
+        // Donnée brute, purement dérivée de finalDynamax() — jamais mutée
+        _baseResultDamageByType: computed(() => {
+            const dynamaxList = store._pokemonDynamaxRepository.finalDynamax();
+            const map = new Map<TypePokemon, ResultDamage[]>();
+            if (dynamaxList.length === 0) return map;
+
+            allTypes.forEach((typeOpponent) => {
+                const list: ResultDamage[] = [];
+                dynamaxList.forEach((dynamax) => {
+                    dynamax.attackType.forEach((typeAttack) => {
+                        const typeAffinity = store._typeEffectivenessService.calculEffectivness(
+                            typeAttack,
+                            typeOpponent,
+                            typeOpponent,
+                        );
+                        const stabMultiplier = dynamax.pokemon.type.includes(typeAttack) ? 1.2 : 1;
+                        const damage = dynamax.attack * typeAffinity * dynamax.damageAttack * stabMultiplier;
+                        list.push({ dynamax, damage, typeAttack });
+                    });
+                });
+                map.set(typeOpponent, list.sortDesc('damage'));
+            });
+            return map;
+        }),
+    })),
+    withComputed((store) => ({
+        // Vue finale : injecte isSelected / isBadComparedToSelected sans muter la base
+        _allDynamaxPokemonResultDamageBase: computed(() => {
+            const base = store._baseResultDamageByType();
+            const selectedKeys = store._selectedKeys();
+            const map = new Map<TypePokemon, ResultDamage[]>();
+
+            let foundSelectedGlobally = false; // ajuste si "bad compared" doit être par type plutôt que global
+
+            base.forEach((list, type) => {
+                let foundInType = false;
+                const mapped = list.map((rd) => {
+                    const isSelected = selectedKeys.has(resultDamageKey(rd.dynamax, rd.typeAttack));
+                    if (isSelected) foundInType = true;
+                    return { ...rd, isSelected, isBadComparedToSelected: foundInType };
+                });
+                map.set(type, mapped);
+            });
+            return map;
+        }),
+        maxDamageFind: computed(() => {
+            let max = 0;
+            store._baseResultDamageByType().forEach((list) => {
+                list.forEach((rd) => (max = Math.max(max, rd.damage)));
+            });
+            return max;
+        }),
+    })),
+    withComputed((store) => ({
         selectedPokemonArray: computed(() => {
-            return [...store._selectedPokemon()];
+            const result: ResultDamage[] = [];
+            store._allDynamaxPokemonResultDamageBase().forEach((list) => {
+                list.forEach((rd) => rd.isSelected && result.push(rd));
+            });
+            return result;
         }),
         finalAllDynamaxPokemonResultDamageBase: computed(() => {
             const breakPointPercent = 0.5;
-            const map = new Map();
+            const maxDamage = store.maxDamageFind();
+            const map = new Map<TypePokemon, ResultDamage[]>();
             allTypes.forEach((type) => {
-                map.set(
-                    type,
+                const filtered =
                     store
                         ._allDynamaxPokemonResultDamageBase()
                         .get(type)
@@ -54,11 +105,10 @@ export const DynamaxStore = signalStore(
                                     type,
                                     type,
                                 ) > 1;
-                            const doEnoughDamage = resultDamage.damage >= store.maxDamageFind() * breakPointPercent;
-
+                            const doEnoughDamage = resultDamage.damage >= maxDamage * breakPointPercent;
                             return (doEnoughDamage && (isStab || isSuperEffective)) || (isStab && isSuperEffective);
-                        })!,
-                );
+                        }) ?? [];
+                map.set(type, filtered);
             });
             return map;
         }),
@@ -66,93 +116,27 @@ export const DynamaxStore = signalStore(
             if (store.search().length < 3) return;
             const map = new Map<TypePokemon, ResultDamage[]>();
             allTypes.forEach((type) => {
-                const re = store
-                    ._allDynamaxPokemonResultDamageBase()
-                    .get(type)!
-                    .filter((resultDamage) => resultDamage.dynamax.pokemon.name.slugifyIncludes(store.search()));
-                map.set(type, re);
+                const list = store._allDynamaxPokemonResultDamageBase().get(type) ?? [];
+                map.set(
+                    type,
+                    list.filter((resultDamage) => resultDamage.dynamax.pokemon.name.slugifyIncludes(store.search())),
+                );
             });
             return map;
         }),
     })),
-    withComputed((store) => ({})),
     withMethods((store) => ({
         unselectAll() {
-            patchState(store, { _selectedPokemon: new Set<ResultDamage>() });
+            patchState(store, { _selectedKeys: new Set<string>() });
         },
-        selectPokemon(selectedPokemon: ResultDamage) {
-            const map = store._allDynamaxPokemonResultDamageBase();
-
-            allTypes.forEach((type) => {
-                const list = map.get(type);
-                if (!list) return;
-
-                let found = false;
-
-                list.forEach((resultDamage) => {
-                    if (isSameResultDamage(resultDamage, selectedPokemon)) {
-                        resultDamage.isSelected = !resultDamage.isSelected;
-                    }
-                    if (resultDamage.isSelected) found = true;
-                    resultDamage.isBadComparedToSelected = found;
-                });
-            });
-            patchState(store, {
-                _allDynamaxPokemonResultDamageBase: new Map(map),
-            });
+        selectPokemon(selected: ResultDamage) {
+            const key = resultDamageKey(selected.dynamax, selected.typeAttack);
+            const next = new Set(store._selectedKeys());
+            next.has(key) ? next.delete(key) : next.add(key);
+            patchState(store, { _selectedKeys: next });
         },
-        setSearch: (value: string) => {
+        setSearch(value: string) {
             patchState(store, { search: value });
-        },
-        _getDamage(dynamax: Dynamax, typeAttck: TypePokemon, typeOpponent: TypePokemon): number | null {
-            const typeAffinity = store._typeEffectivenessService.calculEffectivness(
-                typeAttck,
-                typeOpponent,
-                typeOpponent,
-            );
-            const stabMultiplier = dynamax.pokemon.type.includes(typeAttck) ? 1.2 : 1;
-            const damage = dynamax.attack * typeAffinity * dynamax.damageAttack * stabMultiplier;
-            const newMaxDamage = Math.max(store.maxDamageFind(), damage);
-            patchState(store, { maxDamageFind: newMaxDamage });
-            return damage;
-        },
-    })),
-    withMethods((store) => ({
-        _addResultDamage(dynamax: Dynamax, typeOpponent: TypePokemon): void {
-            if (!store._allDynamaxPokemonResultDamageBase().has(typeOpponent))
-                store._allDynamaxPokemonResultDamageBase().set(typeOpponent, []);
-            const listDamage: ResultDamage[] = store._allDynamaxPokemonResultDamageBase().get(typeOpponent)!;
-
-            dynamax.attackType.forEach((typeAttack) => {
-                const damage = store._getDamage(dynamax, typeAttack, typeOpponent);
-                if (damage != null) listDamage.push({ dynamax, damage, typeAttack });
-            });
-        },
-    })),
-    withHooks((store) => ({
-        onInit() {
-            allTypes.forEach((type) => {
-                store._pokemonDynamaxRepository
-                    .getDynamaxPokemon()
-                    .forEach((dynamax) => store._addResultDamage(dynamax, type));
-            });
-            const breakPointPercent = 0.5;
-            allTypes.forEach((type) => {
-                store
-                    ._allDynamaxPokemonResultDamageBase()
-                    .set(type, store._allDynamaxPokemonResultDamageBase().get(type)?.sortDesc('damage')!);
-            });
         },
     })),
 );
-
-function isSameResultDamage(resultDamage1: ResultDamage, resultDamage2: ResultDamage): boolean {
-    return (
-        resultDamage1.dynamax.pokemon.dexNumber === resultDamage2.dynamax.pokemon.dexNumber &&
-        resultDamage1.typeAttack === resultDamage2.typeAttack
-    );
-}
-
-function thisDynamaxIsSelected(resultDamage: ResultDamage, iterableResulatDamage: Iterable<ResultDamage>): boolean {
-    return [...iterableResulatDamage].some((item) => isSameResultDamage(item, resultDamage));
-}

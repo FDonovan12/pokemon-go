@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { PokemonData } from '@entities/pokemon';
+import { DynamaxApiEntry, PokemonData } from '@entities/pokemon';
 
 @Component({
     selector: 'app-image-pokemon',
@@ -23,7 +23,7 @@ import { PokemonData } from '@entities/pokemon';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImagePokemon {
-    pokemon = input.required<PokemonData>();
+    pokemon = input.required<PokemonData | DynamaxApiEntry>();
     height = input<number>(50);
     isShiny = input<boolean>(false);
 }

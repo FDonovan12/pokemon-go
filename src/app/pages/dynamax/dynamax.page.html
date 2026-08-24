@@ -45,7 +45,7 @@
                     <div
                         app-percent-color
                         [value]="damage.damage"
-                        [maximumValue]="maxDamage"
+                        [maximumValue]="dynamaxStore.maxDamageFind()"
                         [viewPercent]="true"
                         [style.width.px]="60"
                         [style.display]="'inline-block'"
@@ -53,7 +53,7 @@
                 </div>
             }
             <div style="background-color: rgb(165, 165, 165); width: 1px; height: 100px; border-radius: 100vw"></div>
-            @for (damage of test.get(type); track $index) {
+            @for (damage of dynamaxStore.finalAllDynamaxPokemonResultDamageBase().get(type); track $index) {
                 <div
                     [style.margin.px]="5"
                     (click)="dynamaxStore.selectPokemon(damage)"
@@ -70,7 +70,7 @@
                     <div
                         app-percent-color
                         [value]="damage.damage"
-                        [maximumValue]="maxDamage"
+                        [maximumValue]="dynamaxStore.maxDamageFind()"
                         [viewPercent]="true"
                         [style.width.px]="60"
                         [style.display]="'inline-block'"

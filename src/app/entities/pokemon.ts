@@ -80,41 +80,25 @@ export interface PokemonInterface {
     generation: GenerationPokemon;
     family: PokemonFamily;
 }
-
+export type DynamaxApiEntry = {
+    pokemonId: string;
+    name: NamePokemon;
+    slug: PokemonSlug;
+    dexNumber: number;
+    image: string;
+    imageShiny: string;
+    type: TypePokemon[];
+    stats: { baseAttack: number; baseDefense: number; baseStamina: number };
+    dynamaxMove: DynamaxMove[];
+    isReleased?: boolean;
+    family: PokemonFamily;
+};
 export type PokemonData = PokemonInterface | Base;
 
 export type AlternativePokemon = Record<
     'Gmax' | 'Galar' | 'Alola' | 'Hisui' | 'Rapid-strike' | 'Single-strike-gmax' | 'Rapid-strike-gmax' | 'Crowned',
     PokemonInterface
 >;
-
-// export class Pokemon implements PokemonInterface {
-//     id: number;
-//     name: string;
-//     slug: PokemonSlug;
-//     type: TypePokemon[];
-//     isLegendary: boolean;
-//     isMythical: boolean;
-//     mega?: { id: number; type: string[] } | undefined;
-//     alternatives?: AlternativePokemon;
-
-//     constructor(rawData: PokemonInterface) {
-//         this.id = rawData.id;
-//         this.name = rawData.name;
-//         this.slug = rawData.slug;
-//         this.type = rawData.type;
-//         this.isLegendary = rawData.isLegendary;
-//         this.isMythical = rawData.isMythical;
-//         this.mega = rawData.mega;
-//         this.alternatives = rawData.alternatives;
-//     }
-//     get image(): string {
-//         return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${this.id}.png`;
-//     }
-//     get sprite(): string {
-//         return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.id}.png`;
-//     }
-// }
 
 export const allTypes = [
     'Acier',
@@ -139,34 +123,35 @@ export const allTypes = [
 
 export type TypePokemon = (typeof allTypes)[number];
 
+export type DynamaxMove = {
+    pokemonType: TypePokemon;
+    powerLevels?: number[];
+};
+
 export class Dynamax {
-    pokemon: PokemonInterface;
-    attack: number;
-    attackType: TypePokemon[];
+    pokemon: DynamaxApiEntry;
+    stats: { baseAttack: number; baseDefense: number; baseStamina: number };
+    dynamaxMoves: DynamaxMove[];
     isRelease: boolean;
 
-    constructor(pokemon: PokemonInterface, attack: number, attackType: TypePokemon[], isRelease: boolean = true) {
+    constructor(pokemon: DynamaxApiEntry, isRelease: boolean = true) {
         this.pokemon = pokemon;
-        this.attack = attack;
-        this.attackType = attackType;
+        this.stats = pokemon.stats;
+        this.dynamaxMoves = pokemon.dynamaxMove;
         this.isRelease = isRelease;
     }
 
-    get damageAttack() {
-        return 350;
+    get attack() {
+        return this.pokemon.stats.baseAttack;
+    }
+
+    get attackType(): TypePokemon[] {
+        return this.dynamaxMoves.map((move) => move.pokemonType);
+    }
+
+    get damageAttack(): number {
+        return this.dynamaxMoves[0]?.powerLevels?.[2] ?? 350;
     }
 
     damageAgainst(opponent: TypePokemon) {}
-}
-
-export class Gigamax extends Dynamax {
-    constructor(pokemon: PokemonInterface, attack: number, attackType: TypePokemon[], isRelease: boolean = true) {
-        if (pokemon.alternatives?.Gmax) {
-            pokemon = pokemon.alternatives.Gmax;
-        }
-        super(pokemon, attack, attackType, isRelease);
-    }
-    override get damageAttack() {
-        return 450;
-    }
 }
