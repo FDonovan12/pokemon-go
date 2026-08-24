@@ -28,9 +28,11 @@ export function persistToLocalStorage<T>(key: string, source: Signal<T>, injecto
 }
 
 // localStorageSignal (standalone) devient juste une composition des deux :
-export function localStorageSignal<T>(key: string, defaultValue: T): WritableSignal<T> {
+export function localStorageSignal<T>(key: string, defaultValue: T, reviver?: (value: T) => T): WritableSignal<T> {
     const localStorageService = inject(LocalStorageService);
-    const state = signal<T>(localStorageService.get(key, defaultValue));
+    const stored = localStorageService.get(key, defaultValue);
+    const initial = reviver ? reviver(stored) : stored;
+    const state = signal<T>(initial);
 
     persistToLocalStorage(key, state);
 

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PokemonSelectComponent } from '@shared/features/pokemon-search/pokemon-select/pokemon-select.component';
 import { ImagePokemon } from '../../shared/components/image-pokemon/image-pokemon';
 import { PercentColor } from '../../shared/components/percent-color/percent-color';
 import { TypeComponent } from '../../shared/components/type/type.component';
@@ -10,7 +11,7 @@ import { DynamaxStore } from './dynamax-store/dynamax-store';
 @MeasurePerf()
 @Component({
     selector: 'app-dynamax.page',
-    imports: [TypeComponent, ImagePokemon, PercentColor, FormsModule, ReactiveFormsModule],
+    imports: [TypeComponent, ImagePokemon, PercentColor, FormsModule, ReactiveFormsModule, PokemonSelectComponent],
     templateUrl: './dynamax.page.html',
     styleUrl: './dynamax.page.css',
     changeDetection: ChangeDetectionStrategy.OnPush,

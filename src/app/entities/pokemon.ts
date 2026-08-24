@@ -1,3 +1,4 @@
+import { FastMovePokemon } from '@repositories/move/move.repository';
 import { pokemonFamilyName } from '../bdd/family-pokemon-name';
 import { pokemonSlugs } from '../bdd/name-pokemon';
 
@@ -32,7 +33,7 @@ export interface Base {
     imageShiny: string;
     type: TypePokemon[];
     stats: Stats;
-    quickMoves: string[];
+    quickMoves: FastMovePokemon[];
     cinematicMoves: string[];
     eliteQuickMove: string[];
     eliteCinematicMove: string[];
@@ -133,12 +134,15 @@ export class Dynamax {
     stats: { baseAttack: number; baseDefense: number; baseStamina: number };
     dynamaxMoves: DynamaxMove[];
     isRelease: boolean;
+    isManual: boolean;
 
-    constructor(pokemon: DynamaxApiEntry, isRelease: boolean = true) {
+    constructor(pokemon: DynamaxApiEntry, isManual: boolean = false) {
         this.pokemon = pokemon;
         this.stats = pokemon.stats;
         this.dynamaxMoves = pokemon.dynamaxMove;
-        this.isRelease = isRelease;
+        this.isRelease = pokemon.isReleased ?? true;
+        this.isManual = isManual;
+        console.log(this);
     }
 
     get attack() {
@@ -153,5 +157,23 @@ export class Dynamax {
         return this.dynamaxMoves[0]?.powerLevels?.[2] ?? 350;
     }
 
-    damageAgainst(opponent: TypePokemon) {}
+    static fromBase(base: Base, quickMoveTypes: TypePokemon[]): Dynamax {
+        const entry: DynamaxApiEntry = {
+            pokemonId: base.pokemonId,
+            name: base.name,
+            slug: base.slug,
+            dexNumber: base.dexNumber,
+            image: base.image,
+            imageShiny: base.imageShiny,
+            type: base.type,
+            family: base.family,
+            stats: base.stats,
+            dynamaxMove: quickMoveTypes.unique().map((pokemonType) => ({
+                pokemonType,
+                powerLevels: [250, 300, 350, 450], // puissance fixe : jamais Gigamax pour un ajout manuel
+            })),
+            isReleased: false,
+        };
+        return new Dynamax(entry, true);
+    }
 }

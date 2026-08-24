@@ -13,6 +13,6 @@ export class PokemonDynamaxRepository {
     finalDynamax = computed(() => this.dynamax.value().map((entry) => this.toDynamaxInstance(entry)));
 
     private toDynamaxInstance(entry: DynamaxApiEntry): Dynamax {
-        return new Dynamax(entry, entry.isReleased ?? true);
+        return new Dynamax(entry);
     }
 }

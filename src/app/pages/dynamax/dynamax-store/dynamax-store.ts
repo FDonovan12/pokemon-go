@@ -1,8 +1,10 @@
 import { computed, inject } from '@angular/core';
-import { allTypes, Dynamax, TypePokemon } from '@entities/pokemon';
+import { allTypes, Base, Dynamax, PokemonSlug, TypePokemon } from '@entities/pokemon';
 import { patchState, signalStore, withComputed, withMethods, withProps, withState } from '@ngrx/signals';
+import { MoveRepository } from '@repositories/move/move.repository';
 import { PokemonDynamaxRepository } from '@repositories/pokemon/pokemon-dynamax';
 import { TypeEffectivenessService } from '@services/type-effectiveness-service/type-effectiveness-service';
+import { localStorageSignal } from '@shared/utils/utils';
 
 export type ResultDamage = {
     dynamax: Dynamax;
@@ -22,14 +24,18 @@ const initialState = {
 export const DynamaxStore = signalStore(
     { providedIn: 'root' },
     withProps(() => ({
+        _manuallyAddedDynamax: localStorageSignal('MANUALLY_ADDED_DYNAMAX_KEY', [] as Dynamax[], (list) =>
+            list.map((raw) => new Dynamax(raw.pokemon, raw.isManual)),
+        ),
         _typeEffectivenessService: inject(TypeEffectivenessService),
         _pokemonDynamaxRepository: inject(PokemonDynamaxRepository),
+        _moveRepository: inject(MoveRepository),
     })),
     withState(initialState),
     withComputed((store) => ({
         // Donnée brute, purement dérivée de finalDynamax() — jamais mutée
         _baseResultDamageByType: computed(() => {
-            const dynamaxList = store._pokemonDynamaxRepository.finalDynamax();
+            const dynamaxList = [...store._pokemonDynamaxRepository.finalDynamax(), ...store._manuallyAddedDynamax()];
             const map = new Map<TypePokemon, ResultDamage[]>();
             if (dynamaxList.length === 0) return map;
 
@@ -137,6 +143,16 @@ export const DynamaxStore = signalStore(
         },
         setSearch(value: string) {
             patchState(store, { search: value });
+        },
+        addManualDynamax(base: Base) {
+            const quickMoveTypes = store._moveRepository.fastMove
+                .getMany(base.quickMoves)
+                .map((move) => move.pokemonType);
+            const dynamax = Dynamax.fromBase(base, quickMoveTypes);
+            store._manuallyAddedDynamax.update((previous) => [...previous, dynamax]);
+        },
+        removeManualDynamax(slug: PokemonSlug) {
+            store._manuallyAddedDynamax.update((previous) => previous.filter((d) => d.pokemon.slug !== slug));
         },
     })),
 );
