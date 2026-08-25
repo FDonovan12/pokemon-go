@@ -3,7 +3,7 @@ import { Base, PokemonSlug } from '@entities/pokemon';
 import { AllRankPVP, Combo, FilterDef, FilterTier, IV, ivToFilterValue, LeagueStats } from '@entities/stats';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
-import { PvpRankRepository } from '@repositories/pvp-rank-repository/pvp-rank.repository';
+import { KeyRankExcluded, PvpRankRepository } from '@repositories/pvp-rank-repository/pvp-rank.repository';
 import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { withPokemonSearch } from '@shared/features/pokemon-search/with-pokemon-search.feature';
@@ -28,6 +28,7 @@ type FilterMapValue = {
 const initialState = {
     allRank: new Map<PokemonSlug, PvpRank>(),
     _importantPokemons: new Set<PokemonSlug>(),
+    _excludedRanks: new Set<KeyRankExcluded>(),
 };
 
 export const PVPRankStore = signalStore(
@@ -130,6 +131,21 @@ export const PVPRankStore = signalStore(
             const actualRank = ranks.get(slug)?.[league]?.normal ?? limit + 1;
             return allRank[league].filter((stats) => stats.rank < actualRank);
         },
+        isRankExcluded(slug: PokemonSlug, league: League, form: 'normal' | 'obscur'): boolean {
+            const key = `${slug}:${league}:${form}` as KeyRankExcluded;
+            return store._excludedRanks().has(key);
+        },
+        toggleRankExcluded(slug: PokemonSlug, league: League, form: 'normal' | 'obscur'): void {
+            const set = new Set<KeyRankExcluded>(store._excludedRanks());
+            const key = `${slug}:${league}:${form}` as KeyRankExcluded;
+            if (set.has(key)) {
+                set.delete(key);
+            } else {
+                set.add(key);
+            }
+            patchState(store, { _excludedRanks: set });
+            void store._pvpRankRepository.saveRankExcluded(set);
+        },
         toggleImportantPokemon(slug: PokemonSlug): void {
             const set = new Set<PokemonSlug>(store._importantPokemons());
             if (set.has(slug)) {
@@ -166,8 +182,9 @@ export const PVPRankStore = signalStore(
         },
     })),
     withMethods((store) => ({
-        _pokemonIsWorseThanRank(pokemon: PokemonSlug, league: League, rank: number = 1): boolean {
-            const ranks: PvpRank = store._getOrInitRank(pokemon);
+        _pokemonIsWorseThanRank(slug: PokemonSlug, league: League, rank: number = 1): boolean {
+            const ranks: PvpRank = store._getOrInitRank(slug);
+            if (store.isRankExcluded(slug, league, 'normal')) return false;
             return (ranks[league].normal ?? 4096) > rank;
         },
     })),
@@ -497,6 +514,10 @@ export const PVPRankStore = signalStore(
             effect(() => {
                 const data = store._pvpRankRepository.pvpImportantPokemonResource.value();
                 patchState(store, { _importantPokemons: data });
+            });
+            effect(() => {
+                const data = store._pvpRankRepository.pvpRankExcludedResource.value();
+                patchState(store, { _excludedRanks: data });
             });
         },
     })),

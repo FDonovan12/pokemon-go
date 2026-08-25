@@ -86,6 +86,16 @@ export class ModifyRankDialogComponent {
         this.close();
     }
 
+    isRankExcluded() {
+        const { pokemon, rank, league, forme } = this.formModel();
+        return this.store.isRankExcluded(pokemon.slug, league, forme);
+    }
+    toggleRankExcluded() {
+        const { pokemon, rank, league, forme } = this.formModel();
+        this.store.toggleRankExcluded(pokemon.slug, league, forme);
+        this.close();
+    }
+
     close() {
         this.closed.emit();
     }

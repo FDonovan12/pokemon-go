@@ -65,6 +65,16 @@
             Supprimer
         </button>
         <button
+            type="button"
+            (click)="toggleRankExcluded()"
+        >
+            @if (isRankExcluded()) {
+                inclure le rang
+            } @else {
+                exclure le rang
+            }
+        </button>
+        <button
             type="submit"
             [disabled]="rankForm().invalid()"
         >

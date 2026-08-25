@@ -4,6 +4,7 @@ import { patchState, signalStore, withComputed, withMethods, withProps, withStat
 import { MoveRepository } from '@repositories/move/move.repository';
 import { PokemonDynamaxRepository } from '@repositories/pokemon/pokemon-dynamax';
 import { TypeEffectivenessService } from '@services/type-effectiveness-service/type-effectiveness-service';
+import { ToastService } from '@shared/features/toast/toast.service';
 import { localStorageSignal } from '@shared/utils/utils';
 
 export type ResultDamage = {
@@ -28,6 +29,7 @@ export const DynamaxStore = signalStore(
             list.map((raw) => new Dynamax(raw.pokemon, raw.isManual)),
         ),
         _typeEffectivenessService: inject(TypeEffectivenessService),
+        _toastService: inject(ToastService),
         _pokemonDynamaxRepository: inject(PokemonDynamaxRepository),
         _moveRepository: inject(MoveRepository),
     })),
@@ -145,9 +147,28 @@ export const DynamaxStore = signalStore(
             patchState(store, { search: value });
         },
         addManualDynamax(base: Base) {
-            const quickMoveTypes = store._moveRepository.fastMove
-                .getMany(base.quickMoves)
-                .map((move) => move.pokemonType);
+            const alreadyPresent = [
+                ...store._pokemonDynamaxRepository.finalDynamax(),
+                ...store._manuallyAddedDynamax(),
+            ].some((dynamax) => dynamax.pokemon.slug === base.slug);
+
+            if (alreadyPresent) {
+                store._toastService
+                    .prepare(`${base.name} est déjà dans la liste`, `Un pokemon Deja present ne peut pas etre rajouté.`)
+                    .showWarning();
+                return;
+            }
+
+            const moves = store._moveRepository.fastMove.getMany(base.quickMoves.concat(base.eliteQuickMove)).compact();
+            const quickMoveTypes = moves.map((move) => move.pokemonType);
+
+            if (quickMoveTypes.length === 0) {
+                store._toastService
+                    .prepare(`Aucune attaque trouvée pour ${base.name}`, `Contacter un admin pour reporter ce bug.`)
+                    .showWarning();
+                return;
+            }
+
             const dynamax = Dynamax.fromBase(base, quickMoveTypes);
             store._manuallyAddedDynamax.update((previous) => [...previous, dynamax]);
         },

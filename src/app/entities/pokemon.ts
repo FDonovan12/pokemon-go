@@ -35,7 +35,7 @@ export interface Base {
     stats: Stats;
     quickMoves: FastMovePokemon[];
     cinematicMoves: string[];
-    eliteQuickMove: string[];
+    eliteQuickMove: FastMovePokemon[];
     eliteCinematicMove: string[];
     nonTmCinematicMoves: string[];
     evolutionIds: Evolution[];
@@ -150,6 +150,7 @@ export class Dynamax {
     }
 
     get attackType(): TypePokemon[] {
+        console.log(this.dynamaxMoves, this);
         return this.dynamaxMoves.map((move) => move.pokemonType);
     }
 

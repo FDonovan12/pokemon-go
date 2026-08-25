@@ -142,14 +142,22 @@
             <span>⚪</span>
             @if (_pokemonRepository.availabilityBySlug.asMap().get(pokemon.slug)?.super) {
                 <span (click)="openModifyRankDialog(pokemon, 'super', 'normal')">
-                    {{ store.allRank().get(pokemon.slug)?.super?.normal ?? '' }}
+                    @if (store.isRankExcluded(pokemon.slug, 'super', 'normal')) {
+                        ❌
+                    } @else {
+                        {{ store.allRank().get(pokemon.slug)?.super?.normal ?? '' }}
+                    }
                 </span>
             } @else {
                 <span>❌</span>
             }
             @if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper) {
                 <span (click)="openModifyRankDialog(pokemon, 'hyper', 'normal')">
-                    {{ store.allRank().get(pokemon.slug)?.hyper?.normal ?? '' }}
+                    @if (store.isRankExcluded(pokemon.slug, 'hyper', 'normal')) {
+                        ❌
+                    } @else {
+                        {{ store.allRank().get(pokemon.slug)?.hyper?.normal ?? '' }}
+                    }
                 </span>
             } @else {
                 <span>❌</span>
@@ -157,14 +165,22 @@
             <span>⚫</span>
             @if (store.isPokemonsAvaible().get(pokemon.slug)?.super) {
                 <span (click)="openModifyRankDialog(pokemon, 'super', 'obscur')">
-                    {{ store.allRank().get(pokemon.slug)?.super?.obscur ?? '' }}
+                    @if (store.isRankExcluded(pokemon.slug, 'super', 'obscur')) {
+                        ❌
+                    } @else {
+                        {{ store.allRank().get(pokemon.slug)?.super?.obscur ?? '' }}
+                    }
                 </span>
             } @else {
                 <span>❌</span>
             }
             @if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper) {
                 <span (click)="openModifyRankDialog(pokemon, 'hyper', 'obscur')">
-                    {{ store.allRank().get(pokemon.slug)?.hyper?.obscur ?? '' }}
+                    @if (store.isRankExcluded(pokemon.slug, 'hyper', 'obscur')) {
+                        ❌
+                    } @else {
+                        {{ store.allRank().get(pokemon.slug)?.hyper?.obscur ?? '' }}
+                    }
                 </span>
             } @else {
                 <span>❌</span>
