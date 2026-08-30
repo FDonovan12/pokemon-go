@@ -78,12 +78,22 @@ export class FiltersRepository {
         },
     ];
 
-    // private userFiltersSignal = signal<FilterItem[]>([]);
-    readonly userFiltersSignal = linkedSignal(() => this._filtersResource.value());
-
     constructor() {
         this.loadFilters();
     }
+
+    private readonly _filtersResource = resource({
+        params: () => (this.supabaseService.isLoggedIn() ? true : undefined),
+        loader: async () => {
+            const { data } = await this.supabaseService.client.from('user_data').select('filters').single();
+            const filterList = (data?.filters as FilterListItem[]) ?? this.defaultFilters;
+            this.localStorageService.set(FILTERS_STORAGE_KEY, filterList);
+            return filterList;
+        },
+        defaultValue: this.localStorageService.get<FilterListItem[]>(FILTERS_STORAGE_KEY, this.defaultFilters),
+    });
+    // private userFiltersSignal = signal<FilterItem[]>([]);
+    readonly userFiltersSignal = linkedSignal(() => this._filtersResource.value());
 
     getFilters(): Signal<FilterListItem[]> {
         return this.userFiltersSignal.asReadonly();
@@ -274,17 +284,6 @@ export class FiltersRepository {
             );
         }
     }
-
-    private readonly _filtersResource = resource({
-        params: () => (this.supabaseService.isLoggedIn() ? true : undefined),
-        loader: async () => {
-            const { data } = await this.supabaseService.client.from('user_data').select('filters').single();
-            const filterList = (data?.filters as FilterListItem[]) ?? this.defaultFilters;
-            this.localStorageService.set(FILTERS_STORAGE_KEY, filterList);
-            return filterList;
-        },
-        defaultValue: this.localStorageService.get<FilterListItem[]>(FILTERS_STORAGE_KEY, this.defaultFilters),
-    });
 
     // private readonly _filtersResource = resource({
     //     params: () => (this.supabaseService.isLoggedIn() ? true : undefined),

@@ -149,7 +149,7 @@
                                 </span>
                                 <button
                                     (click)="copyFilter(filter)"
-                                    [disabled]="filtersFacade.isFilterResolving(filter.id)"
+                                    [disabled]="!filter.isCompletelyResolved"
                                 >
                                     {{ filter.label }}
                                 </button>
@@ -197,7 +197,7 @@
                 </span>
                 <button
                     (click)="copyFilter(filter)"
-                    [disabled]="filtersFacade.isFilterResolving(filter.id)"
+                    [disabled]="!filter.isCompletelyResolved"
                 >
                     {{ filter.label }}
                 </button>

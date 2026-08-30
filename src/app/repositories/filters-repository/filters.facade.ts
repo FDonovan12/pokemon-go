@@ -1,6 +1,4 @@
-import { Injectable, ResourceRef, Signal, computed, inject, resource } from '@angular/core';
-import { ListPokemonRepository } from '@repositories/list-pokemon-repository/list-pokemon.repository';
-import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
+import { Injectable, Signal, effect, inject, signal } from '@angular/core';
 import { FilterService } from '@services/filter-service/filter-service';
 import {
     FilterFolder,
@@ -20,121 +18,116 @@ import { FiltersRepository } from './filters.repository';
 export class FiltersFacade {
     private readonly _filterService = inject(FilterService);
     private readonly _filtersRepository = inject(FiltersRepository);
-    private readonly _listPokemonRepository = inject(ListPokemonRepository);
-    private readonly _pokemonRepository = inject(PokemonRepository);
+
+    private readonly _resolvedFilters = signal<FilterListItemResolved[]>([]);
+    private readonly _resolveGeneration = new Map<string, number>();
+
+    constructor() {
+        effect(() => {
+            const currentList = this._filtersRepository.getFilters()();
+            this.rebuildAndResolve(currentList);
+        });
+    }
+
+    // ---------- Helpers structure (privés, remplacent les fonctions locales du fichier d'origine) ----------
+
+    private flatten(list: FilterListItem[]): FilterItem[] {
+        return list.flatMap((item) => (item.type === 'folder' ? item.children : [item]));
+    }
+
+    private needsResolution(query: FilterQuery | string): boolean {
+        return typeof query !== 'string' && !!query.lists;
+    }
 
     private resolveQuerySync(query: FilterQuery | string): string {
         if (typeof query === 'string') return query;
         return query.prefix;
     }
 
-    // getFiltersResolved(): ResourceRef<FilterListItemResolved[]> {
-    //     const flatten = (list: FilterListItem[]): FilterItem[] =>
-    //         list.flatMap((item) => (item.type === 'folder' ? item.children : [item]));
-
-    //     const rebuild = (list: FilterListItem[], resolvedQueryById: Map<string, string>): FilterListItemResolved[] =>
-    //         list.map((item) =>
-    //             item.type === 'folder'
-    //                 ? {
-    //                       type: 'folder' as const,
-    //                       id: item.id,
-    //                       label: item.label,
-    //                       isOpen: item.isOpen,
-    //                       children: item.children.map((f) => ({
-    //                           type: 'filter' as const,
-    //                           id: f.id,
-    //                           label: f.label,
-    //                           query: resolvedQueryById.get(f.id) ?? '',
-    //                       })),
-    //                   }
-    //                 : {
-    //                       type: 'filter' as const,
-    //                       id: item.id,
-    //                       label: item.label,
-    //                       query: resolvedQueryById.get(item.id) ?? '',
-    //                   },
-    //         );
-
-    //     const currentList = this._filtersRepository.getFilters()();
-    //     const defaultResolvedMap = new Map(flatten(currentList).map((f) => [f.id, this.resolveQuerySync(f.query)]));
-
-    //     return resource({
-    //         params: () => this._filtersRepository.getFilters()(),
-    //         loader: async ({ params: filterList }) => {
-    //             const resolvedFlat = await this.resolveFilters(flatten(filterList));
-    //             const resolvedMap = new Map(resolvedFlat.map((f) => [f.id, f.query]));
-    //             return rebuild(filterList, resolvedMap);
-    //         },
-    //         defaultValue: rebuild(currentList, defaultResolvedMap),
-    //     });
-    // }
-
-    private _queryCacheResource?: ResourceRef<Map<string, string>>;
-
-    isFilterResolving(filterId: string): boolean {
-        return !!this._queryCacheResource?.isLoading() && !this._queryCacheResource.value().has(filterId);
-    }
-
-    getFiltersResolved(): Signal<FilterListItemResolved[]> {
-        const flatten = (list: FilterListItem[]): FilterItem[] =>
-            list.flatMap((item) => (item.type === 'folder' ? item.children : [item]));
-
-        const resolveKey = computed(() =>
-            flatten(this._filtersRepository.getFilters()())
-                .map((f) => `${f.id}:${JSON.stringify(f.query)}`)
-                .sort()
-                .join('|'),
-        );
-
-        const rebuild = (list: FilterListItem[], resolvedQueryById?: Map<string, string>): FilterListItemResolved[] =>
-            list.map((item) =>
-                item.type === 'folder'
-                    ? {
-                          type: 'folder' as const,
-                          id: item.id,
-                          label: item.label,
-                          isOpen: item.isOpen,
-                          children: item.children.map((f) => ({
-                              type: 'filter' as const,
-                              id: f.id,
-                              label: f.label,
-                              query: resolvedQueryById?.get(f.id) ?? '',
-                          })),
-                      }
-                    : {
+    /** Reconstruit la structure complète (dossiers + filtres) à partir de la liste brute et d'un résolveur par item. */
+    private rebuild(
+        list: FilterListItem[],
+        resolveFor: (item: FilterItem) => { query: string; isCompletelyResolved: boolean },
+    ): FilterListItemResolved[] {
+        return list.map((item) =>
+            item.type === 'folder'
+                ? {
+                      type: 'folder' as const,
+                      id: item.id,
+                      label: item.label,
+                      isOpen: item.isOpen,
+                      children: item.children.map((f) => ({
                           type: 'filter' as const,
-                          id: item.id,
-                          label: item.label,
-                          query: resolvedQueryById?.get(item.id) ?? '',
-                      },
-            );
-
-        const currentList = this._filtersRepository.getFilters()();
-        const defaultResolvedMap = new Map(flatten(currentList).map((f) => [f.id, this.resolveQuerySync(f.query)]));
-
-        this._queryCacheResource = resource({
-            params: resolveKey,
-            loader: async () => {
-                const currentFlat = flatten(this._filtersRepository.getFilters()());
-                const resolvedFlat = await this.resolveFilters(currentFlat);
-                return new Map(resolvedFlat.map((f) => [f.id, f.query]));
-            },
-            defaultValue: defaultResolvedMap,
-        });
-
-        // computed() plutôt que resource(): se recalcule dès que getFilterList() OU
-        // queryCache.value() change, sans avoir besoin d'un second cycle async.
-        return computed(() => rebuild(this._filtersRepository.getFilters()(), this._queryCacheResource?.value()));
+                          id: f.id,
+                          label: f.label,
+                          ...resolveFor(f),
+                      })),
+                  }
+                : {
+                      type: 'filter' as const,
+                      id: item.id,
+                      label: item.label,
+                      ...resolveFor(item),
+                  },
+        );
     }
 
-    async resolveFilters(filters: FilterItem[]): Promise<FilterItemResolved[]> {
-        return Promise.all(
-            filters.map(async (filter) => ({
-                type: 'filter',
-                id: filter.id,
-                label: filter.label,
-                query: await this.resolveQuery(filter.query),
-            })),
+    /** Trouve un filtre résolu par id, en cherchant aussi dans les dossiers. */
+    private findFilterResolved(filterId: string, list: FilterListItemResolved[]): FilterItemResolved | undefined {
+        for (const item of list) {
+            if (item.type === 'filter' && item.id === filterId) return item;
+            if (item.type === 'folder') {
+                const found = item.children.find((f) => f.id === filterId);
+                if (found) return found;
+            }
+        }
+        return undefined;
+    }
+
+    /** Retourne une nouvelle liste avec le filtre `filterId` mis à jour via `updater`, sans muter l'originale. */
+    private updateFilterInList(
+        list: FilterListItemResolved[],
+        filterId: string,
+        updater: (item: FilterItemResolved) => FilterItemResolved,
+    ): FilterListItemResolved[] {
+        return list.map((item) => {
+            if (item.type === 'filter') {
+                return item.id === filterId ? updater(item) : item;
+            }
+            return {
+                ...item,
+                children: item.children.map((f) => (f.id === filterId ? updater(f) : f)),
+            };
+        });
+    }
+
+    // ---------- Résolution ----------
+
+    private rebuildAndResolve(list: FilterListItem[]): void {
+        const flat = this.flatten(list);
+
+        // 1. Rebuild synchrone immédiat — jamais d'attente
+        const synced = this.rebuild(list, (item) => ({
+            query: this.resolveQuerySync(item.query),
+            isCompletelyResolved: !this.needsResolution(item.query),
+        }));
+        this._resolvedFilters.set(synced);
+
+        // 2. Lancer la résolution async, filtre par filtre, indépendamment
+        flat.filter((f) => this.needsResolution(f.query)).forEach((filter) => this.resolveOneFilter(filter));
+    }
+
+    private async resolveOneFilter(filter: FilterItem): Promise<void> {
+        const generation = (this._resolveGeneration.get(filter.id) ?? 0) + 1;
+        this._resolveGeneration.set(filter.id, generation);
+
+        const query = await this.resolveQuery(filter.query);
+
+        // Si le filtre a été modifié/reconstruit entre-temps, cette résolution est obsolète -> on l'ignore
+        if (this._resolveGeneration.get(filter.id) !== generation) return;
+
+        this._resolvedFilters.update((list) =>
+            this.updateFilterInList(list, filter.id, (item) => ({ ...item, query, isCompletelyResolved: true })),
         );
     }
 
@@ -147,11 +140,10 @@ export class FiltersFacade {
             return query;
         }
 
-        query.prefix;
         const parts: string[] = [query.prefix];
 
         if (query.lists) {
-            const { cleaned, removedKeys } = await this._filterService.cleanListCondition(query.lists);
+            const { cleaned } = await this._filterService.cleanListCondition(query.lists);
             query.lists = cleaned;
             const pokemons = (await this._filterService.simplifyPokemon(query.lists)).sortAsc('dexNumber');
             const result = this._filterService.buildAllPokemon(pokemons);
@@ -163,11 +155,22 @@ export class FiltersFacade {
 
     /**
      * Convertit une structure ListCondition récursive en string
-     * (À implémente plus tard)
+     * (À implémenter plus tard)
      */
     private resolveListCondition(condition: ListCondition): string {
         // TODO: Implémenter la résolution récursive
         return '';
+    }
+
+    // ---------- API publique ----------
+
+    isFilterResolving(filterId: string): boolean {
+        const filter = this.findFilterResolved(filterId, this._resolvedFilters());
+        return filter ? !filter.isCompletelyResolved : false;
+    }
+
+    getFiltersResolved(): Signal<FilterListItemResolved[]> {
+        return this._resolvedFilters.asReadonly();
     }
 
     getFilterById(id: string): FilterItem | undefined {

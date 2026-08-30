@@ -10,8 +10,8 @@ import {
     FilterItem,
     FilterItemResolved,
     FilterListItemResolved,
-    FiltersFacade,
 } from '@repositories/filters-repository';
+import { FiltersFacade } from '@repositories/filters-repository/filters.facade';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { ToastService } from '@shared/features/toast/toast.service';

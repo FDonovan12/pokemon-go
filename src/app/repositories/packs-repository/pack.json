@@ -98,7 +98,11 @@
     {
       "id": "pack-pass-x10",
       "name": "Pack pass (x10)",
-      "items": [{ "type": "pass_raid_normal", "quantity": 10 }],
+      "items": [
+        { "type": "pass_raid_normal", "quantity": 10 },
+        { "type": "potion_max", "quantity": 3 },
+        { "type": "rappel_max", "quantity": 3 }
+      ],
       "priceCoins": 625
     },
     {

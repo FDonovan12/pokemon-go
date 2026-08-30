@@ -25,6 +25,7 @@ export interface FilterItemResolved {
     id: string;
     label: string;
     query: string; // Toujours un string pour le composant
+    isCompletelyResolved: boolean;
 }
 
 export interface FilterItemResolved {
