@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Base } from '@entities/pokemon';
 import { DropdownComponent } from '@shared/components/dropdown/dropdown.component';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
@@ -14,6 +14,7 @@ import { PokemonSelectStore } from './pokemon-select-store';
 })
 export class PokemonSelectComponent {
     protected store = inject(PokemonSelectStore);
+    placeHolder = input<string>('Rechercher un Pokémon...');
     selected = output<Base>();
 
     onSearch(value: string) {

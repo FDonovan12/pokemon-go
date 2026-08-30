@@ -142,7 +142,6 @@ export class Dynamax {
         this.dynamaxMoves = pokemon.dynamaxMove;
         this.isRelease = pokemon.isReleased ?? true;
         this.isManual = isManual;
-        console.log(this);
     }
 
     get attack() {
@@ -150,7 +149,6 @@ export class Dynamax {
     }
 
     get attackType(): TypePokemon[] {
-        console.log(this.dynamaxMoves, this);
         return this.dynamaxMoves.map((move) => move.pokemonType);
     }
 

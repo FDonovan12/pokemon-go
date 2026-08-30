@@ -11,9 +11,20 @@
     </label>
     <button (click)="dynamaxStore.setSearch('')">Reset</button>
 </div>
-<app-pokemon-select (selected)="dynamaxStore.addManualDynamax($event)"></app-pokemon-select>
+<app-pokemon-select
+    (selected)="dynamaxStore.addManualDynamax($event)"
+    [placeHolder]="'Ajouter un Pokemon'"
+></app-pokemon-select>
+@for (type of dynamaxStore.typeList(); track $index) {
+    <app-type
+        [type]="type"
+        [isSelected]="type === dynamaxStore.selectedType()"
+        (click)="dynamaxStore.selectType(type)"
+        style="margin-inline: 3px"
+    ></app-type>
+}
 <div style="overflow-x: auto; max-width: 100%">
-    @for (type of typesList; track $index) {
+    @for (type of dynamaxStore.typeList(); track $index) {
         <div
             [class]="type"
             style="
@@ -25,10 +36,20 @@
                 width: fit-content;
             "
         >
-            <app-type
-                [type]="type"
-                style="margin-inline: 3px"
-            ></app-type>
+            <div style="display: flex; flex-direction: column">
+                @if (dynamaxStore.selectedType()) {
+                    <app-type
+                        [type]="dynamaxStore.selectedType()!"
+                        style="margin-inline: 3px"
+                    ></app-type>
+                }
+                @if (type !== dynamaxStore.selectedType()) {
+                    <app-type
+                        [type]="type"
+                        style="margin-inline: 3px"
+                    ></app-type>
+                }
+            </div>
             @for (damage of dynamaxStore.searchPokemon()?.get(type); track $index) {
                 <div
                     [style.margin.px]="5"

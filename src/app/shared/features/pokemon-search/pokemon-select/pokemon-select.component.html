@@ -1,7 +1,7 @@
 <app-dropdown
     [value]="store.search()"
     [items]="store.searchResults()"
-    placeholder="Rechercher un Pokémon..."
+    [placeholder]="placeHolder()"
     (valueChange)="onSearch($event ?? '')"
     (selected)="select($event)"
 >

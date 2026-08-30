@@ -4,7 +4,10 @@
 >
     <div>
         @for (type of resistanceOfCurrentType(); track $index) {
-            <app-type [type]="type" />
+            <app-type
+                [type]="type"
+                [isALink]="true"
+            />
         }
     </div>
 </div>
@@ -14,7 +17,10 @@
 >
     <div style="display: flex; align-items: center; justify-content: end">
         @for (type of weaknessesOfCurrentType(); track $index) {
-            <app-type [type]="type" />
+            <app-type
+                [type]="type"
+                [isALink]="true"
+            />
         }
     </div>
     <app-type
@@ -24,7 +30,10 @@
     />
     <div style="display: flex; align-items: center">
         @for (type of weaknessesToCurrentType(); track $index) {
-            <app-type [type]="type" />
+            <app-type
+                [type]="type"
+                [isALink]="true"
+            />
         }
     </div>
 </div>
@@ -34,7 +43,10 @@
 >
     <div>
         @for (type of resistanceToCurrentType(); track $index) {
-            <app-type [type]="type" />
+            <app-type
+                [type]="type"
+                [isALink]="true"
+            />
         }
     </div>
 </div>

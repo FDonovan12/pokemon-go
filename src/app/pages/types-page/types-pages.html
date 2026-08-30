@@ -42,7 +42,10 @@
         @for (type1 of typesList; track type1) {
             <tr>
                 <td>
-                    <app-type [type]="type1"></app-type>
+                    <app-type
+                        [type]="type1"
+                        [isALink]="true"
+                    ></app-type>
                 </td>
                 <td>
                     {{ store.coverageTeam().totalPerTypeOffensive.get(type1) }}

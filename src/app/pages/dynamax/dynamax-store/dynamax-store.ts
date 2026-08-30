@@ -16,10 +16,16 @@ export type ResultDamage = {
 };
 
 const resultDamageKey = (dynamax: Dynamax, typeAttack: TypePokemon) => `${dynamax.pokemon.dexNumber}-${typeAttack}`;
+type State = {
+    _selectedKeys: Set<string>;
+    search: string;
+    selectedType: TypePokemon | null;
+};
 
-const initialState = {
+const initialState: State = {
     _selectedKeys: new Set<string>(),
     search: '',
+    selectedType: null,
 };
 
 export const DynamaxStore = signalStore(
@@ -35,12 +41,12 @@ export const DynamaxStore = signalStore(
     })),
     withState(initialState),
     withComputed((store) => ({
+        typeList: computed(() => [store.selectedType(), ...allTypes].compact().unique()),
         // Donnée brute, purement dérivée de finalDynamax() — jamais mutée
         _baseResultDamageByType: computed(() => {
             const dynamaxList = [...store._pokemonDynamaxRepository.finalDynamax(), ...store._manuallyAddedDynamax()];
             const map = new Map<TypePokemon, ResultDamage[]>();
             if (dynamaxList.length === 0) return map;
-
             allTypes.forEach((typeOpponent) => {
                 const list: ResultDamage[] = [];
                 dynamaxList.forEach((dynamax) => {
@@ -48,7 +54,7 @@ export const DynamaxStore = signalStore(
                         const typeAffinity = store._typeEffectivenessService.calculEffectivness(
                             typeAttack,
                             typeOpponent,
-                            typeOpponent,
+                            store.selectedType() ?? typeOpponent,
                         );
                         const stabMultiplier = dynamax.pokemon.type.includes(typeAttack) ? 1.2 : 1;
                         const damage = dynamax.attack * typeAffinity * dynamax.damageAttack * stabMultiplier;
@@ -97,7 +103,7 @@ export const DynamaxStore = signalStore(
             return result;
         }),
         finalAllDynamaxPokemonResultDamageBase: computed(() => {
-            const breakPointPercent = 0.5;
+            const breakPointPercent = store.selectedType() ? 0.25 : 0.5;
             const maxDamage = store.maxDamageFind();
             const map = new Map<TypePokemon, ResultDamage[]>();
             allTypes.forEach((type) => {
@@ -111,7 +117,7 @@ export const DynamaxStore = signalStore(
                                 store._typeEffectivenessService.calculEffectivness(
                                     resultDamage.typeAttack,
                                     type,
-                                    type,
+                                    store.selectedType() ?? type,
                                 ) > 1;
                             const doEnoughDamage = resultDamage.damage >= maxDamage * breakPointPercent;
                             return (doEnoughDamage && (isStab || isSuperEffective)) || (isStab && isSuperEffective);
@@ -136,6 +142,9 @@ export const DynamaxStore = signalStore(
     withMethods((store) => ({
         unselectAll() {
             patchState(store, { _selectedKeys: new Set<string>() });
+        },
+        selectType(type: TypePokemon) {
+            patchState(store, { selectedType: type });
         },
         selectPokemon(selected: ResultDamage) {
             const key = resultDamageKey(selected.dynamax, selected.typeAttack);
