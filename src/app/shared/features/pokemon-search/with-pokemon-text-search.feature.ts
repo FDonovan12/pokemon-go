@@ -3,6 +3,9 @@ import { PokemonData } from '@entities/pokemon';
 import { patchState, signalStoreFeature, withComputed, withMethods, withProps, withState } from '@ngrx/signals';
 import { InternalListPokemonRepository } from '@repositories/list-pokemon-repository/internal-list-pokemon.repository';
 
+export type CustomSearchResolver<T extends PokemonData> = (search: string, allPokemons: T[]) => T[] | undefined;
+type MaybeCustomSearch<T extends PokemonData> = { _customSearch?: CustomSearchResolver<T> };
+
 const createInitialState = <T extends PokemonData>() => ({
     _allPokemons: [] as T[],
     search: '',
@@ -23,6 +26,10 @@ export function withPokemonTextSearch<T extends PokemonData>() {
                 const allPokemons = store._allPokemons() ?? ([] as T[]);
 
                 if (!search || search.trim() === '') return allPokemons;
+
+                const customSearchFn = (store as unknown as MaybeCustomSearch<T>)._customSearch;
+                const custom = customSearchFn?.(search, allPokemons);
+                if (custom) return custom;
 
                 const internal = store._internalListPokemonRepository.getPokemonsForInternalListBySearch(search);
                 if (internal) return internal as T[];

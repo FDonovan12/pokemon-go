@@ -7,6 +7,7 @@ import { KeyRankExcluded, PvpRankRepository } from '@repositories/pvp-rank-repos
 import { FilterService } from '@services/filter-service/filter-service';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { withPokemonSearch } from '@shared/features/pokemon-search/with-pokemon-search.feature';
+import { CustomSearchResolver } from '@shared/features/pokemon-search/with-pokemon-text-search.feature';
 import { createTimer, localStorageSignal } from '@shared/utils/utils';
 import { League } from './../pvp-rank.type';
 
@@ -20,6 +21,8 @@ export interface PvpRank {
         normal: number | null;
     };
 }
+
+const MAX_PVP_RANK = 4096;
 type FilterMapValue = {
     pokemonsSlug: PokemonSlug[];
     hasRank1: boolean;
@@ -33,6 +36,26 @@ const initialState = {
 
 export const PVPRankStore = signalStore(
     { providedIn: 'root' },
+    withState(initialState),
+    withProps((store) => ({
+        _customSearch: ((search, allPokemons) => {
+            const rank = Number(search);
+            if (Number.isNaN(rank)) return undefined;
+            const allRank = store.allRank();
+            const filtered = allPokemons.filter((p) => {
+                const r = allRank.get(p.slug);
+                if (!r) return false;
+                const bestRank = Math.min(
+                    r.super.normal ?? MAX_PVP_RANK,
+                    r.super.obscur ?? MAX_PVP_RANK,
+                    r.hyper.normal ?? MAX_PVP_RANK,
+                    r.hyper.obscur ?? MAX_PVP_RANK,
+                );
+                return bestRank <= rank;
+            });
+            return filtered;
+        }) satisfies CustomSearchResolver<Base>,
+    })),
     withPokemonSearch<Base>(),
     withProps(() => ({
         _pokemonRepository: inject(PokemonRepository),
@@ -61,13 +84,13 @@ export const PVPRankStore = signalStore(
             defaultValue: [] as Base[],
         }),
     })),
-    withState(initialState),
     withComputed((store) => ({
         isLoading: computed(() => store._pokemonsResource.isLoading() || store._filteredResource.isLoading()),
         filteredPokemons: computed(() => {
             if (!store._filteredResource.isLoading()) {
                 return store._filteredResource.value() ?? [];
             }
+            store.allRank().get('Bulbizarre')?.super.normal;
 
             return store.resultSelected();
         }),
@@ -166,6 +189,7 @@ export const PVPRankStore = signalStore(
             const getBadge = (stats: LeagueStats<IV>[], available: boolean): string | null => {
                 if (!available) return '❌';
                 const min = stats.reduce((min, stat) => Math.min(stat.attack, stat.defense, stat.stamina, min), 15);
+                if (min >= 15) return '⭐';
                 if (min >= 12) return '🍀';
                 if (min >= 10) return '⚔️';
                 if (min >= 5) return '🔄';
@@ -266,7 +290,7 @@ export const PVPRankStore = signalStore(
             const remainingFilter = {
                 label: 'reste',
                 filter: `!# & ${dexNumberRemaining.join(',')}, obscur`,
-                length: remainingSlugs.size,
+                length: dexNumberRemaining.length,
             };
             // "no-verif" : par signature exacte de tiers, en excluant tout dexNumber déjà dans remainingFilter
             const dexToTierIndices = new Map<number, Set<number>>();

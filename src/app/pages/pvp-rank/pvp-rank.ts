@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { Base, PokemonInterface } from '@entities/pokemon';
-import { Combo, FilterTier, LeagueStats } from '@entities/stats';
+import { Combo, FilterTier } from '@entities/stats';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
 import { FilterService } from '@services/filter-service/filter-service';
@@ -45,16 +45,6 @@ export class PvpRankPages {
         this.showDialog.set(false);
     }
 
-    getBadge(stats: LeagueStats): '⭐' | '🌦️' | '🔄' | '⚔️' | '🍀' | null {
-        const min = Math.min(stats.attack, stats.defense, stats.stamina);
-        if (min >= 15) return '⭐';
-        if (min >= 12) return '🍀';
-        if (min >= 10) return '⚔️';
-        if (min >= 5) return '🔄';
-        if (min >= 4) return '🌦️';
-        return null;
-    }
-
     openModifyRankDialog(pokemon: PokemonInterface, league: League = 'super', forme: Forme = 'normal') {
         this.selectedPokemon.set(pokemon);
         this.selectedLeague = league;
@@ -64,7 +54,6 @@ export class PvpRankPages {
 
     copyFilter(filter: { stats: Combo<FilterTier>; pokemons: Base[]; isIncluded: boolean }, league: 'great' | 'ultra') {
         const ids = filter.pokemons.map((p) => p.dexNumber).join(',');
-        const { attack, defense, stamina } = filter.stats;
         let str = '';
         if (filter.isIncluded) {
             str = `${ids}&${this._filterService.comboToFilter(filter.stats)} & !# `;
