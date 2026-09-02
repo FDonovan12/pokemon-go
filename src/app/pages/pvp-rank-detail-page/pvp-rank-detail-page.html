@@ -36,8 +36,8 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Ⓖ Grande Ligue</th>
-                    <th>Ⓤ Ultra Ligue</th>
+                    <th>Ⓖ Super Ligue</th>
+                    <th>Ⓤ Hyper Ligue</th>
                 </tr>
             </thead>
             <tbody>
@@ -81,44 +81,16 @@
                             <td colspan="3">
                                 @let allMatches = allMatchesForRow(row);
                                 <div class="expanded-content">
-                                    <div class="expanded-league">
-                                        <div class="expanded-league-title">Grande Ligue</div>
-                                        <div class="expanded-list">
-                                            @if (allMatches?.great; as list) {
-                                                @for (item of list; track item.rank) {
-                                                    <div class="expanded-item">
-                                                        <span>Rank {{ item.rank }}</span>
-                                                        <span>
-                                                            {{ item.stat.attack }} / {{ item.stat.defense }} / {{ item.stat.stamina }}
-                                                        </span>
-                                                    </div>
-                                                } @empty {
-                                                    <span class="no-rank">Aucun résultat</span>
-                                                }
-                                            } @else {
-                                                <span class="unavailable">❌</span>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div class="expanded-league">
-                                        <div class="expanded-league-title">Ultra Ligue</div>
-                                        <div class="expanded-list">
-                                            @if (allMatches?.ultra; as list) {
-                                                @for (item of list; track item.rank) {
-                                                    <div class="expanded-item">
-                                                        <span>Rank {{ item.rank }}</span>
-                                                        <span>
-                                                            {{ item.stat.attack }} / {{ item.stat.defense }} / {{ item.stat.stamina }}
-                                                        </span>
-                                                    </div>
-                                                } @empty {
-                                                    <span class="no-rank">Aucun résultat</span>
-                                                }
-                                            } @else {
-                                                <span class="unavailable">❌</span>
-                                            }
-                                        </div>
-                                    </div>
+                                    <app-league-rank-expanded-component
+                                        [list]="allMatches?.great"
+                                        league="super"
+                                        [actualRank]="actualRank()"
+                                    ></app-league-rank-expanded-component>
+                                    <app-league-rank-expanded-component
+                                        [list]="allMatches?.ultra"
+                                        league="hyper"
+                                        [actualRank]="actualRank()"
+                                    ></app-league-rank-expanded-component>
                                 </div>
                             </td>
                         </tr>

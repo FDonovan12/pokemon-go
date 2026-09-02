@@ -11,9 +11,10 @@ import { ClickOutsideDirective } from '@shared/directive/click-outside.directive
 import { createExpandableSet, localStorageSignal } from '@shared/utils/utils';
 import { PvpRank, PVPRankStore } from '../pvp-rank/pvp-rank-store/pvp-rank-store';
 import { League } from '../pvp-rank/pvp-rank.type';
+import { LeagueRankExpandedComponent } from './league-rank-expanded-component/league-rank-expanded-component';
 
 type MatchesByLeague = Map<string, RankedStat[]>;
-type RankedStat = {
+export type RankedStat = {
     rank: number;
     stat: LeagueStats;
     betterCount: number;
@@ -38,7 +39,7 @@ const createSource = (minIv: number, label: string, icon: string) => ({
 });
 
 const SOURCES = {
-    meilleur: createSource(0, 'Rank 1', '⭐'),
+    meilleur: createSource(0, 'Nature', '🌿'),
     meteo: createSource(4, 'Météo', '🌦️'),
     echange: createSource(5, 'Échange', '🔄'),
     raid: createSource(10, 'Raid / œuf', '⚔️'),
@@ -51,7 +52,7 @@ const DISPLAY_MODE_LOCAL_STORAGE = 'pokemon-display-mode-local-storage';
 
 @Component({
     selector: 'app-pvp-rank-detail-page',
-    imports: [ImagePokemon, NgTemplateOutlet, ClickOutsideDirective],
+    imports: [ImagePokemon, NgTemplateOutlet, ClickOutsideDirective, LeagueRankExpandedComponent],
     templateUrl: './pvp-rank-detail-page.html',
     styleUrl: './pvp-rank-detail-page.css',
 })

@@ -35,7 +35,7 @@ export class PokestopPage implements OnInit {
     @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef<HTMLDivElement>;
 
     private readonly injector = inject(Injector);
-    private map!: import('leaflet').Map;
+    private map!: L.Map;
     private clusterGroup!: import('leaflet').MarkerClusterGroup;
 
     readonly locationDenied = signal(false);
@@ -83,7 +83,7 @@ export class PokestopPage implements OnInit {
 
         this.clusterGroup = L.markerClusterGroup({
             maxClusterRadius: 35,
-            disableClusteringAtZoom: 18,
+            disableClusteringAtZoom: 17,
             spiderfyOnMaxZoom: true,
         });
         this.map.addLayer(this.clusterGroup);

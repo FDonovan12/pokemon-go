@@ -148,21 +148,6 @@
     gap: 1rem;
 }
 
-.expanded-league {
-    flex: 1;
-}
-
-.expanded-list {
-    max-height: 220px; /* ~7 lignes visibles selon la hauteur d'un item */
-    overflow-y: auto;
-}
-
-.expanded-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.25rem 0.5rem;
-}
-
 .chevron {
     transition: transform 0.15s ease;
     display: inline-block;
