@@ -12,7 +12,7 @@ import {
     signal,
 } from '@angular/core';
 import * as L from 'leaflet';
-import 'leaflet.markercluster';
+import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 
 interface Pokestop {
     id: string;
