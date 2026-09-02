@@ -11,8 +11,8 @@ import {
     resource,
     signal,
 } from '@angular/core';
-import * as L from 'leaflet';
-import 'leaflet.markercluster/dist/leaflet.markercluster.js';
+
+declare const L: typeof import('leaflet');
 
 interface Pokestop {
     id: string;
@@ -35,8 +35,8 @@ export class PokestopPage implements OnInit {
     @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef<HTMLDivElement>;
 
     private readonly injector = inject(Injector);
-    private map!: L.Map;
-    private clusterGroup!: L.MarkerClusterGroup;
+    private map!: import('leaflet').Map;
+    private clusterGroup!: import('leaflet').MarkerClusterGroup;
 
     readonly locationDenied = signal(false);
 
