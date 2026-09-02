@@ -1,0 +1,16 @@
+<!-- pokestop-page.html -->
+<div class="map-wrapper">
+    @if (loading()) {
+        <div class="map-overlay">Chargement des pokestops…</div>
+    }
+    @if (locationDenied()) {
+        <div class="map-overlay map-overlay--warning">Position non disponible — carte centrée sur une position par défaut.</div>
+    }
+    @if (error()) {
+        <div class="map-overlay map-overlay--error">{{ error() }}</div>
+    }
+    <div
+        #mapContainer
+        class="map-container"
+    ></div>
+</div>
