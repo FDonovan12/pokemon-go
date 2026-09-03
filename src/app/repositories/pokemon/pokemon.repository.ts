@@ -4,6 +4,7 @@ import {
     Base,
     GenerationPokemon,
     NamePokemon,
+    OldPokemonSlug,
     PokemonFamily,
     PokemonInterface,
     PokemonSetting,
@@ -40,8 +41,11 @@ export class PokemonRepository {
     private readonly _toastService: ToastService = inject(ToastService);
     private readonly _pokemonCalcService: PokemonCalcService = inject(PokemonCalcService);
 
-    pokemonsSetting: HttpResourceRef<PokemonSetting[] | undefined> = httpResource(
+    pokemonsSetting: HttpResourceRef<PokemonSetting[]> = httpResource(
         () => 'https://raw.githubusercontent.com/FDonovan12/pokemon-go-api/output/pokemon-setting.json',
+        {
+            defaultValue: [] as PokemonSetting[],
+        },
     );
     allDifferentFormPokemonsSetting = resource({
         params: () => this.pokemonsSetting.value(),
@@ -52,6 +56,16 @@ export class PokemonRepository {
         defaultValue: [] as Base[],
     });
     differentForm = createLookup(this.allDifferentFormPokemonsSetting.value, (p) => p.slug);
+
+    baseFormPokemonsSetting = resource({
+        params: () => this.pokemonsSetting.value(),
+        loader: async ({ params: pokemons }) => {
+            if (!pokemons) return [];
+            return pokemons.map((form) => form.base);
+        },
+        defaultValue: [] as Base[],
+    });
+    baseForm = createLookup(this.baseFormPokemonsSetting.value, (p) => p.slug);
 
     private allFormPokemonsSetting = resource({
         params: () => this.pokemonsSetting.value(),
@@ -134,7 +148,7 @@ export class PokemonRepository {
     };
     pokemonIndex = this.buildPokemonIndex(pokemonsList, pokemonsListHomeMade);
 
-    getPokemonBySlug(slug: PokemonSlug): PokemonInterface {
+    getPokemonBySlug(slug: OldPokemonSlug): PokemonInterface {
         return this.pokemonIndex.byName[slug];
     }
 
@@ -155,7 +169,7 @@ export class PokemonRepository {
         return this.pokemonIndex.byId[id];
     }
 
-    getPokemonsBySLugs(slugs: PokemonSlug[]): PokemonInterface[] {
+    getPokemonsBySLugs(slugs: OldPokemonSlug[]): PokemonInterface[] {
         const result: PokemonInterface[] = [];
         const errors: string[] = [];
         slugs.forEach((slug) => {
@@ -177,17 +191,17 @@ export class PokemonRepository {
         return Object.entries(this.pokemonIndex.byId).map((couple) => couple[1]);
     }
 
-    getAllOtherPokemons(pokemons: PokemonInterface[]): PokemonInterface[] {
+    getAllOtherPokemons(pokemons: Base[]): Base[] {
         return this.getAllOtherPokemonsFromSLugs(pokemons.map((p) => p.slug));
     }
 
-    getAllOtherPokemonsFromSLugs(pokemonsSlugs: PokemonSlug[]): PokemonInterface[] {
+    getAllOtherPokemonsFromSLugs(pokemonsSlugs: PokemonSlug[]): Base[] {
         const set: Set<PokemonSlug> = pokemonsSlugs.toSet();
-        return this.getAllPokemon().filter((pokemon) => !set.has(pokemon.slug));
+        return this.baseForm.getAll().filter((pokemon) => !set.has(pokemon.slug));
     }
 
-    getAllPokemonSlugs(): PokemonSlug[] {
-        return Object.entries(this.pokemonIndex.byName).map((couple) => couple[0] as PokemonSlug);
+    getAllPokemonSlugs(): OldPokemonSlug[] {
+        return Object.entries(this.pokemonIndex.byName).map((couple) => couple[0] as OldPokemonSlug);
     }
 
     pokemonFamilyName = pokemonFamilyName;

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { LabelEntry } from '@entities/label';
-import { Base, PokemonInterface, PokemonSlug } from '@entities/pokemon';
+import { Base, OldPokemonSlug, oldSlugToNew, PokemonSlug } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { LocalStorageService } from '@services/local-storage-service/local-storage-service';
 import { SupabaseService } from '@services/supabase-service/supabase.service';
@@ -32,18 +32,21 @@ export class ListPokemonRepository {
                 .select('slug_pokemon')
                 .eq('user_id', this._supabaseService.getUserId())
                 .eq('list_slug', entry.slug);
-            return (data ?? []).map((row) => row.slug_pokemon as PokemonSlug);
+            return (data ?? []).map((row) => oldSlugToNew(row.slug_pokemon) as PokemonSlug);
         }
-        return this._localStorageService.get(entry.slug, []);
+        return this._localStorageService
+            .get(entry.slug, [] as string[])
+            .map((slug) => oldSlugToNew(slug as OldPokemonSlug));
     }
 
-    async getPokemonsForList(entry: LabelEntry | { slug: string }): Promise<PokemonInterface[]> {
+    async getPokemonsForList(entry: LabelEntry | { slug: string }): Promise<Base[]> {
         const internal = this._internalListPokemonRepository.getPokemonsForInternalList(entry);
-        if (internal) return internal as Base[] as PokemonInterface[];
+        if (internal) return internal as Base[];
 
         const slugs = await this.getSlugsForList(entry);
-        return this._pokemonRepository.getPokemonsBySLugs(slugs);
+        return this._pokemonRepository.differentForm.getMany(slugs);
     }
+
     async listExists(entry: { slug: string }): Promise<boolean> {
         if (this._internalListPokemonRepository.getPokemonsForInternalList(entry)) {
             return true;
@@ -52,7 +55,7 @@ export class ListPokemonRepository {
         return keys.filter((key) => key.slug === entry.slug).length > 0;
     }
     async addAllSlugsToList(entry: LabelEntry | { slug: string }, slugs: PokemonSlug[]): Promise<void> {
-        slugs.forEach((slug) => this.addSlugToList(entry, slug));
+        await Promise.all(slugs.map((slug) => this.addSlugToList(entry, slug)));
     }
     async addSlugToList(entry: LabelEntry | { slug: string }, slug: PokemonSlug): Promise<void> {
         if (this._supabaseService.isLoggedIn()) {

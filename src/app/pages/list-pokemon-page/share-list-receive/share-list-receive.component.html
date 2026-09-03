@@ -23,7 +23,7 @@
                 Retour
             </button>
         </div>
-    } @else if (!shareData) {
+    } @else if (!shareData()) {
         <div style="background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 16px; text-align: center">
             <p>Chargement des données...</p>
         </div>
@@ -31,7 +31,7 @@
         <div style="background-color: #e3f2fd; border: 1px solid #2196f3; border-radius: 4px; padding: 16px; margin-bottom: 20px">
             <p style="margin: 0">
                 📋
-                <strong>{{ shareData.ids.length }} pokémons</strong>
+                <strong>{{ shareData()?.slugs?.length }} pokémons</strong>
                 prêts à être importés
             </p>
         </div>

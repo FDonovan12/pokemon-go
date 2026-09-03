@@ -18,24 +18,24 @@ type PokemonIndex = {
 export class PokemonAPIRepository {
     private readonly httpClient: HttpClient = inject(HttpClient);
 
-    updatePokemonData(pokemon: PokemonInterface) {
-        pokemon.type = pokemon.type.map(this.updateType);
-        let newId = pokemon.dexNumber;
-        if (pokemon.sprite) {
-            const string = pokemon.sprite.split('/').last()?.split('.')[0];
-            newId = +string!;
-        }
-        pokemon.dexNumber = +newId;
-        pokemon.image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${newId}.png`;
-        pokemon.sprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${newId}.png`;
+    // updatePokemonData(pokemon: PokemonInterface) {
+    //     pokemon.type = pokemon.type.map(this.updateType);
+    //     let newId = pokemon.dexNumber;
+    //     if (pokemon.sprite) {
+    //         const string = pokemon.sprite.split('/').last()?.split('.')[0];
+    //         newId = +string!;
+    //     }
+    //     pokemon.dexNumber = +newId;
+    //     pokemon.image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${newId}.png`;
+    //     pokemon.sprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${newId}.png`;
 
-        if (pokemon.alternatives) {
-            for (let [key, object] of Object.entries(pokemon.alternatives)) {
-                this.updatePokemonData(object);
-            }
-        }
-        return pokemon;
-    }
+    //     if (pokemon.alternatives) {
+    //         for (let [key, object] of Object.entries(pokemon.alternatives)) {
+    //             this.updatePokemonData(object);
+    //         }
+    //     }
+    //     return pokemon;
+    // }
 
     updateAlternative(pokemon: PokemonInfo): any {
         if (!pokemon.alternatives) return pokemon;

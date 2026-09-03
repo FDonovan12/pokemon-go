@@ -1,18 +1,50 @@
-import { Injectable } from '@angular/core';
+import { computed, inject, Injectable, Signal } from '@angular/core';
+import { Base, PokemonSlug } from '@entities/pokemon';
+import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import * as LZ from 'lz-string';
 
 export interface ShareDataIds {
-    ids: number[];
+    slugs: PokemonSlug[];
 }
 
 @Injectable({
     providedIn: 'root',
 })
 export class ShareListService {
-    generateShareUrl(ids: number[]): string {
-        const compressed = this.compressShareData(ids);
+    private readonly _pokemonRepository: PokemonRepository = inject(PokemonRepository);
+
+    SLUG_DICTIONARY: Signal<PokemonSlug[]> = computed(() =>
+        this._pokemonRepository.differentForm.getAll().map((pokemon) => pokemon.slug),
+    );
+    SLUG_INDEX: Signal<Map<PokemonSlug, number>> = computed(
+        () => new Map(this.SLUG_DICTIONARY().map((slug, index) => [slug, index])),
+    );
+
+    generateShareUrl(pokemons: Base[]): string {
+        const indexes = this.slugsToIndexes(pokemons.map((p) => p.slug));
+        const compressed = this.compressShareData(indexes);
         const baseUrl = window.location.origin;
         return `${baseUrl}/pokemon-go/keep/share/${compressed}`;
+    }
+
+    private slugsToIndexes(slugs: PokemonSlug[]): number[] {
+        return slugs.map((slug) => {
+            const index = this.SLUG_INDEX().get(slug);
+            if (index === undefined) {
+                throw new Error(`Slug inconnu dans le dictionnaire: "${slug}"`);
+            }
+            return index;
+        });
+    }
+
+    private indexesToSlugs(indexes: number[]): PokemonSlug[] {
+        return indexes.map((index) => {
+            const slug = this.SLUG_DICTIONARY()[index];
+            if (slug === undefined) {
+                throw new Error(`Index hors dictionnaire: ${index}`);
+            }
+            return slug;
+        });
     }
 
     private compressShareData(ids: number[]): string {
@@ -25,8 +57,9 @@ export class ShareListService {
         try {
             const deconpressed = LZ.decompressFromEncodedURIComponent(compressed);
             if (!deconpressed) return null;
-            const decoded = this.decodeIds(deconpressed);
-            return { ids: decoded };
+            const indexes = this.decodeIds(deconpressed);
+            const slugs = this.indexesToSlugs(indexes);
+            return { slugs };
         } catch {
             return null;
         }

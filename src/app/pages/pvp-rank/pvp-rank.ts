@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { Base, PokemonInterface } from '@entities/pokemon';
+import { Base } from '@entities/pokemon';
 import { Combo, FilterTier } from '@entities/stats';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ClipboardService } from '@services/clipboard-service/clipboard-service';
@@ -30,7 +30,7 @@ export class PvpRankPages {
     readonly _pokemonRepository = inject(PokemonRepository);
     private readonly _router = inject(Router);
 
-    selectedPokemon: WritableSignal<PokemonInterface> = signal(this._pokemonRepository.getPokemonById(1)!);
+    selectedPokemon: WritableSignal<Base> = linkedSignal(() => this._pokemonRepository.baseForm.getAll()[0]!);
     selectedLeague: League = 'super';
     selectedForm: Forme = 'normal';
     showDialog = signal(false);
@@ -45,7 +45,7 @@ export class PvpRankPages {
         this.showDialog.set(false);
     }
 
-    openModifyRankDialog(pokemon: PokemonInterface, league: League = 'super', forme: Forme = 'normal') {
+    openModifyRankDialog(pokemon: Base, league: League = 'super', forme: Forme = 'normal') {
         this.selectedPokemon.set(pokemon);
         this.selectedLeague = league;
         this.selectedForm = forme;
@@ -71,7 +71,7 @@ export class PvpRankPages {
         this.clipboardService.copyToClipboard(filter, { message });
     }
 
-    navigateDetailPokemon(pokemon: PokemonInterface) {
+    navigateDetailPokemon(pokemon: Base) {
         this._router.navigate(['pvp-rank', 'detail', pokemon.slug]);
     }
 }

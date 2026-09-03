@@ -90,8 +90,6 @@ export const PVPRankStore = signalStore(
             if (!store._filteredResource.isLoading()) {
                 return store._filteredResource.value() ?? [];
             }
-            store.allRank().get('Bulbizarre')?.super.normal;
-
             return store.resultSelected();
         }),
         _subEvolutionsMap: computed(() => buildSubEvolutionsMap(store._pokemonsResource.value())),
@@ -121,7 +119,9 @@ export const PVPRankStore = signalStore(
                             return [slug, data] as const;
                         }),
                     );
-                    results.push(...(batchResults.filter(([, data]) => data !== null) as [string, AllRankPVP<IV>][]));
+                    results.push(
+                        ...(batchResults.filter(([, data]) => data !== null) as [PokemonSlug, AllRankPVP<IV>][]),
+                    );
                 }
 
                 return new Map(results);

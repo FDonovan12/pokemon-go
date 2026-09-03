@@ -54,8 +54,7 @@ export class ListPokemonPages {
             return;
         }
 
-        const ids = pokemons.map((p) => p.dexNumber);
-        const shareUrl = this.shareListService.generateShareUrl(ids);
+        const shareUrl = this.shareListService.generateShareUrl(pokemons);
 
         this.clipboardService.copyToClipboard(shareUrl);
         this.toastService.prepare('✓ Succès', `Lien copié! ${pokemons.length} pokémons à partager`).showSuccess();

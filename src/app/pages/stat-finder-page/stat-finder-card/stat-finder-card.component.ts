@@ -1,6 +1,6 @@
 import { CdkDragHandle } from '@angular/cdk/drag-drop';
 import { Component, computed, inject, input } from '@angular/core';
-import { PokemonData, PokemonSlug } from '@entities/pokemon';
+import { Base, PokemonSlug } from '@entities/pokemon';
 import { PokemonRepository } from '@repositories/pokemon/pokemon.repository';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { PokemonSelectComponent } from '@shared/features/pokemon-search/pokemon-select/pokemon-select.component';
@@ -49,7 +49,7 @@ export class StatFinderCardComponent {
         });
     });
 
-    addPokemon(pokemon: PokemonData) {
+    addPokemon(pokemon: Base) {
         this._pageStore.updateCard(this.card().id, {
             pokemonSlugs: [...this.card().pokemonSlugs, pokemon.slug],
         });

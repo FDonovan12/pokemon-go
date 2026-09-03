@@ -8,12 +8,13 @@ type ExtractSlug<T extends readonly { slug: string }[]> = T[number]['slug'];
 
 export const generationsPokemon = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
 
-export type PokemonSlug = (typeof pokemonSlugs)[number];
+export type OldPokemonSlug = (typeof pokemonSlugs)[number];
 export type GenerationPokemon = (typeof generationsPokemon)[number];
 export type PokemonFamily = (typeof pokemonFamilyName)[number];
 
 export type Brand<T, B extends string> = T & { readonly __brand: B };
 export type NamePokemon = Brand<string, 'NamePokemon'>;
+export type PokemonSlug = Brand<string, 'PokemonSlug'>;
 
 export interface PokemonSetting {
     base: Base;
@@ -47,6 +48,10 @@ export interface Base {
     encounter: Encounter;
 }
 
+export function oldSlugToNew(slug: OldPokemonSlug | PokemonSlug): PokemonSlug {
+    return slug.slugify() as PokemonSlug;
+}
+
 export interface Evolution {
     pokemonId?: string;
     form: string;
@@ -70,7 +75,7 @@ export interface Different {
 export interface PokemonInterface {
     dexNumber: number;
     name: NamePokemon;
-    slug: PokemonSlug;
+    slug: OldPokemonSlug;
     image: string;
     imageShiny: string;
     type: TypePokemon[];

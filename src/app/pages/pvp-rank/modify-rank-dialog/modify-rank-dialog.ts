@@ -12,11 +12,11 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { form, FormField, max, min, validate } from '@angular/forms/signals';
-import { PokemonInterface } from '@entities/pokemon';
 import { ImagePokemon } from '@shared/components/image-pokemon/image-pokemon';
 import { ClickOutsideDirective } from '@shared/directive/click-outside.directive';
 import { PVPRankStore } from '../pvp-rank-store/pvp-rank-store';
 import { Forme, formeValues, League, leagueValues } from '../pvp-rank.type';
+import { Base } from '@entities/pokemon';
 
 const minRank = 1;
 const maxRank = 4096;
@@ -32,7 +32,7 @@ export class ModifyRankDialogComponent {
     protected readonly store = inject(PVPRankStore);
     league = model.required<League>();
     forme = model.required<Forme>();
-    pokemon = model.required<PokemonInterface>();
+    pokemon = model.required<Base>();
     rank: Signal<number> = computed(
         () => this.store.getRankPokemon(this.pokemon().slug, this.league(), this.forme()) ?? 0,
     );

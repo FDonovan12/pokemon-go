@@ -2,9 +2,9 @@ import {
     AlternativePokemon,
     GenerationPokemon,
     NamePokemon,
+    OldPokemonSlug,
     PokemonFamily,
     PokemonInterface,
-    PokemonSlug,
     TypePokemon,
 } from '@entities/pokemon';
 
@@ -73,7 +73,7 @@ export class PokemonWithRarity implements PokemonInterface {
         return this.pokemon.dexNumber;
     }
 
-    get slug(): PokemonSlug {
+    get slug(): OldPokemonSlug {
         return this.pokemon.slug;
     }
 

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { PokemonInterface } from '@entities/pokemon';
+import { Base, PokemonInterface } from '@entities/pokemon';
 import {
     Combo,
     DeepConvert,
@@ -324,7 +324,7 @@ export class FilterService {
         return { cleaned: { ...lists, items }, removedKeys };
     }
 
-    async simplifyPokemon(lists: ListCondition): Promise<PokemonInterface[]> {
+    async simplifyPokemon(lists: ListCondition): Promise<Base[]> {
         const cleaned = lists;
 
         const pokemonsLists = await Promise.all(
@@ -347,12 +347,12 @@ export class FilterService {
         }
     }
 
-    buildAllPokemon(pokemons: PokemonInterface[]): string {
+    buildAllPokemon(pokemons: Base[]): string {
         const filter: Filter = { or: pokemons.sortAsc('dexNumber').map((pokemon) => '' + pokemon.dexNumber) };
         return this.buildFilter(filter);
     }
 
-    buildNeitherPokemon(pokemons: PokemonInterface[]): string {
+    buildNeitherPokemon(pokemons: Base[]): string {
         const allOtherPokemons = this._pokemonRepository.getAllOtherPokemons(pokemons);
 
         const filter: Filter = { or: allOtherPokemons.sortAsc('dexNumber').map((pokemon) => '' + pokemon.dexNumber) };

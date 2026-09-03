@@ -1,5 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { LabelEntry } from '@entities/label';
+import { OldPokemonSlug, oldSlugToNew, PokemonSlug } from '@entities/pokemon';
 import { FILTERS_STORAGE_KEY } from '@repositories/filters-repository';
 import { LOCAL_STORAGE_KEEP_KEYS } from '@repositories/list-pokemon-repository/list-pokemon.repository';
 import { LOCAL_STORAGE_PVP_RANK } from '@repositories/pvp-rank-repository/pvp-rank.repository';
@@ -45,13 +46,13 @@ export class DataSyncService {
         console.log(test);
         // migration list_pokemons
         for (const entry of listKeys) {
-            const slugs = this.localStorageService.get(entry.slug, []);
+            const slugs = this.localStorageService.get<OldPokemonSlug[] | PokemonSlug[]>(entry.slug, []);
             if (slugs.length) {
                 await this.supabaseService.client.from('list_pokemons').upsert(
-                    slugs.map((slug: string) => ({
+                    slugs.map((slug) => ({
                         user_id: session.user.id,
                         list_slug: entry.slug,
-                        slug_pokemon: slug,
+                        slug_pokemon: oldSlugToNew(slug),
                     })),
                     { ignoreDuplicates: true },
                 );
