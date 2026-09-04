@@ -214,11 +214,11 @@ export class SortPokemonService {
     }
 
     private commonTypeCount(a: PokemonInterface, b: PokemonInterface): number {
-        return a.type.filter((t) => b.type.includes(t)).length;
+        return a.types.filter((t) => b.types.includes(t)).length;
     }
 
     private megaCommonBridgeCount(a: PokemonInterface, b: PokemonInterface, megas: PokemonInterface[]): number {
-        return megas.filter((m) => m.type.some((t) => a.type.includes(t)) && m.type.some((t) => b.type.includes(t)))
+        return megas.filter((m) => m.types.some((t) => a.types.includes(t)) && m.types.some((t) => b.types.includes(t)))
             .length;
     }
 }

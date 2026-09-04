@@ -38,7 +38,7 @@ export function withPokemonTextSearch<T extends PokemonData>() {
                     .filter(
                         (pokemon) =>
                             pokemon.slug.slugifyIncludes(search) ||
-                            pokemon.type.some((type) => type.slugifyEquals(search)),
+                            pokemon.types.some((type) => type.slugifyEquals(search)),
                     )
                     .map((pokemon) => pokemon.family)
                     .toSet();

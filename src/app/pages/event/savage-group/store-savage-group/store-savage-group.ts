@@ -51,23 +51,23 @@ export const StoreSavageGroup = signalStore(
 );
 
 function haveTypeInCommon(pokemon1: PokemonInterface, pokemon2: PokemonInterface): boolean {
-    return pokemon1.type.some((type) => type === pokemon2.type[0] || type === pokemon2.type[1]);
+    return pokemon1.types.some((type) => type === pokemon2.types[0] || type === pokemon2.types[1]);
 }
 
 function countTypeBoost(mega: PokemonInterface, savages: PokemonInterface[], minCount: number = 2): boolean {
-    if (mega.type.length < minCount) return false;
+    if (mega.types.length < minCount) return false;
     let totalListCount = 0;
     const listPokemonBuffPerType: Record<string, PokemonInterface[]> = Object.fromEntries(
-        mega.type.map((type) => [type, []]),
+        mega.types.map((type) => [type, []]),
     );
-    const countBoostPerType: Record<string, number> = mega.type.reduce((obj: any, key) => {
+    const countBoostPerType: Record<string, number> = mega.types.reduce((obj: any, key) => {
         obj[key] = 0;
         return obj;
     }, {});
     savages.forEach((savage) => {
         let boost = false;
-        mega.type.forEach((type) => {
-            if (savage.type.includes(type)) {
+        mega.types.forEach((type) => {
+            if (savage.types.includes(type)) {
                 countBoostPerType[type]++;
                 listPokemonBuffPerType[type].push(savage);
                 boost = true;

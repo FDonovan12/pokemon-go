@@ -83,6 +83,11 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/pokestop/pokestop-page').then((m) => m.PokestopPage),
     },
     {
+        path: 'calc-raid',
+        loadComponent: () =>
+            import('./pages/calc-raid-damage-page/calc-raid-damage-page').then((m) => m.CalcRaidDamagePage),
+    },
+    {
         path: 'pvp-rank',
         loadComponent: () => import('./pages/pvp-rank/pvp-rank').then((m) => m.PvpRankPages),
         children: [

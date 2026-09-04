@@ -56,7 +56,7 @@ export const DynamaxStore = signalStore(
                             typeOpponent,
                             store.selectedType() ?? typeOpponent,
                         );
-                        const stabMultiplier = dynamax.pokemon.type.includes(typeAttack) ? 1.2 : 1;
+                        const stabMultiplier = dynamax.pokemon.types.includes(typeAttack) ? 1.2 : 1;
                         const damage = dynamax.attack * typeAffinity * dynamax.damageAttack * stabMultiplier;
                         list.push({ dynamax, damage, typeAttack });
                     });
@@ -112,7 +112,7 @@ export const DynamaxStore = signalStore(
                         ._allDynamaxPokemonResultDamageBase()
                         .get(type)
                         ?.filter((resultDamage) => {
-                            const isStab = resultDamage.dynamax.pokemon.type.includes(resultDamage.typeAttack);
+                            const isStab = resultDamage.dynamax.pokemon.types.includes(resultDamage.typeAttack);
                             const isSuperEffective =
                                 store._typeEffectivenessService.calculEffectivness(
                                     resultDamage.typeAttack,

@@ -12,8 +12,8 @@ export class TypeEffectivenessService {
         this.typeEffectiveness = this.getDamageRelations();
     }
 
-    calculEffectivness(attacker: TypePokemon, type1: TypePokemon, type2?: TypePokemon): number {
-        const eff1 = this.getDamageRelations().get(attacker)?.get(type1) ?? 1;
+    calculEffectivness(attacker: TypePokemon, type1?: TypePokemon, type2?: TypePokemon): number {
+        const eff1 = type1 ? (this.getDamageRelations().get(attacker)?.get(type1) ?? 1) : 1;
         let eff2 = 1;
         if (type1 !== type2 && type2) eff2 = this.getDamageRelations().get(attacker)?.get(type2) ?? 1;
         const combinedEff = eff1 * eff2;

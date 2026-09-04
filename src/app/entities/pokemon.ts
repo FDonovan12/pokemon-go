@@ -1,4 +1,4 @@
-import { FastMovePokemon } from '@repositories/move/move.repository';
+import { CinematicMovePokemon, FastMovePokemon } from '@repositories/move/move.repository';
 import { pokemonFamilyName } from '../bdd/family-pokemon-name';
 import { pokemonSlugs } from '../bdd/name-pokemon';
 
@@ -15,6 +15,7 @@ export type PokemonFamily = (typeof pokemonFamilyName)[number];
 export type Brand<T, B extends string> = T & { readonly __brand: B };
 export type NamePokemon = Brand<string, 'NamePokemon'>;
 export type PokemonSlug = Brand<string, 'PokemonSlug'>;
+export type PokemonId = Brand<string, 'PokemonId'>;
 
 export interface PokemonSetting {
     base: Base;
@@ -24,7 +25,7 @@ export interface PokemonSetting {
 
 export interface Base {
     id: string;
-    pokemonId: string;
+    pokemonId: PokemonId;
     dexNumber: number;
     name: NamePokemon;
     generation: GenerationPokemon;
@@ -32,13 +33,14 @@ export interface Base {
     imageId: number;
     image: string;
     imageShiny: string;
-    type: TypePokemon[];
+    types: TypePokemon[];
     stats: Stats;
     quickMoves: FastMovePokemon[];
-    cinematicMoves: string[];
+    cinematicMoves: CinematicMovePokemon[];
     eliteQuickMove: FastMovePokemon[];
-    eliteCinematicMove: string[];
-    nonTmCinematicMoves: string[];
+    eliteCinematicMove: CinematicMovePokemon[];
+    nonTmCinematicMoves: CinematicMovePokemon[];
+    hasMega: boolean;
     evolutionIds: Evolution[];
     family: PokemonFamily;
     isLegendary: boolean;
@@ -46,6 +48,28 @@ export interface Base {
     isUltraBeast: boolean;
     form: string;
     encounter: Encounter;
+    mega?: Mega[];
+    parentPokemonId?: PokemonId;
+}
+
+export interface Mega {
+    name: NamePokemon;
+    slug: PokemonSlug;
+    stats?: Stats;
+    image: string;
+    types: TypePokemon[];
+    hasLevel4: boolean;
+    megaAttack?: MegaAttack;
+}
+
+export interface MegaAttack {
+    id: string;
+    movementId: CinematicMovePokemon;
+    pokemonType: TypePokemon;
+    power: number;
+    durationMs: number;
+    energyDelta: number;
+    vfxName: string;
 }
 
 export function oldSlugToNew(slug: OldPokemonSlug | PokemonSlug): PokemonSlug {
@@ -53,7 +77,7 @@ export function oldSlugToNew(slug: OldPokemonSlug | PokemonSlug): PokemonSlug {
 }
 
 export interface Evolution {
-    pokemonId?: string;
+    pokemonId?: PokemonId;
     form: string;
 }
 
@@ -78,7 +102,7 @@ export interface PokemonInterface {
     slug: OldPokemonSlug;
     image: string;
     imageShiny: string;
-    type: TypePokemon[];
+    types: TypePokemon[];
     isLegendary: boolean;
     isMythical: boolean;
     mega?: { id: number; type: string[] };
@@ -93,7 +117,7 @@ export type DynamaxApiEntry = {
     dexNumber: number;
     image: string;
     imageShiny: string;
-    type: TypePokemon[];
+    types: TypePokemon[];
     stats: { baseAttack: number; baseDefense: number; baseStamina: number };
     dynamaxMove: DynamaxMove[];
     isReleased?: boolean;
@@ -169,7 +193,7 @@ export class Dynamax {
             dexNumber: base.dexNumber,
             image: base.image,
             imageShiny: base.imageShiny,
-            type: base.type,
+            types: base.types,
             family: base.family,
             stats: base.stats,
             dynamaxMove: quickMoveTypes.unique().map((pokemonType) => ({

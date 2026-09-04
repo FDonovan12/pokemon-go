@@ -22,6 +22,6 @@ export class EventRepository {
     }
 
     haveTypeInCommon(pokemon1: PokemonInterface, pokemon2: PokemonInterface): boolean {
-        return pokemon1.type.some((type) => type === pokemon2.type[0] || type === pokemon2.type[1]);
+        return pokemon1.types.some((type) => type === pokemon2.types[0] || type === pokemon2.types[1]);
     }
 }

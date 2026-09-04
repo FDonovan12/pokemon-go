@@ -16,7 +16,7 @@
                 <app-image-pokemon [pokemon]="savage"></app-image-pokemon>
             </td>
             <td class="type">
-                @for (type of savage.type; track $index) {
+                @for (type of savage.types; track $index) {
                     <app-type [type]="type"></app-type>
                 }
             </td>

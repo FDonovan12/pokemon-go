@@ -1,0 +1,17 @@
+@for (pokemon of store.raidRanking(); track $index) {
+    <!-- <app-image-pokemon [pokemon]="pokemon"></app-image-pokemon> -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr)">
+        <span>
+            {{ pokemon.pokemon.name }}
+        </span>
+        <span>
+            {{ pokemon.cinematicMove }}
+        </span>
+        <span>
+            {{ pokemon.quickMove }}
+        </span>
+        <span>
+            {{ pokemon.dps }}
+        </span>
+    </div>
+}

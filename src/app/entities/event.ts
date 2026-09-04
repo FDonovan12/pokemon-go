@@ -81,8 +81,8 @@ export class PokemonWithRarity implements PokemonInterface {
         return this.pokemon.name;
     }
 
-    get type(): TypePokemon[] {
-        return this.pokemon.type;
+    get types(): TypePokemon[] {
+        return this.pokemon.types;
     }
 
     get image(): string {

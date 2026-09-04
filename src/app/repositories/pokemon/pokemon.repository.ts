@@ -57,6 +57,19 @@ export class PokemonRepository {
     });
     differentForm = createLookup(this.allDifferentFormPokemonsSetting.value, (p) => p.slug);
 
+    allMega = computed(() =>
+        this.differentForm
+            .getAll()
+            .filter((pokemon) => pokemon.mega && pokemon.mega.length > 0)
+            .flatMap((pokemon) =>
+                pokemon.mega!.map((mega) => ({
+                    ...pokemon,
+                    ...mega,
+                    cinematicMoves: pokemon.cinematicMoves.concat([mega.megaAttack?.movementId].compact()),
+                })),
+            ),
+    );
+
     baseFormPokemonsSetting = resource({
         params: () => this.pokemonsSetting.value(),
         loader: async ({ params: pokemons }) => {

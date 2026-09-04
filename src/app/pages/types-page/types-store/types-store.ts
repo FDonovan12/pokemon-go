@@ -66,7 +66,7 @@ export const TypesStore = signalStore(
             const pokemonTypeCount = initTypeTable();
 
             megaAndLegendaryPokemon.forEach((pokemon) =>
-                incrementTable(pokemonTypeCount, pokemon.type[0], pokemon.type[1]),
+                incrementTable(pokemonTypeCount, pokemon.types[0], pokemon.types[1]),
             );
             effect(() => {
                 store._localStorageService.set('currentTeamBuilded', Array.from(store.currentTeamBuilded()));
