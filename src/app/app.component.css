@@ -10,3 +10,9 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+.buttonHeader {
+    background-color: rgb(203, 230, 253);
+    border-radius: 0.375em;
+    padding: 0.125em 0.25em;
+}

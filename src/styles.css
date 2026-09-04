@@ -19,60 +19,81 @@
     --color-tenebres: 23 12% 58%;
     --color-vol: 255 76% 75%;
 }
-
+a {
+    color: inherit;
+    text-decoration: none;
+}
 .Acier {
-    background-color: hsl(var(--color-acier) / 0.15);
+    --color-background: var(--color-acier);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Combat {
-    background-color: hsl(var(--color-combat) / 0.15);
+    --color-background: var(--color-combat);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Dragon {
-    background-color: hsl(var(--color-dragon) / 0.15);
+    --color-background: var(--color-dragon);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Eau {
-    background-color: hsl(var(--color-eau) / 0.15);
+    --color-background: var(--color-eau);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Électrik {
-    background-color: hsl(var(--color-electrik) / 0.15);
+    --color-background: var(--color-electrik);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Fée {
-    background-color: hsl(var(--color-fee) / 0.15);
+    --color-background: var(--color-fee);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Feu {
-    background-color: hsl(var(--color-feu) / 0.15);
+    --color-background: var(--color-feu);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Glace {
-    background-color: hsl(var(--color-glace) / 0.15);
+    --color-background: var(--color-glace);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Insecte {
-    background-color: hsl(var(--color-insecte) / 0.15);
+    --color-background: var(--color-insecte);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Normal {
-    background-color: hsl(var(--color-normal) / 0.15);
+    --color-background: var(--color-normal);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Plante {
-    background-color: hsl(var(--color-plante) / 0.15);
+    --color-background: var(--color-plante);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Poison {
-    background-color: hsl(var(--color-poison) / 0.15);
+    --color-background: var(--color-poison);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Psy {
-    background-color: hsl(var(--color-psy) / 0.15);
+    --color-background: var(--color-psy);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Roche {
-    background-color: hsl(var(--color-roche) / 0.15);
+    --color-background: var(--color-roche);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Sol {
-    background-color: hsl(var(--color-sol) / 0.15);
+    --color-background: var(--color-sol);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Spectre {
-    background-color: hsl(var(--color-spectre) / 0.15);
+    --color-background: var(--color-spectre);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Ténèbres {
-    background-color: hsl(var(--color-tenebres) / 0.15);
+    --color-background: var(--color-tenebres);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 .Vol {
-    background-color: hsl(var(--color-vol) / 0.15);
+    --color-background: var(--color-vol);
+    background-color: hsl(var(--color-background) / var(--type-bg-opacity, 0.15));
 }
 
 :root {

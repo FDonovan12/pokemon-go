@@ -2,7 +2,7 @@ import { PokemonSlug } from '@entities/pokemon';
 import { FilterItem, FilterQuery, ListItem } from '@repositories/filters-repository';
 import { PvpRank } from '../../pages/pvp-rank/pvp-rank-store/pvp-rank-store';
 
-const CURRENT_VERSION = 6;
+const CURRENT_VERSION = 7;
 
 const migrations: Record<number, () => void> = {
     1: migrateV0toV1, // listPokemon key change from string[] to LabelEntry[]
@@ -11,6 +11,7 @@ const migrations: Record<number, () => void> = {
     4: migrateV3toV4, // filterPokemon lists becomes required
     5: migrateV4toV5, // modify slug for alternative pokemon in pvpv pages
     6: migrateV5toV6, // duplicate pvp data
+    7: migrateV6toV7, // types instead of type dynamax
 };
 
 export function runMigrations(): void {
@@ -27,6 +28,20 @@ export function runMigrations(): void {
     }
 
     localStorage.setItem('app_version', String(CURRENT_VERSION));
+}
+
+function migrateV6toV7() {
+    const DYNAMAX_STORAGE_KEY = 'MANUALLY_ADDED_DYNAMAX_KEY';
+    const raw = localStorage.getItem(DYNAMAX_STORAGE_KEY);
+    if (!raw) return;
+
+    const parsed = JSON.parse(raw);
+    const migrated = parsed.map((dynamax: any) => ({
+        ...dynamax,
+        pokemon: { ...dynamax.pokemon, types: dynamax.pokemon.type },
+    }));
+
+    localStorage.setItem(DYNAMAX_STORAGE_KEY, JSON.stringify(migrated));
 }
 
 function migrateV5toV6() {

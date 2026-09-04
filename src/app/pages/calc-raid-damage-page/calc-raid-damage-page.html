@@ -1,17 +1,30 @@
-@for (pokemon of store.raidRanking(); track $index) {
-    <!-- <app-image-pokemon [pokemon]="pokemon"></app-image-pokemon> -->
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr)">
-        <span>
-            {{ pokemon.pokemon.name }}
-        </span>
-        <span>
-            {{ pokemon.cinematicMove }}
-        </span>
-        <span>
-            {{ pokemon.quickMove }}
-        </span>
-        <span>
-            {{ pokemon.dps }}
-        </span>
-    </div>
-}
+<h2>Top Attaquant contre le type {{ store.selectedType() }}</h2>
+<div style="display: grid; grid-template-columns: repeat(6, max-content); gap: 0.25em; align-self: center">
+    @for (type of store.typeList(); track $index) {
+        <app-type
+            [type]="type"
+            [isSelected]="type === store.selectedType()"
+            (click)="store.selectType(type)"
+            style="margin-inline: 3px"
+        ></app-type>
+    }
+</div>
+<table>
+    @for (pokemon of store.raidRanking(); track $index) {
+        <!-- <app-image-pokemon [pokemon]="pokemon"></app-image-pokemon> -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.25em">
+            <span>
+                {{ pokemon.pokemon.name }}
+            </span>
+            <span>
+                {{ pokemon.quickMove.names.fr }}
+            </span>
+            <span>
+                {{ pokemon.cinematicMove.names.fr }}
+            </span>
+            <span>
+                {{ pokemon.dps }}
+            </span>
+        </div>
+    }
+</table>

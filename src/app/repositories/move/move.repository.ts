@@ -9,19 +9,21 @@ export interface FastMove {
     id: string;
     movementId: FastMovePokemon;
     pokemonType: TypePokemon;
-    power?: number;
+    power: number;
     durationMs: number;
-    energyDelta?: number;
+    energyDelta: number;
     vfxName: string;
+    names: { fr: string };
 }
 export interface CinematicMove {
     id: string;
     movementId: CinematicMovePokemon;
     pokemonType: TypePokemon;
-    power?: number;
+    power: number;
     durationMs: number;
-    energyDelta?: number;
+    energyDelta: number;
     vfxName: string;
+    names: { fr: string };
 }
 
 @Injectable({

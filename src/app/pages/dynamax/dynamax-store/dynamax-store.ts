@@ -56,6 +56,7 @@ export const DynamaxStore = signalStore(
                             typeOpponent,
                             store.selectedType() ?? typeOpponent,
                         );
+                        console.log(dynamax.pokemon);
                         const stabMultiplier = dynamax.pokemon.types.includes(typeAttack) ? 1.2 : 1;
                         const damage = dynamax.attack * typeAffinity * dynamax.damageAttack * stabMultiplier;
                         list.push({ dynamax, damage, typeAttack });

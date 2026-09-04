@@ -15,6 +15,9 @@ import { DynamaxStore } from './dynamax-store/dynamax-store';
     templateUrl: './dynamax.page.html',
     styleUrl: './dynamax.page.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        style: 'display: contents',
+    },
 })
 export class DynamaxPage {
     protected readonly dynamaxStore = inject(DynamaxStore);

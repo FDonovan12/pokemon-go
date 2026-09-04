@@ -8,8 +8,8 @@ import { DynamaxApiEntry, PokemonData } from '@entities/pokemon';
         <img
             loading="lazy"
             [src]="isShiny() ? pokemon().imageShiny : pokemon().image"
-            [alt]="pokemon().slug.titleCase()"
-            [title]="pokemon().slug.titleCase()"
+            [alt]="pokemon().name"
+            [title]="pokemon().name"
             [style.height.px]="height()"
             [style.aspect-ratio]="'1'"
         />

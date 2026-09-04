@@ -1,14 +1,64 @@
 <header style="display: flex; gap: 0.5em; flex-wrap: wrap">
-    <a routerLink="/">Accueil</a>
-    <a routerLink="/types">Types</a>
-    <a routerLink="/keep">Liste</a>
-    <a routerLink="/dynamax">Dynamax</a>
-    <a routerLink="/infographic">Infographies</a>
-    <a routerLink="/shop-packs">Packs</a>
-    <a routerLink="/pvp-rank">PVP rank</a>
-    <a routerLink="/stat-finder">Stat Finder</a>
-    <a routerLink="/pokestop">pokestop</a>
-    <a routerLink="/calc-raid">Calc Raid</a>
+    <a
+        routerLink="/"
+        class="buttonHeader"
+    >
+        Accueil
+    </a>
+    <a
+        routerLink="/types"
+        class="buttonHeader"
+    >
+        Types
+    </a>
+    <a
+        routerLink="/keep"
+        class="buttonHeader"
+    >
+        Liste
+    </a>
+    <a
+        routerLink="/dynamax"
+        class="buttonHeader"
+    >
+        Dynamax
+    </a>
+    <a
+        routerLink="/infographic"
+        class="buttonHeader"
+    >
+        Infographies
+    </a>
+    <a
+        routerLink="/shop-packs"
+        class="buttonHeader"
+    >
+        Packs
+    </a>
+    <a
+        routerLink="/pvp-rank"
+        class="buttonHeader"
+    >
+        PVP rank
+    </a>
+    <a
+        routerLink="/stat-finder"
+        class="buttonHeader"
+    >
+        Stat Finder
+    </a>
+    <a
+        routerLink="/pokestop"
+        class="buttonHeader"
+    >
+        pokestop
+    </a>
+    <a
+        routerLink="/calc-raid"
+        class="buttonHeader"
+    >
+        Calc Raid
+    </a>
 </header>
 @if (supabase.isLoggedIn()) {
     <div class="profile">
@@ -24,4 +74,6 @@
     <button (click)="login()">Se connecter avec Google</button>
 }
 <app-toast-container></app-toast-container>
-<router-outlet />
+<div style="display: grid; justify-items: center">
+    <router-outlet />
+</div>

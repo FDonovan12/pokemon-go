@@ -15,14 +15,16 @@
     (selected)="dynamaxStore.addManualDynamax($event)"
     [placeHolder]="'Ajouter un Pokemon'"
 ></app-pokemon-select>
-@for (type of dynamaxStore.typeList(); track $index) {
-    <app-type
-        [type]="type"
-        [isSelected]="type === dynamaxStore.selectedType()"
-        (click)="dynamaxStore.selectType(type)"
-        style="margin-inline: 3px"
-    ></app-type>
-}
+<div style="display: grid; grid-template-columns: repeat(6, max-content); gap: 0.25em; align-self: center">
+    @for (type of typesList; track $index) {
+        <app-type
+            [type]="type"
+            [isSelected]="type === dynamaxStore.selectedType()"
+            (click)="dynamaxStore.selectType(type)"
+            style="margin-inline: 3px"
+        ></app-type>
+    }
+</div>
 <div style="overflow-x: auto; max-width: 100%">
     @for (type of dynamaxStore.typeList(); track $index) {
         <div

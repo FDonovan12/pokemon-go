@@ -1,8 +1,9 @@
 import { httpResource, HttpResourceRef } from '@angular/common/http';
-import { computed, inject, Injectable, resource } from '@angular/core';
+import { computed, inject, Injectable, resource, Signal } from '@angular/core';
 import {
     Base,
     GenerationPokemon,
+    Mega,
     NamePokemon,
     OldPokemonSlug,
     PokemonFamily,
@@ -22,6 +23,7 @@ import { megaPokemon } from '../../bdd/mega-pokemon';
 
 const pokemonsList = pokemonsData as PokemonInterface[];
 
+export type MegaBase = Base & Mega;
 interface PokemonIv {
     attack: number;
     defense: number;
@@ -57,7 +59,7 @@ export class PokemonRepository {
     });
     differentForm = createLookup(this.allDifferentFormPokemonsSetting.value, (p) => p.slug);
 
-    allMega = computed(() =>
+    allMega: Signal<MegaBase[]> = computed(() =>
         this.differentForm
             .getAll()
             .filter((pokemon) => pokemon.mega && pokemon.mega.length > 0)
@@ -65,7 +67,6 @@ export class PokemonRepository {
                 pokemon.mega!.map((mega) => ({
                     ...pokemon,
                     ...mega,
-                    cinematicMoves: pokemon.cinematicMoves.concat([mega.megaAttack?.movementId].compact()),
                 })),
             ),
     );
