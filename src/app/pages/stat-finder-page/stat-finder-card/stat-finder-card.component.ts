@@ -31,8 +31,13 @@ export class StatFinderCardComponent {
         this._pageStore.updateCard(this.card().id, { isCollapsed: !this.card().isCollapsed });
     }
     resultsByPokemon = computed(() => {
-        const { pokemonSlugs, prerequisites } = this.card();
-        const pokemons = this._pokemonRepository.differentForm.getMany(pokemonSlugs);
+        const { pokemonSlugs, prerequisites, searchMode } = this.card();
+
+        const pokemons =
+            searchMode === 'global'
+                ? this._pokemonRepository.differentForm.getAll()
+                : this._pokemonRepository.differentForm.getMany(pokemonSlugs);
+
         if (hasNoPrerequisites(prerequisites)) {
             return pokemons.map((pokemon) => ({
                 pokemon,
@@ -41,12 +46,14 @@ export class StatFinderCardComponent {
                 matches: [],
             }));
         }
-        return pokemons.map((pokemon) => {
+        const results = pokemons.map((pokemon) => {
             const matches = (pokemon ? this._statFinderCalcService.findStatMatches(pokemon.stats, prerequisites) : [])
                 .sortAsc('cp')
                 .sortDesc('level');
             return { pokemon, slug: pokemon.slug, name: pokemon?.name ?? pokemon.slug, matches };
         });
+
+        return searchMode === 'global' ? results.filter((r) => r.matches.length > 0) : results;
     });
 
     addPokemon(pokemon: Base) {
@@ -69,6 +76,12 @@ export class StatFinderCardComponent {
     updatePrerequisites(partial: Partial<CardPrerequisites>) {
         this._pageStore.updateCard(this.card().id, {
             prerequisites: { ...this.card().prerequisites, ...partial },
+        });
+    }
+
+    toggleSearchMode() {
+        this._pageStore.updateCard(this.card().id, {
+            searchMode: this.card().searchMode === 'global' ? 'manual' : 'global',
         });
     }
 

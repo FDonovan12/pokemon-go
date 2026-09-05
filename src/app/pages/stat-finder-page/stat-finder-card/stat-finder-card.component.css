@@ -42,6 +42,7 @@
 /* --- Ligne résultat par pokémon --- */
 
 .pokemon-result-row {
+    flex-shrink: 0;
     border: 1px solid #eee;
     border-radius: 12px;
     overflow: hidden;
@@ -187,4 +188,56 @@
     transition: transform 0.2s ease;
     color: #888;
     font-size: 0.85rem;
+}
+
+.search-mode-toggle {
+    border: 1px solid #ddd;
+    background: #fafafa;
+    color: #555;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.search-mode-toggle:hover {
+    background: #f0f0f0;
+}
+
+.search-mode-toggle:focus-visible {
+    outline: 2px solid #3b4cca;
+    outline-offset: 1px;
+}
+
+.search-mode-toggle--global {
+    background: #eef0fd;
+    border-color: #3b4cca;
+    color: #3b4cca;
+}
+
+.search-mode-toggle--global:hover {
+    background: #e2e5fb;
+}
+
+.results-list {
+    max-height: 340px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-right: 4px; /* évite que la scrollbar chevauche le contenu */
+}
+
+.results-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.results-list::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 3px;
 }

@@ -24,6 +24,7 @@ export interface CardEntry {
     pokemonSlugs: PokemonSlug[];
     prerequisites: CardPrerequisites;
     isCollapsed: boolean;
+    searchMode: 'manual' | 'global';
 }
 
 export interface StatMatch {
@@ -45,5 +46,6 @@ export function createEmptyCard(): CardEntry {
             iv: { mode: 'common', comparison: 'exact', common: null, atk: null, def: null, sta: null },
         },
         isCollapsed: false,
+        searchMode: 'manual',
     };
 }
