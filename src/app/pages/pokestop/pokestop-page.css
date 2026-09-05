@@ -1,4 +1,9 @@
 /* pokestop-page.css */
+:host {
+    display: block;
+    width: 100%;
+}
+
 .map-wrapper {
     position: relative;
     width: 100%;

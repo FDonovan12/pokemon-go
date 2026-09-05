@@ -87,6 +87,7 @@ export class PokestopPage implements OnInit {
             spiderfyOnMaxZoom: true,
         });
         this.map.addLayer(this.clusterGroup);
+        setTimeout(() => this.map.invalidateSize(), 0);
     }
 
     private locateUser(): void {
