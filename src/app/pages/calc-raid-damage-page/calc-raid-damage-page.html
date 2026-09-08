@@ -1,30 +1,46 @@
 <h2>Top Attaquant contre le type {{ store.selectedType() }}</h2>
-<div style="display: grid; grid-template-columns: repeat(6, max-content); gap: 0.25em; align-self: center">
+<div style="display: grid; grid-template-columns: repeat(6, max-content); gap: 0.25em; place-self: center">
     @for (type of store.typeList(); track $index) {
         <app-type
             [type]="type"
             [isSelected]="type === store.selectedType()"
             (click)="store.selectType(type)"
-            style="margin-inline: 3px"
+            style="margin-inline: 3px; cursor: pointer"
         ></app-type>
     }
 </div>
 <table>
-    @for (pokemon of store.raidRanking(); track $index) {
-        <!-- <app-image-pokemon [pokemon]="pokemon"></app-image-pokemon> -->
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.25em">
-            <span>
-                {{ pokemon.pokemon.name }}
-            </span>
-            <span>
-                {{ pokemon.quickMove.names.fr }}
-            </span>
-            <span>
-                {{ pokemon.cinematicMove.names.fr }}
-            </span>
-            <span>
-                {{ pokemon.dps }}
-            </span>
-        </div>
-    }
+    <thead>
+        <tr>
+            <th>Pokémon</th>
+            <th>Rapide</th>
+            <th>Chargé</th>
+            <th>DPS</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (pokemon of store.raidRanking(); track $index) {
+            <tr>
+                <td>
+                    <!-- <app-image-pokemon [pokemon]="pokemon.pokemon"></app-image-pokemon> -->
+                    {{ pokemon.pokemon.name }}
+                </td>
+                <td style="text-align: center">
+                    <app-type-move
+                        [move]="pokemon.quickMove"
+                        [isElite]="pokemon.quickMove.isElite"
+                        [megaLevel]="pokemon.quickMove.isMega ? 4 : 0"
+                    ></app-type-move>
+                </td>
+                <td style="text-align: center">
+                    <app-type-move
+                        [move]="pokemon.cinematicMove"
+                        [isElite]="pokemon.cinematicMove.isElite"
+                        [megaLevel]="pokemon.cinematicMove.isMega ? 4 : 0"
+                    ></app-type-move>
+                </td>
+                <td>{{ pokemon.dps | number: '1.0-3' }}</td>
+            </tr>
+        }
+    </tbody>
 </table>

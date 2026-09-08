@@ -16,7 +16,8 @@ import { DynamaxStore } from './dynamax-store/dynamax-store';
     styleUrl: './dynamax.page.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        style: 'display: contents',
+        '[class.grid-container]': 'true',
+        '[class.full-width]': 'true',
     },
 })
 export class DynamaxPage {

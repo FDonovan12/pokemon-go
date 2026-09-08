@@ -80,7 +80,7 @@
     </tbody>
 </table>
 
-<div style="display: grid; grid-template-columns: repeat(3, max-content)">
+<div style="display: grid; grid-template-columns: repeat(3, max-content); place-self: center">
     @for (type of typesList; track $index) {
         <app-relation-type-component
             [id]="type"

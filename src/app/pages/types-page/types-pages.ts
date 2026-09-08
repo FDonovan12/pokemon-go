@@ -12,6 +12,10 @@ import { TypesStore } from './types-store/types-store';
     styleUrl: './types-pages.css',
     providers: [TypesStore],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[class.grid-container]': 'true',
+        '[class.full-width]': 'true',
+    },
 })
 export class TypesPages {
     protected readonly store = inject(TypesStore);

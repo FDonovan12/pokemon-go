@@ -44,7 +44,9 @@
     </div>
 
     @if (!isCollapsed()) {
-        <app-pokemon-select (selected)="addPokemon($event)" />
+        @if (card().searchMode !== 'global') {
+            <app-pokemon-select (selected)="addPokemon($event)" />
+        }
 
         <app-prerequisites-form
             [prerequisites]="card().prerequisites"

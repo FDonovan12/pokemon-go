@@ -71,27 +71,33 @@
 } @else {
     <h2>Generation {{ store.generationSelected() }}</h2>
 }
-@for (pokemon of store.filteredPokemons(); track pokemon.dexNumber) {
-    <app-image-pokemon
-        [pokemon]="pokemon"
-        [height]="75"
-        (click)="store.selectPokemon(pokemon)"
-        [class.selected]="store.selectedPokemonWantKeep().has(pokemon)"
-    ></app-image-pokemon>
-}
+<div class="full-width">
+    @for (pokemon of store.filteredPokemons(); track pokemon.dexNumber) {
+        <app-image-pokemon
+            [pokemon]="pokemon"
+            [height]="75"
+            (click)="store.selectPokemon(pokemon)"
+            [class.selected]="store.selectedPokemonWantKeep().has(pokemon)"
+        ></app-image-pokemon>
+    }
+</div>
 <div style="display: flex; align-items: center">
     <h2>Pokemon sélectionné</h2>
     <button (click)="store.reverseSelectedPokemon()">Inverser selection</button>
 </div>
-@for (generation of generations; track $index) {
-    @if (store.actualListPokemonMap().has(generation) && store.actualListPokemonMap().get(generation)?.length !== 0) {
-        <h3>Generation {{ generation }}</h3>
-        @for (pokemon of store.actualListPokemonMap().get(generation); track $index) {
-            <app-image-pokemon
-                [pokemon]="pokemon"
-                [height]="75"
-                (click)="store.selectPokemon(pokemon)"
-            ></app-image-pokemon>
+<div class="grid-container full-width">
+    @for (generation of generations; track $index) {
+        @if (store.actualListPokemonMap().has(generation) && store.actualListPokemonMap().get(generation)?.length !== 0) {
+            <h3>Generation {{ generation }}</h3>
+            <div class="full-width">
+                @for (pokemon of store.actualListPokemonMap().get(generation); track $index) {
+                    <app-image-pokemon
+                        [pokemon]="pokemon"
+                        [height]="75"
+                        (click)="store.selectPokemon(pokemon)"
+                    ></app-image-pokemon>
+                }
+            </div>
         }
     }
-}
+</div>

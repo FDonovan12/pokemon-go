@@ -57,12 +57,13 @@ export const CalcRaidStore = signalStore(
         },
     })),
     withMethods((store) => ({
-        getDpsForMoveset: (pokemon: Base, quick: FastMove, cinematic: CinematicMove): number => {
+        getDpsForMoveset: (pokemon: Base, quick: FastMove, cinematic: CinematicMove & MoveMeta): number => {
             const quickEnergyGain = quick.energyDelta ?? 0;
             if (quickEnergyGain <= 0) return 0; // move invalide, pas de gain d'énergie
 
             const quickDamage = store.getMoveDamage(quick.power, quick.pokemonType, pokemon);
-            const cinematicDamage = store.getMoveDamage(cinematic.power, cinematic.pokemonType, pokemon);
+            const cinematicDamage =
+                store.getMoveDamage(cinematic.power, cinematic.pokemonType, pokemon) * (cinematic.isMega ? 1.3 : 1);
             const cinematicEnergyCost = Math.abs(cinematic.energyDelta);
 
             const quickMoveCount = cinematicEnergyCost / quickEnergyGain;
@@ -96,8 +97,7 @@ export const CalcRaidStore = signalStore(
                 for (const cinematicRef of cinematicMoveRefs) {
                     const cinematic = store._moveRepository.cinematicMove.get(cinematicRef.id);
                     if (!cinematic) continue;
-
-                    const dps = store.getDpsForMoveset(pokemon, quick, cinematic);
+                    const dps = store.getDpsForMoveset(pokemon, quick, { ...cinematic, ...cinematicRef });
                     if (!best || dps > best.dps) {
                         best = {
                             dps,

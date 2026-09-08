@@ -111,84 +111,85 @@
         </div>
     </div> -->
 </details>
-@for (pokemon of store.filteredPokemons(); track pokemon.slug) {
-    <div class="test">
-        <app-image-pokemon
-            [pokemon]="pokemon"
-            [height]="100"
-            (click)="navigateDetailPokemon(pokemon)"
-        ></app-image-pokemon>
-        <div>
-            <span
-                class="important-toggle"
-                (click)="store.toggleImportantPokemon(pokemon.slug)"
-            >
-                {{ store.isImportantPokemon(pokemon.slug) ? '⭐' : '☆' }}
-            </span>
-            <span
-                (click)="copyPokemonFilterBetterRankPVP(pokemon, 'super')"
-                class="league-cell"
-            >
-                Ⓖ
-                <span class="league-cell__badge">{{ store.badgesByPokemon().get(pokemon.slug)?.great }}</span>
-            </span>
-            <span
-                (click)="copyPokemonFilterBetterRankPVP(pokemon, 'hyper')"
-                class="league-cell"
-            >
-                <span class="league-cell__logo">Ⓤ</span>
-                <span class="league-cell__badge">{{ store.badgesByPokemon().get(pokemon.slug)?.ultra }}</span>
-            </span>
-            <span>⚪</span>
-            @if (_pokemonRepository.availabilityBySlug.asMap().get(pokemon.slug)?.super) {
-                <span (click)="openModifyRankDialog(pokemon, 'super', 'normal')">
-                    @if (store.isRankExcluded(pokemon.slug, 'super', 'normal')) {
-                        ❌
-                    } @else {
-                        {{ store.allRank().get(pokemon.slug)?.super?.normal ?? '' }}
-                    }
+<div class="full-width">
+    @for (pokemon of store.filteredPokemons(); track pokemon.slug) {
+        <div class="test">
+            <app-image-pokemon
+                [pokemon]="pokemon"
+                [height]="100"
+                (click)="navigateDetailPokemon(pokemon)"
+            ></app-image-pokemon>
+            <div>
+                <span
+                    class="important-toggle"
+                    (click)="store.toggleImportantPokemon(pokemon.slug)"
+                >
+                    {{ store.isImportantPokemon(pokemon.slug) ? '⭐' : '☆' }}
                 </span>
-            } @else {
-                <span>❌</span>
-            }
-            @if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper) {
-                <span (click)="openModifyRankDialog(pokemon, 'hyper', 'normal')">
-                    @if (store.isRankExcluded(pokemon.slug, 'hyper', 'normal')) {
-                        ❌
-                    } @else {
-                        {{ store.allRank().get(pokemon.slug)?.hyper?.normal ?? '' }}
-                    }
+                <span
+                    (click)="copyPokemonFilterBetterRankPVP(pokemon, 'super')"
+                    class="league-cell"
+                >
+                    Ⓖ
+                    <span class="league-cell__badge">{{ store.badgesByPokemon().get(pokemon.slug)?.great }}</span>
                 </span>
-            } @else {
-                <span>❌</span>
-            }
-            <span>⚫</span>
-            @if (store.isPokemonsAvaible().get(pokemon.slug)?.super) {
-                <span (click)="openModifyRankDialog(pokemon, 'super', 'obscur')">
-                    @if (store.isRankExcluded(pokemon.slug, 'super', 'obscur')) {
-                        ❌
-                    } @else {
-                        {{ store.allRank().get(pokemon.slug)?.super?.obscur ?? '' }}
-                    }
+                <span
+                    (click)="copyPokemonFilterBetterRankPVP(pokemon, 'hyper')"
+                    class="league-cell"
+                >
+                    <span class="league-cell__logo">Ⓤ</span>
+                    <span class="league-cell__badge">{{ store.badgesByPokemon().get(pokemon.slug)?.ultra }}</span>
                 </span>
-            } @else {
-                <span>❌</span>
-            }
-            @if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper) {
-                <span (click)="openModifyRankDialog(pokemon, 'hyper', 'obscur')">
-                    @if (store.isRankExcluded(pokemon.slug, 'hyper', 'obscur')) {
-                        ❌
-                    } @else {
-                        {{ store.allRank().get(pokemon.slug)?.hyper?.obscur ?? '' }}
-                    }
-                </span>
-            } @else {
-                <span>❌</span>
-            }
+                <span>⚪</span>
+                @if (_pokemonRepository.availabilityBySlug.asMap().get(pokemon.slug)?.super) {
+                    <span (click)="openModifyRankDialog(pokemon, 'super', 'normal')">
+                        @if (store.isRankExcluded(pokemon.slug, 'super', 'normal')) {
+                            ❌
+                        } @else {
+                            {{ store.allRank().get(pokemon.slug)?.super?.normal ?? '' }}
+                        }
+                    </span>
+                } @else {
+                    <span>❌</span>
+                }
+                @if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper) {
+                    <span (click)="openModifyRankDialog(pokemon, 'hyper', 'normal')">
+                        @if (store.isRankExcluded(pokemon.slug, 'hyper', 'normal')) {
+                            ❌
+                        } @else {
+                            {{ store.allRank().get(pokemon.slug)?.hyper?.normal ?? '' }}
+                        }
+                    </span>
+                } @else {
+                    <span>❌</span>
+                }
+                <span>⚫</span>
+                @if (store.isPokemonsAvaible().get(pokemon.slug)?.super) {
+                    <span (click)="openModifyRankDialog(pokemon, 'super', 'obscur')">
+                        @if (store.isRankExcluded(pokemon.slug, 'super', 'obscur')) {
+                            ❌
+                        } @else {
+                            {{ store.allRank().get(pokemon.slug)?.super?.obscur ?? '' }}
+                        }
+                    </span>
+                } @else {
+                    <span>❌</span>
+                }
+                @if (store.isPokemonsAvaible().get(pokemon.slug)?.hyper) {
+                    <span (click)="openModifyRankDialog(pokemon, 'hyper', 'obscur')">
+                        @if (store.isRankExcluded(pokemon.slug, 'hyper', 'obscur')) {
+                            ❌
+                        } @else {
+                            {{ store.allRank().get(pokemon.slug)?.hyper?.obscur ?? '' }}
+                        }
+                    </span>
+                } @else {
+                    <span>❌</span>
+                }
+            </div>
         </div>
-    </div>
-}
-
+    }
+</div>
 @if (showDialog()) {
     <app-modify-rank-dialog
         [league]="selectedLeague"

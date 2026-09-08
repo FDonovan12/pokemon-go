@@ -22,6 +22,10 @@ const _store = PVPRankStore;
     templateUrl: './pvp-rank.html',
     styleUrl: './pvp-rank.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[class.grid-container]': 'true',
+        '[class.full-width]': 'true',
+    },
 })
 export class PvpRankPages {
     protected readonly store = inject(_store);

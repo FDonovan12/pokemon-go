@@ -1,4 +1,5 @@
 img {
-    max-height: clamp(500px, 60vh, 1000px);
-    display: block;
+    /* max-height: clamp(500px, 60vh, 1000px); */
+    /* display: block; */
+    max-width: 100%;
 }

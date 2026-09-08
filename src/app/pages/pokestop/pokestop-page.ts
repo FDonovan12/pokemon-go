@@ -30,6 +30,10 @@ const DEFAULT_CENTER: L.LatLngTuple = [45.7772, 3.087];
     standalone: true,
     templateUrl: './pokestop-page.html',
     styleUrl: './pokestop-page.css',
+    host: {
+        '[class.grid-container]': 'true',
+        '[class.full-width]': 'true',
+    },
 })
 export class PokestopPage implements OnInit {
     @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef<HTMLDivElement>;

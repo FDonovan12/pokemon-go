@@ -21,6 +21,10 @@ const _store = ListPokemonPageStore;
     templateUrl: './list-pokemon-pages.html',
     styleUrl: './list-pokemon-pages.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[class.grid-container]': 'true',
+        '[class.full-width]': 'true',
+    },
 })
 export class ListPokemonPages {
     protected readonly store = inject(_store);

@@ -7,6 +7,10 @@ import { IMAGES } from '@shared/assets/images.generated';
     templateUrl: './infographic-pages.html',
     styleUrl: './infographic-pages.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[class.grid-container]': 'true',
+        '[class.full-width]': 'true',
+    },
 })
 export class InfographicPages {
     ressourcesKeys = Object.keys(IMAGES.ressources.infographie) as Array<keyof typeof IMAGES.ressources.infographie>;
