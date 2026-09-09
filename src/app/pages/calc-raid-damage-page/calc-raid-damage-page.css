@@ -1,0 +1,5 @@
+@media (max-width: 600px) {
+    .move-cell {
+        display: flex;
+    }
+}

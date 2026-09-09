@@ -137,6 +137,10 @@ a {
     --fs-800: clamp(2.33rem, calc(1.7rem + 3.15vw), 4.14rem);
     --fs-900: clamp(2.8rem, calc(1.85rem + 4.74vw), 5.52rem);
 }
+
+body {
+    /* font-size: var(--fs-300); */
+}
 a {
     text-decoration: none;
 }
@@ -211,14 +215,9 @@ input {
     --breakout: minmax(0rem, 4rem);
     --partial-content-part: 1;
     --partial-margin-part: 2;
-    /* --breakout-size: clamp(0.5rem, 6vw, 3rem);
---breakout: minmax(var(--breakout-size), 1fr); */
 
     --partial-total-part: calc(var(--partial-content-part) + var(--partial-margin-part));
     --content: min(var(--max-content-size), 100% - calc((calc(var(--gap))) * 2));
-    /* --half-content: minmax(calc(var(--content) / 2), 3fr); */
-    /* all the fr value have to be in correspondance with var(--partial-content-part) and  var(--partial-margin-part) */
-    /* --full fr =  --partial-content fr + --partial-margin fr |  var(--partial-content-part) ===  --partial-content fr  |  var(--partial-margin-part) ===  --partial-margin fr */
     --full: minmax(var(--gap), 3fr);
     --partial-content: minmax(
         calc(var(--content) / calc(2 * var(--partial-total-part)) * var(--partial-content-part)),
@@ -228,18 +227,8 @@ input {
         calc(var(--content) / calc(2 * var(--partial-total-part)) * var(--partial-margin-part)),
         2fr
     );
-    /* --partial-content: calc(var(--content) / calc(2 * var(--partial-total-part)) * var(--partial-content-part));
---partial-margin: calc(var(--content) / calc(2 * var(--partial-total-part)) * var(--partial-margin-part)); */
 
     display: grid;
-    /* grid-template-columns:
-    [full-width-start] var(--full)
-    [breakout-start] var(--breakout)
-    [content-start] var(--half-content)
-    [middle]
-    var(--half-content) [content-end]
-    var(--breakout) [breakout-end]
-    var(--full) [full-width-end]; */
     grid-template-columns:
         [full-width-start] var(--full)
         [breakout-start] var(--breakout)

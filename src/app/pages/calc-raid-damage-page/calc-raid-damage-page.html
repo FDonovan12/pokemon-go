@@ -1,23 +1,18 @@
 <h2>Top Attaquant contre le type {{ store.selectedType() }}</h2>
-<div style="display: grid; grid-template-columns: repeat(6, max-content); gap: 0.25em; place-self: center">
+<div
+    style="display: grid; grid-template-columns: repeat(6, max-content); gap: 0.25em; place-self: center; max-width: 100%; overflow-x: auto"
+    class="full-width"
+>
     @for (type of store.typeList(); track $index) {
         <app-type
             [type]="type"
             [isSelected]="type === store.selectedType()"
             (click)="store.selectType(type)"
-            style="margin-inline: 3px; cursor: pointer"
+            style="cursor: pointer; font-size: 0.75rem"
         ></app-type>
     }
 </div>
 <table>
-    <thead>
-        <tr>
-            <th>Pokémon</th>
-            <th>Rapide</th>
-            <th>Chargé</th>
-            <th>DPS</th>
-        </tr>
-    </thead>
     <tbody>
         @for (pokemon of store.raidRanking(); track $index) {
             <tr>
@@ -25,14 +20,20 @@
                     <!-- <app-image-pokemon [pokemon]="pokemon.pokemon"></app-image-pokemon> -->
                     {{ pokemon.pokemon.name }}
                 </td>
-                <td style="text-align: center">
+                <td
+                    style="text-align: center"
+                    class="move-cell"
+                >
                     <app-type-move
                         [move]="pokemon.quickMove"
                         [isElite]="pokemon.quickMove.isElite"
                         [megaLevel]="pokemon.quickMove.isMega ? 4 : 0"
                     ></app-type-move>
                 </td>
-                <td style="text-align: center">
+                <td
+                    style="text-align: center"
+                    class="move-cell"
+                >
                     <app-type-move
                         [move]="pokemon.cinematicMove"
                         [isElite]="pokemon.cinematicMove.isElite"

@@ -25,7 +25,7 @@ import { IMAGES } from '@shared/assets/images.generated';
                 <img
                     [src]="urlType()"
                     [alt]="type()"
-                    [style.transform]="'scale(' + sizePercentage() / 100 + ')'"
+                    [style.fontSize.%]="sizePercentage()"
                     [class.selected]="isSelected()"
                 />
             } @else {
@@ -33,25 +33,28 @@ import { IMAGES } from '@shared/assets/images.generated';
                     [class]="type()"
                     [class.selected]="isSelected()"
                     [class.typeBadge]="true"
-                    [style.transform]="'scale(' + sizePercentage() / 100 + ')'"
+                    [style.fontSize.%]="sizePercentage()"
                 >
-                    <ng-content />
+                    <span style="display: inline-block; transform: translateY(2px)">
+                        <ng-content />
+                    </span>
                 </span>
             }
         </ng-template>
     `,
     styles: `
-        .selected {
+        .typeBadge.selected {
             font-weight: bold;
             --type-bg-opacity: var(--type-bg-opacity-selected, 0.15);
-            outline: hsl(var(--color-background) / 1) solid 2px;
+            border-color: hsl(var(--color-background) / 1);
         }
         .typeBadge {
             display: inline-block;
-            padding: 0.125em 0.25em;
+            padding: 0px 0.125em;
             border-radius: 0.375em;
-            min-width: 8ch;
+            border: 2px solid transparent;
             text-align: center;
+            min-width: var(--type-badge-width, auto);
         }
     `,
     host: {

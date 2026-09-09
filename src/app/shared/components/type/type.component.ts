@@ -14,9 +14,20 @@ import { TypeBadgeComponent } from './type-badge.component';
             [isSelected]="isSelected()"
             [sizePercentage]="sizePercentage()"
             [keepLogo]="keepLogo()"
+            style="
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                font-weight: bold;
+                --type-badge-width: 10.5ch;
+            "
         >
             {{ type() }}
         </app-type-badge>
+    `,
+    styles: `
+        :host {
+            font-size: var(--fs-300);
+        }
     `,
 })
 export class TypeComponent {
