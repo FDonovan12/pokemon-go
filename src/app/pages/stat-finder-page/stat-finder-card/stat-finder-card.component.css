@@ -20,13 +20,14 @@
 }
 
 .remove-card-button {
-    border: none;
-    background: transparent;
+    border: 1px solid #ddd;
+    background: #fafafa;
+    border-radius: 100vw;
+    /* background: transparent; */
     color: #999;
     font-size: 0.85rem;
     cursor: pointer;
     padding: 4px 8px;
-    border-radius: 6px;
 }
 
 .remove-card-button:hover {
@@ -156,6 +157,7 @@
 }
 
 .card-name-input {
+    min-width: 0;
     flex: 1;
     border: none;
     background: transparent;
@@ -222,6 +224,16 @@
 
 .search-mode-toggle--global:hover {
     background: #e2e5fb;
+}
+
+.search-mode-label {
+    display: none;
+}
+
+@media (min-width: 540px) {
+    .search-mode-label {
+        display: inline;
+    }
 }
 
 .results-list {

@@ -27,6 +27,10 @@ export class StatFinderCardComponent {
     protected expandable = createExpandableSet<PokemonSlug>();
     protected isCollapsed = computed(() => this.card().isCollapsed);
 
+    protected searchModeText = computed(() =>
+        this.card().searchMode === 'global' ? '🌍 Tous les Pokémon' : '🎯 Sélection manuelle',
+    );
+
     toggleCollapse() {
         this._pageStore.updateCard(this.card().id, { isCollapsed: !this.card().isCollapsed });
     }

@@ -1,22 +1,22 @@
-:host {
+/* :host {
     display: block;
     max-width: 720px;
     margin: 0 auto;
     padding: 24px 16px 64px;
-}
+} */
 
-.stat-finder-page {
+/* .stat-finder-page {
     display: flex;
     flex-direction: column;
     gap: 16px;
-}
+} */
 
-.stat-finder-page__header {
+/* .stat-finder-page__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 8px;
-}
+} */
 
 .add-card-button {
     display: inline-flex;

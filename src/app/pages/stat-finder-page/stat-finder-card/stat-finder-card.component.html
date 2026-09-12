@@ -33,13 +33,18 @@
             [class.search-mode-toggle--global]="card().searchMode === 'global'"
             (click)="toggleSearchMode()"
         >
-            {{ card().searchMode === 'global' ? '🌍 Tous les Pokémon' : '🎯 Sélection manuelle' }}
+            <span>
+                {{ card().searchMode === 'global' ? '🌍' : '🎯' }}
+                <span class="search-mode-label">
+                    {{ card().searchMode === 'global' ? 'Tous les Pokémon' : 'Sélection manuelle' }}
+                </span>
+            </span>
         </button>
         <button
             class="remove-card-button"
             (click)="removeCard()"
         >
-            Supprimer
+            🗑️
         </button>
     </div>
 

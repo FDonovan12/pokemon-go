@@ -1,7 +1,7 @@
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { Component, inject } from '@angular/core';
 import { StatFinderCardComponent } from './stat-finder-card/stat-finder-card.component';
 import { StatFinderPageStore } from './stats-finder-store/stat-finder-page.store';
-import { CdkDropList, CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-stat-finder-page',
@@ -9,6 +9,10 @@ import { CdkDropList, CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
     imports: [StatFinderCardComponent, CdkDropList, CdkDrag],
     templateUrl: './stat-finder-page.html',
     styleUrl: './stat-finder-page.css',
+    host: {
+        '[class.grid-container]': 'true',
+        '[class.full-width]': 'true',
+    },
 })
 export class StatFinderPage {
     protected store = inject(StatFinderPageStore);
