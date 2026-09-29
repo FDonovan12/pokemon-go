@@ -19,12 +19,12 @@
     style="display: grid; grid-template-columns: repeat(6, max-content); gap: 0.25em; place-self: center; max-width: 100%; overflow-x: auto"
     class="full-width"
 >
-    @for (type of dynamaxStore.typeList(); track $index) {
+    @for (type of typesList; track $index) {
         <app-type
             [type]="type"
             [isSelected]="type === dynamaxStore.selectedType()"
             (click)="dynamaxStore.selectType(type)"
-            style="cursor: pointer; font-size: 0.75rem"
+            style="cursor: pointer; font-size: min(2.3vw, 0.75rem)"
         ></app-type>
     }
 </div>
@@ -48,13 +48,13 @@
                 @if (dynamaxStore.selectedType()) {
                     <app-type
                         [type]="dynamaxStore.selectedType()!"
-                        style="margin-inline: 3px"
+                        style="margin-inline: 3px; font-size: 0.75rem"
                     ></app-type>
                 }
                 @if (type !== dynamaxStore.selectedType()) {
                     <app-type
                         [type]="type"
-                        style="margin-inline: 3px"
+                        style="margin-inline: 3px; font-size: 0.75rem"
                     ></app-type>
                 }
             </div>
@@ -70,7 +70,10 @@
                         <app-image-pokemon [pokemon]="damage.dynamax.pokemon"></app-image-pokemon>
                     </div>
                     <div>
-                        <app-type [type]="damage.typeAttack"></app-type>
+                        <app-type
+                            [type]="damage.typeAttack"
+                            style="font-size: 0.75rem"
+                        ></app-type>
                     </div>
                     <div
                         app-percent-color
@@ -113,7 +116,10 @@
                         <app-image-pokemon [pokemon]="damage.dynamax.pokemon"></app-image-pokemon>
                     </div>
                     <div>
-                        <app-type [type]="damage.typeAttack"></app-type>
+                        <app-type
+                            [type]="damage.typeAttack"
+                            style="font-size: 0.75rem"
+                        ></app-type>
                     </div>
                     <div
                         app-percent-color
