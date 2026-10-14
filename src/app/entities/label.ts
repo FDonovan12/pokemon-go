@@ -5,4 +5,5 @@ export type ListSlug = Brand<string, 'ListSlug'>;
 export interface LabelEntry {
     label: ListLabel;
     slug: ListSlug;
+    isLocked?: boolean;
 }

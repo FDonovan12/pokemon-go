@@ -62,6 +62,9 @@
     <span>
         <button (click)="clipboardService.copyToClipboard(filterNeither())">Copie inversé</button>
     </span>
+    <span>
+        <button (click)="store.changeIsLocked()">{{ store.selectedListEntry().isLocked ? 'unlock' : 'lock' }}</button>
+    </span>
 </div>
 
 <app-pokemon-search></app-pokemon-search>

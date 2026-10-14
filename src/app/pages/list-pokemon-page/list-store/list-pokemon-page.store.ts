@@ -74,6 +74,7 @@ export const ListPokemonPageStore = signalStore(
         },
         selectPokemon(pokemon: Base) {
             const set = new Set<Base>(store.selectedPokemonWantKeep());
+            if (store.selectedListEntry().isLocked) return;
             if (set.has(pokemon)) {
                 set.delete(pokemon);
                 store._listPokemonRepository.removeSlugFromList(store.selectedListEntry(), pokemon.slug);
@@ -82,6 +83,15 @@ export const ListPokemonPageStore = signalStore(
                 store._listPokemonRepository.addSlugToList(store.selectedListEntry(), pokemon.slug);
             }
             patchState(store, { selectedPokemonWantKeep: set });
+        },
+        changeIsLocked() {
+            // patchState(store, { selectedPokemonWantKeep: set });
+            const newSelectedEntry = store.selectedListEntry();
+            console.log(store.listEntries());
+            newSelectedEntry.isLocked = !newSelectedEntry.isLocked;
+            console.log(store.listEntries());
+            store._persistListKeys();
+            console.log(store.listEntries());
         },
         addList: (nameList: ListLabel): LabelEntry => {
             const oldListNames = store.listEntries();
@@ -99,15 +109,26 @@ export const ListPokemonPageStore = signalStore(
             pokemons.forEach((pokemon) => store.selectPokemon(pokemon));
         },
         reverseSelectedPokemon() {
-            store._allPokemons().forEach((pokemon) => store.selectPokemon(pokemon));
+            const selectedLabel = store.selectedListEntry().label;
+            const message = `Êtes-vous sûr d'inverse la selection de la liste "${selectedLabel}" avec ${store.selectedPokemonWantKeep().size} Pokémon ?`;
+            store._toastService.prepare('Confirmation', message).showConfirmation(
+                () => store._allPokemons().forEach((pokemon) => store.selectPokemon(pokemon)),
+                () => {
+                    // Annulation, ne rien faire
+                },
+            );
         },
     })),
     withMethods((store) => ({
         renameSelectedList: (name: string) => {
             const label = name as ListLabel;
+            console.log(store.listEntries());
             const newSelectedEntry = store.selectedListEntry();
+            console.log(store.listEntries());
             newSelectedEntry.label = label;
+            console.log(store.listEntries());
             store._persistListKeys();
+            console.log(store.listEntries());
         },
         duplicateSelectedList: (name: string) => {
             const label = name as ListLabel;
@@ -155,6 +176,7 @@ export const ListPokemonPageStore = signalStore(
             effect(store._persistListOfPokemon);
             effect(() => {
                 const allPokemons = store._pokemonRepository.baseForm.getAll();
+                console.log(allPokemons);
                 patchState(store, {
                     _allPokemons: allPokemons,
                 });

@@ -24,9 +24,11 @@ import { TypeBadgeComponent } from './type-badge.component';
         </app-type-badge>
     `,
     styles: `
-        // :host {
-        //     font-size: var(--fs-300);
-        // }
+        /*
+        :host {
+            font-size: var(--fs-300);
+        }
+            */
     `,
 })
 export class TypeComponent {

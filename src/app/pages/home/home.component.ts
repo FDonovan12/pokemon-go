@@ -1,5 +1,4 @@
 import { CdkDrag, CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
-import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, signal, Signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +22,7 @@ import { AddFilterPage } from './add-filter/add-filter.page';
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [RouterLink, DatePipe, FormsModule, DragDropModule, RouterOutlet],
+    imports: [RouterLink, FormsModule, DragDropModule, RouterOutlet],
     templateUrl: './home.component.html',
 
     styleUrl: './home.component.css',
