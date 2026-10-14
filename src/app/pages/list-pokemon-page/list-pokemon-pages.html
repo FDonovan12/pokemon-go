@@ -63,7 +63,21 @@
         <button (click)="clipboardService.copyToClipboard(filterNeither())">Copie inversé</button>
     </span>
     <span>
-        <button (click)="store.changeIsLocked()">{{ store.selectedListEntry().isLocked ? 'unlock' : 'lock' }}</button>
+        <button
+            type="button"
+            class="lock-btn"
+            [class.lock-btn--locked]="store.selectedListEntry().isLocked"
+            [attr.aria-pressed]="store.selectedListEntry().isLocked"
+            [title]="store.selectedListEntry().isLocked ? 'Cliquer pour déverrouiller' : 'Cliquer pour verrouiller'"
+            (click)="store.changeIsLocked()"
+        >
+            <span class="lock-btn__icon">
+                {{ store.selectedListEntry().isLocked ? '🔒' : '🔓' }}
+            </span>
+            <span class="lock-btn__text">
+                {{ store.selectedListEntry().isLocked ? 'Liste verrouillée' : 'Liste déverrouillée' }}
+            </span>
+        </button>
     </span>
 </div>
 

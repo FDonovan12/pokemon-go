@@ -85,13 +85,15 @@ export const ListPokemonPageStore = signalStore(
             patchState(store, { selectedPokemonWantKeep: set });
         },
         changeIsLocked() {
-            // patchState(store, { selectedPokemonWantKeep: set });
             const newSelectedEntry = store.selectedListEntry();
-            console.log(store.listEntries());
             newSelectedEntry.isLocked = !newSelectedEntry.isLocked;
-            console.log(store.listEntries());
+            patchState(store, {
+                listEntries: store
+                    .listEntries()
+                    .map((entry) => (entry.slug === newSelectedEntry.slug ? newSelectedEntry : entry)),
+                selectedListEntry: newSelectedEntry,
+            });
             store._persistListKeys();
-            console.log(store.listEntries());
         },
         addList: (nameList: ListLabel): LabelEntry => {
             const oldListNames = store.listEntries();
@@ -122,13 +124,15 @@ export const ListPokemonPageStore = signalStore(
     withMethods((store) => ({
         renameSelectedList: (name: string) => {
             const label = name as ListLabel;
-            console.log(store.listEntries());
             const newSelectedEntry = store.selectedListEntry();
-            console.log(store.listEntries());
             newSelectedEntry.label = label;
-            console.log(store.listEntries());
+            patchState(store, {
+                listEntries: store
+                    .listEntries()
+                    .map((entry) => (entry.slug === newSelectedEntry.slug ? newSelectedEntry : entry)),
+                selectedListEntry: newSelectedEntry,
+            });
             store._persistListKeys();
-            console.log(store.listEntries());
         },
         duplicateSelectedList: (name: string) => {
             const label = name as ListLabel;
@@ -176,7 +180,6 @@ export const ListPokemonPageStore = signalStore(
             effect(store._persistListOfPokemon);
             effect(() => {
                 const allPokemons = store._pokemonRepository.baseForm.getAll();
-                console.log(allPokemons);
                 patchState(store, {
                     _allPokemons: allPokemons,
                 });
